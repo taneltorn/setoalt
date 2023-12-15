@@ -1,0 +1,504 @@
+{
+  "id": "pollulaul",
+  "title": "Põllulaul",
+  "description": "ERA, DH 17 (34) < Värska al - Žanna Pärtlas, Janika Oras, Andreas Kalkun, Triino Ojamaa, salv. Jaan Tamm < Anastassia Puhm, eestütleja, Maria Rõžikova, killõ, ja koor (2006).",
+  "tempo": 80,
+  "breaks": [
+    22
+  ],
+  "dividers": [
+    8,16, 26
+  ],
+  "stave": {
+    "name": "PPT",
+    "lines": [
+      {
+        "pitch": "d#5",
+        "y": 0,
+        "color": "#eee",
+        "strokeWidth": 1
+      },
+      {
+        "pitch": "d5",
+        "y": 1,
+        "color": "#000",
+        "strokeWidth": 2
+      },
+      {
+        "pitch": "b4",
+        "y": 4,
+        "color": "#eee",
+        "strokeWidth": 1
+      },
+      {
+        "pitch": "a#4",
+        "y": 5,
+        "color": "#000",
+        "strokeWidth": 2
+      },
+      {
+        "pitch": "g4",
+        "y": 8,
+        "color": "#eee",
+        "strokeWidth": 1
+      },
+      {
+        "pitch": "f#4",
+        "y": 9,
+        "color": "#000",
+        "strokeWidth": 2
+      }
+    ]
+  },
+  "voices": [
+    {
+      "name": "torrõ",
+      "color": "black",
+      "notes": [
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 0
+        },
+        {
+          "pitch": "a#4",
+          "duration": "8n",
+          "position": 1
+        },
+        {
+          "pitch": "g4",
+          "duration": "8n",
+          "detune": -22,
+          "position": 2
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 3
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 4
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "detune": -22,
+
+          "position": 5
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 6
+        },
+        {
+          "pitch": "a#4",
+          "duration": "8n",
+          "position": 7
+        },
+        {
+          "pitch": "a#4",
+          "duration": "8n",
+          "position": 8
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 9
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 10
+        },
+        {
+          "pitch": "f#4",
+          "duration": "8n",
+          "position": 11
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 12
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 13
+        },
+        {
+          "pitch": "a#4",
+          "duration": "8n",
+          "position": 14
+        },
+        {
+          "pitch": "a#4",
+          "duration": "8n",
+          "position": 15
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 16
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 17
+        },
+        {
+          "pitch": "b4",
+          "duration": "2n",
+          "position": 18
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 24
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 25
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 26
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 27
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 28
+        },
+        {
+          "pitch": "a#4",
+          "duration": "8n",
+          "position": 29
+        },
+        {
+          "pitch": "a#4",
+          "duration": "8n",
+          "position": 30
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 31
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 32
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 34
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 35
+        },
+        {
+          "pitch": "a#4",
+          "duration": "8n",
+          "position": 36
+        },
+        {
+          "pitch": "a#4",
+          "duration": "8n",
+          "position": 37
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 38
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 39
+        }
+      ]
+    },
+    {
+      "name": "killõ",
+      "color": "blue",
+      "notes": [
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 12
+        },
+        {
+          "pitch": "d#5",
+          "duration": "8n",
+          "position": 13
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 14
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 15
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 16
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 17
+        },
+        {
+          "pitch": "b4",
+          "duration": "2n",
+          "position": 18
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 22
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 23
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 24
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 25
+        },
+        {
+          "pitch": "d#5",
+          "duration": "8n",
+          "position": 26
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 27
+        },
+        {
+          "pitch": "d#5",
+          "duration": "8n",
+          "position": 28
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 29
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 30
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 31
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 32
+        },
+        {
+          "pitch": "f#4",
+          "duration": "8n",
+          "position": 33
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 34
+        },
+        {
+          "pitch": "d#5",
+          "duration": "8n",
+          "position": 35
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 36
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 37
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 38
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 39
+        }
+      ]
+    }
+  ],
+  "lyrics": [
+    {
+      "position": 0,
+      "text": "A -"
+    },
+    {
+      "position": 1,
+      "text": "r'a"
+    },
+    {
+      "position": 2,
+      "text": "Lää -"
+    },
+    {
+      "position": 3,
+      "text": "me"
+    },
+    {
+      "position": 4,
+      "text": "mi"
+    },
+    {
+      "position": 5,
+      "text": "põl -"
+    },
+    {
+      "position": 6,
+      "text": "du"
+    },
+    {
+      "position": 7,
+      "text": "põi -"
+    },
+    {
+      "position": 8,
+      "text": "mõ -"
+    },
+    {
+      "position": 9,
+      "text": "ma -"
+    },
+    {
+      "position": 10,
+      "text": "he,"
+    },
+    {
+      "position": 11,
+      "text": "lee -"
+    },
+    {
+      "position": 12,
+      "text": "lo"
+    },
+    {
+      "position": 14,
+      "text": "lee -"
+    },
+    {
+      "position": 15,
+      "text": "lo"
+    },
+    {
+      "position": 16,
+      "text": "lee -"
+    },
+    {
+      "position": 17,
+      "text": "lo"
+    },
+    {
+      "position": 22,
+      "text": "ar'"
+    },
+    {
+      "position": 23,
+      "text": "a"
+    },
+    {
+      "position": 24,
+      "text": "lää -"
+    },
+    {
+      "position": 25,
+      "text": "me"
+    },
+    {
+      "position": 26,
+      "text": "mi"
+    },
+    {
+      "position": 27,
+      "text": "põl -"
+    },
+    {
+      "position": 28,
+      "text": "du"
+    },
+    {
+      "position": 29,
+      "text": "põi -"
+    },
+    {
+      "position": 30,
+      "text": "mõ -"
+    },
+    {
+      "position": 31,
+      "text": "ma -"
+    },
+    {
+      "position": 32,
+      "text": "he"
+    },
+    {
+      "position": 33,
+      "text": "lee -"
+    },
+    {
+      "position": 34,
+      "text": "lo"
+    },
+    {
+      "position": 36,
+      "text": "lee -"
+    },
+    {
+      "position": 37,
+      "text": "lo"
+    },
+    {
+      "position": 38,
+      "text": "lee -"
+    },
+    {
+      "position": 39,
+      "text": "lo"
+    }
+  ],
+  "text": "Aŕa lääme mi põldu põimõmahe, lelo, lelo, lelo,\nlakja lääme mi vällä laapimahe,\ninne panõ-i mi kässi kjaumahe,\ninne panõ-i mi sõrmi sõudõmahe\nilo panõm mi iih minemähe\nlaulu lasõm mi laja välä pääle\niloga lätt tüü ilosahe\nlauluga lätt tüü ladusahe\noh, kjauge’ ńoo’ kull´a käekese’\naŕa sõudkõ’ ti virga’ sõrmõkõsõ’\nsis õks jovvam mi otsa õdagusta\naŕa-ks jovvam mi põimta’ pikä põllu."
+}

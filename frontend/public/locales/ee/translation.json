@@ -1,0 +1,136 @@
+{
+  "brand": {
+    "title": "Seto alt."
+  },
+  "view": {
+    "scores": {
+      "title": "Kuula noodistusi",
+      "description": ""
+    },
+    "editor": {
+      "title": "Redaktor",
+      "description": "Redaktor võimaldab katsetada uute noodistuste loomisega."
+    }
+  },
+  "navbar": {
+    "home": "Avaleht",
+    "scores": "Kuula",
+    "editor": "Redaktor"
+  },
+  "tooltip": {
+    "changeDuration": {
+      "2n": "Poolnoot",
+      "4n": "Veerandnoot",
+      "8n": "Kaheksandiknoot"
+    },
+    "openEditor": "Ava redaktor",
+    "closeEditor": "Sulge redaktor",
+    "insertPitch": "Lisa {{pitch}} noot",
+    "changePitch": "Muuda {{pitch}} noodiks",
+    "shiftLeft": "Nihuta vasakule",
+    "shiftRight": "Nihuta paremale",
+    "insertBreak": "Lisa reavahe",
+    "removeBreak": "Eemalda reavahe",
+    "insertDivider": "Lisa eraldaja",
+    "removeDivider": "Eemalda eraldaja",
+    "microTuning": "Mikrotonaalsus",
+    "staveSelection": "Vaheta noodijoonestikku",
+    "removeNote": "Eemalda noot",
+    "resetScore": "Lähtesta",
+    "playNext": "Järgmine",
+    "playPrevious": "Eelmine",
+    "startPlayback": "Esita",
+    "stopPlayback": "Peata",
+    "resetPlayback": "Algusesse",
+    "changeTempo": "Muuda tempot",
+    "showVoice": "Näita hääl",
+    "hideVoice": "Peida hääl",
+    "transpose": "Transponeeri"
+  },
+  "dialog": {
+    "microTuning": {
+      "title": "Mikrotonaalsus",
+      "description": "Muuda noodi {{pitch}} kõrgust tsentides."
+    },
+    "staveSelection": {
+      "title": "Noodijoonestiku valimine"
+    },
+    "transpose": {
+      "title": "Transponeeri",
+      "description": "Transponeeri noodistust pooltoonides."
+    },
+    "resetScore": {
+      "title": "Lähtesta andmed?",
+      "description": "Oled sa kindel, et soovid sisestatud andmed lähtestada?"
+    }
+  },
+  "button": {
+    "ok": "OK",
+    "copy": "Kopeeri",
+    "save": "Salvesta",
+    "confirm": "Kinnita",
+    "cancel": "Tühista",
+    "edit": "Redigeeri",
+    "close": "Sulge redaktor"
+  },
+  "stave": {
+    "ppt": "PPT",
+    "diatonic": "Diatooniline",
+    "olddiatonic": "Vanem diatooniline"
+  },
+  "pitch": {
+    "c3": "C",
+    "c#3": "C#",
+    "d3": "D",
+    "d#3": "D#",
+    "e3": "E",
+    "f3": "F",
+    "f#3": "F#",
+    "g3": "G",
+    "g#3": "G#",
+    "a3": "A",
+    "a#3": "A#",
+    "b3": "B",
+    "c4": "C",
+    "c#4": "C#",
+    "d4": "D",
+    "d#4": "D#",
+    "e4": "E",
+    "f4": "F",
+    "f#4": "F#",
+    "g4": "G",
+    "g#4": "G#",
+    "a4": "A",
+    "a#4": "A#",
+    "b4": "B",
+    "c5": "C",
+    "c#5": "C#",
+    "d5": "D",
+    "d#5": "D#",
+    "e5": "E",
+    "f5": "F",
+    "f#5": "F#",
+    "g5": "G",
+    "g#5": "G#",
+    "a5": "A",
+    "a#5": "A#",
+    "b5": "B",
+    "c6": "C",
+    "c#6": "C#",
+    "d6": "D",
+    "d#6": "D#",
+    "e6": "E",
+    "f6": "F",
+    "f#6": "F#",
+    "g6": "G",
+    "g#6": "G#",
+    "a6": "A",
+    "a#6": "A#",
+    "b6": "B"
+  },
+  "duration": {
+    "2n": "2n",
+    "4n": "4n",
+    "8n": "8n"
+  }
+}

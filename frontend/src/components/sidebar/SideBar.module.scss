@@ -1,0 +1,29 @@
+.sidebar {
+  width: 300px;
+}
+
+.icon {
+  margin-right: var(--mantine-spacing-md);
+}
+
+.link {
+  border-radius: var(--mantine-radius-default);
+
+  &:hover {
+    background-color: var(--mantine-color-gray-1);
+    color: var(--mantine-color-dark);
+  }
+
+  &[data-active] {
+    &,
+    &:hover {
+      background-color: var(--mantine-primary-color-9);
+      color: var(--mantine-color-white);
+    }
+  }
+}
+
+.version {
+  color: var(--mantine-color-gray-9) !important;
+  background-color: var(--mantine-color-gray-3) !important;
+}

@@ -1,0 +1,348 @@
+import React, {MutableRefObject, useEffect, useMemo, useState} from 'react';
+import {Note} from "../models/Note";
+import {Score} from "../models/Score";
+import {
+    calculateDimensions,
+    durationToScalar,
+    EmptyScore,
+    getDurationOffset,
+    getNextPitch,
+    getNextPosition,
+    getPreviousPitch,
+    getPreviousPosition,
+    sort
+} from "../utils/helpers";
+import {Voice} from "../models/Voice";
+import {ScoreContext} from './ScoreContext';
+import {useAudioContext} from "./AudioContext";
+import {NoteRange, Voices} from "../utils/dictionaries";
+import {Coordinates} from "../models/Coordinates";
+
+interface Properties {
+    children: React.ReactNode;
+}
+
+const ScoreContextProvider: React.FC<Properties> = ({children}) => {
+
+    const [score, setScore] = useState<Score>(EmptyScore);
+    const [containerRef, setContainerRef] = useState<MutableRefObject<any> | undefined>();
+
+    const [isEditMode, setIsEditMode] = useState<boolean>(false);
+    const [isTyping, setIsTyping] = useState<boolean>(false);
+
+    const [semitones, setSemitones] = useState<number>(0);
+    const [currentPosition, setCurrentPosition] = useState<number>(-1);
+    const [currentNote, setCurrentNote] = useState<Note | undefined>();
+    const [currentDuration, setCurrentDuration] = useState<string>("8n");
+    const [currentVoice, setCurrentVoice] = useState<Voice>({...Voices[0]});
+
+    const audioContext = useAudioContext();
+
+    const toggleEditMode = () => {
+        setIsEditMode(!isEditMode);
+    }
+
+    const getNote = (position: number, voice?: Voice): Note | undefined => {
+        const notes = voice
+            ? score.voices.find(v => v.name === voice.name)?.notes || []
+            : score.voices.flatMap(v => v.notes) || [];
+
+        return notes.find(n => n.position === position);
+    }
+
+    const getNotes = (position?: number): Note[] => {
+        const notes = score.voices.flatMap(v => v.notes) || [];
+        if (position !== undefined) {
+            return notes.filter(n => n.position === position);
+        }
+        return notes;
+    }
+
+    const next = (): number => {
+        const position = getNextPosition(currentPosition, score.voices, currentNote, isEditMode);
+        setCurrentPosition(position);
+
+        const note = getNote(position, currentVoice);
+        setCurrentNote(note);
+        if (note?.duration) {
+            setCurrentDuration(note?.duration);
+        }
+
+        return position;
+    }
+
+    const previous = (): number => {
+        const position = getPreviousPosition(currentPosition, score.voices, currentVoice, isEditMode);
+        setCurrentPosition(position);
+
+        const note = getNote(position, currentVoice);
+        setCurrentNote(note);
+        if (note?.duration) {
+            setCurrentDuration(note?.duration);
+        }
+
+        return position;
+    }
+
+    const shiftNotes = (position: number, offset: number, resetCurrentNote?: boolean) => {
+        if (resetCurrentNote) {
+            setCurrentNote(undefined);
+        }
+        score.voices
+            .find(v => v.name === currentVoice.name)?.notes
+            .filter(n => n.position > position)
+            .forEach(n => {
+                n.position += offset;
+                if (currentPosition === n.position) {
+                    setCurrentNote(n);
+                }
+            });
+    }
+
+    const shiftLeft = () => {
+        if (currentNote || currentPosition < 0) return;
+
+        shiftNotes(currentPosition, -1, true);
+        refresh();
+    }
+
+    const shiftRight = () => {
+        if (currentPosition < 0) return;
+
+        shiftNotes(currentPosition - 1, 1, true);
+        refresh();
+    }
+
+    const addLyric = (text: string) => {
+        const lyric = score.lyrics.find(l => l.position === currentPosition);
+        if (lyric) {
+            lyric.text = text;
+            return;
+        }
+        score.lyrics.push({
+            text: text,
+            position: currentPosition
+        });
+    }
+
+    const addNote = (pitch: string) => {
+        const note: Note = {
+            pitch: pitch,
+            position: currentPosition > 0 ? currentPosition : 0,
+            duration: currentDuration,
+        }
+
+        if (!score.voices.find(v => v.name === currentVoice.name)) {
+            score.voices.push({...currentVoice, notes: []});
+        }
+
+        const voice = score.voices.find(v => v.name === currentVoice.name);
+        if (voice) {
+            voice.notes.push(note);
+
+            const newPosition = note.position + durationToScalar(note.duration);
+            setCurrentPosition(newPosition);
+
+            const line = score.stave.lines.find(l => l.pitch === pitch);
+            audioContext.playNote(note, voice, line);
+
+            const newPositionNote = getNote(newPosition, currentVoice);
+            if (newPositionNote) {
+                setCurrentNote(newPositionNote);
+            }
+        }
+        refresh();
+    }
+
+    const removeNote = () => {
+        if (!currentNote || !currentVoice) return;
+
+        const voice = score.voices.find(v => v.name === currentVoice.name);
+        if (voice) {
+            voice.notes = voice.notes.filter(n => n.position !== currentNote.position);
+            setCurrentNote(undefined);
+        }
+
+        refresh();
+    }
+
+    const changeDuration = (duration: string) => {
+        setCurrentDuration(duration);
+
+        if (currentNote) {
+            const offset = getDurationOffset(duration, currentNote.duration)
+            shiftNotes(currentNote.position, offset);
+
+            currentNote.duration = duration;
+            const line = score.stave.lines.find(l => l.pitch === currentNote.pitch);
+            audioContext.playNote(currentNote, currentVoice, line);
+
+            refresh();
+        }
+    }
+
+    const changePitch = (pitch: string) => {
+        if (currentNote) {
+            currentNote.pitch = pitch;
+            const line = score.stave.lines.find(l => l.pitch === pitch);
+            audioContext.playNote(currentNote, currentVoice, line);
+
+            refresh();
+        }
+    }
+
+    const transpose = (semitones: number) => {
+        setSemitones(semitones);
+        score.stave.lines.forEach(line => {
+            const index = NoteRange.findIndex(n => n === line.pitch);
+            if (index) {
+                const pitch = NoteRange[index + semitones];
+                if (pitch) {
+                    line.pitch = pitch;
+                }
+            }
+        });
+        score.voices.flatMap(v => v.notes).forEach(note => {
+            const index = NoteRange.findIndex(n => n === note.pitch);
+            if (index) {
+                const pitch = NoteRange[index + semitones];
+                if (pitch) {
+                    note.pitch = pitch;
+                }
+            }
+        });
+        refresh();
+    }
+
+    const increasePitch = () => {
+        if (currentNote) {
+            const pitch = getNextPitch(score.stave.lines.map(l => l.pitch), currentNote.pitch);
+            changePitch(pitch);
+        }
+    }
+
+    const decreasePitch = () => {
+        if (currentNote) {
+            const pitch = getPreviousPitch(score.stave.lines.map(l => l.pitch), currentNote.pitch);
+            changePitch(pitch);
+        }
+    }
+
+    const toggleBreak = () => {
+        if (context.score.breaks.findIndex(d => d === context.currentPosition) >= 0) {
+            removeBreak(currentPosition);
+            return;
+        }
+        context.insertBreak(currentPosition);
+    }
+
+    const insertBreak = (position: number) => {
+        score.breaks.push(position);
+        sort(score.breaks);
+        refresh();
+    }
+
+    const removeBreak = (position: number) => {
+        score.breaks = score.breaks.filter(n => n !== position);
+        refresh();
+    }
+
+    const toggleDivider = () => {
+        if (context.score.dividers.findIndex(d => d === context.currentPosition) >= 0) {
+            removeDivider(currentPosition)
+            return;
+        }
+        context.insertDivider(currentPosition);
+    }
+
+    const insertDivider = (position: number) => {
+        score.dividers.push(position);
+        sort(score.dividers);
+        refresh();
+    }
+
+    const removeDivider = (position: number) => {
+        score.dividers = score.dividers.filter(n => n !== position);
+        refresh();
+    }
+
+    const refresh = () => {
+        setScore({...score});
+    }
+
+    const clear = () => {
+        score.breaks = [];
+        score.dividers = [];
+        score.lyrics = [];
+        score.voices = [];
+        refresh();
+        setCurrentPosition(0);
+    }
+
+    const dimensions: { x: number, y: number } = useMemo<Coordinates>(() => calculateDimensions(score), [score]);
+
+    const endPosition: number = useMemo<number>(() => {
+        const notes = score.voices.flatMap(v => v.notes).sort((a, b) => a.position - b.position);
+        const lyrics = score.lyrics.sort((a, b) => a.position - b.position);
+        const lastNote = notes.slice(-1).pop();
+        const lastLyric = lyrics.slice(-1).pop();
+
+
+        return Math.max(lastLyric?.position || 0, ((lastNote?.position || 0) + (lastNote?.duration ? durationToScalar(lastNote.duration) : 0)));
+    }, [score]);
+
+    useEffect(() => {
+        audioContext.setTempo(score.tempo || 80);
+    }, [score.tempo]);
+
+    const context = useMemo(() => ({
+        containerRef,
+        setContainerRef,
+
+        dimensions,
+        score, setScore,
+        isEditMode, setIsEditMode,
+        toggleEditMode,
+        isTyping, setIsTyping,
+        endPosition,
+        currentPosition, setCurrentPosition,
+        currentNote, setCurrentNote,
+        currentVoice, setCurrentVoice,
+        currentDuration, setCurrentDuration,
+
+        next,
+        previous,
+        getNote,
+        getNotes,
+        refresh,
+        shiftNotes,
+        shiftLeft,
+        shiftRight,
+        toggleBreak,
+        insertBreak,
+        removeBreak,
+        toggleDivider,
+        insertDivider,
+        removeDivider,
+        transpose,
+        semitones,
+        setSemitones,
+
+        addLyric,
+        addNote,
+        removeNote,
+
+        changeDuration,
+        changePitch,
+        increasePitch,
+        decreasePitch,
+        clear
+    }), [containerRef, endPosition, isEditMode, isTyping, dimensions, score, score.voices, currentNote, currentPosition, currentVoice, currentDuration]);
+
+    return (
+        <ScoreContext.Provider value={context}>
+            {children}
+        </ScoreContext.Provider>);
+}
+
+export default ScoreContextProvider;

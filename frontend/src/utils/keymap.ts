@@ -1,0 +1,17 @@
+export enum ShortKey {
+    MICRO_TUNING = "T",
+    SHIFT_LEFT = "Z",
+    SHIFT_RIGHT = "X",
+    DELETE_NOTE = "DELETE",
+    REMOVE_NOTE = "BACKSPACE",
+    DIVIDER = "D",
+    BREAK = "ENTER",
+    HALF_NOTE = "Q",
+    QUARTER_NOTE = "W",
+    EIGHT_NOTE = "E",
+    INCREASE_PITCH = "ARROWUP",
+    DECREASE_PITCH = "ARROWDOWN",
+    START_PLAYBACK = " ",
+    PREVIOUS = "ARROWLEFT",
+    NEXT = "ARROWRIGHT",
+}

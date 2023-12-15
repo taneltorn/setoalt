@@ -1,0 +1,128 @@
+{
+  "id": "diatonic",
+  "title": "Diatooniline",
+  "description": "F#-G#-A#-B-C#-D#-E",
+  "breaks": [],
+  "dividers": [],
+  "lyrics": [],
+  "stave": {
+    "name": "Diatonic",
+    "lines": [
+      {
+        "pitch": "e5",
+        "y": 0,
+        "color": "#eee",
+        "strokeWidth": 1
+      },
+      {
+        "pitch": "d#5",
+        "y": 1,
+        "color": "#000",
+        "strokeWidth": 2
+      },
+      {
+        "pitch": "c#5",
+        "y": 3,
+        "color": "#eee",
+        "strokeWidth": 1
+      },
+      {
+        "pitch": "b4",
+        "y": 5,
+        "color": "#000",
+        "strokeWidth": 3
+      },
+      {
+        "pitch": "a#4",
+        "y": 6,
+        "color": "#eee",
+        "strokeWidth": 1
+      },
+      {
+        "pitch": "g#4",
+        "y": 8,
+        "color": "#000",
+        "strokeWidth": 2
+      },
+      {
+        "pitch": "f#4",
+        "y": 10,
+        "color": "#eee",
+        "strokeWidth": 1
+      }
+    ]
+  },
+  "voices": [
+    {
+      "name": "torrõ",
+      "color": "black",
+      "notes": [
+        {
+          "pitch": "f#4",
+          "duration": "8n",
+          "position": 0
+        },
+        {
+          "pitch": "g#4",
+          "duration": "8n",
+          "position": 1
+        },
+        {
+          "pitch": "a#4",
+          "duration": "8n",
+          "position": 2
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 3
+        },
+        {
+          "pitch": "c#5",
+          "duration": "8n",
+          "position": 4
+        },
+        {
+          "pitch": "d#5",
+          "duration": "8n",
+          "position": 5
+        },
+        {
+          "pitch": "e5",
+          "duration": "8n",
+          "position": 6
+        },
+        {
+          "pitch": "d#5",
+          "duration": "8n",
+          "position": 7
+        },
+        {
+          "pitch": "c#5",
+          "duration": "8n",
+          "position": 8
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 9
+        },
+        {
+          "pitch": "a#4",
+          "duration": "8n",
+          "position": 10
+        },
+        {
+          "pitch": "g#4",
+          "duration": "8n",
+          "position": 11
+        },
+        {
+          "pitch": "f#4",
+          "duration": "8n",
+          "position": 12
+        }
+      ]
+    }
+  ]
+}

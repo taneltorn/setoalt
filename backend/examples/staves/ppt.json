@@ -1,0 +1,112 @@
+{
+  "id": "ppt",
+  "title": "Pooltoon-poolteisttoon",
+  "description": "F#-G-A#-B-D-D#",
+  "breaks": [],
+  "dividers": [],
+  "lyrics": [],
+  "stave": {
+    "name": "PPT",
+    "lines": [
+      {
+        "pitch": "d#5",
+        "y": 0,
+        "color": "#eee",
+        "strokeWidth": 1
+      },
+      {
+        "pitch": "d5",
+        "y": 1,
+        "color": "#000",
+        "strokeWidth": 2
+      },
+      {
+        "pitch": "b4",
+        "y": 4,
+        "color": "#eee",
+        "strokeWidth": 1
+      },
+      {
+        "pitch": "a#4",
+        "y": 5,
+        "color": "#000",
+        "strokeWidth": 2
+      },
+      {
+        "pitch": "g4",
+        "y": 8,
+        "color": "#eee",
+        "strokeWidth": 1
+      },
+      {
+        "pitch": "f#4",
+        "y": 9,
+        "color": "#000",
+        "strokeWidth": 2
+      }
+    ]
+  },
+  "voices": [
+    {
+      "name": "torrõ",
+      "color": "black",
+      "notes": [
+        {
+          "pitch": "f#4",
+          "duration": "8n",
+          "position": 0
+        },
+        {
+          "pitch": "g4",
+          "duration": "8n",
+          "position": 1
+        },
+        {
+          "pitch": "a#4",
+          "duration": "8n",
+          "position": 2
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 3
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 4
+        },
+        {
+          "pitch": "d#5",
+          "duration": "8n",
+          "position": 5
+        },
+        {
+          "pitch": "d5",
+          "duration": "8n",
+          "position": 6
+        },
+        {
+          "pitch": "b4",
+          "duration": "8n",
+          "position": 7
+        },
+        {
+          "pitch": "a#4",
+          "duration": "8n",
+          "position": 8
+        },
+        {
+          "pitch": "g4",
+          "duration": "8n",
+          "position": 9
+        },
+        {
+          "pitch": "f#4",
+          "duration": "8n",
+          "position": 10
+        }
+      ]
+    }
+  ]
+}
