@@ -20,7 +20,7 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
 
     const handleNoteClick = () => {
         audioContext.stopPlayback();
-        audioContext.playPosition(scoreContext.score, lyric.position);
+        audioContext.playPosition(scoreContext.score, lyric.position, undefined, scoreContext.semitones);
 
         const notes = scoreContext.getNotes(lyric.position);
 

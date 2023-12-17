@@ -4,15 +4,14 @@ import {isEmpty} from "../utils/helpers";
 import {Voice} from "../models/Voice";
 import {ScoreContextProperties} from "./ScoreContext";
 import {Score} from "../models/Score";
-import {Line} from "../models/Line";
 
 export interface AudioContextProperties {
 
     isPlaying: boolean;
     setIsPlaying: (value: boolean) => void;
 
-    playNote: (note: Note, voice: Voice, line: Line | undefined) => void;
-    playPosition: (score: Score, position: number, voice?: Voice) => void;
+    playNote: (note: Note, voice: Voice, detune?: number, semitones?: number) => void;
+    playPosition: (score: Score, position: number, voice?: Voice, semitones?: number) => void;
 
     playNext: (scoreContext: ScoreContextProperties) => void;
     playPrevious: (scoreContext: ScoreContextProperties) => void;

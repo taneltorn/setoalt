@@ -46,8 +46,6 @@ export interface ScoreContextProperties {
     insertDivider: (position: number) => void;
     removeDivider: (position: number) => void;
 
-    transpose: (semitones: number) => void;
-
     addLyric: (text: string) => void;
     addNote: (pitch: string) => void;
     removeNote: () => void;

@@ -8,6 +8,7 @@ import * as Tone from "tone";
 import {Line} from "../models/Line";
 import {Coordinates} from "../models/Coordinates";
 import {ScoreContextProperties} from "../context/ScoreContext";
+import {NoteRange} from "./dictionaries.ts";
 
 export const isEmpty = (object: any) => {
     return !object || Object.keys(object).length === 0 || object.length === 0;
@@ -291,4 +292,12 @@ export const prepareScoreForOpening = (score: Score) => {
             }
         });
     return score;
+}
+
+export const transpose = (pitch: string, semitones: number): string => {
+    const index = NoteRange.findIndex(n => n === pitch);
+    if (index !== undefined) {
+        return  NoteRange[index + semitones];
+    }
+    return "";
 }

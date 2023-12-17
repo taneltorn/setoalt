@@ -39,7 +39,7 @@ const StaveNote: React.FC<Properties> = ({note, voice}) => {
 
         audioContext.stopPlayback();
 
-        audioContext.playNote(note, voice, line);
+        audioContext.playNote(note, voice, note.detune || line?.detune, scoreContext.semitones);
     }
 
     return (<>

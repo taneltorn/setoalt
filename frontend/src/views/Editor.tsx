@@ -1,6 +1,5 @@
-import {Alert, Text, Title} from "@mantine/core";
-import {useScoreContext} from "../context/ScoreContext.tsx";
-import React, {useEffect} from "react";
+import {Text, Title} from "@mantine/core";
+import React from "react";
 import {EmptyScore} from "../utils/helpers.ts";
 import {StavePPT} from "../staves/StavePPT.ts";
 import Stave from "../components/stave/Stave.tsx";
@@ -10,38 +9,27 @@ import KeyPressHandler from "../components/KeyPressHandler.tsx";
 import EditorDialogs from "../components/editor/EditorDialogs.tsx";
 import PlaybackPanel from "../components/controls/PlaybackPanel.tsx";
 import TransposeDialog from "../components/dialog/TransposeDialog.tsx";
-import {IoMdAlert} from "react-icons/io";
+import ScoreContextProvider from "../context/ScoreContextProvider.tsx";
 
 const Editor: React.FC = () => {
 
     const {t} = useTranslation();
-    const context = useScoreContext();
-
-
-    useEffect(() => {
-        context.setScore({...EmptyScore, stave: StavePPT});
-        context.setIsEditMode(true);
-    }, []);
 
     return (
-        <>
+        <ScoreContextProvider showEditor>
             <KeyPressHandler/>
 
-            <Title order={2} mb={"xs"}>{t("view.editor.title")}</Title>
+            <Title order={1} mb={"xs"}>{t("view.editor.title")}</Title>
             <Text mb={"lg"}>{t("view.editor.description")}</Text>
-
-            <Alert mb={"md"} radius={"md"} icon={<IoMdAlert size={30}/>}>
-                Hetkel salvestamise võimalus puudub.
-            </Alert>
 
             <PlaybackPanel/>
             <EditorPanel/>
 
-            <Stave score={context.score}/>
+            <Stave score={{...EmptyScore, stave: StavePPT}} showCursor/>
 
             <EditorDialogs/>
             <TransposeDialog/>
-        </>
+        </ScoreContextProvider>
     );
 }
 

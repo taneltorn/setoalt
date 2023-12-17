@@ -1,12 +1,13 @@
 import React from "react";
 import Editor from "./views/Editor.tsx";
-import Scores from "./views/Scores.tsx";
+import ScoreDetails from "./views/ScoreDetails.tsx";
 import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
 import Layout from "./Layout.tsx";
 import Home from "./views/Home.tsx";
+import Scores from "./views/Scores.tsx";
 
 const router = createBrowserRouter([
     {
@@ -20,6 +21,10 @@ const router = createBrowserRouter([
             {
                 path: "/scores",
                 element: <Scores/>,
+            },
+            {
+                path: "/scores/:id",
+                element: <ScoreDetails/>,
             },
             {
                 path: "/editor",

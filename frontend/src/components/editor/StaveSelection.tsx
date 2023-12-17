@@ -18,7 +18,7 @@ const StaveSelection: React.FC<Properties> = ({activeStave, onSelect}) => {
 
     return (
         <Group display={"flex"} justify={"space-between"} className={"hover-pointer"}>
-            {[StavePPT, StaveDiatonic, StaveOldDiatonic].map((stave, index) =>
+            {[StavePPT, StaveOldDiatonic, StaveDiatonic].map((stave, index) =>
                 <Card onClick={() => onSelect(stave)} p={"xl"} shadow={"md"}>
                     <Card.Section opacity={stave.name === activeStave.name ? 1 : 0.3}>
                         <StavePreview

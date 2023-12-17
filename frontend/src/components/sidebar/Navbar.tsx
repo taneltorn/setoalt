@@ -24,7 +24,7 @@ const Navbar: React.FC = () => {
             {structure.map((item, index) => (
                 <NavLink
                     key={index}
-                    active={location.pathname === item.link}
+                    active={item.link === "/" && location.pathname === "/" || item.link !== "/" && location.pathname.startsWith(item.link)}
                     className={classes.link}
                     label={t(`navbar.${item.id}`)}
                     leftSection={item.icon}

@@ -6,6 +6,7 @@ import {DialogType, useDialogContext} from "../../context/DialogContext";
 import {Playback} from "../../utils/constants";
 import {useTranslation} from "react-i18next";
 import {Flex, rem, Slider, Text} from "@mantine/core";
+import TextLink from "../common/TextLink.tsx";
 
 const MicroTuningDialog: React.FC = () => {
 
@@ -18,7 +19,7 @@ const MicroTuningDialog: React.FC = () => {
     const handleSave = () => {
         if (context.currentNote) {
             context.currentNote.detune = detune;
-            playNote(context.currentNote, context.currentVoice, undefined);
+            playNote(context.currentNote, context.currentVoice, detune, context.semitones);
             context.refresh();
         }
         close();
@@ -47,6 +48,11 @@ const MicroTuningDialog: React.FC = () => {
                 <Text>
                     {t("dialog.microTuning.description", {pitch: t(`pitch.${context.currentNote?.pitch}`)})}
                 </Text>
+
+                <Text>
+                    <TextLink to={"#"} label={t("button.reset")} onClick={() => setDetune(0)}/>
+                </Text>
+
                 <Slider
                     miw={400}
                     mt={"lg"}

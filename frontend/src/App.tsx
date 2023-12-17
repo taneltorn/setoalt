@@ -1,11 +1,15 @@
 import AppRouter from "./AppRouter.tsx";
 
 import "./i18n";
+import {Notifications} from "@mantine/notifications";
 
 function App() {
 
     return (
-        <AppRouter/>
+        <>
+            <Notifications position="top-right" />
+            <AppRouter/>
+        </>
     )
 }
 

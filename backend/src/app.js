@@ -9,18 +9,24 @@ const port = 4000;
 const cors = require('cors');
 app.use(cors());
 const fs = require('fs');
+const path = require("path");
 app.get('/hello', (req, res) => {
     res.send('Hello World!');
 });
-app.get('/score', (req, res) => {
-    console.log("got request");
+app.get('/scores/pollulaul', (req, res) => {
     try {
-        const data = fs.readFileSync('/examples/songs/pollulaul.json', 'utf8');
-        console.log(data);
-        const jsonData = JSON.parse(data);
-        res.json(jsonData);
+        setTimeout(() => {
+            const file = path.resolve(__dirname, '../examples/polluxlaul.json');
+            console.log("file");
+            console.log("file");
+            console.log(file);
+            const data = fs.readFileSync(file, 'utf8');
+            const jsonData = JSON.parse(data);
+            res.json(jsonData);
+        }, 500);
     }
     catch (err) {
+        console.log("GOT ERROR");
         res.status(500).send('Error reading the file');
     }
 });

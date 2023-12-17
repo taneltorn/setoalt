@@ -11,17 +11,11 @@ const EditorPanel: React.FC = () => {
 
     return (
         <Group className={classes.panel}>
-
             <VoicePanel/>
             <NoteControls/>
             <DurationPanel/>
             <LayoutPanel/>
             <MiscPanel/>
-
-            {/*<div className={"hover-pointer hover-color-accent d-flex justify-content-end flex-grow-1"}*/}
-            {/*     onClick={() => open(DialogType.STAVE_SELECTION)}>*/}
-            {/*    <GiGClef size={40}/>*/}
-            {/*</div>*/}
         </Group>
     )
 };

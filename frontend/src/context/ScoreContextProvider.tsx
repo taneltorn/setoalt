@@ -15,19 +15,20 @@ import {
 import {Voice} from "../models/Voice";
 import {ScoreContext} from './ScoreContext';
 import {useAudioContext} from "./AudioContext";
-import {NoteRange, Voices} from "../utils/dictionaries";
+import {Voices} from "../utils/dictionaries";
 import {Coordinates} from "../models/Coordinates";
 
 interface Properties {
+    showEditor?: boolean;
     children: React.ReactNode;
 }
 
-const ScoreContextProvider: React.FC<Properties> = ({children}) => {
+const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
 
     const [score, setScore] = useState<Score>(EmptyScore);
     const [containerRef, setContainerRef] = useState<MutableRefObject<any> | undefined>();
 
-    const [isEditMode, setIsEditMode] = useState<boolean>(false);
+    const [isEditMode, setIsEditMode] = useState<boolean>(!!showEditor);
     const [isTyping, setIsTyping] = useState<boolean>(false);
 
     const [semitones, setSemitones] = useState<number>(0);
@@ -144,7 +145,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
             setCurrentPosition(newPosition);
 
             const line = score.stave.lines.find(l => l.pitch === pitch);
-            audioContext.playNote(note, voice, line);
+            audioContext.playNote(note, voice, note.detune || line?.detune, semitones);
 
             const newPositionNote = getNote(newPosition, currentVoice);
             if (newPositionNote) {
@@ -175,7 +176,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
             currentNote.duration = duration;
             const line = score.stave.lines.find(l => l.pitch === currentNote.pitch);
-            audioContext.playNote(currentNote, currentVoice, line);
+            audioContext.playNote(currentNote, currentVoice, currentNote.detune || line?.detune, semitones);
 
             refresh();
         }
@@ -185,33 +186,10 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         if (currentNote) {
             currentNote.pitch = pitch;
             const line = score.stave.lines.find(l => l.pitch === pitch);
-            audioContext.playNote(currentNote, currentVoice, line);
+            audioContext.playNote(currentNote, currentVoice, currentNote.detune || line?.detune, semitones);
 
             refresh();
         }
-    }
-
-    const transpose = (semitones: number) => {
-        setSemitones(semitones);
-        score.stave.lines.forEach(line => {
-            const index = NoteRange.findIndex(n => n === line.pitch);
-            if (index) {
-                const pitch = NoteRange[index + semitones];
-                if (pitch) {
-                    line.pitch = pitch;
-                }
-            }
-        });
-        score.voices.flatMap(v => v.notes).forEach(note => {
-            const index = NoteRange.findIndex(n => n === note.pitch);
-            if (index) {
-                const pitch = NoteRange[index + semitones];
-                if (pitch) {
-                    note.pitch = pitch;
-                }
-            }
-        });
-        refresh();
     }
 
     const increasePitch = () => {
@@ -324,7 +302,6 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         toggleDivider,
         insertDivider,
         removeDivider,
-        transpose,
         semitones,
         setSemitones,
 
@@ -337,7 +314,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         increasePitch,
         decreasePitch,
         clear
-    }), [containerRef, endPosition, isEditMode, isTyping, dimensions, score, score.voices, currentNote, currentPosition, currentVoice, currentDuration]);
+    }), [containerRef, endPosition, isEditMode, isTyping, dimensions, semitones, score, score.voices, currentNote, currentPosition, currentVoice, currentDuration]);
 
     return (
         <ScoreContext.Provider value={context}>

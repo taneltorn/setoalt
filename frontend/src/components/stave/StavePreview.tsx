@@ -18,7 +18,7 @@ const StavePreview: React.FC<Properties> = ({stave}) => {
         <svg width={200}>
             {stave.lines.map((line, index) => {
                 let {y} = getLineCoords(line, 0, context);
-                y = y - Layout.stave.container.SYMBOLS_BAR;
+                y = y - Layout.stave.container.SYMBOLS_BAR  + 30;
 
                 return <g key={index}>
                     <text x={0} y={y} fontSize={14} fill={"black"}>

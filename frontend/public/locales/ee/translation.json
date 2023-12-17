@@ -4,8 +4,8 @@
   },
   "view": {
     "scores": {
-      "title": "Kuula noodistusi",
-      "description": ""
+      "title": "Kuula",
+      "description": "Siin saad kuulata loodud noodistusi."
     },
     "editor": {
       "title": "Redaktor",
@@ -56,7 +56,7 @@
       "title": "Noodijoonestiku valimine"
     },
     "transpose": {
-      "title": "Transponeeri",
+      "title": "Transponeerimine",
       "description": "Transponeeri noodistust pooltoonides."
     },
     "resetScore": {
@@ -71,7 +71,8 @@
     "confirm": "Kinnita",
     "cancel": "Tühista",
     "edit": "Redigeeri",
-    "close": "Sulge redaktor"
+    "close": "Sulge redaktor",
+    "reset": "Lähtesta"
   },
   "stave": {
     "ppt": "PPT",

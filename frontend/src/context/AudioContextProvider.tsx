@@ -8,7 +8,6 @@ import {Voice} from "../models/Voice";
 import {AudioContext} from "./AudioContext";
 import {ScoreContextProperties} from "./ScoreContext";
 import {Score} from "../models/Score";
-import {Line} from "../models/Line";
 
 interface Properties {
     children: React.ReactNode;
@@ -22,13 +21,13 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [tempo, setTempo] = useState<number>(Playback.DEFAULT_TEMPO);
 
-    const playNote = (note: Note, voice: Voice, line: Line | undefined) => {
+    const playNote = (note: Note, voice: Voice, detune?: number, semitones?: number) => {
         if (!(note.position >= 0)) return;
 
-        player.playNote(note, voice, line);
+        player.playNote(note, voice, detune, semitones);
     }
 
-    const playPosition = (score: Score, position: number, voice?: Voice) => {
+    const playPosition = (score: Score, position: number, voice?: Voice, semitones?: number) => {
         score.voices
             .filter(v => voice ? v.name === voice.name : true)
             .forEach(voice => {
@@ -36,7 +35,7 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
                     .filter(note => note.position === position)
                     .forEach(note => {
                         const line = score.stave.lines.find(l => l.pitch === note.pitch);
-                        player.playNote(note, voice, line);
+                        playNote(note, voice, note.detune || line?.detune, semitones);
                     });
             });
     }
@@ -83,7 +82,7 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
         if (!sequenceRef.current) {
             sequenceRef.current = new Tone.Part((_, event) => {
                 const line = context.score.stave.lines.find(l => l.pitch === event.note.pitch);
-                playNote(event.note, event.voice, line);
+                playNote(event.note, event.voice, event.note.detune || line?.detune, context.semitones);
                 context.setCurrentPosition(event.note.position);
 
                 const notes = context.getNotes(event.note.position);
