@@ -5,7 +5,7 @@ import path from "path";
 import cors from "cors";
 
 const app = express();
-const port = 4000;
+const port = 3001;
 
 app.use(cors());
 

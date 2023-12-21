@@ -8,7 +8,7 @@ const useScoreService = () => {
 
     const fetchScore = async (id: string, onSuccess: (data: any) => void): Promise<any> => {
         setIsLoading(true);
-        fetch(`http://localhost:4000/scores/${id}`)
+        fetch(`http://localhost:3001/scores/${id}`)
             .then(response => response.json())
             .then(data => {
                 onSuccess(data);
