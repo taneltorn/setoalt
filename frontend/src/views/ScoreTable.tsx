@@ -1,5 +1,4 @@
 import {Badge, Group, Table} from "@mantine/core";
-import {useTranslation} from "react-i18next";
 import TextLink from "../components/common/TextLink.tsx";
 import React from "react";
 
@@ -8,6 +7,7 @@ interface ScoreRow {
     title: string;
     stave: string;
     voices: string[];
+    inserted?: string;
 }
 
 interface Properties {
@@ -15,9 +15,6 @@ interface Properties {
 }
 
 const ScoreTable: React.FC<Properties> = ({rows}) => {
-
-    const {t} = useTranslation();
-
 
     return (
         <Table highlightOnHover>
@@ -45,7 +42,7 @@ const ScoreTable: React.FC<Properties> = ({rows}) => {
                                 )}
                             </Group>
                         </Table.Td>
-                        <Table.Td/>
+                        <Table.Td>{row.inserted}</Table.Td>
                     </Table.Tr>
                 )}
             </Table.Tbody>

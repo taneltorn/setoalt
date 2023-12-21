@@ -5,13 +5,16 @@ import {Link as Component} from "react-router-dom";
 interface Properties {
     to: string;
     label: string;
+    target?: string;
+    prefix?: string;
     onClick?: () => void;
 }
 
 const TextLink: React.FC<Properties> = (props) => {
 
     return (
-        <Component to={props.to}>
+        <Component to={props.to} target={props.target}>
+            {props.prefix}
             <Anchor fw={700} onClick={props.onClick}>
                 {props.label}
             </Anchor>

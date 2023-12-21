@@ -10,6 +10,7 @@ import StaveSkeleton from "../components/stave/StaveSkeleton.tsx";
 import TransposeDialog from "../components/dialog/TransposeDialog.tsx";
 import {Link} from "react-router-dom";
 import {IoChevronBack} from "react-icons/io5";
+import KeyPressHandler from "../components/KeyPressHandler.tsx";
 
 const ScoreDetails: React.FC = () => {
 
@@ -27,6 +28,7 @@ const ScoreDetails: React.FC = () => {
 
     return (
         <ScoreContextProvider>
+            <KeyPressHandler/>
 
             {scoreService.isLoading && <>
                 <Loader/>

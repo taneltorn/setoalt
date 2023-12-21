@@ -24,15 +24,12 @@ const ScoreDetails: React.FC = () => {
             <Title order={4} mt={"xl"} mb={"sm"}>Lood</Title>
 
             <ScoreTable rows={[
-                {id: "pollulaul", title: "Põllulaul", stave: "PPT", voices: ["torrõ", "killõ"]},
-                {id: "jarvelaul", title: "Järvelaul", stave: "PPT", voices: ["torrõ", "killõ"]},
-                {id: "varavalaul", title: "Väravalaul", stave: "Diatooniline", voices: ["torrõ"]}
+                {id: "pollulaul", title: "Põllulaul", stave: "PPT", voices: ["torrõ", "killõ"], inserted: "21.12.2023"},
             ]}/>
 
             <Link to={"/editor"}>
                 <Button mt={"md"}>Lisa uus</Button>
             </Link>
-
         </>
     );
 }

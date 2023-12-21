@@ -7,7 +7,7 @@
     22
   ],
   "dividers": [
-    10,18, 32
+    10,19, 32
   ],
   "stave": {
     "name": "PPT",
@@ -37,7 +37,7 @@
         "strokeWidth": 2
       },
       {
-        "pitch": "e♭4",
+        "pitch": "d#4",
         "y": 8,
         "color": "#eee",
         "strokeWidth": 1
@@ -66,9 +66,8 @@
           "position": 1
         },
         {
-          "pitch": "e♭4",
+          "pitch": "d#4",
           "duration": "8n",
-          "detune": -22,
           "position": 2
         },
         {
@@ -84,8 +83,6 @@
         {
           "pitch": "a#4",
           "duration": "8n",
-          "detune": -22,
-
           "position": 5
         },
         {
@@ -145,13 +142,8 @@
         },
         {
           "pitch": "g4",
-          "duration": "8n",
+          "duration": "4n",
           "position": 17
-        },
-        {
-          "pitch": "g4",
-          "duration": "2n",
-          "position": 18
         },
         {
           "pitch": "g4",
@@ -261,13 +253,8 @@
         },
         {
           "pitch": "g4",
-          "duration": "8n",
+          "duration": "4n",
           "position": 17
-        },
-        {
-          "pitch": "g4",
-          "duration": "2n",
-          "position": 18
         },
         {
           "pitch": "a#4",
@@ -280,7 +267,7 @@
           "position": 23
         },
         {
-          "pitch": "a#4",
+          "pitch": "b4",
           "duration": "8n",
           "position": 24
         },

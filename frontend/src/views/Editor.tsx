@@ -20,7 +20,8 @@ const Editor: React.FC = () => {
             <KeyPressHandler/>
 
             <Title order={1} mb={"xs"}>{t("view.editor.title")}</Title>
-            <Text mb={"lg"}>{t("view.editor.description")}</Text>
+            <Text>{t("view.editor.description")} </Text>
+            <Text mb={"lg"} fw={600}>NB! Hetkel salvestamisvõimalus puudub.</Text>
 
             <PlaybackPanel/>
             <EditorPanel/>

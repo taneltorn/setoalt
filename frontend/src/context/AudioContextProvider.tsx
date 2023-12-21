@@ -115,10 +115,11 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
         Tone.Transport.stop();
     };
 
-    const resetPlayback = (scoreContext: ScoreContextProperties) => {
+    const resetPlayback = (context: ScoreContextProperties) => {
         stopPlayback();
-        scoreContext.setCurrentPosition(0);
-        scoreContext.refresh();
+        context.setCurrentPosition(0);
+        context.setCurrentNote(context.getNote(0));
+        context.refresh();
     };
 
     useEffect(() => {

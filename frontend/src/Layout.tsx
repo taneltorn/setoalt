@@ -3,6 +3,7 @@ import { Outlet } from "react-router-dom";
 import {AppShell,  Divider} from "@mantine/core";
 import Navbar from "./components/sidebar/Navbar.tsx";
 import Logo from "./components/sidebar/Logo.tsx";
+import DevMessage from "./components/DevMessage.tsx";
 
 const Layout: React.FC = () => {
 
@@ -22,6 +23,7 @@ const Layout: React.FC = () => {
                 <Navbar/>
             </AppShell.Navbar>
             <AppShell.Main id={"content"}>
+                <DevMessage/>
                 <Outlet/>
             </AppShell.Main>
         </AppShell>
