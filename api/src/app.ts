@@ -12,12 +12,12 @@ app.use(cors());
 // todo use .env
 const Pool = require('pg').Pool
 const pool = new Pool({
-    // connectionString: process.env.DATABASE_URL
-    user: 'postgres',
-    host: 'localhost',
-    database: 'setoalt',
-    password: 'mypass',
-    port: 5432,
+    connectionString: process.env.DATABASE_URL
+    // user: 'postgres',
+    // host: 'localhost',
+    // database: 'setoalt',
+    // password: 'mypass',
+    // port: 5432,
 });
 
 app.get('/scores', async (req: Request, res: Response): Promise<void> => {
