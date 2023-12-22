@@ -1,14 +1,50 @@
 version: '3.8'
-name: setoalt
+
 services:
   backend:
-    build: ./backend
+    build: api
+    container_name: setoalt-api
     ports:
-      - "3001:3001"
+      - "3000:3000"
+    restart: always
+    environment:
+      - DATABASE_URL=postgres://${POSTGRES_USER}:${POSTGRES_PASSWORD}@database:5432/${POSTGRES_DB}
+    depends_on:
+      - database
+    networks:
+      setoalt-network:
+
   frontend:
-    build: ./frontend
+    build: ui
+    container_name: setoalt-ui
     ports:
       - "80:80"
+    restart: always
     depends_on:
       - backend
+    networks:
+      setoalt-network:
 
+  database:
+    image: postgres:14
+    container_name: setoalt-database
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
+      - POSTGRES_DB=${POSTGRES_DB}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+      - ./database/scripts/init-db.sql:/docker-entrypoint-initdb.d/init-db.sql
+      - ./database/scripts/insert-data.sql:/docker-entrypoint-initdb.d/insert-data.sql
+    restart: always
+    networks:
+      setoalt-network:
+
+
+volumes:
+  postgres-data:
+
+networks:
+  setoalt-network:
