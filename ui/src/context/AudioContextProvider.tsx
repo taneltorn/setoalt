@@ -64,7 +64,7 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
             Tone.context.resume();
         }
 
-        const startPosition = context.currentPosition >= context.endPosition ? 0 : context.currentPosition;
+        const startPosition = context.currentPosition >= context.endPosition ? 0 : Math.max(0, context.currentPosition);
 
         const endTimes: number[] = [];
         const events: Array<[number, { note: Note, voice: Voice }]> = [];

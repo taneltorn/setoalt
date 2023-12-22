@@ -1,12 +1,14 @@
 import {useState} from "react";
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || 'http://localhost:3000';
+
 const useScoreService = () => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const fetchScore = async (id: string): Promise<any> => {
         setIsLoading(true);
-        return fetch(`http://localhost:3000/scores/${id}`)
+        return fetch(`${BACKEND_URL}/scores/${id}`)
             .then(response => {
                 setIsLoading(false);
                 return response.json();
@@ -15,13 +17,12 @@ const useScoreService = () => {
 
     const fetchScores = async (): Promise<any> => {
         setIsLoading(true);
-        return fetch(`http://localhost:3000/scores`)
+        return fetch(`${BACKEND_URL}/scores`)
             .then(response => {
                 setIsLoading(false);
                 return response.json();
             });
     }
-
 
     return {
         isLoading,

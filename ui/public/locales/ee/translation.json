@@ -78,6 +78,12 @@
     "close": "Sulge redaktor",
     "reset": "Lähtesta"
   },
+  "toast": {
+    "error": {
+      "title": "Viga!",
+      "fetchData": "Ei õnnestunud andmeid laadida."
+    }
+  },
   "stave": {
     "ppt": "PPT",
     "diatonic": "Diatooniline",

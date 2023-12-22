@@ -253,8 +253,9 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         score.data.dividers = [];
         score.data.lyrics = [];
         score.data.voices = [];
-        refresh();
         setCurrentPosition(0);
+        setCurrentNote(undefined);
+        refresh();
     }
 
     const dimensions: { x: number, y: number } = useMemo<Coordinates>(() => calculateDimensions(score), [score]);

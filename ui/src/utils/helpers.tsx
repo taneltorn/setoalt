@@ -287,9 +287,9 @@ export const transpose = (pitch: string, semitones: number): string => {
     return "";
 }
 
-export const DisplayGlobalError = (message: string) => {
+export const DisplayGlobalError = (title: string, message: string) => {
     notifications.show({
-        title: "Viga!",
+        title: title,
         message: message,
         icon: <IoMdAlert color={"red"} size={40}/>,
         color: "white"

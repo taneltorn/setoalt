@@ -16,7 +16,10 @@ const ScoreDetails: React.FC = () => {
     useEffect(() => {
         scoreService.fetchScores()
             .then(r => setScores(r))
-            .catch(() => DisplayGlobalError("Ei saanud"));
+            .catch(() => DisplayGlobalError(
+                t("toast.error.title"),
+                t("toast.error.fetchData"),
+            ));
     }, []);
 
     return (
