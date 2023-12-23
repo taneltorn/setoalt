@@ -2,7 +2,6 @@ version: '3.8'
 
 services:
   backend:
-#    build: api
     image: taneltorn/setoalt-backend
     container_name: setoalt-api
     ports:
@@ -16,14 +15,11 @@ services:
       setoalt-network:
 
   frontend:
-#    build: ui
     image: taneltorn/setoalt-frontend
     container_name: setoalt-ui
     ports:
       - "80:80"
     restart: always
-    environment:
-      - VITE_BACKEND_URL=http://backend:3000
     depends_on:
       - backend
     networks:
