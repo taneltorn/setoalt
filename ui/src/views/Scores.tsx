@@ -14,7 +14,6 @@ const ScoreDetails: React.FC = () => {
     const [scores, setScores] = useState<Score[]>([]);
 
     useEffect(() => {
-        console.log("\NHERE")
         scoreService.fetchScores()
             .then(r => setScores(r))
             .catch(() => DisplayGlobalError(

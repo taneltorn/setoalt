@@ -12,6 +12,7 @@ interface Properties {
 
 const TextLink: React.FC<Properties> = (props) => {
 
+    // todo fix anchor a error
     return (
         <Component to={props.to} target={props.target}>
             {props.prefix}

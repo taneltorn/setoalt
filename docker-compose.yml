@@ -2,7 +2,8 @@ version: '3.8'
 
 services:
   backend:
-    image: taneltorn/setoalt-backend
+    build:
+      context: api
     container_name: setoalt-api
     ports:
       - "3000:3000"
@@ -15,7 +16,8 @@ services:
       setoalt-network:
 
   frontend:
-    image: taneltorn/setoalt-frontend
+    build:
+      context: ui
     container_name: setoalt-ui
     ports:
       - "80:80"

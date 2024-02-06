@@ -13,7 +13,7 @@ const Home: React.FC = () => {
             <Title order={1} mb={"xs"}>{t("view.home.title")}</Title>
             <Text>{t("view.home.description")}</Text>
 
-            <Text mt={"lg"} fw={600}>Tähtis teadeanne!</Text>
+            <Text mt={"lg"} fw={600}>Tähtis teadaanne!</Text>
             <Text>
                 Kuna tegu arendusjärgus oleva tarkvaraga, võid siin-seal kohata (loe: kindlasti kohtad) erinevaid vigu
                 ja puudujääke. See on iteratiivses tarkvaraarednusprotsessis

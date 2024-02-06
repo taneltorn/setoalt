@@ -1,7 +1,6 @@
 import {useState} from "react";
 
-// todo move under conf
-const API_URL = "http://104.248.100.79:3000";
+const API_URL = import.meta.env.VITE_API_URL;
 
 const useScoreService = () => {
 
@@ -17,9 +16,10 @@ const useScoreService = () => {
     }
 
     const fetchScores = async (): Promise<any> => {
-
         setIsLoading(true);
-        return fetch(`${API_URL}/api/scores`)
+        return fetch(`${API_URL}/api/scores`, {
+            credentials: "include"
+        })
             .then(response => {
                 setIsLoading(false);
                 return response.json();

@@ -14,12 +14,29 @@
     "editor": {
       "title": "Redaktor",
       "description": "Redaktor võimaldab katsetada uute noodistuste loomisega."
+    },
+    "admin": {
+      "title": "Adminpaneel",
+      "description": "Kasutajate haldus"
+    },
+    "login": {
+      "title": "Logi sisse",
+      "form": {
+        "username": "Kasutajanimi",
+        "password": "Parool",
+        "submit": "Logi sisse"
+      }
     }
   },
-  "navbar": {
-    "home": "Avaleht",
-    "scores": "Kuula",
-    "editor": "Redaktor"
+  "sidebar": {
+    "navigation": {
+      "home": "Avaleht",
+      "scores": "Kuula",
+      "editor": "Redaktor",
+      "admin": "Seaded"
+    },
+    "login": "Logi sisse",
+    "logout": "Logi välja"
   },
   "tooltip": {
     "changeDuration": {
@@ -76,12 +93,16 @@
     "cancel": "Tühista",
     "edit": "Redigeeri",
     "close": "Sulge redaktor",
-    "reset": "Lähtesta"
+    "reset": "Lähtesta",
+    "submit": "Saada"
   },
   "toast": {
     "error": {
       "title": "Viga!",
-      "fetchData": "Ei õnnestunud andmeid laadida."
+      "message": "Midagi läks valesti.",
+      "fetchData": "Ei õnnestunud andmeid laadida.",
+      "wrongCredentials": "Vale kasutajanimi/parool",
+      "logout": "Ei õnnestunud andmeid laadida."
     }
   },
   "stave": {

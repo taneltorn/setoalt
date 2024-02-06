@@ -8,6 +8,9 @@ import {
 import Layout from "./Layout.tsx";
 import Home from "./views/Home.tsx";
 import Scores from "./views/Scores.tsx";
+import Login from "./views/Login.tsx";
+import ProtectedRoute from "./components/ProtectedRoute.tsx";
+import Admin from "./views/Admin.tsx";
 
 const router = createBrowserRouter([
     {
@@ -17,6 +20,10 @@ const router = createBrowserRouter([
             {
                 path: "/",
                 element: <Home/>,
+            },
+            {
+                path: "/login",
+                element: <Login/>,
             },
             {
                 path: "/scores",
@@ -30,6 +37,23 @@ const router = createBrowserRouter([
                 path: "/editor",
                 element: <Editor/>,
             },
+            {
+                path: "/admin",
+                element: (
+                    <ProtectedRoute>
+                        <Admin />
+                    </ProtectedRoute>
+                ),
+            }
+            // {
+            //     path: "/editor",
+            //     // Wrap the Editor component in a ProtectedRoute
+            //     element: (
+            //         <ProtectedRoute allowedRoles={['admin', 'editor']}>
+            //             <Editor />
+            //         </ProtectedRoute>
+            //     ),
+            // }
         ]
     },
 ]);

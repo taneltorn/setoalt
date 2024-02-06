@@ -8,6 +8,7 @@ import '@mantine/notifications/styles.css';
 import {MantineProvider, createTheme} from '@mantine/core';
 import DialogContextProvider from "./context/DialogContextProvider.tsx";
 import AudioContextProvider from "./context/AudioContextProvider.tsx";
+import {AuthContextProvider} from "./context/AuthContextProvider.tsx";
 
 const theme = createTheme({
     fontFamily: ' Montserrat, sans-serif',
@@ -19,11 +20,13 @@ const theme = createTheme({
 ReactDOM.createRoot(document.getElementById('root')!).render(
     // <React.StrictMode>
     <MantineProvider theme={theme}>
-        <DialogContextProvider>
-            <AudioContextProvider>
-                <App/>
-            </AudioContextProvider>
-        </DialogContextProvider>
+        <AuthContextProvider>
+            <DialogContextProvider>
+                <AudioContextProvider>
+                    <App/>
+                </AudioContextProvider>
+            </DialogContextProvider>
+        </AuthContextProvider>
     </MantineProvider>
     // </React.StrictMode>,
 )
