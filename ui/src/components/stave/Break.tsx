@@ -3,17 +3,18 @@ import {useScoreContext} from "../../context/ScoreContext";
 import {getBreakCoords} from "../../utils/helpers.tsx";
 import {useTranslation} from "react-i18next";
 import {useMantineTheme} from "@mantine/core";
+import {Divider} from "../../models/Divider.ts";
 
 interface Properties {
-    position: number;
+    divider: Divider;
 }
 
-const Break: React.FC<Properties> = ({position}) => {
+const Break: React.FC<Properties> = ({divider}) => {
 
     const [t] = useTranslation();
     const theme = useMantineTheme();
     const context = useScoreContext();
-    const {x, y} = getBreakCoords(position, context);
+    const {x, y} = getBreakCoords(divider.position, context);
 
     const [isHovering, setIsHovering] = useState(false);
 
@@ -24,7 +25,7 @@ const Break: React.FC<Properties> = ({position}) => {
                 x={x}
                 y={y}
                 fill={isHovering ? theme.colors.red[9] : theme.black}
-                onClick={() => context.removeBreak(position)}
+                onClick={() => context.removeDivider(divider)}
                 onMouseOver={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
             >

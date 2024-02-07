@@ -57,8 +57,7 @@ const Stave: React.FC<Properties> = (props) => {
                         }}/>
                 )}
 
-                {context.score.data.dividers.filter(d => d.type === DividerType.BREAK).map(n => <Break key={`break-${n}`} position={n.position}/>)}
-                {/*{context.score.data.dividers.map(n => <InlineDivider key={`divider-${n}`} position={n}/>)}*/}
+                {context.score.data.dividers.filter(d => d.type === DividerType.BREAK).map(d => <Break key={`break-${d}`} divider={d}/>)}
                 {context.score.data.dividers
                     .filter(it => [DividerType.BAR, DividerType.SEPARATOR].includes(it.type))
                     .map(it => <InlineDivider key={`divider-${it.type}-${it.position}`} divider={it}/>)}

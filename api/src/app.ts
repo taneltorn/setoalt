@@ -15,9 +15,9 @@ const port = 3000;
 config({path: path.resolve(__dirname, '../../.env')});
 
 app.use(cors({
-    origin: "http://localhost:5173",
+    credentials: true,
+    origin: ["http://localhost:5173", "http://localhost:80"],
     // origin: process.env.ALLOWED_ORIGIN,
-    credentials: true
 }));
 
 app.use(bodyParser.json());
