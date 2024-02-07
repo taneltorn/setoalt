@@ -15,8 +15,8 @@ const VoiceFilter: React.FC = () => {
     const toggleVoice = (voice: Voice) => {
         const score = {...context.score};
         if (voice) {
-            const value = !voice.hidden;
-            voice.hidden = value;
+            const value = !voice.options.hidden;
+            voice.options.hidden = value;
 
             voice.notes.forEach(note => {
                 note.hidden = value;
@@ -30,11 +30,11 @@ const VoiceFilter: React.FC = () => {
             {context.score.data.voices.map(voice => (
                 <Button
                     key={voice.name}
-                    c={voice.hidden ? "gray.5" : "white"}
-                    color={voice.hidden ? "gray.1" : "black"}
-                    title={t(`tooltip.${!voice.hidden ? "hideVoice" : "showVoice"}`)}
+                    c={voice.options.hidden ? "gray.5" : "white"}
+                    color={voice.options.hidden ? "gray.1" : "black"}
+                    title={t(`tooltip.${!voice.options.hidden ? "hideVoice" : "showVoice"}`)}
                     className={`me-2`}
-                    leftSection={!voice.hidden
+                    leftSection={!voice.options.hidden
                         ? <MdRecordVoiceOver
                             size={ICON_SIZE}
                             style={{color: "white"}}

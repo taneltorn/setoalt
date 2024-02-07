@@ -1,6 +1,7 @@
 import React from 'react';
 import {Voice} from "../../models/Voice";
 import StaveNote from "./StaveNote";
+import {useScoreContext} from "../../context/ScoreContext.tsx";
 
 interface Properties {
     voice: Voice;
@@ -8,10 +9,12 @@ interface Properties {
 
 const VoiceLine: React.FC<Properties> = ({voice}) => {
 
+    const {isEditMode} = useScoreContext();
+
     return (
         <>
             {voice.notes
-                .filter(n => !n.hidden)
+                .filter(n => isEditMode || !n.hidden)
                 .map((note, index) =>
                     <StaveNote
                         key={`note-${index}`}

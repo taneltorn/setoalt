@@ -8,7 +8,7 @@ const useScoreService = () => {
 
     const fetchScore = async (id: string): Promise<any> => {
         setIsLoading(true);
-        return fetch(`${API_URL}/api/scores/${id}`)
+        return fetch(`${API_URL}/scores/${id}`)
             .then(response => {
                 setIsLoading(false);
                 return response.json();
@@ -17,7 +17,7 @@ const useScoreService = () => {
 
     const fetchScores = async (): Promise<any> => {
         setIsLoading(true);
-        return fetch(`${API_URL}/api/scores`, {
+        return fetch(`${API_URL}/scores`, {
             credentials: "include"
         })
             .then(response => {

@@ -22,7 +22,7 @@ const StaveNote: React.FC<Properties> = ({note, voice}) => {
     const {x, y} = getNoteCoords(note, voice, scoreContext);
     const opacity = (!audioContext.isPlaying
         && scoreContext.isEditMode
-        && voice.name !== scoreContext.currentVoice.name) ? 0.4 : 1;
+        && voice.options.hidden) ? 0.3 : 1;
 
     const isHighlighted = scoreContext.currentPosition === note.position
         && (!scoreContext.currentNote
@@ -64,7 +64,7 @@ const StaveNote: React.FC<Properties> = ({note, voice}) => {
             cy={y}
             opacity={opacity}
             r={Layout.stave.note.RADIUS}
-            fill={isHighlighted ? Color.stave.HIGHLIGHT : !line ? "#ddd" : note.color || voice.color}
+            fill={isHighlighted ? Color.stave.HIGHLIGHT : !line ? "#ddd" : note.color || voice.options?.color || "black"}
             onClick={handleNoteClick}
         >
             <title>{getNoteTitle(note, line, t)}</title>

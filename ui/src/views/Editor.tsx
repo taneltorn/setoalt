@@ -12,6 +12,7 @@ import ScoreContextProvider from "../context/ScoreContextProvider.tsx";
 import StaveSelectionDialog from "../components/dialog/StaveSelectionDialog.tsx";
 import MicroTuningDialog from "../components/dialog/MicroTuningDialog.tsx";
 import ResetScoreDialog from "../components/dialog/ResetScoreDialog.tsx";
+import ScoreInfo from "../components/ScoreInfo.tsx";
 
 const Editor: React.FC = () => {
 
@@ -34,6 +35,9 @@ const Editor: React.FC = () => {
             <MicroTuningDialog/>
             <ResetScoreDialog/>
             <TransposeDialog/>
+
+
+            <ScoreInfo/>
         </ScoreContextProvider>
     );
 }

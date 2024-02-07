@@ -16,7 +16,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
     const [currentUser, setCurrentUser] = useState<UserDetails | null>();
 
     const login = async (username: string, password: string): Promise<any> => {
-        return fetch(`${API_URL}/api/login`, {
+        return fetch(`${API_URL}/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -31,6 +31,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
             .then(data => {
                 if (data.token && data.user) {
                     setCurrentUser(data.user);
+                    return data;
                 } else {
                     DisplayGlobalError(t("toast.error.title"), t("toast.error.wrongCredentials"));
                 }
@@ -42,20 +43,21 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
     }
 
     const logout = (): Promise<any> => {
-        return fetch(`${API_URL}/api/logout`, {
+        return fetch(`${API_URL}/auth/logout`, {
             method: "POST",
             credentials: "include"
         })
+            .then(() => {
+                setCurrentUser(null);
+            })
             .catch(() => {
                 DisplayGlobalError(t("toast.error.title"), t("toast.error.message"));
-            })
-            .finally(() => {
                 setCurrentUser(null);
             });
     }
 
     const verify = async () => {
-        fetch(`${API_URL}/api/verify`, {
+        fetch(`${API_URL}/auth/verify`, {
             credentials: "include"
         })
             .then(response => response.json())
@@ -82,7 +84,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
         login,
         logout,
         verify
-    }), [currentUser]);
+    }), [currentUser, isInitialized]);
 
     return (
         <>

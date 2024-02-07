@@ -1,7 +1,7 @@
 import React from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import {Box, Button, Code, Divider, Group, NavLink, Title} from "@mantine/core";
+import {Box, Button, Code, Divider, Group, NavLink, Text} from "@mantine/core";
 import classes from "./Sidebar.module.scss";
 import {GiGClef} from "react-icons/gi";
 import {PiSpeakerSimpleHigh} from "react-icons/pi";
@@ -9,6 +9,8 @@ import {IoHome, IoLogInOutline, IoSettingsOutline} from "react-icons/io5";
 import packageInfo from "../../../package.json";
 import {useAuth} from "../../context/AuthContext.tsx";
 import {MdOutlineLogout} from "react-icons/md";
+import {CiUser} from "react-icons/ci";
+import {FaUserGraduate} from "react-icons/fa";
 
 const routes = [
     {id: 'home', icon: <IoHome className={classes.icon} size={24}/>, link: "/"},
@@ -26,20 +28,21 @@ const Sidebar: React.FC = () => {
     const location = useLocation();
     const navigate = useNavigate();
     const auth = useAuth();
-    // const userService = useUserService();
 
     const handleLogout = () => {
-        auth.logout()
-            .then(() => navigate("/"));
+        auth.logout().then(() => navigate("/"));
     }
 
     return (
         <>
-            <p>{auth.currentUser ? auth.currentUser.username : "Guest"}</p>
             <Group py={"sm"} justify={"space-between"} visibleFrom={"lg"}>
-                <Link to={"/"}>
-                    <Title order={4}>{t("brand.title")}</Title>
-                </Link>
+                <Group>
+                    {!auth.currentUser && <CiUser size={24}/>}
+                    {auth.currentUser?.role === "ADMIN" && <FaUserGraduate size={24}/>}
+                    <Text>
+                        {auth.currentUser?.username || "külaline"}
+                    </Text>
+                </Group>
                 <Code> {packageInfo.version}</Code>
             </Group>
 
@@ -59,7 +62,6 @@ const Sidebar: React.FC = () => {
                 ))}
 
                 {auth.currentUser && <>
-
                     <Divider my={"lg"}/>
 
                     {protectedRoutes.map((item, index) => (
@@ -95,7 +97,7 @@ const Sidebar: React.FC = () => {
                 {auth.currentUser && <>
                     <Group mt={"lg"} justify={"center"} hiddenFrom={"lg"}>
                         <Box onClick={handleLogout}>
-                            <MdOutlineLogout size={24} className={classes.icon}  />
+                            <MdOutlineLogout size={24} className={classes.icon}/>
                         </Box>
                     </Group>
 

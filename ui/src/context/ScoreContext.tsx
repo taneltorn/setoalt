@@ -3,6 +3,7 @@ import {Note} from "../models/Note";
 import {isEmpty} from "../utils/helpers.tsx";
 import {Score} from "../models/Score";
 import {Voice} from "../models/Voice";
+import {Divider} from "../models/Divider.ts";
 
 export interface ScoreContextProperties {
 
@@ -39,12 +40,10 @@ export interface ScoreContextProperties {
     getNotes: (position?: number) => Note[];
 
     toggleBreak: () => void;
-    insertBreak: (position: number) => void;
-    removeBreak: (position: number) => void;
+    toggleInlineDivider: () => void;
 
-    toggleDivider: () => void;
-    insertDivider: (position: number) => void;
-    removeDivider: (position: number) => void;
+    insertDivider: (divider: Divider) => void;
+    removeDivider: (divider: Divider) => void;
 
     addLyric: (text: string) => void;
     addNote: (pitch: string) => void;

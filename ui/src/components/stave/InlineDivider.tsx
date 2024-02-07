@@ -3,16 +3,17 @@ import {useScoreContext} from "../../context/ScoreContext";
 import {getDividerCoords} from "../../utils/helpers.tsx";
 import {Color, Layout} from "../../utils/constants";
 import {useTranslation} from "react-i18next";
+import {Divider, DividerType} from "../../models/Divider.ts";
 
 interface Properties {
-    position: number;
+    divider: Divider;
 }
 
-const Divider: React.FC<Properties> = ({position}) => {
+const InlineDivider: React.FC<Properties> = ({divider}) => {
 
     const [t] = useTranslation();
     const context = useScoreContext();
-    const {x, y} = getDividerCoords(position, context);
+    const {x, y} = getDividerCoords(divider.position, context);
     const height = context.dimensions.y - Layout.lyrics.HEIGHT + 20;
 
     const [isHovering, setIsHovering] = useState(false);
@@ -31,12 +32,12 @@ const Divider: React.FC<Properties> = ({position}) => {
                 x={x + 7}
                 y={y}
                 width={Layout.stave.divider.WIDTH}
-                height={height}
+                height={divider.type === DividerType.SEPARATOR ? 30 : height}
             />
 
             <rect
                 className={context.isEditMode ? "hover-pointer" : ""}
-                onClick={() => context.removeDivider(position)}
+                onClick={() => context.removeDivider(divider)}
                 onMouseOver={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
                 opacity={0}
@@ -51,4 +52,4 @@ const Divider: React.FC<Properties> = ({position}) => {
     )
 };
 
-export default Divider;
+export default InlineDivider;

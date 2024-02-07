@@ -8,7 +8,8 @@ import StaveBlock from "./StaveBlock";
 import StaveLyric from "./StaveLyric";
 import Break from "./Break";
 import Cursor from "./Cursor";
-import Divider from "./Divider";
+import InlineDivider from "./InlineDivider.tsx";
+import {DividerType} from "../../models/Divider.ts";
 
 interface Properties {
     score: Score;
@@ -31,14 +32,14 @@ const Stave: React.FC<Properties> = (props) => {
             style={{
                 maxWidth: Layout.stave.container.MAX_WIDTH,
                 overflowX: "scroll",
-                height: context.dimensions.y * (context.score.data.breaks.length + 1) + 30
+                height: context.dimensions.y * (context.score.data.dividers.filter(d => d.type === DividerType.BREAK).length + 1) + 30
             }}>
             <svg width={context.dimensions.x}
-                 height={context.dimensions.y * (context.score.data.breaks.length + 1)}>
+                 height={context.dimensions.y * (context.score.data.dividers.filter(d => d.type === DividerType.BREAK).length + 1)}>
 
                 {props.showCursor && <Cursor/>}
 
-                {range(context.score.data.breaks.length + 1)
+                {range(context.score.data.dividers.filter(d => d.type === DividerType.BREAK).length + 1)
                     .map((_, index) => (
                         <StaveBlock
                             key={`stave-${index}`}
@@ -56,8 +57,12 @@ const Stave: React.FC<Properties> = (props) => {
                         }}/>
                 )}
 
-                {context.score.data.breaks.map(n => <Break key={`break-${n}`} position={n}/>)}
-                {context.score.data.dividers.map(n => <Divider key={`divider-${n}`} position={n}/>)}
+                {context.score.data.dividers.filter(d => d.type === DividerType.BREAK).map(n => <Break key={`break-${n}`} position={n.position}/>)}
+                {/*{context.score.data.dividers.map(n => <InlineDivider key={`divider-${n}`} position={n}/>)}*/}
+                {context.score.data.dividers
+                    .filter(it => [DividerType.BAR, DividerType.SEPARATOR].includes(it.type))
+                    .map(it => <InlineDivider key={`divider-${it.type}-${it.position}`} divider={it}/>)}
+
 
                 {context.score.data.voices.map(voice =>
                     <VoiceLine

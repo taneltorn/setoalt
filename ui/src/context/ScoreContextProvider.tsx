@@ -10,13 +10,13 @@ import {
     getNextPosition,
     getPreviousPitch,
     getPreviousPosition,
-    sort
 } from "../utils/helpers.tsx";
 import {Voice} from "../models/Voice";
 import {ScoreContext} from './ScoreContext';
 import {useAudioContext} from "./AudioContext";
 import {Voices} from "../utils/dictionaries";
 import {Coordinates} from "../models/Coordinates";
+import {Divider, DividerType} from "../models/Divider.ts";
 
 interface Properties {
     showEditor?: boolean;
@@ -207,40 +207,38 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
     }
 
     const toggleBreak = () => {
-        if (context.score.data.breaks.findIndex(d => d === context.currentPosition) >= 0) {
-            removeBreak(currentPosition);
+        const divider = context.score.data.dividers.find(it => it.position === currentPosition);
+        if (divider) {
+            removeDivider(divider);
             return;
         }
-        context.insertBreak(currentPosition);
+        context.insertDivider({position: currentPosition, type: DividerType.BREAK})
     }
 
-    const insertBreak = (position: number) => {
-        score.data.breaks.push(position);
-        sort(score.data.breaks);
-        refresh();
-    }
+    const toggleInlineDivider = () => {
+        const position = currentPosition - 1;
 
-    const removeBreak = (position: number) => {
-        score.data.breaks = score.data.breaks.filter(n => n !== position);
-        refresh();
-    }
-
-    const toggleDivider = () => {
-        if (context.score.data.dividers.findIndex(d => d === context.currentPosition) >= 0) {
-            removeDivider(currentPosition)
+        const divider = context.score.data.dividers.find(it => it.position === position);
+        if (divider) {
+            if (divider.type === DividerType.BAR) {
+                divider.type = DividerType.SEPARATOR;
+            } else if (divider.type === DividerType.SEPARATOR) {
+                removeDivider(divider);
+            }
+            refresh();
             return;
         }
-        context.insertDivider(currentPosition);
+        context.insertDivider({position: position, type: DividerType.BAR});
     }
 
-    const insertDivider = (position: number) => {
-        score.data.dividers.push(position);
-        sort(score.data.dividers);
+    const insertDivider = (divider: Divider) => {
+        score.data.dividers.push(divider);
+        score.data.dividers.sort((a, b) => (a.position || 0) - (b.position || 0));
         refresh();
     }
 
-    const removeDivider = (position: number) => {
-        score.data.dividers = score.data.dividers.filter(n => n !== position);
+    const removeDivider = (divider: Divider) => {
+        score.data.dividers = score.data.dividers.filter(d => d.type !== divider.type && d.position !== divider.position);
         refresh();
     }
 
@@ -249,7 +247,6 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
     }
 
     const clear = () => {
-        score.data.breaks = [];
         score.data.dividers = [];
         score.data.lyrics = [];
         score.data.voices = [];
@@ -298,9 +295,7 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         shiftLeft,
         shiftRight,
         toggleBreak,
-        insertBreak,
-        removeBreak,
-        toggleDivider,
+        toggleInlineDivider,
         insertDivider,
         removeDivider,
         semitones,

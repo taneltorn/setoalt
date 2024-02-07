@@ -74,7 +74,7 @@ const KeyPressHandler: React.FC = () => {
                     scoreContext.toggleBreak();
                     break;
                 case ShortKey.DIVIDER:
-                    scoreContext.toggleDivider();
+                    scoreContext.toggleInlineDivider();
                     break;
             }
         }

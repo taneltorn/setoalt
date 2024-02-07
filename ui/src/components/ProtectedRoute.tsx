@@ -1,27 +1,23 @@
-import { Navigate } from 'react-router-dom';
+import {Navigate} from 'react-router-dom';
 import {useAuth} from "../context/AuthContext.tsx";
 import {ReactNode, useEffect} from "react";
 
 interface Properties {
     children: ReactNode;
+    allowedRoles: string[];
 }
 
-const ProtectedRoute: React.FC<Properties> = ({ children }) => {
+const ProtectedRoute: React.FC<Properties> = ({children, allowedRoles}) => {
+
     const auth = useAuth();
 
-    if (!auth.currentUser) {
-        return <Navigate to="/login" replace />;
+    if (!allowedRoles.includes(auth.currentUser?.role as string)) {
+        return <Navigate to="/login" replace/>;
     }
 
     useEffect(() => {
-        // const verify = async () => {
-        //     auth.verify(); // Make sure this method exists and is implemented in useAuth
-        // };
-        //
-        // verify();
-        auth.verify(); // Make sure this method exists and is implemented in useAuth
-
-    }, [auth]);
+        auth.verify();
+    }, []);
 
     return children;
 };

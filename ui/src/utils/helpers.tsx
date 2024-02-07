@@ -1,15 +1,16 @@
+import * as Tone from "tone";
 import {Frequency} from "tone";
 import {Note} from "../models/Note";
 import {Voice} from "../models/Voice";
 import {Layout} from "./constants";
 import {Score} from "../models/Score";
-import * as Tone from "tone";
 import {Line} from "../models/Line";
 import {Coordinates} from "../models/Coordinates";
 import {ScoreContextProperties} from "../context/ScoreContext";
 import {NoteRange} from "./dictionaries.ts";
 import {notifications} from "@mantine/notifications";
 import {IoMdAlert} from "react-icons/io";
+import {Divider, DividerType} from "../models/Divider.ts";
 
 export const isEmpty = (object: any) => {
     return !object || Object.keys(object).length === 0 || object.length === 0;
@@ -23,7 +24,6 @@ export const EmptyScore: Score = {
             name: "",
             lines: []
         },
-        breaks: [],
         dividers: [],
         lyrics: [],
         voices: []
@@ -129,7 +129,8 @@ export const getNextPosition = (currentPosition: number, voices: Voice[], curren
     return positions[Math.min(currentPositionIndex + 1, positions.length - 1)];
 }
 
-export const getBreakCount = (position: number, breaks: number[]) => {
+export const getBreakCount = (position: number, dividers: Divider[]) => {
+    const breaks = dividers.filter(d => d.type === DividerType.BREAK).map(d => d.position);
     let n = 0;
     breaks.forEach(v => {
         if (position >= v) {
@@ -140,11 +141,11 @@ export const getBreakCount = (position: number, breaks: number[]) => {
 }
 
 export const getDividerCoords = (position: number, context: ScoreContextProperties): Coordinates => {
-    const c = getBreakCount(position, context.score.data.breaks);
+    const c = getBreakCount(position, context.score.data.dividers);
 
     const x = position * Layout.stave.note.SPACING
         + Layout.stave.container.PADDING_X_START
-        - (c > 0 ? context.score.data.breaks[c - 1] * Layout.stave.note.SPACING : 0)
+        - (c > 0 ? context.score.data.dividers[c - 1].position * Layout.stave.note.SPACING : 0)
         + Layout.stave.note.SPACING / 2
         - Layout.stave.divider.CONTAINER_WIDTH / 2;
     const y = context.dimensions.y * (c) + Layout.stave.container.SYMBOLS_BAR;
@@ -153,11 +154,11 @@ export const getDividerCoords = (position: number, context: ScoreContextProperti
 }
 
 export const getLyricCoords = (position: number, context: ScoreContextProperties): Coordinates => {
-    const c = getBreakCount(position, context.score.data.breaks);
+    const c = getBreakCount(position, context.score.data.dividers);
 
     const x = position * Layout.stave.note.SPACING
         + Layout.stave.container.PADDING_X_START
-        - (c > 0 ? context.score.data.breaks[c - 1] * Layout.stave.note.SPACING : 0)
+        - (c > 0 ? context.score.data.dividers[c - 1].position * Layout.stave.note.SPACING : 0)
         - Layout.stave.note.RADIUS * 2;
     const y = context.dimensions.y * (c + 1) - Layout.lyrics.HEIGHT
         + 30
@@ -167,11 +168,11 @@ export const getLyricCoords = (position: number, context: ScoreContextProperties
 }
 
 export const getCursorCoords = (context: ScoreContextProperties): Coordinates => {
-    const c = getBreakCount(context.currentPosition, context.score.data.breaks);
+    const c = getBreakCount(context.currentPosition, context.score.data.dividers);
 
     const x = context.currentPosition * Layout.stave.note.SPACING
         + Layout.stave.container.PADDING_X_START
-        - (c > 0 ? context.score.data.breaks[c - 1] * Layout.stave.note.SPACING : 0)
+        - (c > 0 ? context.score.data.dividers[c - 1].position * Layout.stave.note.SPACING : 0)
         - Layout.stave.cursor.WIDTH / 2
         - Layout.stave.note.RADIUS / 2
     ;
@@ -181,11 +182,11 @@ export const getCursorCoords = (context: ScoreContextProperties): Coordinates =>
 }
 
 export const getBreakCoords = (position: number, context: ScoreContextProperties): Coordinates => {
-    const c = getBreakCount(position, context.score.data.breaks);
+    const c = getBreakCount(position, context.score.data.dividers);
 
     const x = Layout.stave.container.PADDING_X_START
         + (position) * Layout.stave.note.SPACING
-        - (c > 1 ? context.score.data.breaks[c - 2] * Layout.stave.note.SPACING : 0)
+        - (c > 1 ? context.score.data.dividers[c - 2].position * Layout.stave.note.SPACING : 0)
         // - Layout.stave.note.SPACING
         - Layout.stave.note.RADIUS;
     const y = context.dimensions.y * (c - 1) + 20;
@@ -195,18 +196,18 @@ export const getBreakCoords = (position: number, context: ScoreContextProperties
 }
 
 export const getNoteCoords = (note: Note, voice: Voice, context: ScoreContextProperties): Coordinates => {
-    const c = getBreakCount(note.position, context.score.data.breaks);
+    const c = getBreakCount(note.position, context.score.data.dividers);
 
     const voiceIndex = context.score.data.voices.findIndex(v => v.name === voice.name);
-    const count = context.score.data.voices.filter((_, i) => i < voiceIndex)
+    const count = context.score.data.voices.filter((v, i) => i < voiceIndex && !v.options.disableOffset)
         .flatMap(v => v.notes)
         .filter(n => n.position === note.position && n.pitch === note.pitch).length;
 
     const x = Layout.stave.container.PADDING_X_START
         + note.position * Layout.stave.note.SPACING
-        - (c > 0 ? context.score.data.breaks[c - 1] * Layout.stave.note.SPACING : 0)
+        - (c > 0 ? context.score.data.dividers[c - 1].position * Layout.stave.note.SPACING : 0)
         - Layout.stave.note.RADIUS / 2
-        + count * Layout.stave.note.REPEATING_OFFSET;
+        + (voice.options?.disableOffset ? 0 : count * Layout.stave.note.REPEATING_OFFSET);
 
     const line = context.score.data.stave.lines.find(l => l.pitch === note.pitch);
     const detune = note.detune || line?.detune || 0;
@@ -255,7 +256,7 @@ export const calculateDimensions = (score: Score): { x: number, y: number } => {
         .pop();
 
     const end = note ? note.position + durationToScalar(note.duration) : 0;
-    const x = getMaxLength(score.data.breaks, end) * Layout.stave.note.SPACING
+    const x = getMaxLength(score.data.dividers.filter(d => d.type === DividerType.BREAK).map(d => d.position), end) * Layout.stave.note.SPACING
         + Layout.stave.container.PADDING_X_START
         + Layout.stave.container.PADDING_X_END
 

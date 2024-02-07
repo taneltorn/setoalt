@@ -6,6 +6,7 @@ import {ShortKey} from "../../../utils/keymap";
 import {TfiShiftLeft, TfiShiftRight} from "react-icons/tfi";
 import ControlButton from "../../common/ControlButton.tsx";
 import {Group} from "@mantine/core";
+import {DividerType} from "../../../models/Divider.ts";
 
 const LayoutControls: React.FC = () => {
 
@@ -17,16 +18,16 @@ const LayoutControls: React.FC = () => {
             <ControlButton
                 tooltip={t("tooltip.insertBreak")}
                 shortKey={ShortKey.BREAK}
-                active={context.score.data.breaks.findIndex(d => d === context.currentPosition) >= 0}
+                active={context.score.data.dividers.findIndex(d => d.type === DividerType.BREAK && d.position === context.currentPosition) >= 0}
                 label={"↵"}
                 onClick={context.toggleBreak}
             />
             <ControlButton
                 tooltip={t("tooltip.insertDivider")}
                 shortKey={ShortKey.DIVIDER}
-                active={context.score.data.dividers.findIndex(d => d === context.currentPosition) >= 0}
+                active={context.score.data.dividers.findIndex(d => [DividerType.BAR, DividerType.SEPARATOR].includes(d.type) && d.position === (context.currentPosition - 1)) >= 0}
                 label={"|"}
-                onClick={context.toggleDivider}
+                onClick={context.toggleInlineDivider}
             />
             <ControlButton
                 tooltip={t("tooltip.shiftLeft",)}

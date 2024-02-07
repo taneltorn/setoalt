@@ -26,7 +26,7 @@ export const StaveOldDiatonic: Stave = {
             pitch: "g4",
             y: 5,
             color: Color.stave.PRIMARY_LINE,
-            strokeWidth: Layout.stave.line.STROKE_WIDTH_BOLD
+            strokeWidth: Layout.stave.line.PRIMARY_LINE_STROKE_WIDTH
         },
         {
             pitch: "f4",
@@ -36,7 +36,7 @@ export const StaveOldDiatonic: Stave = {
         },
         {
             pitch: "e4",
-            y: 8,
+            y: 9,
             color: Color.stave.PRIMARY_LINE,
             strokeWidth: Layout.stave.line.PRIMARY_LINE_STROKE_WIDTH
         },

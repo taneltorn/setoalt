@@ -21,15 +21,13 @@ const Login: React.FC = () => {
     const onSubmit = async (values: FormValues) => {
         auth.login(values.username, values.password)
             .then(response => {
-                if (response.ok) {
+                if (response) {
                     navigate("/")
                 }
             });
     }
 
     useEffect(() => {
-        console.log("auth")
-        console.log(auth.currentUser)
         if (auth.currentUser) {
             navigate("/");
         }
