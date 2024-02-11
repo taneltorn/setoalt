@@ -30,10 +30,10 @@ const KeyPressHandler: React.FC = () => {
                 const pitch = scoreContext.score.data.stave.lines.map(l => l.pitch).reverse()[+event.key - 1];
                 if (pitch) {
                     if (scoreContext.currentNote) {
-                        scoreContext.changePitch(pitch);
+                        scoreContext.changePitch(scoreContext.currentNote, pitch, true);
                         return;
                     }
-                    scoreContext.addNote(pitch);
+                    scoreContext.insertNote(pitch, scoreContext.currentPosition);
                 }
                 return;
             }
@@ -71,7 +71,7 @@ const KeyPressHandler: React.FC = () => {
                     scoreContext.decreasePitch();
                     break;
                 case ShortKey.BREAK:
-                    scoreContext.toggleBreak();
+                    scoreContext.toggleBreak(scoreContext.currentPosition);
                     break;
                 case ShortKey.DIVIDER:
                     scoreContext.toggleInlineDivider();
@@ -81,10 +81,11 @@ const KeyPressHandler: React.FC = () => {
 
         switch (event.key.toUpperCase()) {
             case ShortKey.PREVIOUS:
-                audioContext.playPrevious(scoreContext);
+                // audioContext.playPrevious(scoreContext);
+                scoreContext.previous();
                 break;
             case ShortKey.NEXT:
-                audioContext.playNext(scoreContext);
+                scoreContext.next();
                 break;
             case ShortKey.START_PLAYBACK:
                 if (audioContext.isPlaying) {

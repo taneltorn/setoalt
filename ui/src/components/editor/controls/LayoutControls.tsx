@@ -13,6 +13,7 @@ const LayoutControls: React.FC = () => {
     const [t] = useTranslation();
     const context = useScoreContext();
 
+
     return (
         <Group gap={4} ml={"md"}>
             <ControlButton
@@ -20,26 +21,25 @@ const LayoutControls: React.FC = () => {
                 shortKey={ShortKey.BREAK}
                 active={context.score.data.dividers.findIndex(d => d.type === DividerType.BREAK && d.position === context.currentPosition) >= 0}
                 label={"↵"}
-                onClick={context.toggleBreak}
+                onClick={() => context.toggleBreak(context.currentPosition)}
             />
             <ControlButton
                 tooltip={t("tooltip.insertDivider")}
                 shortKey={ShortKey.DIVIDER}
-                active={context.score.data.dividers.findIndex(d => [DividerType.BAR, DividerType.SEPARATOR].includes(d.type) && d.position === (context.currentPosition - 1)) >= 0}
+                active={context.score.data.dividers.findIndex(d => [DividerType.BAR, DividerType.SEPARATOR].includes(d.type)
+                    && d.position === (context.currentPosition)) >= 0}
                 label={"|"}
                 onClick={context.toggleInlineDivider}
             />
             <ControlButton
-                tooltip={t("tooltip.shiftLeft",)}
+                tooltip={t("tooltip.shiftLeft")}
                 shortKey={ShortKey.SHIFT_LEFT}
-                disabled={!!context.currentNote || context.currentPosition < 0}
                 label={<TfiShiftLeft/>}
                 onClick={context.shiftLeft}
             />
             <ControlButton
                 tooltip={t("tooltip.shiftRight")}
                 shortKey={ShortKey.SHIFT_RIGHT}
-                disabled={context.currentPosition < 0}
                 label={<TfiShiftRight/>}
                 onClick={context.shiftRight}
             />

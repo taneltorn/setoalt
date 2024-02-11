@@ -1,4 +1,4 @@
-import {Text, Title} from "@mantine/core";
+import {Button, Group, Text, Title} from "@mantine/core";
 import React from "react";
 import {EmptyScore} from "../utils/helpers.tsx";
 import {StavePPT} from "../staves/StavePPT.ts";
@@ -29,7 +29,7 @@ const Editor: React.FC = () => {
             <PlaybackPanel/>
             <EditorPanel/>
 
-            <Stave score={{...EmptyScore, data: {...EmptyScore.data, stave: StavePPT}}} showCursor/>
+            <Stave score={{...EmptyScore, data: {...EmptyScore.data, stave: StavePPT}}} />
 
             <StaveSelectionDialog/>
             <MicroTuningDialog/>

@@ -18,10 +18,10 @@ const NoteControls: React.FC = () => {
 
     const handleClick = (pitch: string) => {
         if (context.currentNote) {
-            context.changePitch(pitch);
+            context.changePitch(context.currentNote, pitch);
             return;
         }
-        context.addNote(pitch);
+        context.insertNote(pitch, context.currentPosition);
     }
 
     return (

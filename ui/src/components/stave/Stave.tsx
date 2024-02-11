@@ -8,45 +8,63 @@ import StaveBlock from "./StaveBlock";
 import StaveLyric from "./StaveLyric";
 import Break from "./Break";
 import Cursor from "./Cursor";
-import InlineDivider from "./InlineDivider.tsx";
+import StaveDivider from "./StaveDivider.tsx";
 import {DividerType} from "../../models/Divider.ts";
+import NotePreviewBar from "./NotePreviewBar.tsx";
+import useMousePosition from "../../hooks/useMousePosition.tsx";
+import StaveBreak from "./StaveBreak.tsx";
 
 interface Properties {
     score: Score;
     showCursor?: boolean;
+
+
 }
 
-const Stave: React.FC<Properties> = (props) => {
+const Stave: React.FC<Properties> = ({score}) => {
 
     const context = useScoreContext();
 
-    const ref = useRef<HTMLDivElement | null>(null)
+    const ref = useRef<HTMLDivElement>(null)
+
+
 
     useEffect(() => {
-        context.setScore(props.score);
+        context.setScore(score);
+        context.setContainerRef(ref);
+
+
     }, []);
 
     return (
         <div
             ref={ref}
             style={{
-                maxWidth: Layout.stave.container.MAX_WIDTH,
+                maxWidth: Layout.stave.container.WIDTH,
                 overflowX: "scroll",
-                height: context.dimensions.y * (context.score.data.dividers.filter(d => d.type === DividerType.BREAK).length + 1) + 30
+                height: context.dimensions.y * context.dimensions.blocks + 30
             }}>
-            <svg width={context.dimensions.x}
-                 height={context.dimensions.y * (context.score.data.dividers.filter(d => d.type === DividerType.BREAK).length + 1)}>
+            <svg width={context.dimensions.x} height={context.dimensions.y * context.dimensions.blocks}>
 
-                {props.showCursor && <Cursor/>}
+                {/*{props.showCursor && <Cursor/>}*/}
+                <Cursor/>
 
-                {range(context.score.data.dividers.filter(d => d.type === DividerType.BREAK).length + 1)
+                {range(context.score.data.breaks.length + 1)
                     .map((_, index) => (
+                        // todo rename to lineblock or something
                         <StaveBlock
-                            key={`stave-${index}`}
+                            key={`stave-block-${index}`}
+                            index={index}
                             lines={context.score.data.stave.lines}
-                            y={index * context.dimensions.y}
                         />
                     ))}
+
+                {context.score.data.breaks
+                    .map(position =>
+                        <StaveBreak
+                            key={`break-${position}`}
+                            position={position}
+                        />)}
 
                 {context.score.data.lyrics.length >= 0 && range(context.endPosition + 1).map((n, i) =>
                     <StaveLyric
@@ -57,10 +75,12 @@ const Stave: React.FC<Properties> = (props) => {
                         }}/>
                 )}
 
-                {context.score.data.dividers.filter(d => d.type === DividerType.BREAK).map(d => <Break key={`break-${d}`} divider={d}/>)}
+
                 {context.score.data.dividers
-                    .filter(it => [DividerType.BAR, DividerType.SEPARATOR].includes(it.type))
-                    .map(it => <InlineDivider key={`divider-${it.type}-${it.position}`} divider={it}/>)}
+                    .map(divider => <StaveDivider
+                        key={`divider-${divider.position}`}
+                        divider={divider}
+                    />)}
 
 
                 {context.score.data.voices.map(voice =>
@@ -68,6 +88,8 @@ const Stave: React.FC<Properties> = (props) => {
                         key={voice.name}
                         voice={voice}
                     />)}
+
+                {/*{props.showCursor && <NotePreviewBar/>}*/}
             </svg>
         </div>
     )

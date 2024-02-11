@@ -1,22 +1,21 @@
-import React, {MutableRefObject, useEffect, useMemo, useState} from 'react';
+import React, {RefObject, useEffect, useMemo, useState} from 'react';
 import {Note} from "../models/Note";
 import {Score} from "../models/Score";
 import {
-    calculateDimensions,
+    calculateStaveDimensions,
     durationToScalar,
     EmptyScore,
     getDurationOffset,
     getNextPitch,
-    getNextPosition,
+    getPositions,
     getPreviousPitch,
-    getPreviousPosition,
 } from "../utils/helpers.tsx";
 import {Voice} from "../models/Voice";
-import {ScoreContext} from './ScoreContext';
+import {Filter, ScoreContext} from './ScoreContext';
 import {useAudioContext} from "./AudioContext";
 import {Voices} from "../utils/dictionaries";
-import {Coordinates} from "../models/Coordinates";
-import {Divider, DividerType} from "../models/Divider.ts";
+import {DividerType} from "../models/Divider.ts";
+import {StaveDimensions} from "../models/Dimensions.ts";
 
 interface Properties {
     showEditor?: boolean;
@@ -26,13 +25,17 @@ interface Properties {
 const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
 
     const [score, setScore] = useState<Score>(EmptyScore);
-    const [containerRef, setContainerRef] = useState<MutableRefObject<any> | undefined>();
+
+    const [filter, setFilter] = useState<Filter>({});
+
+
+    const [containerRef, setContainerRef] = useState<RefObject<HTMLElement> | undefined>();
 
     const [isEditMode, setIsEditMode] = useState<boolean>(!!showEditor);
     const [isTyping, setIsTyping] = useState<boolean>(false);
 
     const [semitones, setSemitones] = useState<number>(0);
-    const [currentPosition, setCurrentPosition] = useState<number>(-1);
+    const [currentPosition, setCurrentPosition] = useState<number>(!!showEditor ? 0 : -1);
     const [currentNote, setCurrentNote] = useState<Note | undefined>();
     const [currentDuration, setCurrentDuration] = useState<string>("8n");
     const [currentVoice, setCurrentVoice] = useState<Voice>({...Voices[0]});
@@ -43,6 +46,38 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         setIsEditMode(!isEditMode);
     }
 
+    // const changeCurrentPosition = (position: number) => {
+    //     setCurrentPosition(position);
+    //     const note = score.data.voices
+    //         .filter(v => currentVoice ? v.name === currentVoice.name : true)
+    //         .flatMap(v => v.notes)
+    //         .find(n => n.position < position);
+    //     if (note) {
+    //         setCurrentNote(note);
+    //     }
+    // }
+    //
+
+    const selectNote = (note: Note) => {
+        setCurrentNote(note);
+        setCurrentPosition(note.position);
+        setCurrentDuration(note.duration);
+
+        const line = score.data.stave.lines.find(l => l.pitch === note.pitch);
+        audioContext.playNote(note, currentVoice.name, {
+            detune: note.detune || line?.detune,
+            transpose: semitones
+        });
+    }
+
+    const playNote = (note: Note) => {
+        const line = score.data.stave.lines.find(l => l.pitch === note.pitch);
+        audioContext.playNote(note, currentVoice.name, {
+            detune: note.detune || line?.detune,
+            transpose: semitones
+        });
+    }
+
     const getNote = (position: number, voice?: Voice): Note | undefined => {
         const notes = voice
             ? score.data.voices.find(v => v.name === voice.name)?.notes || []
@@ -51,38 +86,77 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         return notes.find(n => n.position === position);
     }
 
-    const getNotes = (position?: number): Note[] => {
+    const getNotes = (position: number): Note[] => {
         const notes = score.data.voices.flatMap(v => v.notes) || [];
-        if (position !== undefined) {
-            return notes.filter(n => n.position === position);
-        }
-        return notes;
+        return notes.filter(n => n.position === position);
     }
 
-    const next = (): number => {
-        const position = getNextPosition(currentPosition, score.data.voices, currentNote, isEditMode);
-        setCurrentPosition(position);
 
-        const note = getNote(position, currentVoice);
-        setCurrentNote(note);
-        if (note?.duration) {
-            setCurrentDuration(note?.duration);
+    const next = (): number => {
+        let position: number;
+        if (isEditMode) {
+            const currentNote = getNote(currentPosition, currentVoice);
+            position = currentNote
+                ? currentNote.position + durationToScalar(currentNote.duration)
+                : currentPosition + 1;
+        } else {
+            const positions = getPositions(score.data.voices);
+            const currentPositionIndex = positions.findIndex(p => p === currentPosition);
+
+            position = positions[Math.min(currentPositionIndex + 1, positions.length - 1)];
         }
 
+        const note = getNote(position, currentVoice);
+        if (note) {
+            playNote(note);
+            setCurrentDuration(note.duration);
+        }
+        setCurrentNote(note);
+        setCurrentPosition(position);
         return position;
     }
 
     const previous = (): number => {
-        const position = getPreviousPosition(currentPosition, score.data.voices, currentVoice, isEditMode);
-        setCurrentPosition(position);
+        let position: number;
+        if (isEditMode) {
+            const closestNote: Note | undefined = score.data.voices
+                .filter(v => currentVoice ? v.name === currentVoice.name : true)
+                .flatMap(v => v.notes)
+                .filter(n => n.position < currentPosition)
+                .slice(-1)?.[0];
 
-        const note = getNote(position, currentVoice);
-        setCurrentNote(note);
-        if (note?.duration) {
-            setCurrentDuration(note?.duration);
+            if (closestNote && (closestNote.position + durationToScalar(closestNote.duration)) > (currentPosition - 1)) {
+                position = closestNote.position;
+            } else {
+                position = Math.max(currentPosition - 1, 0);
+            }
+        } else {
+            const positions = getPositions(score.data.voices);
+            const currentPositionIndex = positions.findIndex(p => p === currentPosition);
+            position = positions[Math.max(currentPositionIndex - 1, 0)];
         }
 
+        const note = getNote(position, currentVoice);
+        if (note) {
+            playNote(note);
+            setCurrentDuration(note.duration);
+        }
+        setCurrentNote(note);
+        setCurrentPosition(position);
         return position;
+    }
+
+    const changeDuration = (duration: string) => {
+        setCurrentDuration(duration);
+
+        if (currentNote) {
+
+            const offset = getDurationOffset(duration, currentNote.duration)
+            shiftNotes(currentNote.position, offset);
+
+            currentNote.duration = duration;
+            playNote(currentNote);
+        }
     }
 
     const shiftNotes = (position: number, offset: number, resetCurrentNote?: boolean) => {
@@ -101,17 +175,21 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
     }
 
     const shiftLeft = () => {
-        if (currentNote || currentPosition < 0) return;
+        // todo atm does not take into account prev note duration
+        if (currentPosition < 0 || !!getNote(currentPosition - 1, currentVoice)) return;
 
-        shiftNotes(currentPosition, -1, true);
+        shiftNotes(currentPosition - 1, -1);
         refresh();
+        setCurrentPosition(currentPosition - 1);
+
     }
 
     const shiftRight = () => {
         if (currentPosition < 0) return;
 
-        shiftNotes(currentPosition - 1, 1, true);
+        shiftNotes(currentPosition - 1, 1);
         refresh();
+        setCurrentPosition(currentPosition + 1);
     }
 
     const addLyric = (text: string) => {
@@ -126,10 +204,11 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         });
     }
 
-    const addNote = (pitch: string) => {
+    const insertNote = (pitch: string, position?: number) => {
+        const p = position || currentPosition;
         const note: Note = {
             pitch: pitch,
-            position: currentPosition > 0 ? currentPosition : 0,
+            position: p > 0 ? p : 0,
             duration: currentDuration,
         }
 
@@ -140,105 +219,103 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         const voice = score.data.voices.find(v => v.name === currentVoice.name);
         if (voice) {
             voice.notes.push(note);
+            voice.notes.sort((a, b) => (a.position || 0) - (b.position || 0));
 
             const newPosition = note.position + durationToScalar(note.duration);
             setCurrentPosition(newPosition);
 
-            const line = score.data.stave.lines.find(l => l.pitch === pitch);
-            audioContext.playNote(note, voice, note.detune || line?.detune, semitones);
-
-            const newPositionNote = getNote(newPosition, currentVoice);
-            if (newPositionNote) {
-                setCurrentNote(newPositionNote);
-            }
+            playNote(note);
+            refresh();
         }
-        refresh();
     }
 
     const removeNote = () => {
-        if (!currentNote || !currentVoice) return;
-
-        const voice = score.data.voices.find(v => v.name === currentVoice.name);
-        if (voice) {
-            voice.notes = voice.notes.filter(n => n.position !== currentNote.position);
-            setCurrentNote(undefined);
+        if (currentNote && currentVoice) {
+            const voice = score.data.voices.find(v => v.name === currentVoice.name);
+            if (voice) {
+                voice.notes = voice.notes.filter(n => n.position !== currentNote.position);
+                setCurrentNote(undefined);
+            }
+            refresh();
         }
+        previous();
+    }
 
+
+    const changePitch = (note: Note, pitch: string, moveToNext?: boolean) => {
+        if (!note) {
+            return;
+        }
+        note.pitch = pitch;
+        selectNote(note);
         refresh();
-    }
-
-    const changeDuration = (duration: string) => {
-        setCurrentDuration(duration);
-
-        if (currentNote) {
-            const offset = getDurationOffset(duration, currentNote.duration)
-            shiftNotes(currentNote.position, offset);
-
-            currentNote.duration = duration;
-            const line = score.data.stave.lines.find(l => l.pitch === currentNote.pitch);
-            audioContext.playNote(currentNote, currentVoice, currentNote.detune || line?.detune, semitones);
-
-            refresh();
-        }
-    }
-
-    const changePitch = (pitch: string) => {
-        if (currentNote) {
-            currentNote.pitch = pitch;
-            const line = score.data.stave.lines.find(l => l.pitch === pitch);
-            audioContext.playNote(currentNote, currentVoice, currentNote.detune || line?.detune, semitones);
-
-            refresh();
+        if (moveToNext) {
+            next();
         }
     }
 
     const increasePitch = () => {
         if (currentNote) {
             const pitch = getNextPitch(score.data.stave.lines.map(l => l.pitch), currentNote.pitch);
-            changePitch(pitch);
+            changePitch(currentNote, pitch);
         }
     }
 
     const decreasePitch = () => {
         if (currentNote) {
             const pitch = getPreviousPitch(score.data.stave.lines.map(l => l.pitch), currentNote.pitch);
-            changePitch(pitch);
+            changePitch(currentNote, pitch);
         }
     }
 
-    const toggleBreak = () => {
-        const divider = context.score.data.dividers.find(it => it.position === currentPosition);
-        if (divider) {
-            removeDivider(divider);
+    const toggleBreak = (position: number) => {
+        const breakpoint = context.score.data.breaks.find(b => b === position);
+        if (breakpoint) {
+            removeBreak(position);
             return;
         }
-        context.insertDivider({position: currentPosition, type: DividerType.BREAK})
+        insertBreak(position);
+    }
+
+    const insertBreak = (position: number) => {
+        score.data.breaks.push(position);
+        score.data.breaks.sort((a, b) => a - b);
+        refresh();
+    }
+
+    const removeBreak = (position: number) => {
+        score.data.breaks = score.data.breaks.filter(b => b !== position);
+        refresh();
     }
 
     const toggleInlineDivider = () => {
-        const position = currentPosition - 1;
+        const position = currentPosition;
 
         const divider = context.score.data.dividers.find(it => it.position === position);
         if (divider) {
             if (divider.type === DividerType.BAR) {
                 divider.type = DividerType.SEPARATOR;
             } else if (divider.type === DividerType.SEPARATOR) {
-                removeDivider(divider);
+                removeDivider(position);
             }
             refresh();
             return;
         }
-        context.insertDivider({position: position, type: DividerType.BAR});
+        context.insertDivider(position, DividerType.BAR);
     }
 
-    const insertDivider = (divider: Divider) => {
-        score.data.dividers.push(divider);
+
+    const insertDivider = (position: number, type: DividerType) => {
+        score.data.dividers.push({
+            position: position,
+            type: type
+        });
         score.data.dividers.sort((a, b) => (a.position || 0) - (b.position || 0));
         refresh();
     }
 
-    const removeDivider = (divider: Divider) => {
-        score.data.dividers = score.data.dividers.filter(d => d.type !== divider.type && d.position !== divider.position);
+    const removeDivider = (position: number) => {
+        score.data.dividers = score.data.dividers.filter(d => d.position !== position);
         refresh();
     }
 
@@ -255,7 +332,9 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         refresh();
     }
 
-    const dimensions: { x: number, y: number } = useMemo<Coordinates>(() => calculateDimensions(score), [score]);
+    const dimensions: StaveDimensions = useMemo<StaveDimensions>(() => calculateStaveDimensions(score),
+        // todo, atm calc is trigged for each change, need to listen only for line and break changes, [score.data.stave.lines, score.data.dividers] does not work
+        [score]);
 
     const endPosition: number = useMemo<number>(() => {
         const notes = score.data.voices.flatMap(v => v.notes).sort((a, b) => a.position - b.position);
@@ -275,6 +354,7 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         containerRef,
         setContainerRef,
 
+        filter, setFilter,
         dimensions,
         score, setScore,
         isEditMode, setIsEditMode,
@@ -286,6 +366,7 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         currentVoice, setCurrentVoice,
         currentDuration, setCurrentDuration,
 
+        selectNote,
         next,
         previous,
         getNote,
@@ -295,6 +376,8 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         shiftLeft,
         shiftRight,
         toggleBreak,
+        insertBreak,
+        removeBreak,
         toggleInlineDivider,
         insertDivider,
         removeDivider,
@@ -302,7 +385,7 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         setSemitones,
 
         addLyric,
-        addNote,
+        insertNote,
         removeNote,
 
         changeDuration,

@@ -1,12 +1,12 @@
 export const Layout = {
     stave: {
         container: {
+            WIDTH: 1300,
             MAX_WIDTH: 1300,
             PADDING_X_START: 60,
             PADDING_X_END: 60,
-            PADDING_Y_TOP: 0,
-            NOTES_PER_BLOCK: 15,
-            SYMBOLS_BAR: 15
+            SYMBOLS_BAR: 30,
+            LYRICS_BAR: 100
         },
         line: {
             SPACING: 12,
@@ -18,16 +18,22 @@ export const Layout = {
             RADIUS: 7,
             REPEATING_OFFSET: 7,
             SPACING: 50,
-            SHAPE: 0
+            SHAPE: 0,
+            DIMMED_OPACITY: 0.2,
         },
         divider: {
+            BAR_HEIGHT: 140, // todo could use dimensions.y instead, am some svg weirdness
+            SEPARATOR_HEIGHT: 30,
             WIDTH: 2,
             CONTAINER_WIDTH: 15,
         },
         cursor: {
-            WIDTH: 24
+            WIDTH: 24,
+            HEIGHT: 140, // todo could use dimensions.y instead, am some svg weirdness
+
         }
     },
+    // todo remove, use LYRICS_BAR instead of HEIGHT
     lyrics: {
         SPACING: 60,
         HEIGHT: 100,

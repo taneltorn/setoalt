@@ -11,6 +11,9 @@ import {NoteRange} from "./dictionaries.ts";
 import {notifications} from "@mantine/notifications";
 import {IoMdAlert} from "react-icons/io";
 import {Divider, DividerType} from "../models/Divider.ts";
+import {StaveDimensions} from "../models/Dimensions.ts";
+import {Offset} from "../models/Offset.ts";
+import {XY} from "../models/XY.ts";
 
 export const isEmpty = (object: any) => {
     return !object || Object.keys(object).length === 0 || object.length === 0;
@@ -24,6 +27,7 @@ export const EmptyScore: Score = {
             name: "",
             lines: []
         },
+        breaks: [],
         dividers: [],
         lyrics: [],
         voices: []
@@ -86,6 +90,34 @@ export const getPositions = (voices: Voice[]) => {
     return sort(Array.from(new Set(voices.flatMap(v => v.notes).map(n => n.position))));
 }
 
+export const nextPosition = (currentPosition: number, note: Note | undefined, voices: Voice[], isEditMode: boolean): number => {
+    if (isEditMode) {
+        return note
+            ? note.position + durationToScalar(note.duration)
+            : currentPosition + 1;
+    }
+
+    const positions = getPositions(voices);
+    const currentPositionIndex = positions.findIndex(p => p === currentPosition);
+
+    return positions[Math.min(currentPositionIndex + 1, positions.length - 1)];
+}
+
+
+export const getNextPosition = (currentPosition: number, voices: Voice[], currentNote: Note | undefined, isEditMode: boolean): number => {
+    if (isEditMode) {
+        return currentNote
+            ? currentNote.position + durationToScalar(currentNote.duration)
+            : currentPosition + 1;
+    }
+
+    const positions = getPositions(voices);
+    const currentPositionIndex = positions.findIndex(p => p === currentPosition);
+
+    return positions[Math.min(currentPositionIndex + 1, positions.length - 1)];
+}
+
+
 export const getPreviousPosition = (currentPosition: number, voices: Voice[], currentVoice: Voice | undefined, isEditMode: boolean): number => {
     if (isEditMode) {
         const closestNote: Note | undefined = voices
@@ -101,8 +133,8 @@ export const getPreviousPosition = (currentPosition: number, voices: Voice[], cu
         return Math.max(currentPosition - 1, 0);
     }
     const positions = getPositions(voices);
-    const currentIndex = positions.findIndex(p => p === currentPosition);
-    return positions[Math.max(currentIndex - 1, 0)];
+    const currentPositionIndex = positions.findIndex(p => p === currentPosition);
+    return positions[Math.max(currentPositionIndex - 1, 0)];
 }
 
 
@@ -116,19 +148,8 @@ export const getPreviousPitch = (pitches: string[], currentPitch: string): strin
     return pitches[Math.min(currentIndex + 1, pitches.length - 1)];
 }
 
-export const getNextPosition = (currentPosition: number, voices: Voice[], currentNote: Note | undefined, isEditMode: boolean): number => {
-    if (isEditMode) {
-        return currentNote
-            ? currentNote.position + durationToScalar(currentNote.duration)
-            : currentPosition + 1;
-    }
 
-    const positions = getPositions(voices);
-    const currentPositionIndex = positions.findIndex(p => p === currentPosition);
-
-    return positions[Math.min(currentPositionIndex + 1, positions.length - 1)];
-}
-
+// TODO useBreakCount or something similar
 export const getBreakCount = (position: number, dividers: Divider[]) => {
     const breaks = dividers.filter(d => d.type === DividerType.BREAK).map(d => d.position);
     let n = 0;
@@ -213,7 +234,6 @@ export const getNoteCoords = (note: Note, voice: Voice, context: ScoreContextPro
     const detune = note.detune || line?.detune || 0;
 
     const y = ((line?.y || 0) - detune / 100) * Layout.stave.line.SPACING
-        + Layout.stave.container.PADDING_Y_TOP
         + context.dimensions.y * c
         + Layout.stave.container.SYMBOLS_BAR;
 
@@ -244,11 +264,77 @@ export const getDurationOffset = (a: string, b: string) => {
     return durationToScalar(a) - durationToScalar(b);
 }
 
+export const calculateOffset = (index: number, context: ScoreContextProperties): XY => {
+    if (index === 0 || context.score.data.breaks.length === 0) {
+        return {
+            x: 0,
+            y: 0
+        }
+    }
+    return {
+        x: context.score.data.breaks[index] * Layout.stave.note.SPACING,
+        y: index * context.dimensions.y
+    }
+}
+
+export const getOffset = (position: number, context: ScoreContextProperties, indexOffsetY?: number): XY => {
+    const breakpoints = context.score.data.breaks;
+
+    let index = breakpoints.findIndex(b => position < b);
+    if (index === -1) {
+        index = breakpoints.length;
+    }
+
+    return {
+        x: index > 0 && breakpoints[index - 1] ? breakpoints[index - 1] * Layout.stave.note.SPACING : 0,
+        y: (index + (indexOffsetY || 0)) * context.dimensions.y,
+    };
+}
+
+export const getBreakOffset = (position: number, context: ScoreContextProperties): XY => {
+    const breakpoints = context.score.data.breaks;
+
+    let index = breakpoints.findIndex(b => position === b);
+    if (index === -1) {
+        index = breakpoints.length;
+    }
+    // - (index > 0 ? breaks[index - 1].position * Layout.stave.note.SPACING : 0);
+    return {
+        x: index > 0 && breakpoints[index - 1] ? breakpoints[index - 1] * Layout.stave.note.SPACING : 0,
+        y: index * context.dimensions.y,
+    };
+}
+
+export const getBlockNumber = (position: number, breakpoints: number[]): number => {
+    let index = breakpoints.findIndex(b => position < b);
+    if (index === 0) return 0;
+
+    if (index === -1) return breakpoints.length;
+
+    return index;
+}
+
+export const calculateStaveDimensions = (score: Score): StaveDimensions => {
+    const bottomLineY = score.data.stave.lines.slice(-1)?.[0]?.y || 0;
+    const y = Layout.stave.container.SYMBOLS_BAR
+        + Layout.stave.line.SPACING * bottomLineY
+        + Layout.stave.container.LYRICS_BAR;
+
+    const x = Layout.stave.container.WIDTH;
+
+    return {
+        x: x,
+        y: y,
+        blocks: score.data.breaks.length + 1,
+    };
+}
+
 export const calculateDimensions = (score: Score): { x: number, y: number } => {
+    console.log("calc dimension")
     const y = (score.data.stave.lines.slice(-1)?.[0]?.y || 0) * Layout.stave.line.SPACING
         + Layout.lyrics.HEIGHT
-        // score.data.voices.filter(voice => voice.notes.some(note => note.lyric)).length * Layout.lyrics.SPACING
-        + Layout.stave.container.PADDING_Y_TOP;
+    // score.data.voices.filter(voice => voice.notes.some(note => note.lyric)).length * Layout.lyrics.SPACING
+    // + Layout.stave.container.PADDING_Y_TOP;
 
     const note = score.data.voices
         .flatMap(voice => voice.notes)
@@ -286,6 +372,19 @@ export const transpose = (pitch: string, semitones: number): string => {
         return NoteRange[index + semitones];
     }
     return "";
+}
+
+export const canShiftLeft = (currentPosition: number, note?: Note) => {
+    if (currentPosition < 0) {
+        return false;
+    }
+    if (note) {
+        const maxPosition = currentPosition - 1 + durationToScalar(note.duration);
+
+        return maxPosition < (currentPosition - 1);
+    }
+
+    return true;
 }
 
 export const DisplayGlobalError = (title: string, message: string) => {

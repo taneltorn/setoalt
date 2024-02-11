@@ -1,5 +1,6 @@
 import express, {Request, Response} from 'express';
 import {pool} from '../config/dbConfig';
+import * as process from "process";
 
 const router = express.Router();
 
@@ -8,7 +9,7 @@ router.get('/', async (req: Request, res: Response): Promise<void> => {
         const result = await pool.query('SELECT * FROM setoalt.scores');
         res.json(result.rows);
     } catch (err) {
-        res.status(500).json({error: 'Internal Server Error'});
+        res.status(500).json({error: err});
     }
 });
 

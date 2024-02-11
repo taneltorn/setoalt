@@ -1,52 +1,50 @@
 import React from 'react';
 import {Voice} from "../../models/Voice";
-import {MdRecordVoiceOver, MdVoiceOverOff} from "react-icons/md";
-import {useTranslation} from "react-i18next";
 import {useScoreContext} from "../../context/ScoreContext";
-import {Button, Group} from "@mantine/core";
+import {Group} from "@mantine/core";
+import VoiceFilterButton from "./VoiceFilterButton.tsx";
 
 const VoiceFilter: React.FC = () => {
 
-    const {t} = useTranslation();
     const context = useScoreContext();
 
-    const ICON_SIZE = 20;
-
     const toggleVoice = (voice: Voice) => {
-        const score = {...context.score};
-        if (voice) {
-            const value = !voice.options.hidden;
-            voice.options.hidden = value;
+        const voices = context.filter.voices || [];
+        if (voices.includes(voice.name)) {
+            context.filter.voices = voices.filter(v => v !== voice.name);
+        } else {
+            voices.push(voice.name);
 
-            voice.notes.forEach(note => {
-                note.hidden = value;
-            })
         }
-        context.setScore(score);
+        context.setFilter({...context.filter});
+        context.refresh();
+    }
+
+    const toggleShowAll = () => {
+        context.setFilter({
+            ...context.filter,
+            voices: !!context.filter.voices?.length ? [] : [context.currentVoice.name]
+        });
+        context.refresh();
     }
 
     return (
         <Group gap={4} ml={"xl"}>
-            {context.score.data.voices.map(voice => (
-                <Button
+            {!context.isEditMode && context.score.data.voices.map(voice => (
+                <VoiceFilterButton
                     key={voice.name}
-                    c={voice.options.hidden ? "gray.5" : "white"}
-                    color={voice.options.hidden ? "gray.1" : "black"}
-                    title={t(`tooltip.${!voice.options.hidden ? "hideVoice" : "showVoice"}`)}
-                    className={`me-2`}
-                    leftSection={!voice.options.hidden
-                        ? <MdRecordVoiceOver
-                            size={ICON_SIZE}
-                            style={{color: "white"}}
-                        />
-                        : <MdVoiceOverOff
-                            size={ICON_SIZE}
-                            style={{color: "#ccc"}}
-                        />}
+                    active={!context.filter.voices?.length || !!context.filter.voices?.includes(voice.name)}
+                    label={voice.name}
                     onClick={() => toggleVoice(voice)}
-                >
-                    {voice.name}
-                </Button>))}
+                />
+            ))}
+
+            {context.isEditMode &&
+                <VoiceFilterButton
+                    active={!context.filter.voices?.length || context.filter.voices?.length === context.score.data.voices.length}
+                    label={"Näita kõiki"}
+                    onClick={toggleShowAll}
+                />}
         </Group>
     );
 };

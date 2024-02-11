@@ -16,5 +16,6 @@ export interface ScoreData {
     stave: Stave;
     voices: Voice[];
     lyrics: Lyric[];
+    breaks: number[];
     dividers: Divider[];
 }

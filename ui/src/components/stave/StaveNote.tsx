@@ -1,11 +1,11 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {Color, Layout} from "../../utils/constants";
 import {Note} from "../../models/Note";
 import {Voice} from "../../models/Voice";
 import {useAudioContext} from "../../context/AudioContext";
 import {useScoreContext} from "../../context/ScoreContext";
-import {getNoteCoords, getNoteTitle} from "../../utils/helpers.tsx";
 import {useTranslation} from "react-i18next";
+import {calculateNoteCoords, isDimmed, isHighlighted} from "../../utils/stave.helpers.tsx";
 
 interface Properties {
     note: Note;
@@ -19,55 +19,23 @@ const StaveNote: React.FC<Properties> = ({note, voice}) => {
     const audioContext = useAudioContext();
     const scoreContext = useScoreContext();
 
-    const {x, y} = getNoteCoords(note, voice, scoreContext);
-    const opacity = (!audioContext.isPlaying
-        && scoreContext.isEditMode
-        && voice.options.hidden) ? 0.3 : 1;
+    const breaksDependency = JSON.stringify(scoreContext.score.data.breaks);
 
-    const isHighlighted = scoreContext.currentPosition === note.position
-        && (!scoreContext.currentNote
-            || !scoreContext.isEditMode
-            || scoreContext.currentVoice?.name === voice.name);
-
-    const line = scoreContext.score.data.stave.lines.find(l => l.pitch === note.pitch);
-
-    const handleNoteClick = () => {
-        scoreContext.setCurrentPosition(note.position);
-        scoreContext.setCurrentNote(note);
-        scoreContext.setCurrentDuration(note.duration);
-        scoreContext.setCurrentVoice(voice);
-
-        audioContext.stopPlayback();
-
-        audioContext.playNote(note, voice, note.detune || line?.detune, scoreContext.semitones);
-    }
+    const {x, y} = useMemo(() => {
+        return calculateNoteCoords(note, voice, scoreContext);
+    }, [note.pitch, note.position, note.detune, scoreContext.score.data.stave, breaksDependency]);
 
     return (<>
-        {/*{Layout.stave.note.SHAPE === 1 &&*/}
-        {/*    <rect*/}
-        {/*        rx={7}*/}
-        {/*        className={"hover-pointer"}*/}
-        {/*        width={Layout.stave.note.SPACING * durationToScalar(note.duration) - 18}*/}
-        {/*        height={Layout.stave.note.RADIUS * 2}*/}
-        {/*        x={((note.position || 0) * Layout.stave.note.SPACING + (note.noteXOffset || 0) + Layout.stave.PADDING_X_START)}*/}
-        {/*        y={line.y - Layout.stave.note.RADIUS}*/}
-        {/*        fill={*/}
-        {/*            isHighlighted*/}
-        {/*                ? Color.stave.HIGHLIGHT*/}
-        {/*                : note.color || voice.color}*/}
-        {/*        onClick={handleNoteClick}*/}
-        {/*    />}*/}
-
         <circle
             className={"hover-pointer"}
             cx={x}
             cy={y}
-            opacity={opacity}
             r={Layout.stave.note.RADIUS}
-            fill={isHighlighted ? Color.stave.HIGHLIGHT : !line ? "#ddd" : note.color || voice.options?.color || "black"}
-            onClick={handleNoteClick}
+            fill={isHighlighted(note, scoreContext) ? Color.stave.HIGHLIGHT : note.color || voice.color || "black"}
+            opacity={isDimmed(note, voice, scoreContext, audioContext) ? Layout.stave.note.DIMMED_OPACITY : 1}
+            onClick={() => scoreContext.selectNote(note)}
         >
-            <title>{getNoteTitle(note, line, t)}</title>
+            <title>{t(`pitch.${note.pitch.toLowerCase()}`)} </title>
         </circle>
     </>);
 };

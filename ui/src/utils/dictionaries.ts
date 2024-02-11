@@ -3,26 +3,21 @@ import {Voice} from "../models/Voice";
 export const Voices: Voice[] = [
     {
         name: "torrõ",
+        color: "black",
         notes: [],
-        options: {
-            color: "black",
-        }
+        options: {}
     },
     {
         name: "killõ",
+        color: "#1aa7ec",
         notes: [],
-        options: {
-            color: "#1aa7ec",
-
-        }
+        options: {}
     },
     {
         name: "al. torrõ",
+        color: "black",
         notes: [],
-        options: {
-            color: "black",
-            disableOffset: true
-        }
+        options: {  }
     },
 ];
 

@@ -1,19 +1,27 @@
-import React, {MutableRefObject, useContext} from 'react';
+import React, {RefObject, useContext} from 'react';
 import {Note} from "../models/Note";
 import {isEmpty} from "../utils/helpers.tsx";
 import {Score} from "../models/Score";
 import {Voice} from "../models/Voice";
-import {Divider} from "../models/Divider.ts";
+import {DividerType} from "../models/Divider.ts";
+import {StaveDimensions} from "../models/Dimensions.ts";
+
+export interface Filter {
+    voices?: string[];
+}
 
 export interface ScoreContextProperties {
 
-    containerRef: MutableRefObject<any> | undefined;
-    setContainerRef: (ref: MutableRefObject<any> | undefined) => void;
+    containerRef: RefObject<HTMLElement> | undefined;
+    setContainerRef: (ref: RefObject<HTMLElement>) => void;
 
-    dimensions: { x: number, y: number };
+    dimensions: StaveDimensions;
 
     score: Score;
     setScore: (score: Score) => void;
+
+    filter: Filter;
+    setFilter: (filter: Filter) => void;
 
     isEditMode: boolean;
     setIsEditMode: (value: boolean) => void;
@@ -24,6 +32,10 @@ export interface ScoreContextProperties {
     semitones: number;
     setSemitones: (semitones: number) => void;
     endPosition: number;
+
+
+    selectNote: (note: Note) => void;
+
     currentPosition: number;
     setCurrentPosition: (index: number) => void;
     currentNote: Note | undefined;
@@ -37,20 +49,22 @@ export interface ScoreContextProperties {
     previous: () => number;
 
     getNote: (position: number, voice?: Voice) => Note | undefined;
-    getNotes: (position?: number) => Note[];
+    getNotes: (position: number) => Note[];
 
-    toggleBreak: () => void;
+    toggleBreak: (position: number) => void;
+    insertBreak: (position: number) => void;
+    removeBreak: (position: number) => void;
+
     toggleInlineDivider: () => void;
-
-    insertDivider: (divider: Divider) => void;
-    removeDivider: (divider: Divider) => void;
+    insertDivider: (position: number, type: DividerType) => void;
+    removeDivider: (position: number) => void;
 
     addLyric: (text: string) => void;
-    addNote: (pitch: string) => void;
+    insertNote: (pitch: string, position: number) => void;
     removeNote: () => void;
 
     changeDuration: (duration: string) => void;
-    changePitch: (pitch: string) => void;
+    changePitch: (note: Note, pitch: string, moveToNext?: boolean) => void;
     increasePitch: () => void;
     decreasePitch: () => void;
 

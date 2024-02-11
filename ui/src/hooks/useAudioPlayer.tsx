@@ -1,24 +1,24 @@
 import * as Tone from "tone";
 import {Note} from "../models/Note";
 import {pitchToFrequency, transpose} from "../utils/helpers.tsx";
-import {Voice} from "../models/Voice";
+import {AudioOptions} from "../models/AudioOptions.ts";
 
 const useAudioPlayer = () => {
 
     const synths: { [key: string]: Tone.Synth } = {};
 
-    const playNote = (note: Note, voice: Voice, detune?: number, semitones?: number) => {
+    const playNote = (note: Note, voice: string, options?: AudioOptions) => {
         if (note.hidden) {
             return;
         }
 
-        const id = `${voice.name || 'global'}`;
+        const id = `${voice || 'global'}`;
         try {
             if (!synths[id]) {
                 synths[id] = new Tone.Synth().toDestination();
             }
-            const pitch = semitones ? transpose(note.pitch, semitones) : note.pitch;
-            const frequency = pitchToFrequency(pitch, detune);
+            const pitch = options?.transpose ? transpose(note.pitch, options.transpose) : note.pitch;
+            const frequency = pitchToFrequency(pitch, options?.detune);
             synths[id].triggerAttackRelease(frequency, note.duration);
         } catch (e) {
             console.log(e);

@@ -1,30 +1,42 @@
 import React from 'react';
 import {Line} from "../../models/Line";
-import {getLineCoords} from "../../utils/helpers.tsx";
-import {useScoreContext} from "../../context/ScoreContext";
+import StaveLine from "./StaveLine.tsx";
+import {useScoreContext} from "../../context/ScoreContext.tsx";
+import {calculateOffset, getOffset} from "../../utils/helpers.tsx";
 
 interface Properties {
     lines: Line[];
-    y: number;
+    index: number;
 }
 
-const StaveBlock: React.FC<Properties> = (props) => {
+const StaveBlock: React.FC<Properties> = ({index, lines}) => {
 
     const context = useScoreContext();
 
+    const offset = calculateOffset(index, context);
+
     return (
         <>
-            {props.lines.map(line => {
-                const {x, y} = getLineCoords(line, props.y, context);
-                return <line
-                    className={`hover-pointer`}
-                    key={line.pitch}
-                    x1={0} y1={y}
-                    x2={x} y2={y}
-                    stroke={line.color}
-                    strokeWidth={line.strokeWidth}
-                />
-            })}
+            {/*{context.score.data.breaks*/}
+            {/*    .map((p, i) =>*/}
+            {/*        <StaveBreak*/}
+            {/*            key={`break-${p}`}*/}
+            {/*            position={p}*/}
+            {/*            // index={index}*/}
+            {/*        />)}*/}
+
+            {/*{context.score.data.dividers*/}
+            {/*    .filter(d => d.type === DividerType.BREAK)*/}
+            {/*    .map(d =>*/}
+            {/*        <Break key={`break-${d.position}`} blockIndex={index} position={d.position}/>)}*/}
+
+
+            {lines.map(line =>
+                <StaveLine
+                    key={`line-${offset.y}-${line.pitch}`}
+                    line={line}
+                    offsetY={offset.y}
+                />)}
         </>
     )
 };

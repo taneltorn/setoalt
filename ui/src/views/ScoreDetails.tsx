@@ -27,8 +27,6 @@ const ScoreDetails: React.FC = () => {
 
         scoreService.fetchScore(params.id)
             .then(r => {
-                console.log("GOT FETHC SOCE RESPO")
-                console.log(r)
                 setScore(r)
             })
             .catch(_ => notifications.show({

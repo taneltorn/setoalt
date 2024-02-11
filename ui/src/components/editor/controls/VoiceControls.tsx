@@ -20,6 +20,7 @@ const VoiceControls: React.FC = () => {
 
         const note = context.getNote(context.currentPosition, voice);
         context.setCurrentNote(note);
+        context.setFilter({...context.filter, voices: [voice.name]});
         context.refresh();
     }
 
