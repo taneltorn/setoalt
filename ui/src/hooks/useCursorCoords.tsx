@@ -1,4 +1,5 @@
 import {RefObject, useState, useEffect} from 'react';
+import {Layout} from "../utils/constants.ts";
 
 type MousePosition = {
     x: number;
@@ -7,8 +8,9 @@ type MousePosition = {
     cy: number;
 };
 
-const useMousePosition = (elementRef: RefObject<HTMLElement>): MousePosition => {
-    const [mousePosition, setMousePosition] = useState<MousePosition>({x: 0, y: 0, cx: 0, cy: 0});
+const useCursorCoords = (elementRef: RefObject<HTMLElement> | undefined): MousePosition => {
+
+    const [cursorPosition, setCursorPosition] = useState<MousePosition>({x: 0, y: 0, cx: 0, cy: 0});
 
     useEffect(() => {
         if (!elementRef?.current) {
@@ -20,11 +22,11 @@ const useMousePosition = (elementRef: RefObject<HTMLElement>): MousePosition => 
                 const cx = ev.clientX - rect.left;
                 const cy = ev.clientY - rect.top;
 
-                const x = Math.round(cx / 50) - 1;
-                const y = cy;
+                let x = Math.round(cx / Layout.stave.note.SPACING) - 1;
+                const y = Math.floor(cy / 250) ; // todo should be dynamic
 
-                setMousePosition({
-                    x, y, cx, cy
+                setCursorPosition({
+                    x, y, cx: Math.round(cx), cy: Math.round(cy)
                 });
             }
         };
@@ -41,7 +43,7 @@ const useMousePosition = (elementRef: RefObject<HTMLElement>): MousePosition => 
         };
     }, [elementRef?.current]);
 
-    return mousePosition;
+    return cursorPosition;
 };
 
-export default useMousePosition;
+export default useCursorCoords;

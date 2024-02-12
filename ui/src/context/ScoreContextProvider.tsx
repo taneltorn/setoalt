@@ -2,7 +2,6 @@ import React, {RefObject, useEffect, useMemo, useState} from 'react';
 import {Note} from "../models/Note";
 import {Score} from "../models/Score";
 import {
-    calculateStaveDimensions,
     durationToScalar,
     EmptyScore,
     getDurationOffset,
@@ -16,6 +15,8 @@ import {useAudioContext} from "./AudioContext";
 import {Voices} from "../utils/dictionaries";
 import {DividerType} from "../models/Divider.ts";
 import {StaveDimensions} from "../models/Dimensions.ts";
+import useCursorCoords from "../hooks/useCursorCoords.tsx";
+import {calculateStaveDimensions} from "../utils/calculation.helpers.tsx";
 
 interface Properties {
     showEditor?: boolean;
@@ -39,8 +40,19 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
     const [currentNote, setCurrentNote] = useState<Note | undefined>();
     const [currentDuration, setCurrentDuration] = useState<string>("8n");
     const [currentVoice, setCurrentVoice] = useState<Voice>({...Voices[0]});
+    const [cursorPosition, setCursorPosition] = useState<number>(0);
 
     const audioContext = useAudioContext();
+
+    const mousePosition = useCursorCoords(containerRef);
+
+    useMemo(() => {
+        let position = mousePosition.x + (score.data.breaks[mousePosition.y - 1] || 0);
+        if (position > score.data.breaks[mousePosition.y]) {
+            position = -1;
+        }
+        setCursorPosition(position);
+    }, [mousePosition.x, mousePosition.y]);
 
     const toggleEditMode = () => {
         setIsEditMode(!isEditMode);
@@ -68,6 +80,16 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
             detune: note.detune || line?.detune,
             transpose: semitones
         });
+    }
+
+    const selectPosition = (position: number) => {
+        const note = getNote(position, currentVoice);
+        if (note) {
+            selectNote(note);
+            return;
+        }
+        setCurrentPosition(position);
+        setCurrentNote(undefined);
     }
 
     const playNote = (note: Note) => {
@@ -176,7 +198,7 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
 
     const shiftLeft = () => {
         // todo atm does not take into account prev note duration
-        if (currentPosition < 0 || !!getNote(currentPosition - 1, currentVoice)) return;
+        if (currentPosition <= 0 || !!getNote(currentPosition - 1, currentVoice)) return;
 
         shiftNotes(currentPosition - 1, -1);
         refresh();
@@ -203,9 +225,17 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
             position: currentPosition
         });
     }
+    const insertOrUpdateNote = (pitch: string, position: number, moveToNext?: boolean) => {
+        const note = getNote(position, currentVoice);
+        if (note) {
+            changePitch(note, pitch, moveToNext);
+            return;
+        }
+        insertNote(pitch, position, moveToNext);
+    }
 
-    const insertNote = (pitch: string, position?: number) => {
-        const p = position || currentPosition;
+    const insertNote = (pitch: string, position: number, moveToNext?: boolean) => {
+        const p = position;
         const note: Note = {
             pitch: pitch,
             position: p > 0 ? p : 0,
@@ -221,11 +251,28 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
             voice.notes.push(note);
             voice.notes.sort((a, b) => (a.position || 0) - (b.position || 0));
 
-            const newPosition = note.position + durationToScalar(note.duration);
-            setCurrentPosition(newPosition);
+            if (moveToNext) {
+                const newPosition = note.position + durationToScalar(note.duration);
+                setCurrentPosition(newPosition);
+            } else {
+                setCurrentPosition(position);
+                setCurrentNote(note);
+            }
 
             playNote(note);
             refresh();
+        }
+    }
+
+    const changePitch = (note: Note, pitch: string, moveToNext?: boolean) => {
+        if (!note) {
+            return;
+        }
+        note.pitch = pitch;
+        selectNote(note);
+        refresh();
+        if (moveToNext) {
+            next();
         }
     }
 
@@ -242,17 +289,6 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
     }
 
 
-    const changePitch = (note: Note, pitch: string, moveToNext?: boolean) => {
-        if (!note) {
-            return;
-        }
-        note.pitch = pitch;
-        selectNote(note);
-        refresh();
-        if (moveToNext) {
-            next();
-        }
-    }
 
     const increasePitch = () => {
         if (currentNote) {
@@ -324,6 +360,7 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
     }
 
     const clear = () => {
+        score.data.breaks = [];
         score.data.dividers = [];
         score.data.lyrics = [];
         score.data.voices = [];
@@ -365,8 +402,11 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         currentNote, setCurrentNote,
         currentVoice, setCurrentVoice,
         currentDuration, setCurrentDuration,
+        cursorPosition, setCursorPosition,
 
         selectNote,
+        selectPosition,
+
         next,
         previous,
         getNote,
@@ -385,6 +425,7 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         setSemitones,
 
         addLyric,
+        insertOrUpdateNote,
         insertNote,
         removeNote,
 
@@ -393,7 +434,7 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         increasePitch,
         decreasePitch,
         clear
-    }), [containerRef, endPosition, isEditMode, isTyping, dimensions, semitones, score, score.data.voices, currentNote, currentPosition, currentVoice, currentDuration]);
+    }), [containerRef, endPosition, isEditMode, isTyping, dimensions, semitones, score, score.data.voices, currentNote, currentPosition, currentVoice, currentDuration, cursorPosition]);
 
     return (
         <ScoreContext.Provider value={context}>

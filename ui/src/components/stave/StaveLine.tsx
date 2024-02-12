@@ -24,6 +24,7 @@ const StaveLine: React.FC<Properties> = ({line, offsetY}) => {
             x2={context.dimensions.x} y2={y}
             stroke={line.color}
             strokeWidth={line.strokeWidth}
+            style={{zIndex: 5}}
         />
     )
 };

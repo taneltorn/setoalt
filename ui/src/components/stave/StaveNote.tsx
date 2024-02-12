@@ -5,7 +5,8 @@ import {Voice} from "../../models/Voice";
 import {useAudioContext} from "../../context/AudioContext";
 import {useScoreContext} from "../../context/ScoreContext";
 import {useTranslation} from "react-i18next";
-import {calculateNoteCoords, isDimmed, isHighlighted} from "../../utils/stave.helpers.tsx";
+import {calculateNoteCoords} from "../../utils/calculation.helpers.tsx";
+import {isDimmed, isHighlighted} from "../../utils/helpers.tsx";
 
 interface Properties {
     note: Note;

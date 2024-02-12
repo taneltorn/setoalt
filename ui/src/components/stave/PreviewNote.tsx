@@ -1,7 +1,7 @@
 import React, {useState} from 'react';
 import {Layout} from "../../utils/constants";
 import {useScoreContext} from "../../context/ScoreContext";
-import useMousePosition from "../../hooks/useMousePosition.tsx";
+import useCursorCoords from "../../hooks/useCursorCoords.tsx";
 
 interface Properties {
     pitch: string;
@@ -12,9 +12,9 @@ interface Properties {
 const PreviewNote: React.FC<Properties> = ({pitch, y}) => {
 
     const context = useScoreContext();
-    const [opacity, setOpacity] = useState<number>(0);
+    const [opacity, setOpacity] = useState<number>(0.5);
 
-    const { x} = useMousePosition(context.containerRef);
+    const { x} = useCursorCoords(context.containerRef);
 
     const handleClick = () => {
 
@@ -51,7 +51,7 @@ const PreviewNote: React.FC<Properties> = ({pitch, y}) => {
             y={y - 10}
             opacity={0}
             onMouseOver={() => setOpacity(0.8)}
-            onMouseLeave={() => setOpacity(0)}
+            onMouseLeave={() => setOpacity(0.5)}
             r={Layout.stave.note.RADIUS * 2.5}
             height={40}
             fill={"red"}

@@ -35,9 +35,12 @@ export interface ScoreContextProperties {
 
 
     selectNote: (note: Note) => void;
+    selectPosition: (position: number) => void;
 
     currentPosition: number;
     setCurrentPosition: (index: number) => void;
+    cursorPosition: number;
+    setCursorPosition: (index: number) => void;
     currentNote: Note | undefined;
     setCurrentNote: (note: Note | undefined) => void;
     currentDuration: string;
@@ -60,7 +63,8 @@ export interface ScoreContextProperties {
     removeDivider: (position: number) => void;
 
     addLyric: (text: string) => void;
-    insertNote: (pitch: string, position: number) => void;
+    insertOrUpdateNote: (pitch: string, position: number, moveToNext?: boolean) => void;
+    insertNote: (pitch: string, position: number, moveToNext?: boolean) => void;
     removeNote: () => void;
 
     changeDuration: (duration: string) => void;

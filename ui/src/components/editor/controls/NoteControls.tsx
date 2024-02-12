@@ -17,11 +17,7 @@ const NoteControls: React.FC = () => {
     const pitches = context.score.data.stave.lines.map(l => l.pitch).reverse();
 
     const handleClick = (pitch: string) => {
-        if (context.currentNote) {
-            context.changePitch(context.currentNote, pitch);
-            return;
-        }
-        context.insertNote(pitch, context.currentPosition);
+        context.insertOrUpdateNote(pitch, context.currentPosition, true);
     }
 
     return (

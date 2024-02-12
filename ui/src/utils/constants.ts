@@ -2,7 +2,6 @@ export const Layout = {
     stave: {
         container: {
             WIDTH: 1300,
-            MAX_WIDTH: 1300,
             PADDING_X_START: 60,
             PADDING_X_END: 60,
             SYMBOLS_BAR: 30,
@@ -27,10 +26,14 @@ export const Layout = {
             WIDTH: 2,
             CONTAINER_WIDTH: 15,
         },
+        position: {
+            WIDTH: 24,
+            HEIGHT: 4,
+        },
         cursor: {
             WIDTH: 24,
-            HEIGHT: 140, // todo could use dimensions.y instead, am some svg weirdness
-
+            HEIGHT: 150, // todo could use dimensions.y instead, am some svg weirdness
+            Y_OFFSET: 10
         }
     },
     // todo remove, use LYRICS_BAR instead of HEIGHT

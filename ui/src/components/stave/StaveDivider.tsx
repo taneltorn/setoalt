@@ -3,7 +3,7 @@ import {useScoreContext} from "../../context/ScoreContext";
 import {Color, Layout} from "../../utils/constants";
 import {useTranslation} from "react-i18next";
 import {Divider, DividerType} from "../../models/Divider.ts";
-import {calculateDividerCoords} from "../../utils/stave.helpers.tsx";
+import {calculateDividerCoords} from "../../utils/calculation.helpers.tsx";
 
 interface Properties {
     divider: Divider;

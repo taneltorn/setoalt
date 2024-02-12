@@ -28,7 +28,7 @@ const VoiceControls: React.FC = () => {
         <Group gap={4}>
             <ControlButton
                 tooltip={t("tooltip.staveSelection")}
-                label={<GiGClef size={34}/>}
+                label={<GiGClef size={30}/>}
                 onClick={() => open(DialogType.STAVE_SELECTION)}
             />
             <Menu shadow={"md"} position={"bottom-start"}>

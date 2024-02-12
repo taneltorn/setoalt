@@ -2,9 +2,7 @@ import React, {useMemo, useState} from 'react';
 import {useScoreContext} from "../../context/ScoreContext";
 import {useTranslation} from "react-i18next";
 import {useMantineTheme} from "@mantine/core";
-import {Layout} from "../../utils/constants.ts";
-import {getBlockNumber, getOffset} from "../../utils/helpers.tsx";
-import {calculateBreakCoords, calculateDividerCoords} from "../../utils/stave.helpers.tsx";
+import {calculateBreakCoords} from "../../utils/calculation.helpers.tsx";
 
 interface Properties {
     position: number;
