@@ -49,7 +49,10 @@ a {
   }
 }
 
-.lyric-input input{
+.lyric-input  {
+  width: 50px;
+  overflow: visible;
+  text-align: center;
   border: none;
   outline: none;
   background: transparent;
@@ -59,6 +62,17 @@ a {
     background: var(--mantine-color-gray-1);
   }
 }
+
+//.lyric-input input {
+//  border: none;
+//  outline: none;
+//  background: transparent;
+//
+//  &:focus,
+//  &:hover {
+//    background: var(--mantine-color-gray-1);
+//  }
+//}
 
 //a:hover {
 //  color: #535bf2;

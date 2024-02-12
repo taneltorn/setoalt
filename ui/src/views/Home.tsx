@@ -16,7 +16,7 @@ const Home: React.FC = () => {
             <Text mt={"lg"} fw={600}>Tähtis teadaanne!</Text>
             <Text>
                 Kuna tegu arendusjärgus oleva tarkvaraga, võid siin-seal kohata (loe: kindlasti kohtad) erinevaid vigu
-                ja puudujääke. See on iteratiivses tarkvaraarednusprotsessis
+                ja puudujääke. See on iteratiivses tarkvaraarendusprotsessis
                 täiesti normaalne. Rakendus valmib järk-järgult, hõlmates mitmeid tagasisideringe.
 
             </Text>

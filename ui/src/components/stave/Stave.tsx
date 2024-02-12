@@ -45,7 +45,7 @@ const Stave: React.FC<Properties> = ({score}) => {
                         />))}
 
                 <CurrentPositionMarker/>
-                <CursorMarker/>
+                {context.isEditMode &&<CursorMarker/>}
 
                 {context.score.data.breaks
                     .map(position =>

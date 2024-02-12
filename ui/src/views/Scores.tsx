@@ -6,12 +6,14 @@ import ScoreTable from "./ScoreTable.tsx";
 import useScoreService from "../services/ScoreService.tsx";
 import {Score} from "../models/Score.ts";
 import {DisplayGlobalError} from "../utils/helpers.tsx";
+import {Role, useAuth} from "../context/AuthContext.tsx";
 
 const ScoreDetails: React.FC = () => {
 
     const {t} = useTranslation();
     const scoreService = useScoreService();
     const [scores, setScores] = useState<Score[]>([]);
+    const auth = useAuth();
 
     useEffect(() => {
         scoreService.fetchScores()
@@ -29,9 +31,10 @@ const ScoreDetails: React.FC = () => {
 
             <ScoreTable scores={scores}/>
 
-            <Link to={"/editor"}>
-                <Button mt={"md"}>Lisa uus</Button>
-            </Link>
+            {[Role.ADMIN, Role.EDITOR].includes(auth.currentUser?.role as Role) &&
+                <Link to={"/editor"}>
+                    <Button mt={"md"}>Lisa uus</Button>
+                </Link>}
         </>
     );
 }

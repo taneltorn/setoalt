@@ -5,10 +5,9 @@ import {Playback} from "../utils/constants";
 import {positionToSeconds} from "../utils/helpers.tsx";
 import useAudioPlayer from "../hooks/useAudioPlayer";
 import {Voice} from "../models/Voice";
-import {AudioContext} from "./AudioContext";
+import {AudioContext, PlaybackOptions} from "./AudioContext";
 import {ScoreContextProperties} from "./ScoreContext";
 import {Score} from "../models/Score";
-import {AudioOptions} from "../models/AudioOptions.ts";
 
 interface Properties {
     children: React.ReactNode;
@@ -22,13 +21,13 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [tempo, setTempo] = useState<number>(Playback.DEFAULT_TEMPO);
 
-    const playNote = (note: Note, voice: string, options?: AudioOptions) => {
+    const playNote = (note: Note, voice: string, options?: PlaybackOptions) => {
         if (!(note.position >= 0)) return;
 
         player.playNote(note, voice, options);
     }
 
-    const playPosition = (score: Score, position: number, voice?: Voice, options?: AudioOptions) => {
+    const playPosition = (score: Score, position: number, voice?: Voice, options?: PlaybackOptions) => {
         score.data.voices
             .filter(v => voice ? v.name === voice.name : true)
             .forEach(voice => {

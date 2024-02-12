@@ -1,10 +1,9 @@
-import React, {useState} from 'react';
+import React, {useMemo, useState} from 'react';
 import {Color, Layout} from "../../utils/constants";
 import {useAudioContext} from "../../context/AudioContext";
 import {useScoreContext} from "../../context/ScoreContext";
 import {Lyric} from "../../models/Lyric";
-import {getLyricCoords} from "../../utils/helpers.tsx";
-import {Input} from "@mantine/core";
+import {calculateLyricCoords} from "../../utils/calculation.helpers.tsx";
 
 interface Properties {
     lyric: Lyric;
@@ -16,11 +15,16 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
     const scoreContext = useScoreContext();
 
     const [value, setValue] = useState<string>(lyric.text);
-    const {x, y} = getLyricCoords(lyric.position, scoreContext);
+    const breaksDependency = JSON.stringify(scoreContext.score.data.breaks);
+
+    const {x, y} = useMemo(() => {
+        return calculateLyricCoords(lyric, scoreContext);
+    }, [lyric.position, scoreContext.score.data.stave, breaksDependency]);
+
 
     const handleNoteClick = () => {
         audioContext.stopPlayback();
-        audioContext.playPosition(scoreContext.score, lyric.position, undefined, scoreContext.semitones);
+        audioContext.playPosition(scoreContext.score, lyric.position, undefined, {transpose: scoreContext.semitones});
 
         const notes = scoreContext.getNotes(lyric.position);
 
@@ -54,17 +58,15 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
 
     return (<>
             {scoreContext.isEditMode &&
-                <foreignObject x={x} y={y} width={Layout.stave.note.SPACING} height="40">
-
-                    {/*<Input*/}
-                    <Input
-                        radius={0}
+                <foreignObject x={x - 15} y={y} width={Layout.stave.note.SPACING} height="40">
+                    <input
                         onFocus={() => scoreContext.setIsTyping(true)}
                         onBlur={() => save()}
                         className={`lyric-input`}
                         disabled={!scoreContext.isEditMode}
                         value={value}
-                        onChange={e => handleChange(e.target.value)}/>
+                        onChange={e => handleChange(e.target.value)}
+                    />
                 </foreignObject>}
 
             {!scoreContext.isEditMode &&
@@ -73,7 +75,7 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
                     fill={lyric.position === scoreContext.currentPosition ? Color.stave.HIGHLIGHT : Color.stave.LYRICS}
                     fontWeight={600}
                     x={x}
-                    y={y + 20}
+                    y={y + 15}
                     onClick={handleNoteClick}
                 >{lyric.text}</text>}
         </>

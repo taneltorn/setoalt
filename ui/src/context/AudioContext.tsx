@@ -4,7 +4,6 @@ import {isEmpty} from "../utils/helpers.tsx";
 import {Voice} from "../models/Voice";
 import {ScoreContextProperties} from "./ScoreContext";
 import {Score} from "../models/Score";
-import {AudioOptions} from "../models/AudioOptions.ts";
 
 export interface PlaybackOptions {
     detune?: number;
@@ -16,8 +15,8 @@ export interface AudioContextProperties {
     isPlaying: boolean;
     setIsPlaying: (value: boolean) => void;
 
-    playNote: (note: Note, voice: string, options?: AudioOptions) => void;
-    playPosition: (score: Score, position: number, voice?: Voice, options?: AudioOptions) => void;
+    playNote: (note: Note, voice: string, options?: PlaybackOptions) => void;
+    playPosition: (score: Score, position: number, voice?: Voice, options?: PlaybackOptions) => void;
 
     playNext: (scoreContext: ScoreContextProperties) => void;
     playPrevious: (scoreContext: ScoreContextProperties) => void;

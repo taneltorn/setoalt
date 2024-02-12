@@ -3,8 +3,14 @@ import {createContext, useContext} from 'react';
 export interface UserDetails {
     id: number;
     username: string;
-    role: string;
+    role: Role;
 }
+
+export enum Role {
+    ADMIN = "ADMIN",
+    EDITOR = "EDITOR"
+}
+
 
 export interface AuthContextProperties {
     currentUser:  UserDetails | null | undefined;

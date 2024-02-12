@@ -6,10 +6,9 @@ import {XY} from "../models/XY.ts";
 import {Divider} from "../models/Divider.ts";
 import {Score} from "../models/Score.ts";
 import {StaveDimensions} from "../models/Dimensions.ts";
+import {Lyric} from "../models/Lyric.ts";
 
 export const calculateBreakCoords = (position: number, context: ScoreContextProperties): XY => {
-    console.log("calculating break at " + position)
-
     const offset = getBreakOffset(position, context);
     const x = Layout.stave.container.PADDING_X_START
         + position * Layout.stave.note.SPACING
@@ -23,8 +22,6 @@ export const calculateBreakCoords = (position: number, context: ScoreContextProp
 }
 
 export const calculateDividerCoords = (divider: Divider, context: ScoreContextProperties): XY => {
-    // console.log("calculating divider for divider at " + divider.position)
-
     const offset = getOffset(divider.position, context);
 
     const x = Layout.stave.container.PADDING_X_START
@@ -40,9 +37,23 @@ export const calculateDividerCoords = (divider: Divider, context: ScoreContextPr
     return {x: x, y: y};
 }
 
-export const calculateCurrentPositionCoords = (context: ScoreContextProperties): XY => {
-    // console.log("calculating current position at " + context.currentPosition)
+export const calculateLyricCoords = (lyric: Lyric, context: ScoreContextProperties): XY => {
+    const offset = getOffset(lyric.position, context);
 
+    const x = Layout.stave.container.PADDING_X_START
+        + lyric.position * Layout.stave.note.SPACING
+        - Layout.stave.note.RADIUS * 1.8
+        - offset.x;
+
+    const y = Layout.stave.container.SYMBOLS_BAR
+        + context.dimensions.y
+        - Layout.lyrics.HEIGHT
+        + offset.y;
+
+    return {x: x, y: y};
+}
+
+export const calculateCurrentPositionCoords = (context: ScoreContextProperties): XY => {
     const offset = getOffset(context.currentPosition, context);
 
     const x = Layout.stave.container.PADDING_X_START
@@ -57,8 +68,6 @@ export const calculateCurrentPositionCoords = (context: ScoreContextProperties):
 }
 
 export const calculateCursorCoords = (context: ScoreContextProperties): XY => {
-    // console.log("calculating cursor corrs at " + context.currentPosition)
-
     const offset = getOffset(context.cursorPosition, context);
 
     const x = Layout.stave.container.PADDING_X_START
@@ -73,8 +82,6 @@ export const calculateCursorCoords = (context: ScoreContextProperties): XY => {
 }
 
 export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreContextProperties): XY => {
-    // console.log("calculating coords for note at " + note.position)
-
     const offset = getOffset(note.position, context);
 
     const positionOccupied = context.score.data.voices
@@ -127,8 +134,6 @@ export const calculateLineBlockOffset = (index: number, context: ScoreContextPro
         y: index * context.dimensions.y
     }
 }
-
-
 
 export const getOffset = (position: number, context: ScoreContextProperties, indexOffsetY?: number): XY => {
     const breakpoints = context.score.data.breaks;

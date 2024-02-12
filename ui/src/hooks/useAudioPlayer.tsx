@@ -1,13 +1,13 @@
 import * as Tone from "tone";
 import {Note} from "../models/Note";
 import {pitchToFrequency, transpose} from "../utils/helpers.tsx";
-import {AudioOptions} from "../models/AudioOptions.ts";
+import {PlaybackOptions} from "../context/AudioContext.tsx";
 
 const useAudioPlayer = () => {
 
     const synths: { [key: string]: Tone.Synth } = {};
 
-    const playNote = (note: Note, voice: string, options?: AudioOptions) => {
+    const playNote = (note: Note, voice: string, options?: PlaybackOptions) => {
         if (note.hidden) {
             return;
         }

@@ -11,6 +11,7 @@ import Scores from "./views/Scores.tsx";
 import Login from "./views/Login.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Admin from "./views/Admin.tsx";
+import ApiStatus from "./views/ApiStatus.tsx";
 
 const router = createBrowserRouter([
     {
@@ -36,6 +37,10 @@ const router = createBrowserRouter([
             {
                 path: "/editor",
                 element: <Editor/>,
+            },
+            {
+                path: "/api-status",
+                element: <ApiStatus/>,
             },
             {
                 path: "/admin",

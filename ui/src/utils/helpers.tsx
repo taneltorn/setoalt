@@ -10,7 +10,6 @@ import {ScoreContextProperties} from "../context/ScoreContext";
 import {NoteRange} from "./dictionaries.ts";
 import {notifications} from "@mantine/notifications";
 import {IoMdAlert} from "react-icons/io";
-import {Divider, DividerType} from "../models/Divider.ts";
 import {StavePPT} from "../staves/StavePPT.ts";
 import {AudioContextProperties} from "../context/AudioContext.tsx";
 
@@ -96,35 +95,6 @@ export const getPreviousPitch = (pitches: string[], currentPitch: string): strin
     const currentIndex = pitches.findIndex(p => p === currentPitch);
     return pitches[Math.min(currentIndex + 1, pitches.length - 1)];
 }
-
-
-// TODO useBreakCount or something similar
-export const getBreakCount = (position: number, dividers: Divider[]) => {
-    const breaks = dividers.filter(d => d.type === DividerType.BREAK).map(d => d.position);
-    let n = 0;
-    breaks.forEach(v => {
-        if (position >= v) {
-            n += 1;
-        }
-    })
-    return n;
-}
-
-
-export const getLyricCoords = (position: number, context: ScoreContextProperties): Coordinates => {
-    const c = getBreakCount(position, context.score.data.dividers);
-
-    const x = position * Layout.stave.note.SPACING
-        + Layout.stave.container.PADDING_X_START
-        - (c > 0 ? context.score.data.dividers[c - 1].position * Layout.stave.note.SPACING : 0)
-        - Layout.stave.note.RADIUS * 2;
-    const y = context.dimensions.y * (c + 1) - Layout.lyrics.HEIGHT
-        + 30
-        + Layout.stave.container.SYMBOLS_BAR;
-
-    return {x: x, y: y};
-}
-
 
 export const getLineCoords = (line: Line, startingY: number, context: ScoreContextProperties): Coordinates => {
     const y = startingY

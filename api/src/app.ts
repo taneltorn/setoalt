@@ -29,6 +29,7 @@ app.use('/api/auth', authRoutes);
 app.use('/api/scores', scoreRoutes);
 
 app.get('/api/status', async (req: Request, res: Response): Promise<void> => {
+    console.log("GET /api/status");
     try {
         res.json("ok");
     } catch (err) {

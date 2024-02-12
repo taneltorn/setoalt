@@ -5,10 +5,14 @@ import * as process from "process";
 const router = express.Router();
 
 router.get('/', async (req: Request, res: Response): Promise<void> => {
+    console.log("GET /api/scores");
+
     try {
         const result = await pool.query('SELECT * FROM setoalt.scores');
         res.json(result.rows);
     } catch (err) {
+        console.log("Could not connect to database");
+
         res.status(500).json({error: err});
     }
 });
