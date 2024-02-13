@@ -15,6 +15,7 @@
     "@mantine/notifications": "^7.3.2",
     "@mdi/js": "^7.3.67",
     "@mdi/react": "^1.6.1",
+    "axios": "^1.6.7",
     "dotenv": "^16.4.1",
     "i18next": "^23.6.0",
     "i18next-http-backend": "^2.3.1",
@@ -30,6 +31,7 @@
     "tone": "^14.7.77"
   },
   "devDependencies": {
+    "@types/axios": "^0.14.0",
     "@types/js-cookie": "^3.0.6",
     "@types/node-sass": "^4.11.6",
     "@types/react": "^18.2.43",

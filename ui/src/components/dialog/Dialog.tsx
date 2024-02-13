@@ -6,8 +6,10 @@ interface Properties {
     title?: string;
     size?: "sm" | "lg" | "xl";
     type: DialogType;
-    primaryButtonLabel: string;
-    onPrimaryButtonClick: () => void;
+    hidePrimaryButton?: boolean;
+    hideSecondaryButton?: boolean;
+    primaryButtonLabel?: string;
+    onPrimaryButtonClick?: () => void;
     secondaryButtonLabel?: string;
     onSecondaryButtonClick?: () => void;
     onClose?: () => void;
@@ -24,9 +26,8 @@ const Dialog: React.FC<Properties> = (props) => {
     }
 
     return (
-
         <Modal
-            size={"auto"}
+            size={props.size || "auto"}
             opened={props.type === active}
             onClose={handleClose}
             title={<Title order={3}>{props.title}</Title>}
@@ -35,20 +36,20 @@ const Dialog: React.FC<Properties> = (props) => {
                 {props.children}
             </Group>
 
-            <Group justify={"end"} gap={4} mt={"xl"}>
-                {props.secondaryButtonLabel &&
-                    <Button
-                        size={"md"}
-                        variant={"light"}
-                        color={"gray.9"}
-                        onClick={() => props.onSecondaryButtonClick && props.onSecondaryButtonClick()}
-                    >
-                        {props.secondaryButtonLabel}
-                    </Button>}
-                <Button size={"md"} onClick={props.onPrimaryButtonClick}>
-                    {props.primaryButtonLabel}
-                </Button>
-            </Group>
+            {!(props.hidePrimaryButton && props.hideSecondaryButton) &&
+                <Group justify={"end"} gap={4} mt={"xl"}>
+                    {!props.hideSecondaryButton &&
+                        <Button size={"md"}
+                                variant={"light"}
+                                color={"gray.9"}
+                                onClick={() => props.onSecondaryButtonClick && props.onSecondaryButtonClick()}>
+                            {props.secondaryButtonLabel}
+                        </Button>}
+                    {!props.hideSecondaryButton &&
+                        <Button size={"md"} onClick={() => props.onPrimaryButtonClick && props.onPrimaryButtonClick()}>
+                            {props.primaryButtonLabel}
+                        </Button>}
+                </Group>}
         </Modal>
     )
 };

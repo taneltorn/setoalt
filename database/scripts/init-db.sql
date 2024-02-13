@@ -10,10 +10,13 @@ CREATE TABLE IF NOT EXISTS setoalt.users (
 
 CREATE TABLE IF NOT EXISTS setoalt.scores
 (
-    id   SERIAL PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
+    user_id INTEGER,
     name VARCHAR(255) NOT NULL,
     description TEXT,
     data JSON NOT NULL,
-    tempo INTEGER,
-    text TEXT
+    default_tempo INTEGER,
+    text TEXT,
+    visibility VARCHAR(255) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES setoalt.users(id) ON DELETE SET NULL
 );

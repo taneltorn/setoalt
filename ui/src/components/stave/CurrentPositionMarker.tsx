@@ -15,6 +15,7 @@ const CurrentPositionMarker: React.FC = () => {
     }, [context.currentPosition, context.score.data.stave, breaksDependency]);
 
     return (<>
+        {context.currentPosition >= 0 &&
             <rect
                 x={x}
                 y={y}
@@ -23,7 +24,7 @@ const CurrentPositionMarker: React.FC = () => {
                 fill={theme.colors.gray[3]}
                 opacity={0.5}
                 style={{zIndex: 1}}
-            />
+            />}
             {/*<rect*/}
             {/*    x={x}*/}
             {/*    y={y}*/}

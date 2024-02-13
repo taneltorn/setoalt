@@ -5,7 +5,7 @@ import {Link} from "react-router-dom";
 import ScoreTable from "./ScoreTable.tsx";
 import useScoreService from "../services/ScoreService.tsx";
 import {Score} from "../models/Score.ts";
-import {DisplayGlobalError} from "../utils/helpers.tsx";
+import {DisplayError} from "../utils/helpers.tsx";
 import {Role, useAuth} from "../context/AuthContext.tsx";
 
 const ScoreDetails: React.FC = () => {
@@ -18,7 +18,7 @@ const ScoreDetails: React.FC = () => {
     useEffect(() => {
         scoreService.fetchScores()
             .then(r => setScores(r))
-            .catch(() => DisplayGlobalError(
+            .catch(() => DisplayError(
                 t("toast.error.title"),
                 t("toast.error.fetchData"),
             ));

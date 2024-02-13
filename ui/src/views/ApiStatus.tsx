@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {DisplayGlobalError} from "../utils/helpers.tsx";
+import {DisplayError} from "../utils/helpers.tsx";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -13,7 +13,7 @@ const ApiStatus: React.FC = () => {
             .then(response => {
                 setOk(response.ok)
             })
-            .catch(e =>  DisplayGlobalError("Error", e.message))
+            .catch(e =>  DisplayError("Error", e.message))
     }, []);
 
     return (

@@ -8,7 +8,7 @@ const Layout: React.FC = () => {
 
     return (
         <AppShell
-            px={"md"}
+            px={"xl"}
             py={"sm"}
             layout={"default"}
             navbar={{width: {base: 75, lg: 250}, breakpoint: 'base'}}>

@@ -12,7 +12,7 @@ const KeyPressHandler: React.FC = () => {
     const dialogContext = useDialogContext();
 
     const handleKeyPress = (event: KeyboardEvent) => {
-        if (scoreContext.isTyping) {
+        if (scoreContext.isTyping || dialogContext.active !== undefined) {
             return;
         }
 
@@ -22,9 +22,6 @@ const KeyPressHandler: React.FC = () => {
         event.preventDefault();
 
         if (scoreContext.isEditMode) {
-            if (dialogContext.active === DialogType.MICRO_TUNING) {
-                return;
-            }
 
             if (range(9).includes(+event.key)) {
                 const pitch = scoreContext.score.data.stave.lines.map(l => l.pitch).reverse()[+event.key - 1];
@@ -77,10 +74,10 @@ const KeyPressHandler: React.FC = () => {
 
         switch (event.key.toUpperCase()) {
             case ShortKey.PREVIOUS:
-                scoreContext.previous();
+                audioContext.playPrevious(scoreContext);
                 break;
             case ShortKey.NEXT:
-                scoreContext.next();
+                audioContext.playNext(scoreContext);
                 break;
             case ShortKey.START_PLAYBACK:
                 if (audioContext.isPlaying) {

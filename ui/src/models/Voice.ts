@@ -4,7 +4,7 @@ export interface Voice {
     name: string;
     notes: Note[];
     color: string;
-    options: VoiceOptions;
+    options?: VoiceOptions;
 }
 
 

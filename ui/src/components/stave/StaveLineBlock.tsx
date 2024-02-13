@@ -12,7 +12,6 @@ interface Properties {
 const StaveLineBlock: React.FC<Properties> = ({index, lines}) => {
 
     const context = useScoreContext();
-
     const offset = calculateLineBlockOffset(index, context);
 
     return (

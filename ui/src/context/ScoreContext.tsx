@@ -20,9 +20,6 @@ export interface ScoreContextProperties {
     score: Score;
     setScore: (score: Score) => void;
 
-    filter: Filter;
-    setFilter: (filter: Filter) => void;
-
     isEditMode: boolean;
     setIsEditMode: (value: boolean) => void;
     toggleEditMode: () => void;

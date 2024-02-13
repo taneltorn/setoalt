@@ -47,7 +47,8 @@ export const calculateLyricCoords = (lyric: Lyric, context: ScoreContextProperti
 
     const y = Layout.stave.container.SYMBOLS_BAR
         + context.dimensions.y
-        - Layout.lyrics.HEIGHT
+        + Layout.stave.lyrics.HEIGHT
+        - Layout.stave.container.LYRICS_BAR
         + offset.y;
 
     return {x: x, y: y};
@@ -62,21 +63,7 @@ export const calculateCurrentPositionCoords = (context: ScoreContextProperties):
         - Layout.stave.note.RADIUS / 2
         - offset.x;
 
-    const y = offset.y + 10;
-
-    return {x: x, y: y};
-}
-
-export const calculateCursorCoords = (context: ScoreContextProperties): XY => {
-    const offset = getOffset(context.cursorPosition, context);
-
-    const x = Layout.stave.container.PADDING_X_START
-        + context.cursorPosition * Layout.stave.note.SPACING
-        - Layout.stave.cursor.WIDTH / 2
-        - Layout.stave.note.RADIUS / 2
-        - offset.x;
-
-    const y = offset.y + 10;
+    const y = offset.y + Layout.stave.cursor.Y_OFFSET;
 
     return {x: x, y: y};
 }
@@ -84,12 +71,15 @@ export const calculateCursorCoords = (context: ScoreContextProperties): XY => {
 export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreContextProperties): XY => {
     const offset = getOffset(note.position, context);
 
-    const positionOccupied = context.score.data.voices
-        .filter(v => v.color !== voice.color)
-        .flatMap(v => v.notes)
-        .find(n => n.position === note.position && n.pitch === note.pitch);
-    if (positionOccupied) {
-        offset.x -= Layout.stave.note.REPEATING_OFFSET;
+    // todo make dynamic, not killõ specific
+    if (voice.name === "killõ") {
+        const positionOccupied = context.score.data.voices
+            .filter(v => v.name !== "killõ")
+            .flatMap(v => v.notes)
+            .find(n => n.position === note.position && n.pitch === note.pitch);
+        if (positionOccupied) {
+            offset.x -= Layout.stave.note.REPEATING_OFFSET;
+        }
     }
 
     const x = Layout.stave.container.PADDING_X_START
@@ -106,6 +96,21 @@ export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreCont
 
     return {x: x, y: y};
 }
+
+export const calculateCursorCoords = (context: ScoreContextProperties): XY => {
+    const offset = getOffset(context.cursorPosition, context);
+
+    const x = Layout.stave.container.PADDING_X_START
+        + context.cursorPosition * Layout.stave.note.SPACING
+        - Layout.stave.cursor.WIDTH / 2
+        - Layout.stave.note.RADIUS / 2
+        - offset.x;
+
+    const y = offset.y + Layout.stave.cursor.Y_OFFSET;
+
+    return {x: x, y: y};
+}
+
 
 export const calculateCursorNoteCoords = (pitch: string, cursorX: number, cursorY: number, context: ScoreContextProperties): XY => {
     const line = context.score.data.stave.lines.find(l => l.pitch === pitch);
@@ -131,7 +136,7 @@ export const calculateLineBlockOffset = (index: number, context: ScoreContextPro
     }
     return {
         x: context.score.data.breaks[index] * Layout.stave.note.SPACING,
-        y: index * context.dimensions.y
+        y: index * (context.dimensions.y + Layout.stave.container.SYMBOLS_BAR)
     }
 }
 
@@ -145,7 +150,7 @@ export const getOffset = (position: number, context: ScoreContextProperties, ind
 
     return {
         x: index > 0 && breakpoints[index - 1] ? breakpoints[index - 1] * Layout.stave.note.SPACING : 0,
-        y: (index + (indexOffsetY || 0)) * context.dimensions.y,
+        y: (index + (indexOffsetY || 0)) * (context.dimensions.y + Layout.stave.container.SYMBOLS_BAR),
     };
 }
 

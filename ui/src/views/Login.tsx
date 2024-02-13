@@ -5,7 +5,7 @@ import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../context/AuthContext.tsx";
 
-type FormValues = {
+type LoginFormValues = {
     username: string
     password: string
 }
@@ -16,9 +16,9 @@ const Login: React.FC = () => {
 
     const auth = useAuth();
     const navigate = useNavigate();
-    const {register, handleSubmit} = useForm<FormValues>();
+    const {register, handleSubmit} = useForm<LoginFormValues>();
 
-    const onSubmit = async (values: FormValues) => {
+    const onSubmit = async (values: LoginFormValues) => {
         auth.login(values.username, values.password)
             .then(response => {
                 if (response) {

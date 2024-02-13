@@ -2,17 +2,18 @@ import * as Tone from "tone";
 import {Note} from "../models/Note";
 import {pitchToFrequency, transpose} from "../utils/helpers.tsx";
 import {PlaybackOptions} from "../context/AudioContext.tsx";
+import {Voice} from "../models/Voice.ts";
 
 const useAudioPlayer = () => {
 
     const synths: { [key: string]: Tone.Synth } = {};
 
-    const playNote = (note: Note, voice: string, options?: PlaybackOptions) => {
+    const playNote = (note: Note, voice?: Voice, options?: PlaybackOptions) => {
         if (note.hidden) {
             return;
         }
 
-        const id = `${voice || 'global'}`;
+        const id = `${voice?.name || 'global'}`;
         try {
             if (!synths[id]) {
                 synths[id] = new Tone.Synth().toDestination();

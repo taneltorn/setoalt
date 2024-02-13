@@ -34,8 +34,8 @@ const NoteControls: React.FC = () => {
                 <ControlButton
                     key={pitch}
                     active={context.currentNote?.pitch === pitch}
-                    label={`${index +1}`}
-                    // label={t(`pitch.${pitch.toLowerCase()}`)}
+                    // label={`${index +1}`}
+                    label={t(`pitch.${pitch.toLowerCase()}`)}
                     tooltip={t(`tooltip.${context.currentNote ? "changePitch" : "insertPitch"}`, {pitch: t(`pitch.${pitch}`)})}
                     shortKey={`${index + 1}`}
                     onClick={() => handleClick(pitch)}

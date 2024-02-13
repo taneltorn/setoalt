@@ -18,7 +18,6 @@ export const isEmpty = (object: any) => {
 }
 
 export const EmptyScore: Score = {
-    id: "",
     name: "",
     data: {
         stave: StavePPT,
@@ -111,14 +110,14 @@ export const getDurationOffset = (a: string, b: string) => {
 
 export const isDimmed = (note: Note, voice: Voice, scoreContext: ScoreContextProperties, audioContext: AudioContextProperties) => {
     return !scoreContext.score.data.stave.lines.find(l => l.pitch === note.pitch) ||
-        !audioContext.isPlaying && scoreContext.isEditMode && !!scoreContext.filter.voices?.length && !scoreContext.filter.voices.includes(voice.name);
+        !audioContext.isPlaying && scoreContext.isEditMode && voice.options?.hidden;
 }
 
 export const isHighlighted = (note: Note, context: ScoreContextProperties) => {
-    if (context.currentNote) {
+    if (context.currentNote && context.isEditMode) {
         return context.currentNote.position === note.position && context.currentNote.pitch === note.pitch;
     }
-    return false;
+    return context.currentPosition === note.position;
 }
 
 
@@ -151,11 +150,20 @@ export const canShiftLeft = (currentPosition: number, note?: Note) => {
     return true;
 }
 
-export const DisplayGlobalError = (title: string, message: string) => {
+export const DisplayError = (title: string, message: string) => {
     notifications.show({
         title: title,
         message: message,
         icon: <IoMdAlert color={"red"} size={40}/>,
+        color: "white"
+    });
+}
+
+export const DisplaySuccess = (title: string, message: string) => {
+    notifications.show({
+        title: title,
+        message: message,
+        icon: <IoMdAlert color={"green"} size={40}/>,
         color: "white"
     });
 }

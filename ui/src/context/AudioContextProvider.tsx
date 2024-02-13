@@ -21,10 +21,12 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [tempo, setTempo] = useState<number>(Playback.DEFAULT_TEMPO);
 
-    const playNote = (note: Note, voice: string, options?: PlaybackOptions) => {
+    const playNote = (note: Note, voice?: Voice, options?: PlaybackOptions) => {
         if (!(note.position >= 0)) return;
 
-        player.playNote(note, voice, options);
+        if (!voice?.options?.hidden) {
+            player.playNote(note, voice, options);
+        }
     }
 
     const playPosition = (score: Score, position: number, voice?: Voice, options?: PlaybackOptions) => {
@@ -35,7 +37,7 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
                     .filter(note => note.position === position)
                     .forEach(note => {
                         const line = score.data.stave.lines.find(l => l.pitch === note.pitch);
-                        playNote(note, voice.name, {
+                        playNote(note, voice, {
                             detune: note.detune || line?.detune,
                             transpose: options?.transpose
                         });
@@ -85,7 +87,7 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
         if (!sequenceRef.current) {
             sequenceRef.current = new Tone.Part((_, event) => {
                 const line = context.score.data.stave.lines.find(l => l.pitch === event.note.pitch);
-                playNote(event.note, event.voice.name, {
+                playNote(event.note, event.voice, {
                     detune: event.note.detune || line?.detune,
                     transpose: context.semitones
                 });

@@ -13,7 +13,14 @@
     },
     "editor": {
       "title": "Redaktor",
-      "description": "Redaktor võimaldab katsetada uute noodistuste loomisega."
+      "description": "Redaktor võimaldab katsetada uute noodistuste loomisega.",
+      "form": {
+        "name": "Pealkiri",
+        "description": "Kirjeldus",
+        "defaultTempo": "Vaikimisi tempo (BPM)",
+        "text": "Sõnad",
+        "visibility": "Avalik"
+      }
     },
     "admin": {
       "title": "Adminpaneel",
@@ -58,6 +65,7 @@
     "staveSelection": "Vaheta noodijoonestikku",
     "removeNote": "Eemalda noot",
     "resetScore": "Lähtesta",
+    "saveScore": "Salvesta",
     "playNext": "Järgmine",
     "playPrevious": "Eelmine",
     "startPlayback": "Esita",
@@ -69,6 +77,10 @@
     "transpose": "Transponeeri"
   },
   "dialog": {
+    "saveScore": {
+      "title": "Salvesta",
+      "description": "Salvesta tehtud noodistus."
+    },
     "microTuning": {
       "title": "Mikrotonaalsus",
       "description": "Muuda noodi {{pitch}} kõrgust tsentides."
@@ -96,13 +108,22 @@
     "reset": "Lähtesta",
     "submit": "Saada"
   },
+  "field": {
+    "required": "Väli on kohustuslik"
+  },
   "toast": {
+    "success": {
+      "title": "OK",
+      "saveScore": "Noodistuse salvestamine õnnestus."
+    },
     "error": {
       "title": "Viga!",
       "message": "Midagi läks valesti.",
       "fetchData": "Ei õnnestunud andmeid laadida.",
       "wrongCredentials": "Vale kasutajanimi/parool",
-      "logout": "Ei õnnestunud andmeid laadida."
+      "logout": "Ei õnnestunud andmeid laadida.",
+      "saveScore": "Noodistuse salvestamine ebaõnnestus.",
+      "updateScore": "Noodistuse muutmine ebaõnnestus."
     }
   },
   "stave": {

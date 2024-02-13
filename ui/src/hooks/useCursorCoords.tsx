@@ -23,7 +23,7 @@ const useCursorCoords = (elementRef: RefObject<HTMLElement> | undefined): MouseP
                 const cy = ev.clientY - rect.top;
 
                 let x = Math.round(cx / Layout.stave.note.SPACING) - 1;
-                const y = Math.floor(cy / 250) ; // todo should be dynamic
+                const y = Math.floor(cy / 200) ; // todo should be dynamic
 
                 setCursorPosition({
                     x, y, cx: Math.round(cx), cy: Math.round(cy)

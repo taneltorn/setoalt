@@ -1,15 +1,16 @@
-import express, {Request, Response} from 'express';
+import express, {Request, Response} from "express";
 import bcrypt from "bcrypt";
-import jwt from 'jsonwebtoken';
+import jwt from "jsonwebtoken";
 import {verifyToken} from "../utils/verifyToken";
-import { pool } from '../config/dbConfig';
+import { pool } from "../config/dbConfig";
 
 const router = express.Router();
 
-router.post('/login', async (req, res) => {
+router.post("/login", async (req, res) => {
     const {username, password} = req.body;
     try {
-        const users = await pool.query('SELECT * FROM setoalt.users WHERE username = $1', [username]);
+        const query = "SELECT * FROM setoalt.users WHERE username = $1";
+        const users = await pool.query(query, [username]);
 
         const user = users.rows?.[0];
         if (user) {
@@ -19,8 +20,8 @@ router.post('/login', async (req, res) => {
                     id: user.id,
                     username: user.username,
                     role: user.role,
-                }, process.env.JWT_SECRET_KEY, {expiresIn: '7d'});
-                res.cookie('token', token, {
+                }, process.env.JWT_SECRET_KEY, {expiresIn: "7d"});
+                res.cookie("token", token, {
                     httpOnly: true,
                     secure: true,
                 });
@@ -43,14 +44,14 @@ router.post('/login', async (req, res) => {
     }
 });
 
-router.post('/logout', (req, res) => {
+router.post("/logout", (req, res) => {
     res.clearCookie("token");
     res.status(200).json({message: "Logged out successfully"});
 });
 
-router.get('/verify', verifyToken, (req: Request, res: Response) => {
+router.get("/verify", verifyToken, (req: Request, res: Response) => {
     // @ts-ignore
-    res.json({message: 'Session is valid', user: req.user});
+    res.json({message: "Session is valid", user: req.user});
 });
 
 export default router;

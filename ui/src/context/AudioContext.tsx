@@ -15,7 +15,7 @@ export interface AudioContextProperties {
     isPlaying: boolean;
     setIsPlaying: (value: boolean) => void;
 
-    playNote: (note: Note, voice: string, options?: PlaybackOptions) => void;
+    playNote: (note: Note, voice?: Voice, options?: PlaybackOptions) => void;
     playPosition: (score: Score, position: number, voice?: Voice, options?: PlaybackOptions) => void;
 
     playNext: (scoreContext: ScoreContextProperties) => void;

@@ -9,7 +9,7 @@ const ScoreInfo: React.FC = () => {
     const {x, y, cx, cy} = useCursorCoords(context.containerRef);
 
     return (
-        <div style={{padding: "10px 15px", backgroundColor: "#f9f9f9    ", borderRadius: "16px"}}>
+        <div style={{marginTop: 20 , padding: "10px 15px", backgroundColor: "#f9f9f9    ", borderRadius: "16px"}}>
             <code>
 
                 <Grid>
@@ -41,12 +41,12 @@ const ScoreInfo: React.FC = () => {
                 <Grid>
                     <Grid.Col span={6}>
                         <pre><strong>Notes</strong></pre>
-                        <pre>{JSON.stringify(context.score.data.voices.flatMap(v => v.notes).map(n => n.position))}</pre>
+                        <span style={{wordBreak: "break-word"}}>{JSON.stringify(context.score.data.voices.flatMap(v => v.notes).map(n => n.position))}</span>
                     </Grid.Col>
 
                     <Grid.Col span={6}>
                         <pre><strong>Breaks</strong></pre>
-                        <pre>{JSON.stringify(context.score.data.breaks)}</pre>
+                        <span style={{wordBreak: "break-word"}}>{JSON.stringify(context.score.data.breaks)}</span>
                     </Grid.Col>
                 </Grid>
 

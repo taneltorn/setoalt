@@ -10,7 +10,7 @@ import {
     getPreviousPitch,
 } from "../utils/helpers.tsx";
 import {Voice} from "../models/Voice";
-import {Filter, ScoreContext} from './ScoreContext';
+import {ScoreContext} from './ScoreContext';
 import {useAudioContext} from "./AudioContext";
 import {Voices} from "../utils/dictionaries";
 import {DividerType} from "../models/Divider.ts";
@@ -26,9 +26,6 @@ interface Properties {
 const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
 
     const [score, setScore] = useState<Score>(EmptyScore);
-
-    const [filter, setFilter] = useState<Filter>({});
-
 
     const [containerRef, setContainerRef] = useState<RefObject<HTMLElement> | undefined>();
 
@@ -58,25 +55,15 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         setIsEditMode(!isEditMode);
     }
 
-    // const changeCurrentPosition = (position: number) => {
-    //     setCurrentPosition(position);
-    //     const note = score.data.voices
-    //         .filter(v => currentVoice ? v.name === currentVoice.name : true)
-    //         .flatMap(v => v.notes)
-    //         .find(n => n.position < position);
-    //     if (note) {
-    //         setCurrentNote(note);
-    //     }
-    // }
-    //
-
     const selectNote = (note: Note) => {
+        audioContext.stopPlayback();
+
         setCurrentNote(note);
         setCurrentPosition(note.position);
         setCurrentDuration(note.duration);
 
         const line = score.data.stave.lines.find(l => l.pitch === note.pitch);
-        audioContext.playNote(note, currentVoice.name, {
+        audioContext.playNote(note, isEditMode ? currentVoice : undefined, {
             detune: note.detune || line?.detune,
             transpose: semitones
         });
@@ -94,7 +81,7 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
 
     const playNote = (note: Note) => {
         const line = score.data.stave.lines.find(l => l.pitch === note.pitch);
-        audioContext.playNote(note, currentVoice.name, {
+        audioContext.playNote(note, isEditMode ? currentVoice : undefined, {
             detune: note.detune || line?.detune,
             transpose: semitones
         });
@@ -103,13 +90,12 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
     const getNote = (position: number, voice?: Voice): Note | undefined => {
         const notes = voice
             ? score.data.voices.find(v => v.name === voice.name)?.notes || []
-            : score.data.voices.flatMap(v => v.notes) || [];
-
+            : score.data.voices.filter(v => !v.options?.hidden).flatMap(v => v.notes) || [];
         return notes.find(n => n.position === position);
     }
 
     const getNotes = (position: number): Note[] => {
-        const notes = score.data.voices.flatMap(v => v.notes) || [];
+        const notes = score.data.voices.filter(v => !v.options?.hidden).flatMap(v => v.notes) || [];
         return notes.filter(n => n.position === position);
     }
 
@@ -128,11 +114,12 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
             position = positions[Math.min(currentPositionIndex + 1, positions.length - 1)];
         }
 
-        const note = getNote(position, currentVoice);
+
+        const note = getNote(position, isEditMode ? currentVoice : undefined);
         if (note) {
-            playNote(note);
-            setCurrentDuration(note.duration);
+            selectNote(note)
         }
+
         setCurrentNote(note);
         setCurrentPosition(position);
         return position;
@@ -157,13 +144,11 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
             const currentPositionIndex = positions.findIndex(p => p === currentPosition);
             position = positions[Math.max(currentPositionIndex - 1, 0)];
         }
-
-        const note = getNote(position, currentVoice);
+        const note = getNote(position, isEditMode ? currentVoice : undefined);
         if (note) {
-            playNote(note);
-            setCurrentDuration(note.duration);
+            selectNote(note);
         }
-        setCurrentNote(note);
+        setCurrentNote(undefined);
         setCurrentPosition(position);
         return position;
     }
@@ -289,7 +274,6 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
     }
 
 
-
     const increasePitch = () => {
         if (currentNote) {
             const pitch = getNextPitch(score.data.stave.lines.map(l => l.pitch), currentNote.pitch);
@@ -391,7 +375,6 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         containerRef,
         setContainerRef,
 
-        filter, setFilter,
         dimensions,
         score, setScore,
         isEditMode, setIsEditMode,

@@ -19,7 +19,7 @@ const MicroTuningDialog: React.FC = () => {
     const handleSave = () => {
         if (context.currentNote) {
             context.currentNote.detune = detune;
-            playNote(context.currentNote, context.currentVoice, detune, context.semitones);
+            playNote(context.currentNote, context.currentVoice.name, {detune: detune, transpose: context.semitones});
             context.refresh();
         }
         close();

@@ -12,6 +12,7 @@ import Login from "./views/Login.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Admin from "./views/Admin.tsx";
 import ApiStatus from "./views/ApiStatus.tsx";
+import {Role} from "./context/AuthContext.tsx";
 
 const router = createBrowserRouter([
     {
@@ -35,6 +36,14 @@ const router = createBrowserRouter([
                 element: <ScoreDetails/>,
             },
             {
+                path: "/scores/:id/edit",
+                element: (
+                    <ProtectedRoute allowedRoles={[Role.ADMIN, Role.EDITOR]}>
+                        <ScoreDetails isEditMode />
+                    </ProtectedRoute>
+                ),
+            },
+            {
                 path: "/editor",
                 element: <Editor/>,
             },
@@ -45,20 +54,11 @@ const router = createBrowserRouter([
             {
                 path: "/admin",
                 element: (
-                    <ProtectedRoute allowedRoles={["ADMIN"]}>
+                    <ProtectedRoute allowedRoles={[Role.ADMIN, Role.EDITOR]}>
                         <Admin />
                     </ProtectedRoute>
                 ),
             }
-            // {
-            //     path: "/editor",
-            //     // Wrap the Editor component in a ProtectedRoute
-            //     element: (
-            //         <ProtectedRoute allowedRoles={['admin', 'editor']}>
-            //             <Editor />
-            //         </ProtectedRoute>
-            //     ),
-            // }
         ]
     },
 ]);

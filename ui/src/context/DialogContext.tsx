@@ -4,6 +4,7 @@ import {isEmpty} from "../utils/helpers.tsx";
 export enum DialogType {
     MICRO_TUNING,
     CLEAR_SCORE,
+    SAVE_SCORE,
     TRANSPOSE,
     STAVE_SELECTION,
     JSON,

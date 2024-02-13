@@ -4,12 +4,13 @@ import {Lyric} from "./Lyric";
 import {Divider} from "./Divider.ts";
 
 export interface Score {
-    id: string;
+    id?: number;
     name: string;
     description?: string;
     data: ScoreData;
     defaultTempo?: number;
     text?: string;
+    visibility?: string;
 }
 
 export interface ScoreData {

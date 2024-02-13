@@ -2,6 +2,7 @@ import React, {useMemo, useState} from 'react';
 import {Layout} from "../../utils/constants";
 import {useScoreContext} from "../../context/ScoreContext";
 import {calculateCursorNoteCoords} from "../../utils/calculation.helpers.tsx";
+import {useDevMode} from "../../context/DevModeContext.tsx";
 
 interface Properties {
     pitch: string;
@@ -12,7 +13,8 @@ interface Properties {
 const CursorNote: React.FC<Properties> = ({pitch, ...props}) => {
 
     const context = useScoreContext();
-    const [opacity, setOpacity] = useState<number>(0);
+    const {isDevMode} = useDevMode();
+    const [opacity, setOpacity] = useState<number>(isDevMode ? 0.2 : 0);
 
     const {x, y} = useMemo(() => {
         return calculateCursorNoteCoords(pitch, props.x, props.y, context);
@@ -25,7 +27,7 @@ const CursorNote: React.FC<Properties> = ({pitch, ...props}) => {
                 className={"hover-pointer"}
                 cx={x}
                 cy={y}
-                opacity={opacity}
+                opacity={isDevMode ? Math.max(opacity, 0.2) : opacity}
                 r={Layout.stave.note.RADIUS}
             >
                 <title>{pitch}</title>
@@ -34,7 +36,7 @@ const CursorNote: React.FC<Properties> = ({pitch, ...props}) => {
                 className={"hover-pointer"}
                 x={x - 50}
                 y={y - 10}
-                opacity={0}
+                opacity={isDevMode ? 0.1 : 0}
                 onMouseOver={() => setOpacity(0.5)}
                 onMouseLeave={() => setOpacity(0)}
                 r={Layout.stave.note.RADIUS * 2.5}

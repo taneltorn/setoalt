@@ -1,6 +1,6 @@
 import React, {useState, ReactNode, useEffect, useMemo} from 'react';
 import {AuthContext, UserDetails} from './AuthContext';
-import {DisplayGlobalError} from "../utils/helpers.tsx";
+import {DisplayError} from "../utils/helpers.tsx";
 import {useTranslation} from "react-i18next";
 
 const API_URL = import.meta.env.VITE_API_URL;
@@ -33,11 +33,11 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
                     setCurrentUser(data.user);
                     return data;
                 } else {
-                    DisplayGlobalError(t("toast.error.title"), t("toast.error.wrongCredentials"));
+                    DisplayError(t("toast.error.title"), t("toast.error.wrongCredentials"));
                 }
             })
             .catch(() => {
-                DisplayGlobalError(t("toast.error.title"), t("toast.error.message"));
+                DisplayError(t("toast.error.title"), t("toast.error.message"));
                 setCurrentUser(null);
             });
     }
@@ -51,7 +51,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
                 setCurrentUser(null);
             })
             .catch(() => {
-                DisplayGlobalError(t("toast.error.title"), t("toast.error.message"));
+                DisplayError(t("toast.error.title"), t("toast.error.message"));
                 setCurrentUser(null);
             });
     }
@@ -70,7 +70,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
                 }
             })
             .catch(() => {
-                DisplayGlobalError(t("toast.error.title"), t("toast.error.message"));
+                DisplayError(t("toast.error.title"), t("toast.error.message"));
                 setCurrentUser(null);
             });
     }

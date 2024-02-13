@@ -9,21 +9,22 @@ const VoiceFilter: React.FC = () => {
     const context = useScoreContext();
 
     const toggleVoice = (voice: Voice) => {
-        const voices = context.filter.voices || [];
-        if (voices.includes(voice.name)) {
-            context.filter.voices = voices.filter(v => v !== voice.name);
-        } else {
-            voices.push(voice.name);
-
+        const v = context.score.data.voices.find(v => v.name === voice.name);
+        if (!v) {
+            return;
         }
-        context.setFilter({...context.filter});
+        v.options = v.options || {};
+        v.options.hidden = !v.options.hidden;
         context.refresh();
     }
 
     const toggleShowAll = () => {
-        context.setFilter({
-            ...context.filter,
-            voices: !!context.filter.voices?.length ? [] : [context.currentVoice.name]
+        const allVoicesVisible = context.score.data.voices.every(v => !v.options?.hidden);
+        context.score.data.voices.forEach(v => {
+            v.options = v.options || {};
+            v.options.hidden = allVoicesVisible
+                ? v.name !== context.currentVoice.name
+                : false;
         });
         context.refresh();
     }
@@ -33,7 +34,8 @@ const VoiceFilter: React.FC = () => {
             {!context.isEditMode && context.score.data.voices.map(voice => (
                 <VoiceFilterButton
                     key={voice.name}
-                    active={!context.filter.voices?.length || !!context.filter.voices?.includes(voice.name)}
+                    active={!voice.options?.hidden}
+                    // active={context.filter.voices === undefined || !!context.filter.voices?.includes(voice.name)}
                     label={voice.name}
                     onClick={() => toggleVoice(voice)}
                 />
@@ -41,7 +43,7 @@ const VoiceFilter: React.FC = () => {
 
             {context.isEditMode &&
                 <VoiceFilterButton
-                    active={!context.filter.voices?.length || context.filter.voices?.length === context.score.data.voices.length}
+                    active={context.score.data.voices.every(v => !v.options?.hidden)}
                     label={"Näita kõiki"}
                     onClick={toggleShowAll}
                 />}
