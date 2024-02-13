@@ -19,6 +19,8 @@ const DEFAULT_VALUES = {
 interface Properties {
     values?: Score;
     onSubmit?: () => void;
+    mode?: "normal" | "modal";
+    children?: React.ReactNode;
 }
 
 const EditScoreForm: React.FC<Properties> = ({values, ...props}) => {
@@ -28,8 +30,6 @@ const EditScoreForm: React.FC<Properties> = ({values, ...props}) => {
     const {close} = useDialogContext();
     const scoreService = useScoreService();
 
-    console.log("default")
-    console.log(values)
     const {
         register,
         control,
@@ -86,6 +86,7 @@ const EditScoreForm: React.FC<Properties> = ({values, ...props}) => {
                     />
                 </Grid.Col>
             </Grid>
+
 
             <Grid mt={"md"}>
                 <Grid.Col>

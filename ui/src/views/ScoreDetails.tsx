@@ -59,7 +59,7 @@ const ScoreDetails: React.FC<Properties> = ({isEditMode}) => {
                 <StaveSkeleton/>
             </>}
 
-            {score && <>
+            {score && !scoreService.isLoading && <>
 
                 <Group justify={"space-between"}>
 
@@ -80,20 +80,19 @@ const ScoreDetails: React.FC<Properties> = ({isEditMode}) => {
 
                 {!isEditMode &&
                     <Grid mb={"md"}>
-                    <Grid.Col span={8}>
-                        {score.description && <Text>{score.description}</Text>}
-                    </Grid.Col>
-                </Grid>}
+                        <Grid.Col span={8}>
+                            {score.description && <Text>{score.description}</Text>}
+                        </Grid.Col>
+                    </Grid>}
 
 
                 <PlaybackPanel/>
                 <Stave score={score} isEditMode={isEditMode}/>
 
-                {isEditMode &&
-                    <EditScoreForm
-                        values={score}
-                        onSubmit={() => navigate(`/scores/${score.id}`)}
-                    />}
+                <EditScoreForm
+                    values={score}
+                    onSubmit={() => navigate(`/scores/${score.id}`)}
+                />
 
                 {!isEditMode && <Grid>
                     <Grid.Col span={8}>
