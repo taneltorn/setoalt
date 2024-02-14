@@ -87,17 +87,18 @@ const EditScoreForm: React.FC<Properties> = ({score, isOpen}) => {
                     <Title order={1}>{score?.name}</Title>
                 </Group>
 
-                {auth.currentUser?.isAuthorized && <Group>
-                    {!isOpen
-                        ?
-                        <Button size={"md"} onClick={() => navigate("edit")}>
-                            {t("button.edit")}
-                        </Button>
-                        :
-                        <Button size={"md"} type={"submit"}>
-                            {t("button.save")}
-                        </Button>}
-                </Group>}
+                {auth.currentUser?.isAuthorized &&
+                    <Group>
+                        {!isOpen
+                            ?
+                            <Button size={"md"} onClick={() => navigate("edit")}>
+                                {t("button.edit")}
+                            </Button>
+                            :
+                            <Button size={"md"} type={"submit"}>
+                                {t("button.save")}
+                            </Button>}
+                    </Group>}
             </Group>
 
             {!isOpen &&

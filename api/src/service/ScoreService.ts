@@ -10,14 +10,17 @@ class ScoreService {
         this.logger.level = 'info';
     }
 
-    public async findAllScores(user: any): Promise<any> {
+    public async findScores(user: any): Promise<any> {
         try {
             this.logger.info(`Querying scores`);
 
             let query = `SELECT *
                          FROM setoalt.scores
                          WHERE deleted_at IS NULL`;
-            query += user ? ` AND (created_by = '${user.username}' OR visibility = 'PUBLIC')` : ` AND visibility = 'PUBLIC'`;
+
+            if (user?.role !== 'ADMIN') {
+                query += user ? ` AND (created_by = '${user.username}' OR visibility = 'PUBLIC')` : ` AND visibility = 'PUBLIC'`;
+            }
             query += ` ORDER BY name ASC`;
 
             const result = await pool.query(query);
@@ -30,11 +33,15 @@ class ScoreService {
         }
     }
 
-    public async findScoreById(id: number): Promise<any> {
+    public async findScoreById(id: number, user: any): Promise<any> {
         try {
             this.logger.info(`Querying score with id = ${id}`);
 
-            const query = "SELECT * FROM setoalt.scores WHERE id = $1 AND deleted_at IS NULL";
+            let query = "SELECT * FROM setoalt.scores WHERE id = $1 AND deleted_at IS NULL";
+            if (user?.role !== 'ADMIN') {
+                query += user ? ` AND (created_by = '${user.username}' OR visibility = 'PUBLIC')` : ` AND visibility = 'PUBLIC'`;
+            }
+
             const result = await pool.query(query, [id]);
 
             this.logger.info(`Found ${result.rows.length} row(s)`);

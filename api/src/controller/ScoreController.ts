@@ -2,6 +2,7 @@ import express, {Request, Response} from "express";
 import log4js from "log4js";
 import {verifyToken} from "../utils/verifyToken";
 import scoreService from "../service/ScoreService";
+import {checkUser} from "../utils/checkUser";
 
 const logger = log4js.getLogger("UserController");
 
@@ -16,8 +17,8 @@ class ScoreController {
     }
 
     initializeRoutes() {
-        this.router.get("/", this.getScores.bind(this));
-        this.router.get("/:id", this.getScore.bind(this));
+        this.router.get("/", checkUser, this.getScores.bind(this));
+        this.router.get("/:id", checkUser, this.getScore.bind(this));
         this.router.post("/", verifyToken, this.createScore.bind(this));
         this.router.put("/:id", verifyToken, this.updateScore.bind(this));
         this.router.delete("/:id", verifyToken, this.deleteScore.bind(this));
@@ -28,13 +29,16 @@ class ScoreController {
             const id = parseInt(req.params.id);
             logger.info(`GET /api/scores/${id}`);
 
+            // @ts-ignore todo use custom type
+            const user = req.user;
+
             if (isNaN(id)) {
                 logger.info(`Invalid ID: ${id}`);
                 res.status(400).json({error: "Invalid ID"});
                 return;
             }
 
-            const result = await scoreService.findScoreById(id);
+            const result = await scoreService.findScoreById(id, user);
             if (!result.success) {
                 if (result.error === "Not found") {
                     res.status(404).json({error: `Score ${id} not found`});
@@ -57,7 +61,7 @@ class ScoreController {
             // @ts-ignore todo use custom type
             const user = req.user;
 
-            const result = await scoreService.findAllScores(user);
+            const result = await scoreService.findScores(user);
             if (!result.success) {
                 res.status(500).json({error: result.error});
                 return;

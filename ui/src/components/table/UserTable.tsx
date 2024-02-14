@@ -4,6 +4,7 @@ import {useTranslation} from "react-i18next";
 import {BsFillPencilFill, BsTrash} from "react-icons/bs";
 import {DialogType, useDialogContext} from "../../context/DialogContext.tsx";
 import {User} from "../../models/User.ts";
+import {Role} from "../../context/AuthContext.tsx";
 
 interface Properties {
     users: User[];
@@ -44,7 +45,8 @@ const ScoreTable: React.FC<Properties> = ({users, refresh}) => {
                             </Table.Td>
 
                             <Table.Td>
-                                <Badge>
+                                <Badge
+                                    bg={[Role.ADMIN, Role.EDITOR].includes(user.role) ? theme.primaryColor : theme.colors.gray[4]}>
                                     {user.role}
                                 </Badge>
                             </Table.Td>
