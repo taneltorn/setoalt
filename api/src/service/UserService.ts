@@ -9,7 +9,7 @@ class UserService {
         this.logger.level = 'info';
     }
 
-    public async findAllUsers() {
+    public async findAll() {
         try {
             this.logger.info(`Querying users`);
             const query = `
@@ -28,7 +28,26 @@ class UserService {
         }
     }
 
-    public async insertUser(data: any, user: any) {
+    public async findByUsername(username: string): Promise<any> {
+        try {
+            this.logger.info(`Querying user with username = ${username}`);
+
+            const query = "SELECT * FROM setoalt.users WHERE username = $1 AND deleted_at IS NULL";
+            const result = await pool.query(query, [username]);
+
+            this.logger.info(`Found ${result.rows.length} row(s)`);
+            if (result.rows.length === 0) {
+                return {success: false, error: "Not found"};
+            }
+            return {success: true, data: mapFields(result.rows[0])};
+
+        } catch (err) {
+            this.logger.error(err);
+            return {success: false, error: `Error querying user with username = ${username}`, detail: err.detail};
+        }
+    }
+
+    public async insert(data: any, user: any) {
         try {
             this.logger.info(`Inserting new user`);
             const query = `
@@ -56,7 +75,7 @@ class UserService {
         }
     }
 
-    public async deleteUser(id: number) {
+    public async delete(id: number) {
         try {
             this.logger.info(`Deleting user with id = ${id}`);
 

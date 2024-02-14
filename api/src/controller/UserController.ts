@@ -6,6 +6,7 @@ import userService from '../service//UserService';
 
 const logger = log4js.getLogger("UserController");
 
+
 class UserController {
 
     router = express.Router();
@@ -34,11 +35,13 @@ class UserController {
                 return;
             }
 
-            const result = await userService.findAllUsers();
+            const result = await userService.findAll();
             if (!result.success) {
                 res.status(500).json({error: result.error});
                 return;
             }
+
+            // todo omit password!
             res.status(200).json(result.data);
         } catch (err) {
             logger.error(err)
@@ -73,7 +76,7 @@ class UserController {
                 })
                 .catch(err => console.error(err.message));
 
-            const result = await userService.insertUser(data, user);
+            const result = await userService.insert(data, user);
             if (!result.success) {
                 if (result.error === "Duplicate username") {
                     res.status(409).json({error: "Username already exists"});
@@ -108,7 +111,7 @@ class UserController {
                 return;
             }
 
-            const result = await userService.deleteUser(userId);
+            const result = await userService.delete(userId);
             if (!result.success) {
                 res.status(500).json({error: result.error});
                 return;

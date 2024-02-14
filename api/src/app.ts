@@ -6,7 +6,7 @@ import * as path from 'path';
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 
-import authRoutes from './routes/authRoutes';
+import AuthController from './controller/AuthController';
 import UserController from "./controller/UserController";
 import ScoreController from "./controller/ScoreController";
 
@@ -25,7 +25,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
-app.use('/api/auth', authRoutes);
+app.use('/api/auth', AuthController);
 app.use('/api/scores', ScoreController);
 app.use('/api/users', UserController);
 
