@@ -41,14 +41,12 @@ const Login: React.FC = () => {
                 <Grid.Col span={4}>
                     <form onSubmit={handleSubmit(onSubmit)} noValidate>
                         <Input
-                            value={"admin"} // todo remove
                             size={"lg"}
                             placeholder={t("field.username")}
                             {...register("username", {required: t("field.required")})}
                         />
 
                         <Input
-                            value={"adminsetoalt"} // todo remove
                             size={"lg"}
                             placeholder={t("field.password")}
                             mt={"xs"}
