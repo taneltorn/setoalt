@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import Dialog from "./Dialog";
 import {DialogType, useDialogContext} from "../../context/DialogContext";
 import {useTranslation} from "react-i18next";
@@ -27,22 +27,38 @@ const SaveUserDialog: React.FC = () => {
         register,
         control,
         reset,
+        setValue,
+        unregister,
         handleSubmit,
         formState: {errors}
     } = useForm<User>({defaultValues: DEFAULT_VALUES});
 
     const onSubmit = async (values: User) => {
-        console.log(values);
-
-        userService.createUser(values)
+        console.log(values)
+        const saveUser = () => context.id ? userService.updateUser(context.id, values) : userService.createUser(values);
+        saveUser()
             .then(() => {
                 DisplaySuccess(t("toast.success.title"), t("toast.success.saveUser"))
-                close();
+                handleClose();
                 context.onSave && context.onSave();
-                reset(DEFAULT_VALUES);
             })
             .catch(() => DisplayError(t("toast.error.title"), t("toast.error.saveUser")));
     }
+
+    const handleClose = () => {
+        close();
+        reset();
+    }
+
+    useEffect(() => {
+        if (context.id) {
+            setValue("firstname", context.user?.firstname || "");
+            setValue("lastname", context.user?.lastname || "");
+            setValue("role", context.user?.role || "");
+            unregister("username");
+            unregister("password");
+        }
+    }, [context]);
 
     return (
         <Dialog
@@ -50,32 +66,62 @@ const SaveUserDialog: React.FC = () => {
             title={t("dialog.saveUser.title")}
             hidePrimaryButton
             hideSecondaryButton
-            onClose={close}
+            onClose={handleClose}
         >
             <Box style={{width: 700}}>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                    {!context.id && <>
+                        <Grid>
+                            <Grid.Col>
+                                <InputWrapper size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                                              label={t("view.admin.form.username")}>
+                                    <TextInput
+                                        size={"xl"}
+                                        placeholder={t("view.admin.form.username")}
+                                        {...register("username", {required: t("field.required")})}
+                                        error={errors.username?.message}
+                                    />
+                                </InputWrapper>
+                            </Grid.Col>
+                        </Grid>
+                        <Grid mt={"md"}>
+                            <Grid.Col>
+                                <InputWrapper size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                                              label={t("view.admin.form.password")}>
+                                    <TextInput
+                                        size={"xl"}
+                                        type={"password"}
+                                        placeholder={t("view.admin.form.password")}
+                                        {...register("password", {required: t("field.required")})}
+                                        error={errors.password?.message}
+                                    />
+                                </InputWrapper>
+                            </Grid.Col>
+                        </Grid>
+                    </>}
+
                     <Grid>
                         <Grid.Col>
                             <InputWrapper size={"lg"} labelProps={Layout.form.LABEL_PROPS}
-                                          label={t("view.admin.form.username")}>
+                                          label={t("view.admin.form.firstname")}>
                                 <TextInput
                                     size={"xl"}
-                                    placeholder={t("view.admin.form.username")}
-                                    {...register("username", {required: t("field.required")})}
+                                    placeholder={t("view.admin.form.firstname")}
+                                    {...register("firstname", {required: t("field.required")})}
                                     error={errors.username?.message}
                                 />
                             </InputWrapper>
                         </Grid.Col>
                     </Grid>
-                    <Grid mt={"md"}>
+                    <Grid>
                         <Grid.Col>
                             <InputWrapper size={"lg"} labelProps={Layout.form.LABEL_PROPS}
-                                          label={t("view.admin.form.password")}>
+                                          label={t("view.admin.form.lastname")}>
                                 <TextInput
                                     size={"xl"}
-                                    placeholder={t("view.admin.form.password")}
-                                    {...register("password", {required: t("field.required")})}
-                                    error={errors.password?.message}
+                                    placeholder={t("view.admin.form.lastname")}
+                                    {...register("lastname", {required: t("field.required")})}
+                                    error={errors.username?.message}
                                 />
                             </InputWrapper>
                         </Grid.Col>
@@ -105,7 +151,7 @@ const SaveUserDialog: React.FC = () => {
 
                     <Group justify={"end"}>
                         <Button mt={"md"} size={"lg"} variant={"light"} color={"gray.9"}
-                                onClick={close}>
+                                onClick={handleClose}>
                             {t("button.cancel")}
                         </Button>
                         <Button mt={"md"} size={"lg"} type={"submit"}>

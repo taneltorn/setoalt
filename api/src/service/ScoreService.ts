@@ -1,6 +1,7 @@
 import {pool} from "../config/dbConfig";
-import {mapFields} from "../utils/helpers";
 import log4js from "log4js";
+import Mapper from "../utils/Mapper";
+
 
 class ScoreService {
     private logger = log4js.getLogger("ScoreService");
@@ -22,7 +23,7 @@ class ScoreService {
             const result = await pool.query(query);
 
             this.logger.info(`Found ${result.rows.length} row(s)`);
-            return {success: true, data: mapFields(result.rows)};
+            return {success: true, data: Mapper.mapFields(result.rows)};
         } catch (err) {
             this.logger.error(err);
             return {success: false, error: "Error querying scores", detail: err.detail};
@@ -40,7 +41,7 @@ class ScoreService {
             if (result.rows.length === 0) {
                 return {success: false, error: "Not found"};
             }
-            return {success: true, data: mapFields(result.rows[0])};
+            return {success: true, data: Mapper.mapFields(result.rows[0])};
 
         } catch (err) {
             this.logger.error(err);

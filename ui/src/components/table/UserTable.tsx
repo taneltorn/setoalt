@@ -1,7 +1,7 @@
 import React from "react";
-import {Alert, Group, Table, Text, useMantineTheme} from "@mantine/core";
+import {Alert, Badge, Group, Table, Text, useMantineTheme} from "@mantine/core";
 import {useTranslation} from "react-i18next";
-import {BsTrash} from "react-icons/bs";
+import {BsFillPencilFill, BsTrash} from "react-icons/bs";
 import {DialogType, useDialogContext} from "../../context/DialogContext.tsx";
 import {User} from "../../models/User.ts";
 
@@ -22,6 +22,7 @@ const ScoreTable: React.FC<Properties> = ({users, refresh}) => {
                 <Table.Thead>
                     <Table.Tr>
                         <Table.Th>{t("view.admin.table.id")}</Table.Th>
+                        <Table.Th>{t("view.admin.table.name")}</Table.Th>
                         <Table.Th>{t("view.admin.table.username")}</Table.Th>
                         <Table.Th>{t("view.admin.table.role")}</Table.Th>
                         <Table.Th/>
@@ -35,15 +36,31 @@ const ScoreTable: React.FC<Properties> = ({users, refresh}) => {
                             </Table.Td>
 
                             <Table.Td>
+                                {`${user.firstname || ""} ${user.lastname || ""}`}
+                            </Table.Td>
+
+                            <Table.Td>
                                 {user.username}
                             </Table.Td>
 
                             <Table.Td>
-                                {user.role}
+                                <Badge>
+                                    {user.role}
+                                </Badge>
                             </Table.Td>
 
                             <Table.Td>
                                 <Group justify={"end"}>
+                                    <BsFillPencilFill
+                                        size={20}
+                                        className={"hover-pointer"}
+                                        color={theme.colors.gray[7]}
+                                        onClick={() => open(DialogType.SAVE_USER, {
+                                            id: user.id,
+                                            user: user,
+                                            onSave: refresh
+                                        })}
+                                    />
                                     <BsTrash
                                         size={20}
                                         className={"hover-pointer"}
@@ -63,9 +80,7 @@ const ScoreTable: React.FC<Properties> = ({users, refresh}) => {
             {!users.length &&
                 <Alert variant={"transparent"}>
                     <Group justify={"center"}>
-                        <Text>
-                            {t("table.noData")}
-                        </Text>
+                        <Text>{t("table.noData")}</Text>
                     </Group>
                 </Alert>}
         </>

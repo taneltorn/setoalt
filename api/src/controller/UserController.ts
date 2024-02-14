@@ -3,6 +3,9 @@ import bcrypt from "bcrypt";
 import log4js from "log4js";
 import {verifyToken} from "../utils/verifyToken";
 import userService from '../service//UserService';
+import {User} from "../model/User";
+import {UserDTO} from "../model/UserDTO";
+import Mapper from "../utils/Mapper";
 
 const logger = log4js.getLogger("UserController");
 
@@ -20,10 +23,11 @@ class UserController {
     initializeRoutes() {
         this.router.get("/", verifyToken, this.getUsers.bind(this));
         this.router.post("/", verifyToken, this.createUser.bind(this));
+        this.router.patch("/:id", verifyToken, this.updateUser.bind(this));
         this.router.delete("/:id", verifyToken, this.deleteUser.bind(this));
     }
 
-    async getUsers(req: Request, res: Response): Promise<void> {
+    async getUsers(req: Request, res: Response): Promise<UserDTO> {
         try {
             // @ts-ignore todo use custom type
             const user = req.user;
@@ -41,8 +45,8 @@ class UserController {
                 return;
             }
 
-            // todo omit password!
-            res.status(200).json(result.data);
+            const users = result.data.map((u: User) => Mapper.toUserDTO(u));
+            res.status(200).json(users);
         } catch (err) {
             logger.error(err)
             res.status(500).json({error: "An unexpected error occurred."});
@@ -82,6 +86,39 @@ class UserController {
                     res.status(409).json({error: "Username already exists"});
                     return;
                 }
+                res.status(500).json({error: result.error});
+                return;
+            }
+            res.status(200).json(result.data);
+        } catch (err) {
+            logger.error(err);
+            res.status(500).json({error: "An unexpected error occurred."});
+        }
+    }
+
+    async updateUser(req: Request, res: Response): Promise<void> {
+        try {
+            const id = parseInt(req.params.id);
+            logger.info(`PATCH /api/users/${id}`);
+
+            // @ts-ignore todo use custom type
+            const user = req.user;
+            const data = req.body;
+
+            if (user?.role !== 'ADMIN') {
+                logger.info(`Not authorized: ${user.username}`);
+                res.status(403).json({error: "Not authorized"});
+                return;
+            }
+
+            if (!data) {
+                logger.info(`Request body is null`);
+                res.status(400).json({error: "Missing user information"});
+                return;
+            }
+
+            const result = await userService.update(id, data, user);
+            if (!result.success) {
                 res.status(500).json({error: result.error});
                 return;
             }

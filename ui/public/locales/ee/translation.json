@@ -40,11 +40,14 @@
       "table": {
         "id": "ID",
         "username": "Kasutajanimi",
+        "name": "Nimi",
         "role": "Roll"
       },
       "form": {
         "username": "Kasutajanimi",
         "password": "Parool",
+        "firstname": "Eesnimi",
+        "lastname": "Perekonnanimi",
         "role": "Roll",
         "editor": "Toimetaja",
         "user": "Tavakasutaja"
@@ -102,7 +105,7 @@
   },
   "dialog": {
     "saveScore": {
-      "title": "Salvesta",
+      "title": "Salvesta noodistus",
       "description": "Salvesta tehtud noodistus."
     },
     "removeScore": {
@@ -110,7 +113,7 @@
       "description": "Kustuta noodistus {{name}}?"
     },
     "saveUser": {
-      "title": "Salvesta",
+      "title": "Lisa uus kasutaja",
       "description": "Lisa uus kasutaja."
     },
     "removeUser": {

@@ -119,7 +119,6 @@ const Sidebar: React.FC = () => {
 
                 <Box mt={"xl"}>
                     <DevMessage/>
-
                 </Box>
             </div>
         </>

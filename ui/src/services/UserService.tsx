@@ -9,25 +9,6 @@ const useUserService = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const cancelSource = axios.CancelToken.source();
 
-    // const fet = async (id: string): Promise<Score> => {
-    //     setIsLoading(true);
-    //     return axios.get(`${API_URL}/scores/${id}`, {
-    //         headers: {
-    //             'Content-Type': 'application/json',
-    //         },
-    //         withCredentials: true
-    //     })
-    //         .then(response => {
-    //             setIsLoading(false);
-    //             return response.data;
-    //         })
-    //         .catch(error => {
-    //             setIsLoading(false);
-    //             throw error;
-    //         });
-    // }
-
-
     const fetchUsers = async (): Promise<User[]> => {
         setIsLoading(true);
         return axios.get(`${API_URL}/users`, {
@@ -49,6 +30,24 @@ const useUserService = () => {
     const createUser = async (user: User): Promise<User> => {
         setIsLoading(true);
         return axios.post(`${API_URL}/users`, user, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true
+        })
+            .then(response => {
+                setIsLoading(false);
+                return response.data;
+            })
+            .catch(error => {
+                setIsLoading(false);
+                throw error;
+            });
+    }
+
+    const updateUser = async (id: number, user: User): Promise<User> => {
+        setIsLoading(true);
+        return axios.patch(`${API_URL}/users/${id}`, user, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -86,6 +85,7 @@ const useUserService = () => {
         isLoading,
         fetchUsers,
         createUser,
+        updateUser,
         removeUser,
         cancelSource
     }

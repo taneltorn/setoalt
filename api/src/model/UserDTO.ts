@@ -1,12 +1,7 @@
-type UserDTO = {
-    id: number;
+export type UserDTO = {
+    id: string;
     username: string;
-    password: string;
+    firstname?: string;
+    lastname?: string;
     role: string;
-    createdBy: string;
-    createdAt: object;
-    modifiedBy: null | string;
-    modifiedAt: object;
-    deletedBy: null | string;
-    deletedAt: null | object;
-};
+}
