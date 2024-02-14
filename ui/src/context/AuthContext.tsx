@@ -4,6 +4,7 @@ export interface UserDetails {
     id: number;
     username: string;
     role: Role;
+    isAuthorized: boolean;
 }
 
 export enum Role {

@@ -1,4 +1,7 @@
-INSERT INTO setoalt.scores (name, description, data, default_tempo, visibility, text)
+INSERT INTO setoalt.users (username, password, role, deleted_at)
+VALUES ('admin', '$2a$10$u2oOh6egvw1l4sEGvgfB4e62yEQoEg/Hnm/ObH8byJOYRM4VKHh7i', 'ADMIN', NULL);
+
+INSERT INTO setoalt.scores (name, description, data, default_tempo, visibility, text, created_by, deleted_at)
 VALUES ('Põllulaul',
         'ERA, DH 17 (34) < Värska al - Žanna Pärtlas, Janika Oras, Andreas Kalkun, Triino Ojamaa, salv. Jaan Tamm < Anastassia Puhm, eestütleja, Maria Rõžikova, killõ, ja koor (2006).',
         '{
@@ -498,4 +501,6 @@ lauluga lätt tüü ladusahe
 oh, kjauge’ ńoo’ kull´a käekese’
 aŕa sõudkõ’ ti virga’ sõrmõkõsõ’
 sis õks jovvam mi otsa õdagusta
-aŕa-ks jovvam mi põimta’ pikä põllu.');
+aŕa-ks jovvam mi põimta’ pikä põllu.',
+        'admin',
+        NULL);

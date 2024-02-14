@@ -5,6 +5,7 @@ export enum DialogType {
     MICRO_TUNING,
     CLEAR_SCORE,
     SAVE_SCORE,
+    REMOVE_SCORE,
     TRANSPOSE,
     STAVE_SELECTION,
     JSON,

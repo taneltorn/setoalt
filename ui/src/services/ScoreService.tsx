@@ -7,6 +7,7 @@ const API_URL = import.meta.env.VITE_API_URL;
 const useScoreService = () => {
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const cancelSource = axios.CancelToken.source();
 
     const fetchScore = async (id: string): Promise<Score> => {
         setIsLoading(true);
@@ -81,12 +82,32 @@ const useScoreService = () => {
             });
     }
 
+    const removeScore = async (id: number): Promise<Score> => {
+        setIsLoading(true);
+        return axios.delete(`${API_URL}/scores/${id}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true
+        })
+            .then(response => {
+                setIsLoading(false);
+                return response.data;
+            })
+            .catch(error => {
+                setIsLoading(false);
+                throw error;
+            });
+    }
+
     return {
         isLoading,
         fetchScore,
         fetchScores,
         createScore,
-        updateScore
+        updateScore,
+        removeScore,
+        cancelSource
     }
 };
 

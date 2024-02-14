@@ -1,5 +1,5 @@
 import React, {useState, ReactNode, useEffect, useMemo} from 'react';
-import {AuthContext, UserDetails} from './AuthContext';
+import {AuthContext, Role, UserDetails} from './AuthContext';
 import {DisplayError} from "../utils/helpers.tsx";
 import {useTranslation} from "react-i18next";
 
@@ -12,7 +12,7 @@ interface AuthProviderProps {
 export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => {
 
     const {t} = useTranslation();
-    const [isInitialized, setIsInistialized] = useState<boolean>(false);
+    const [isInitialized, setIsInitialized] = useState<boolean>(false);
     const [currentUser, setCurrentUser] = useState<UserDetails | null>();
 
     const login = async (username: string, password: string): Promise<any> => {
@@ -30,7 +30,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
             .then(response => response.json())
             .then(data => {
                 if (data.token && data.user) {
-                    setCurrentUser(data.user);
+                    setCurrentUser({...data.user, isAuthorized: [Role.ADMIN, Role.EDITOR].includes(data.user.role)});
                     return data;
                 } else {
                     DisplayError(t("toast.error.title"), t("toast.error.wrongCredentials"));
@@ -42,18 +42,17 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
             });
     }
 
-    const logout = (): Promise<any> => {
-        return fetch(`${API_URL}/auth/logout`, {
-            method: "POST",
-            credentials: "include"
-        })
-            .then(() => {
-                setCurrentUser(null);
-            })
-            .catch(() => {
-                DisplayError(t("toast.error.title"), t("toast.error.message"));
-                setCurrentUser(null);
+    const logout = async (): Promise<any> => {
+        try {
+            await fetch(`${API_URL}/auth/logout`, {
+                method: "POST",
+                credentials: "include"
             });
+            setCurrentUser(null);
+        } catch (e) {
+            DisplayError(t("toast.error.title"), t("toast.error.message"));
+            setCurrentUser(null);
+        }
     }
 
     const verify = async () => {
@@ -63,7 +62,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
             .then(response => response.json())
             .then((data) => {
                 if (data.user) {
-                    setCurrentUser(data.user);
+                    setCurrentUser({...data.user, isAuthorized: [Role.ADMIN, Role.EDITOR].includes(data.user.role)});
                     return;
                 } else {
                     setCurrentUser(null);
@@ -76,14 +75,14 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
     }
 
     useEffect(() => {
-        verify().then(() => setIsInistialized(true));
+        verify().then(() => setIsInitialized(true));
     }, []);
 
     const context = useMemo(() => ({
         currentUser,
         login,
         logout,
-        verify
+        verify,
     }), [currentUser, isInitialized]);
 
     return (

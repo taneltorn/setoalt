@@ -11,6 +11,7 @@ import {useAuth} from "../../context/AuthContext.tsx";
 import {MdOutlineLogout} from "react-icons/md";
 import {CiUser} from "react-icons/ci";
 import {FaUserGraduate} from "react-icons/fa";
+import DevMessage from "../DevMessage.tsx";
 
 const routes = [
     {id: 'home', icon: <IoHome className={classes.icon} size={24}/>, link: "/"},
@@ -110,6 +111,11 @@ const Sidebar: React.FC = () => {
                         </Button>
                     </Group>
                 </>}
+
+                <Box mt={"xl"}>
+                    <DevMessage/>
+
+                </Box>
             </div>
         </>
     );

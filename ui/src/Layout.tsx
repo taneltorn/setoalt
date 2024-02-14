@@ -2,7 +2,6 @@ import React from 'react';
 import {Outlet} from "react-router-dom";
 import {AppShell} from "@mantine/core";
 import Sidebar from "./components/sidebar/Sidebar.tsx";
-import DevMessage from "./components/DevMessage.tsx";
 
 const Layout: React.FC = () => {
 
@@ -16,7 +15,6 @@ const Layout: React.FC = () => {
                 <Sidebar/>
             </AppShell.Navbar>
             <AppShell.Main id={"content"}>
-                <DevMessage/>
                 <Outlet/>
             </AppShell.Main>
         </AppShell>

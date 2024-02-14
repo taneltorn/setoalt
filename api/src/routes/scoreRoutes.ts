@@ -3,17 +3,28 @@ import {pool} from "../config/dbConfig";
 import {verifyToken} from "../utils/verifyToken";
 import log4js from "log4js";
 import {toCamelCase} from "../utils/helpers";
+import {checkUser} from "../utils/checkUser";
 
 const logger = log4js.getLogger();
 logger.level = 'info';
 
 const router = express.Router();
 
-router.get("/", async (req: Request, res: Response): Promise<any> => {
+router.get("/", checkUser , async (req: Request, res: Response): Promise<any> => {
     logger.info("GET /api/scores");
 
+    // @ts-ignore todo use custom type
+    const user = req.user;
+
     try {
-        const query = "SELECT * FROM setoalt.scores";
+        let query = `SELECT *
+                     FROM setoalt.scores
+                     WHERE deleted_at IS NULL`;
+        query += (user
+            ?` AND (created_by = '${user.username}' OR visibility = 'PUBLIC')`
+            :` AND visibility = 'PUBLIC'`);
+        query += `ORDER BY name ASC`
+
         const result = await pool.query(query);
 
         const data = toCamelCase(result.rows);
@@ -36,7 +47,7 @@ router.get("/:id", async (req: Request, res: Response): Promise<void> => {
     try {
         logger.info(`Querying score with id = ${id} in database`);
 
-        const query = "SELECT * FROM setoalt.scores WHERE id = $1";
+        const query = "SELECT * FROM setoalt.scores WHERE id = $1 AND deleted_at IS NULL";
         const result = await pool.query(query, [id]);
 
         if (result.rows.length === 0) {
@@ -71,17 +82,18 @@ router.post("/", verifyToken, async (req: Request, res: Response): Promise<void>
         logger.info(`Inserting new score`);
         logger.info(user.id);
 
-        const query = `INSERT INTO setoalt.scores(name, user_id, description, data, default_tempo, text, visibility)
-                       VALUES($1, $2, $3, $4, $5, $6, $7) 
+        const query = `INSERT INTO setoalt.scores(name, description, data, default_tempo, text, visibility, created_by, deleted_at)
+                       VALUES($1, $2, $3, $4, $5, $6, $7, $8) 
                        RETURNING *`;
         const result = await pool.query(query, [
             score.name,
-            1, // todo => user.id
             score.description,
             score.data,
             score.defaultTempo,
             score.text,
-            score.visibility
+            score.visibility,
+            user.username,
+            null
         ]);
         res.status(200).json(result.rows[0]);
     } catch (err) {
@@ -114,8 +126,10 @@ router.put("/:id", verifyToken, async (req: Request, res: Response): Promise<voi
                 data = $3, 
                 default_tempo = $4, 
                 text = $5, 
-                visibility = $6
-            WHERE id = $7 AND user_id = $8
+                visibility = $6,
+                modified_by = $7,
+                modified_at = NOW()
+            WHERE id = $8
             RETURNING *;
         `;
         const result = await pool.query(query, [
@@ -125,8 +139,8 @@ router.put("/:id", verifyToken, async (req: Request, res: Response): Promise<voi
             updatedScore.defaultTempo,
             updatedScore.text,
             updatedScore.visibility,
+            user.username,
             scoreId,
-            user.id,
         ]);
 
         if (result.rows.length === 0) {
@@ -153,6 +167,7 @@ router.delete("/:id", verifyToken, async (req: Request, res: Response): Promise<
     try {
         logger.info(`Deleting score with id = ${id}`);
 
+        // todo soft delete
         const query = "DELETE FROM setoalt.scores WHERE id = $1 RETURNING id";
         const result = await pool.query(query, [id]);
 

@@ -84,7 +84,6 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                                 voice={voice}
                             />)}
                     {<CursorMarker/>}
-
                 </svg>
             </div>
         </>

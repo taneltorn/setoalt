@@ -11,6 +11,7 @@ export interface Score {
     defaultTempo?: number;
     text?: string;
     visibility?: string;
+    createdBy?: string;
 }
 
 export interface ScoreData {

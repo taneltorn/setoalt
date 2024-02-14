@@ -20,7 +20,10 @@ const VoiceControls: React.FC = () => {
 
         const note = context.getNote(context.currentPosition, voice);
         context.setCurrentNote(note);
-        context.setFilter({...context.filter, voices: [voice.name]});
+        context.score.data.voices.forEach(v => {
+            v.options = v.options || {};
+            v.options.hidden = v.name !== voice.name;
+        });
         context.refresh();
     }
 

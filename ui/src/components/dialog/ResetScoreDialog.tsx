@@ -3,6 +3,7 @@ import {useScoreContext} from "../../context/ScoreContext";
 import Dialog from "./Dialog";
 import {DialogType, useDialogContext} from "../../context/DialogContext";
 import {useTranslation} from "react-i18next";
+import {Text} from "@mantine/core";
 
 const ResetScoreDialog: React.FC = () => {
 
@@ -25,7 +26,7 @@ const ResetScoreDialog: React.FC = () => {
             onSecondaryButtonClick={close}
             onClose={close}
         >
-            <p>{t("dialog.resetScore.description")}</p>
+            <Text>{t("dialog.resetScore.description")}</Text>
         </Dialog>
     )
 };

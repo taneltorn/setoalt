@@ -25,7 +25,7 @@ interface Properties {
 
 const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
 
-    const [score, setScore] = useState<Score>(EmptyScore);
+    const [score, setScore] = useState<Score>({...EmptyScore});
 
     const [containerRef, setContainerRef] = useState<RefObject<HTMLElement> | undefined>();
 
@@ -213,7 +213,7 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
     const insertOrUpdateNote = (pitch: string, position: number, moveToNext?: boolean) => {
         const note = getNote(position, currentVoice);
         if (note) {
-            changePitch(note, pitch, moveToNext);
+            changePitch(note, pitch);
             return;
         }
         insertNote(pitch, position, moveToNext);
@@ -239,6 +239,7 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
             if (moveToNext) {
                 const newPosition = note.position + durationToScalar(note.duration);
                 setCurrentPosition(newPosition);
+                setCurrentNote(getNote(newPosition, currentVoice));
             } else {
                 setCurrentPosition(position);
                 setCurrentNote(note);

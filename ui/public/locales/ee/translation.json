@@ -9,7 +9,19 @@
     },
     "scores": {
       "title": "Kuula",
-      "description": "Siin saad kuulata loodud noodistusi."
+      "description": "Siin saad kuulata loodud noodistusi.",
+      "details": {
+        "noData": "Antud noodistust ei leitud.",
+        "back": "Vaata kõiki noodistusi"
+      },
+      "table": {
+        "name": "Nimi",
+        "stave": "Noodijoonestik",
+        "voices": "Hääled",
+        "visibility": "Nähtavus",
+        "createdBy": "Looja"
+      },
+      "search": "Otsi noodistust"
     },
     "editor": {
       "title": "Redaktor",
@@ -18,7 +30,7 @@
         "name": "Pealkiri",
         "description": "Kirjeldus",
         "defaultTempo": "Vaikimisi tempo (BPM)",
-        "text": "Sõnad",
+        "text": "Laulusõnad",
         "visibility": "Avalik"
       }
     },
@@ -81,6 +93,10 @@
       "title": "Salvesta",
       "description": "Salvesta tehtud noodistus."
     },
+    "removeScore": {
+      "title": "Oled sa kindel?",
+      "description": "Kustuta noodistus {{name}}?"
+    },
     "microTuning": {
       "title": "Mikrotonaalsus",
       "description": "Muuda noodi {{pitch}} kõrgust tsentides."
@@ -108,13 +124,18 @@
     "reset": "Lähtesta",
     "submit": "Saada"
   },
+  "label": {
+    "public": "Avalik",
+    "private": "Privaatne"
+  },
   "field": {
     "required": "Väli on kohustuslik"
   },
   "toast": {
     "success": {
       "title": "OK",
-      "saveScore": "Noodistuse salvestamine õnnestus."
+      "saveScore": "Noodistus salvestatud.",
+      "removeScore": "Noodistus kustutatud."
     },
     "error": {
       "title": "Viga!",
@@ -122,6 +143,8 @@
       "fetchData": "Ei õnnestunud andmeid laadida.",
       "wrongCredentials": "Vale kasutajanimi/parool",
       "logout": "Ei õnnestunud andmeid laadida.",
+      "fetchScore": "Noodistuse laadimine ebaõnnestus.",
+      "removeScore": "Noodistuse kustutamine ebaõnnestus.",
       "saveScore": "Noodistuse salvestamine ebaõnnestus.",
       "updateScore": "Noodistuse muutmine ebaõnnestus."
     }

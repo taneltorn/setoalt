@@ -11,7 +11,6 @@ import {NoteRange} from "./dictionaries.ts";
 import {notifications} from "@mantine/notifications";
 import {IoMdAlert} from "react-icons/io";
 import {StavePPT} from "../staves/StavePPT.ts";
-import {AudioContextProperties} from "../context/AudioContext.tsx";
 
 export const isEmpty = (object: any) => {
     return !object || Object.keys(object).length === 0 || object.length === 0;
@@ -26,7 +25,6 @@ export const EmptyScore: Score = {
         lyrics: [],
         voices: []
     }
-
 }
 
 export const durationToScalar = (duration: string): number => {
@@ -108,9 +106,9 @@ export const getDurationOffset = (a: string, b: string) => {
 }
 
 
-export const isDimmed = (note: Note, voice: Voice, scoreContext: ScoreContextProperties, audioContext: AudioContextProperties) => {
+export const isDimmed = (note: Note, voice: Voice, scoreContext: ScoreContextProperties) => {
     return !scoreContext.score.data.stave.lines.find(l => l.pitch === note.pitch) ||
-        !audioContext.isPlaying && scoreContext.isEditMode && voice.options?.hidden;
+        scoreContext.isEditMode && voice.options?.hidden;
 }
 
 export const isHighlighted = (note: Note, context: ScoreContextProperties) => {
@@ -137,18 +135,18 @@ export const transpose = (pitch: string, semitones: number): string => {
     return "";
 }
 
-export const canShiftLeft = (currentPosition: number, note?: Note) => {
-    if (currentPosition < 0) {
-        return false;
-    }
-    if (note) {
-        const maxPosition = currentPosition - 1 + durationToScalar(note.duration);
-
-        return maxPosition < (currentPosition - 1);
-    }
-
-    return true;
-}
+// export const canShiftLeft = (currentPosition: number, note?: Note) => {
+//     if (currentPosition < 0) {
+//         return false;
+//     }
+//     if (note) {
+//         const maxPosition = currentPosition - 1 + durationToScalar(note.duration);
+//
+//         return maxPosition < (currentPosition - 1);
+//     }
+//
+//     return true;
+// }
 
 export const DisplayError = (title: string, message: string) => {
     notifications.show({
