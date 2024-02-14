@@ -3,10 +3,10 @@ import Dialog from "./Dialog";
 import {DialogType, useDialogContext} from "../../context/DialogContext";
 import {useTranslation} from "react-i18next";
 import {Box, Button, Grid, Group, InputWrapper, Slider, Switch, Textarea, TextInput} from "@mantine/core";
-import { useScoreContext } from '../../context/ScoreContext.tsx';
+import {useScoreContext} from '../../context/ScoreContext.tsx';
 import useScoreService from '../../services/ScoreService.tsx';
 import {Controller, useForm} from 'react-hook-form';
-import {Playback} from "../../utils/constants.ts";
+import {Layout, Playback} from "../../utils/constants.ts";
 import {Score} from "../../models/Score.ts";
 import {DisplayError, DisplaySuccess} from "../../utils/helpers.tsx";
 import {useNavigate} from "react-router-dom";
@@ -62,58 +62,69 @@ const SaveScoreDialog: React.FC = () => {
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     <Grid>
                         <Grid.Col>
-                            <TextInput
-                                size={"xl"}
-                                placeholder={t("view.editor.form.name")}
-                                {...register("name", {required: t("field.required")})}
-                                error={errors.name?.message}
-                                {...handleFocus}
-                            />
+                            <InputWrapper size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                                          label={t("view.editor.form.name")}>
+                                <TextInput
+                                    size={"xl"}
+                                    placeholder={t("view.editor.form.name")}
+                                    {...register("name", {required: t("field.required")})}
+                                    error={errors.name?.message}
+                                    {...handleFocus}
+                                />
+                            </InputWrapper>
                         </Grid.Col>
                     </Grid>
                     <Grid mt={"md"}>
                         <Grid.Col>
-                            <Controller
-                                name="visibility"
-                                control={control}
-                                render={({field}) => (
-                                    <Switch
-                                        size={"lg"}
-                                        {...field}
-                                        disabled={false}
-                                        label={t("view.editor.form.visibility")}
-                                        checked={field.value === "PUBLIC"}
-                                        onChange={(event) => field.onChange(event.currentTarget.checked ? "PUBLIC" : "PRIVATE")}
-                                    />
-                                )}
-                            />
+                            <InputWrapper size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                                          label={t("view.editor.form.visibility")}>
+                                <Controller
+                                    name="visibility"
+                                    control={control}
+                                    render={({field}) => (
+                                        <Switch
+                                            size={"lg"}
+                                            {...field}
+                                            disabled={false}
+                                            label={t(`label.${field.value?.toLowerCase()}`)}
+                                            checked={field.value === "PUBLIC"}
+                                            onChange={(event) => field.onChange(event.currentTarget.checked ? "PUBLIC" : "PRIVATE")}
+                                        />
+                                    )}
+                                />
+                            </InputWrapper>
                         </Grid.Col>
                     </Grid>
 
 
                     <Grid mt={"md"}>
                         <Grid.Col>
-                            <Textarea
-                                size={"xl"}
-                                autosize
-                                minRows={6}
-                                maxRows={10}
-                                placeholder={t("view.editor.form.description")}
-                                {...register("description")}
-                                {...handleFocus}
-                            />
+                            <InputWrapper size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                                          label={t("view.editor.form.description")}>
+                                <Textarea
+                                    size={"xl"}
+                                    autosize
+                                    minRows={6}
+                                    maxRows={10}
+                                    placeholder={t("view.editor.form.description")}
+                                    {...register("description")}
+                                    {...handleFocus}
+                                />
+                            </InputWrapper>
                         </Grid.Col>
                     </Grid>
 
                     <Grid mt={"lg"}>
                         <Grid.Col>
-                            <InputWrapper size={"xl"} label={t("view.editor.form.defaultTempo")}>
+                            <InputWrapper size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                                          label={t("view.editor.form.defaultTempo")}>
                                 <Controller
                                     name="defaultTempo"
                                     control={control}
                                     render={({field}) => (
                                         <Slider
                                             size={"xl"}
+                                            mt={"md"}
                                             min={Playback.MIN_TEMPO}
                                             max={Playback.MAX_TEMPO}
                                             value={field.value}
@@ -127,15 +138,18 @@ const SaveScoreDialog: React.FC = () => {
 
                     <Grid mt={"md"}>
                         <Grid.Col>
-                            <Textarea
-                                size={"xl"}
-                                autosize
-                                minRows={6}
-                                maxRows={10}
-                                placeholder={t("view.editor.form.text")}
-                                {...register("text")}
-                                {...handleFocus}
-                            />
+                            <InputWrapper size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                                          label={t("view.editor.form.text")}>
+                                <Textarea
+                                    size={"xl"}
+                                    autosize
+                                    minRows={6}
+                                    maxRows={10}
+                                    placeholder={t("view.editor.form.text")}
+                                    {...register("text")}
+                                    {...handleFocus}
+                                />
+                            </InputWrapper>
                         </Grid.Col>
                     </Grid>
 

@@ -29,8 +29,9 @@ const Dialog: React.FC<Properties> = (props) => {
         <Modal
             size={props.size || "auto"}
             opened={props.type === active}
+            closeButtonProps={{size: "xl"}}
             onClose={handleClose}
-            title={<Title order={3}>{props.title}</Title>}
+            title={<Title order={2}>{props.title}</Title>}
         >
             <Group>
                 {props.children}

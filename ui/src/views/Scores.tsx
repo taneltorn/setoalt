@@ -1,12 +1,12 @@
 import {Button, CloseButton, Group, Input, Text, Title} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import React, {useEffect, useState} from "react";
-import {Link} from "react-router-dom";
-import ScoreTable from "./ScoreTable.tsx";
+import {useNavigate} from "react-router-dom";
+import ScoreTable from "../components/table/ScoreTable.tsx";
 import useScoreService from "../services/ScoreService.tsx";
 import {Score} from "../models/Score.ts";
 import {DisplayError} from "../utils/helpers.tsx";
-import {Role, useAuth} from "../context/AuthContext.tsx";
+import {useAuth} from "../context/AuthContext.tsx";
 import RemoveScoreDialog from "../components/dialog/RemoveScoreDialog.tsx";
 import {CiSearch} from "react-icons/ci";
 
@@ -16,7 +16,7 @@ const ScoreDetails: React.FC = () => {
     const scoreService = useScoreService();
     const [scores, setScores] = useState<Score[]>([]);
     const [filteredScores, setFilteredScores] = useState<Score[]>([]);
-
+    const navigate = useNavigate();
     const [search, setSearch] = useState<string>("");
 
     const auth = useAuth();
@@ -41,7 +41,6 @@ const ScoreDetails: React.FC = () => {
             ? scores.filter(s => s.name.toLowerCase().includes(search.toLowerCase()))
             : scores;
         setFilteredScores(s);
-
     }, [scores, search]);
 
     return (
@@ -66,14 +65,14 @@ const ScoreDetails: React.FC = () => {
                         />
                     }/>
             </Group>
-            <ScoreTable scores={filteredScores} onScoreRemove={fetchData}/>
+            <ScoreTable scores={filteredScores} refresh={fetchData}/>
 
             <RemoveScoreDialog/>
 
-            {[Role.ADMIN, Role.EDITOR].includes(auth.currentUser?.role as Role) &&
-                <Link to={"/editor"}>
-                    <Button mt={"md"}>Lisa uus</Button>
-                </Link>}
+            {auth.currentUser?.isAuthorized &&
+                <Button mt={"md"} onClick={() => navigate("/editor")}>
+                    {t("button.addNew")}
+                </Button>}
         </>
     );
 }

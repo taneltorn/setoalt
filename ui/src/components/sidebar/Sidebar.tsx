@@ -7,10 +7,9 @@ import {GiGClef} from "react-icons/gi";
 import {PiSpeakerSimpleHigh} from "react-icons/pi";
 import {IoHome, IoLogInOutline, IoSettingsOutline} from "react-icons/io5";
 import packageInfo from "../../../package.json";
-import {useAuth} from "../../context/AuthContext.tsx";
+import {Role, useAuth} from "../../context/AuthContext.tsx";
 import {MdOutlineLogout} from "react-icons/md";
-import {CiUser} from "react-icons/ci";
-import {FaUserGraduate} from "react-icons/fa";
+import {FaUser, FaUserGraduate, FaUserTie} from "react-icons/fa";
 import DevMessage from "../DevMessage.tsx";
 
 const routes = [
@@ -22,6 +21,13 @@ const routes = [
 const protectedRoutes = [
     {id: 'admin', icon: <IoSettingsOutline className={classes.icon} size={24}/>, link: "/admin"},
 ];
+
+const icons = new Map([
+    [Role.ADMIN, <FaUserGraduate size={24}/>],
+    [Role.EDITOR, <FaUserTie size={24}/>],
+    [Role.USER, <FaUser size={24}/>],
+    ["guest", <FaUser size={24}/>]
+]);
 
 const Sidebar: React.FC = () => {
 
@@ -38,8 +44,7 @@ const Sidebar: React.FC = () => {
         <>
             <Group py={"sm"} justify={"space-between"} visibleFrom={"lg"}>
                 <Group>
-                    {!auth.currentUser && <CiUser size={24}/>}
-                    {auth.currentUser?.role === "ADMIN" && <FaUserGraduate size={24}/>}
+                    {icons.get(auth.currentUser?.role || "guest")}
                     <Text>
                         {auth.currentUser?.username || "külaline"}
                     </Text>
@@ -62,7 +67,7 @@ const Sidebar: React.FC = () => {
                     />
                 ))}
 
-                {auth.currentUser && <>
+                {auth.currentUser?.isAdmin && <>
                     <Divider my={"lg"}/>
 
                     {protectedRoutes.map((item, index) => (

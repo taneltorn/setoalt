@@ -7,8 +7,8 @@ import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 
 import authRoutes from './routes/authRoutes';
-import scoreRoutes from './routes/scoreRoutes';
-import router from "./routes/scoreRoutes";
+import UserController from "./controller/UserController";
+import ScoreController from "./controller/ScoreController";
 
 const app = express();
 const port = 3000;
@@ -26,7 +26,8 @@ app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
 app.use('/api/auth', authRoutes);
-app.use('/api/scores', scoreRoutes);
+app.use('/api/scores', ScoreController);
+app.use('/api/users', UserController);
 
 app.get('/api/status', async (req: Request, res: Response): Promise<void> => {
     console.log("GET /api/status");

@@ -1,6 +1,6 @@
-export const toCamelCase = (input: any): any => {
+export const mapFields = (input: any): any => {
     if (Array.isArray(input)) {
-        return input.map(element => toCamelCase(element));
+        return input.map(element => mapFields(element));
     } else if (input !== null && typeof input === 'object') {
         const newObj: any = {};
         Object.keys(input).forEach((key) => {
@@ -9,7 +9,7 @@ export const toCamelCase = (input: any): any => {
                     .replace('-', '')
                     .replace('_', '');
             });
-            newObj[camelKey] = toCamelCase(input[key]); // Recursively apply to nested objects/arrays
+            newObj[camelKey] = mapFields(input[key]); // Recursively apply to nested objects/arrays
         });
         return newObj;
     }

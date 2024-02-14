@@ -44,6 +44,11 @@ export const Layout = {
     // todo remove, use LYRICS_BAR instead of HEIGHT
     lyrics: {
         HEIGHT: 100,
+    },
+    form: {
+        LABEL_PROPS: {
+            fw: 600, ml: 0, mb: 8
+        }
     }
 }
 

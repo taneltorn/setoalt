@@ -42,13 +42,13 @@ const Login: React.FC = () => {
                     <form onSubmit={handleSubmit(onSubmit)} noValidate>
                         <Input
                             size={"lg"}
-                            placeholder={t("field.username")}
+                            placeholder={t("view.login.form.username")}
                             {...register("username", {required: t("field.required")})}
                         />
 
                         <Input
                             size={"lg"}
-                            placeholder={t("field.password")}
+                            placeholder={t("view.login.form.password")}
                             mt={"xs"}
                             type={"password"}
                             {...register("password", {required: t("field.required")})}

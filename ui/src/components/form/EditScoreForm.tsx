@@ -17,7 +17,7 @@ import {
 import {Controller, useForm} from "react-hook-form";
 import useScoreService from "../../services/ScoreService.tsx";
 import {DisplayError, DisplaySuccess} from "../../utils/helpers.tsx";
-import {Playback} from "../../utils/constants.ts";
+import {Layout, Playback} from "../../utils/constants.ts";
 import {Score} from "../../models/Score.ts";
 import {Link, useNavigate} from "react-router-dom";
 import {IoChevronBack} from "react-icons/io5";
@@ -63,9 +63,9 @@ const EditScoreForm: React.FC<Properties> = ({score, isOpen}) => {
         const score = {...values, data: context.score.data};
         const saveScore = () => score.id ? scoreService.updateScore(score.id, score) : scoreService.createScore(score);
         saveScore()
-            .then(data => {
+            .then(() => {
                 DisplaySuccess(t("toast.success.title"), t("toast.success.saveScore"));
-                navigate(`/scores/${data.id}`);
+                navigate(`/scores/${score.id}`);
             })
             .catch(() => DisplayError(t("toast.error.title"), t("toast.error.saveScore")));
     }
@@ -87,19 +87,17 @@ const EditScoreForm: React.FC<Properties> = ({score, isOpen}) => {
                     <Title order={1}>{score?.name}</Title>
                 </Group>
 
-                {auth.currentUser && <>
+                {auth.currentUser?.isAuthorized && <Group>
                     {!isOpen
                         ?
-                        <Link to={"edit"}>
-                            <Button size={"md"}>
-                                {t("button.edit")}
-                            </Button>
-                        </Link>
+                        <Button size={"md"} onClick={() => navigate("edit")}>
+                            {t("button.edit")}
+                        </Button>
                         :
-                        <Button mt={"md"} size={"lg"} type={"submit"}>
+                        <Button size={"md"} type={"submit"}>
                             {t("button.save")}
                         </Button>}
-                </>}
+                </Group>}
             </Group>
 
             {!isOpen &&
@@ -111,33 +109,39 @@ const EditScoreForm: React.FC<Properties> = ({score, isOpen}) => {
 
             {isOpen && <>
                 <Group>
-                    <TextInput size={"xl"}
-                               placeholder={t("view.editor.form.name")}
-                               {...register("name", {required: t("field.required")})}
-                               error={errors.name?.message}
-                               {...handleFocus} />
+                    <InputWrapper size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                                  label={t("view.editor.form.name")}>
+                        <TextInput size={"xl"}
+                                   placeholder={t("view.editor.form.name")}
+                                   {...register("name", {required: t("field.required")})}
+                                   error={errors.name?.message}
+                                   {...handleFocus} />
+                    </InputWrapper>
 
                 </Group>
 
                 <Group mt={"lg"}>
-                    <Controller
-                        name="visibility"
-                        control={control}
-                        render={({field}) => (
-                            <Switch
-                                size={"lg"}
-                                {...field}
-                                disabled={false}
-                                label={t("view.editor.form.visibility")}
-                                checked={field.value === "PUBLIC"}
-                                onChange={(event) => field.onChange(event.currentTarget.checked ? "PUBLIC" : "PRIVATE")}
-                            />
-                        )}
-                    />
+                    <InputWrapper size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                                  label={t("view.editor.form.visibility")}>
+                        <Controller
+                            name="visibility"
+                            control={control}
+                            render={({field}) => (
+                                <Switch
+                                    size={"lg"}
+                                    {...field}
+                                    disabled={false}
+                                    label={t(`label.${field.value?.toLowerCase()}`)}
+                                    checked={field.value === "PUBLIC"}
+                                    onChange={(event) => field.onChange(event.currentTarget.checked ? "PUBLIC" : "PRIVATE")}
+                                />
+                            )}
+                        />
+                    </InputWrapper>
                 </Group>
                 <Grid mt={"lg"}>
                     <Grid.Col span={8}>
-                        <InputWrapper size={"lg"} labelProps={{fw: 600, ml: 15}}
+                        <InputWrapper size={"lg"} labelProps={Layout.form.LABEL_PROPS}
                                       label={t("view.editor.form.description")}>
                             <Textarea
                                 size={"xl"}
@@ -170,13 +174,14 @@ const EditScoreForm: React.FC<Properties> = ({score, isOpen}) => {
 
             {isOpen && <Grid mt={"lg"}>
                 <Grid.Col span={4}>
-                    <InputWrapper size={"lg"} labelProps={{fw: 600, ml: 15}} label={t("view.editor.form.defaultTempo")}>
+                    <InputWrapper size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                                  label={t("view.editor.form.defaultTempo")}>
                         <Controller
                             name="defaultTempo"
                             control={control}
                             render={({field}) => (
                                 <Slider
-                                    size={"md"}
+                                    size={"xl"}
                                     mt={"md"}
                                     min={Playback.MIN_TEMPO}
                                     max={Playback.MAX_TEMPO}
@@ -191,7 +196,8 @@ const EditScoreForm: React.FC<Properties> = ({score, isOpen}) => {
 
             {isOpen && <Grid mt={"lg"}>
                 <Grid.Col span={8}>
-                    <InputWrapper size={"lg"} labelProps={{fw: 600, ml: 15}} label={t("view.editor.form.text")}>
+                    <InputWrapper size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                                  label={t("view.editor.form.text")}>
                         <Textarea
                             size={"xl"}
                             autosize

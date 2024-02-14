@@ -5,11 +5,13 @@ export interface UserDetails {
     username: string;
     role: Role;
     isAuthorized: boolean;
+    isAdmin: boolean;
 }
 
 export enum Role {
     ADMIN = "ADMIN",
-    EDITOR = "EDITOR"
+    EDITOR = "EDITOR",
+    USER = "USER",
 }
 
 

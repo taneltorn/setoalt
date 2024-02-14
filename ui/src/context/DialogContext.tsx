@@ -6,6 +6,8 @@ export enum DialogType {
     CLEAR_SCORE,
     SAVE_SCORE,
     REMOVE_SCORE,
+    SAVE_USER,
+    REMOVE_USER,
     TRANSPOSE,
     STAVE_SELECTION,
     JSON,

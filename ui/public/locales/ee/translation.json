@@ -31,12 +31,24 @@
         "description": "Kirjeldus",
         "defaultTempo": "Vaikimisi tempo (BPM)",
         "text": "Laulusõnad",
-        "visibility": "Avalik"
+        "visibility": "Nähtavus"
       }
     },
     "admin": {
       "title": "Adminpaneel",
-      "description": "Kasutajate haldus"
+      "description": "Kasutajate haldus",
+      "table": {
+        "id": "ID",
+        "username": "Kasutajanimi",
+        "role": "Roll"
+      },
+      "form": {
+        "username": "Kasutajanimi",
+        "password": "Parool",
+        "role": "Roll",
+        "editor": "Toimetaja",
+        "user": "Tavakasutaja"
+      }
     },
     "login": {
       "title": "Logi sisse",
@@ -97,6 +109,14 @@
       "title": "Oled sa kindel?",
       "description": "Kustuta noodistus {{name}}?"
     },
+    "saveUser": {
+      "title": "Salvesta",
+      "description": "Lisa uus kasutaja."
+    },
+    "removeUser": {
+      "title": "Oled sa kindel?",
+      "description": "Kustuta kasutaja {{username}}?"
+    },
     "microTuning": {
       "title": "Mikrotonaalsus",
       "description": "Muuda noodi {{pitch}} kõrgust tsentides."
@@ -122,7 +142,11 @@
     "edit": "Redigeeri",
     "close": "Sulge redaktor",
     "reset": "Lähtesta",
-    "submit": "Saada"
+    "submit": "Saada",
+    "addNew": "Lisa uus"
+  },
+  "table": {
+    "noData": "Andmeid ei leitud."
   },
   "label": {
     "public": "Avalik",
@@ -135,7 +159,9 @@
     "success": {
       "title": "OK",
       "saveScore": "Noodistus salvestatud.",
-      "removeScore": "Noodistus kustutatud."
+      "saveUser": "Kasutaja lisatud.",
+      "removeScore": "Noodistus kustutatud.",
+      "removeUser": "Kasutaja kustutatud."
     },
     "error": {
       "title": "Viga!",
@@ -146,7 +172,9 @@
       "fetchScore": "Noodistuse laadimine ebaõnnestus.",
       "removeScore": "Noodistuse kustutamine ebaõnnestus.",
       "saveScore": "Noodistuse salvestamine ebaõnnestus.",
-      "updateScore": "Noodistuse muutmine ebaõnnestus."
+      "updateScore": "Noodistuse muutmine ebaõnnestus.",
+      "saveUser": "Kasutaja lisamine ebaõnnestus.",
+      "removeUser": "Kasutaja kustutamine ebaõnnestus."
     }
   },
   "stave": {

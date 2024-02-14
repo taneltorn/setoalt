@@ -30,7 +30,11 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
             .then(response => response.json())
             .then(data => {
                 if (data.token && data.user) {
-                    setCurrentUser({...data.user, isAuthorized: [Role.ADMIN, Role.EDITOR].includes(data.user.role)});
+                    setCurrentUser({
+                        ...data.user,
+                        isAuthorized: [Role.ADMIN, Role.EDITOR].includes(data.user.role),
+                        isAdmin: Role.ADMIN === data.user.role
+                    });
                     return data;
                 } else {
                     DisplayError(t("toast.error.title"), t("toast.error.wrongCredentials"));
@@ -62,7 +66,11 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
             .then(response => response.json())
             .then((data) => {
                 if (data.user) {
-                    setCurrentUser({...data.user, isAuthorized: [Role.ADMIN, Role.EDITOR].includes(data.user.role)});
+                    setCurrentUser({
+                        ...data.user,
+                        isAuthorized: [Role.ADMIN, Role.EDITOR].includes(data.user.role),
+                        isAdmin: Role.ADMIN === data.user.role
+                    });
                     return;
                 } else {
                     setCurrentUser(null);
