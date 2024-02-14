@@ -118,10 +118,11 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         const note = getNote(position, isEditMode ? currentVoice : undefined);
         if (note) {
             selectNote(note)
+        } else {
+            setCurrentNote(undefined);
+            setCurrentPosition(position);
         }
 
-        setCurrentNote(note);
-        setCurrentPosition(position);
         return position;
     }
 
@@ -147,9 +148,10 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         const note = getNote(position, isEditMode ? currentVoice : undefined);
         if (note) {
             selectNote(note);
+        } else {
+            setCurrentNote(undefined);
+            setCurrentPosition(position);
         }
-        setCurrentNote(undefined);
-        setCurrentPosition(position);
         return position;
     }
 
