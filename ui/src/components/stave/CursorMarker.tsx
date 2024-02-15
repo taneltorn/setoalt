@@ -1,7 +1,6 @@
 import React, {useMemo} from 'react';
 import {Layout} from "../../utils/constants";
 import {useScoreContext} from "../../context/ScoreContext";
-// import {useMantineTheme} from "@mantine/core";
 import {calculateCursorCoords} from "../../utils/calculation.helpers.tsx";
 import CursorNote from "./CursorNote.tsx";
 import {useAudioContext} from "../../context/AudioContext.tsx";
@@ -27,6 +26,15 @@ const CursorMarker: React.FC = () => {
         context.selectPosition(context.cursorPosition);
     }
 
+    const showNote = useMemo(() => {
+        if (!context.isEditMode) return false;
+
+        const note = context.getNote(context.cursorPosition, context.currentVoice);
+        if (note) return true;
+
+        return !context.currentVoice.occupiedPositions?.includes(context.cursorPosition);
+    }, [context.isEditMode, context.cursorPosition, context.currentVoice]);
+
     return (<>
             <rect
                 x={x - Layout.stave.note.SPACING / 2 - Layout.stave.note.RADIUS / 2}
@@ -38,7 +46,7 @@ const CursorMarker: React.FC = () => {
                 style={{zIndex: 1}}
                 onClick={handleSelect}
             />
-            {context.isEditMode && context.score.data.stave.lines.map(line =>
+            {showNote && context.score.data.stave.lines.map(line =>
                 <CursorNote
                     key={line.pitch}
                     pitch={line.pitch} x={x}

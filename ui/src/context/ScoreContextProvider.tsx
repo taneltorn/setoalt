@@ -4,10 +4,13 @@ import {Score} from "../models/Score";
 import {
     durationToScalar,
     EmptyScore,
+    excludeNotePositionRange,
     getDurationOffset,
     getNextPitch,
     getPositions,
     getPreviousPitch,
+    includeNotePositionRange,
+    wouldProduceOverlap,
 } from "../utils/helpers.tsx";
 import {Voice} from "../models/Voice";
 import {ScoreContext} from './ScoreContext';
@@ -38,6 +41,8 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
     const [currentDuration, setCurrentDuration] = useState<string>("8n");
     const [currentVoice, setCurrentVoice] = useState<Voice>({...Voices[0]});
     const [cursorPosition, setCursorPosition] = useState<number>(0);
+
+    // const [occupiedPositions, setOccupiedPositions] = useState<number[]>([]);
 
     const audioContext = useAudioContext();
 
@@ -155,18 +160,6 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         return position;
     }
 
-    const changeDuration = (duration: string) => {
-        setCurrentDuration(duration);
-
-        if (currentNote) {
-
-            const offset = getDurationOffset(duration, currentNote.duration)
-            shiftNotes(currentNote.position, offset);
-
-            currentNote.duration = duration;
-            playNote(currentNote);
-        }
-    }
 
     const shiftNotes = (position: number, offset: number, resetCurrentNote?: boolean) => {
         if (resetCurrentNote) {
@@ -181,16 +174,21 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
                     setCurrentNote(n);
                 }
             });
+
+        currentVoice.occupiedPositions = currentVoice.occupiedPositions?.map(n => n > position ? (n + offset) : n);
+
     }
 
     const shiftLeft = () => {
         // todo atm does not take into account prev note duration
-        if (currentPosition <= 0 || !!getNote(currentPosition - 1, currentVoice)) return;
+        // if (currentPosition <= 0 || !!getNote(currentPosition - 1, currentVoice)) return;
 
-        shiftNotes(currentPosition - 1, -1);
-        refresh();
-        setCurrentPosition(currentPosition - 1);
-
+        const newPosition = currentPosition - 1;
+        if (!currentVoice.occupiedPositions?.includes(newPosition)) {
+            shiftNotes(newPosition, -1);
+            refresh();
+            setCurrentPosition(newPosition);
+        }
     }
 
     const shiftRight = () => {
@@ -228,6 +226,10 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
             position: p > 0 ? p : 0,
             duration: currentDuration,
         }
+        if (wouldProduceOverlap(currentVoice, note)) {
+            note.duration = "8n";
+            setCurrentDuration("8n");
+        }
 
         if (!score.data.voices.find(v => v.name === currentVoice.name)) {
             score.data.voices.push({...currentVoice, notes: []});
@@ -235,6 +237,8 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
 
         const voice = score.data.voices.find(v => v.name === currentVoice.name);
         if (voice) {
+            currentVoice.occupiedPositions = includeNotePositionRange(currentVoice, note);
+
             voice.notes.push(note);
             voice.notes.sort((a, b) => (a.position || 0) - (b.position || 0));
 
@@ -249,6 +253,22 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
 
             playNote(note);
             refresh();
+        }
+    }
+
+    const changeDuration = (duration: string) => {
+        setCurrentDuration(duration);
+
+        if (currentNote) {
+            currentVoice.occupiedPositions = excludeNotePositionRange(currentVoice, currentNote);
+
+            const offset = getDurationOffset(duration, currentNote.duration)
+            shiftNotes(currentNote.position, offset);
+
+            currentNote.duration = duration;
+            currentVoice.occupiedPositions = includeNotePositionRange(currentVoice, currentNote);
+
+            playNote(currentNote);
         }
     }
 
@@ -269,6 +289,8 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
             const voice = score.data.voices.find(v => v.name === currentVoice.name);
             if (voice) {
                 voice.notes = voice.notes.filter(n => n.position !== currentNote.position);
+
+                currentVoice.occupiedPositions = excludeNotePositionRange(currentVoice, currentNote);
                 setCurrentNote(undefined);
             }
             refresh();
@@ -356,9 +378,7 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         refresh();
     }
 
-    const dimensions: StaveDimensions = useMemo<StaveDimensions>(() => calculateStaveDimensions(score),
-        // todo, atm calc is trigged for each change, need to listen only for line and break changes, [score.data.stave.lines, score.data.dividers] does not work
-        [score]);
+    const dimensions: StaveDimensions = useMemo<StaveDimensions>(() => calculateStaveDimensions(score), [score]);
 
     const endPosition: number = useMemo<number>(() => {
         const notes = score.data.voices.flatMap(v => v.notes).sort((a, b) => a.position - b.position);
@@ -389,6 +409,8 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         currentVoice, setCurrentVoice,
         currentDuration, setCurrentDuration,
         cursorPosition, setCursorPosition,
+
+        // occupiedPositions, setOccupiedPositions,
 
         selectNote,
         selectPosition,

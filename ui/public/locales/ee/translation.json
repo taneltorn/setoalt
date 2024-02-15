@@ -113,8 +113,7 @@
       "description": "Kustuta noodistus {{name}}?"
     },
     "saveUser": {
-      "title": "Lisa uus kasutaja",
-      "description": "Lisa uus kasutaja."
+      "title": "Salvesta kasutaja"
     },
     "removeUser": {
       "title": "Oled sa kindel?",
@@ -151,9 +150,15 @@
   "table": {
     "noData": "Andmeid ei leitud."
   },
-  "label": {
+  "visibility": {
     "public": "Avalik",
     "private": "Privaatne"
+  },
+  "role": {
+    "admin": "Administraator",
+    "editor": "Toimetaja",
+    "user": "Kasutaja",
+    "guest": "Külaline"
   },
   "field": {
     "required": "Väli on kohustuslik"
@@ -162,7 +167,7 @@
     "success": {
       "title": "OK",
       "saveScore": "Noodistus salvestatud.",
-      "saveUser": "Kasutaja lisatud.",
+      "saveUser": "Kasutaja salvestatud.",
       "removeScore": "Noodistus kustutatud.",
       "removeUser": "Kasutaja kustutatud."
     },
@@ -176,7 +181,7 @@
       "removeScore": "Noodistuse kustutamine ebaõnnestus.",
       "saveScore": "Noodistuse salvestamine ebaõnnestus.",
       "updateScore": "Noodistuse muutmine ebaõnnestus.",
-      "saveUser": "Kasutaja lisamine ebaõnnestus.",
+      "saveUser": "Kasutaja salvestamine ebaõnnestus.",
       "removeUser": "Kasutaja kustutamine ebaõnnestus."
     }
   },

@@ -4,15 +4,13 @@ import {verifyToken} from "../utils/verifyToken";
 import scoreService from "../service/ScoreService";
 import {checkUser} from "../utils/checkUser";
 
-const logger = log4js.getLogger("UserController");
-
 class ScoreController {
 
     router = express.Router();
     logger = log4js.getLogger("ScoreController");
 
     constructor() {
-        this.logger.level = 'info';
+        this.logger.level = process.env.LOG_LEVEL;
         this.initializeRoutes();
     }
 
@@ -27,13 +25,13 @@ class ScoreController {
     async getScore(req: Request, res: Response): Promise<void> {
         try {
             const id = parseInt(req.params.id);
-            logger.info(`GET /api/scores/${id}`);
+            this.logger.info(`GET /api/scores/${id}`);
 
             // @ts-ignore todo use custom type
             const user = req.user;
 
             if (isNaN(id)) {
-                logger.info(`Invalid ID: ${id}`);
+                this.logger.info(`Invalid ID: ${id}`);
                 res.status(400).json({error: "Invalid ID"});
                 return;
             }
@@ -49,14 +47,14 @@ class ScoreController {
             }
             res.status(200).json(result.data);
         } catch (err) {
-            logger.error(err);
+            this.logger.error(err);
             res.status(500).json({error: "An unexpected error occurred."});
         }
     }
 
     async getScores(req: Request, res: Response): Promise<void> {
         try {
-            logger.info("GET /api/scores");
+            this.logger.info("GET /api/scores");
 
             // @ts-ignore todo use custom type
             const user = req.user;
@@ -68,7 +66,7 @@ class ScoreController {
             }
             res.status(200).json(result.data);
         } catch (err) {
-            logger.error(err);
+            this.logger.error(err);
             res.status(500).json({error: "An unexpected error occurred."});
         }
     }
@@ -79,11 +77,11 @@ class ScoreController {
             const user = req.user;
             const data = req.body;
 
-            logger.info(`POST /api/scores as ${user.username}:`)
-            logger.info(req.body);
+            this.logger.info(`POST /api/scores as ${user.username}:`)
+            this.logger.info(req.body);
 
             if (!data) {
-                logger.info(`Request body is null`);
+                this.logger.info(`Request body is null`);
                 res.status(400).json({error: "Missing score information"});
                 return;
             }
@@ -95,7 +93,7 @@ class ScoreController {
             }
             res.status(200).json(result.data);
         } catch (err) {
-            logger.error(err);
+            this.logger.error(err);
             res.status(500).json({error: "An unexpected error occurred."});
         }
     }
@@ -107,17 +105,17 @@ class ScoreController {
             const data = req.body;
 
             const id = parseInt(req.params.id);
-            logger.info(`PUT /scores/${id} as ${user.username}:`);
-            logger.info(req.body);
+            this.logger.info(`PUT /scores/${id} as ${user.username}:`);
+            this.logger.info(req.body);
 
             if (isNaN(id)) {
-                logger.info(`Invalid ID: ${id}`);
+                this.logger.info(`Invalid ID: ${id}`);
                 res.status(400).json({error: "Invalid ID"});
                 return;
             }
 
             if (!data) {
-                logger.info(`Request body is null`);
+                this.logger.info(`Request body is null`);
                 res.status(400).json({error: "Missing score information"});
                 return;
             }
@@ -129,7 +127,7 @@ class ScoreController {
             }
             res.status(200).json(result.data);
         } catch (err) {
-            logger.error(err);
+            this.logger.error(err);
             res.status(500).json({error: "An unexpected error occurred."});
         }
     }
@@ -140,10 +138,10 @@ class ScoreController {
             const user = req.user;
 
             const id = parseInt(req.params.id);
-            logger.info(`DELETE /api/scores/${id} as ${user.username}`);
+            this.logger.info(`DELETE /api/scores/${id} as ${user.username}`);
 
             if (isNaN(id)) {
-                logger.info(`Invalid ID: ${id}`);
+                this.logger.info(`Invalid ID: ${id}`);
                 res.status(400).json({error: "Invalid ID"});
                 return;
             }
@@ -155,7 +153,7 @@ class ScoreController {
             }
             res.status(200).json(result.data);
         } catch (err) {
-            logger.error(err);
+            this.logger.error(err);
             res.status(500).json({error: "An unexpected error occurred."});
         }
     }

@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
-import {Button, Text, Title} from "@mantine/core";
+import {Button, Grid, Text, Title} from "@mantine/core";
 import useUserService from "../services/UserService.tsx";
 import {DisplayError} from "../utils/helpers.tsx";
 import UserTable from "../components/table/UserTable.tsx";
@@ -35,7 +35,11 @@ const Admin: React.FC = () => {
             <Title order={1} mb={"xs"}>{t("view.admin.title")}</Title>
             <Text>{t("view.admin.description")} </Text>
 
-            <UserTable users={users} refresh={fetchData}/>
+            <Grid>
+                <Grid.Col span={{xl: 10, lg: 12}}>
+                    <UserTable users={users} refresh={fetchData}/>
+                </Grid.Col>
+            </Grid>
 
             <Button mt={"md"} onClick={() => open(DialogType.SAVE_USER, {onSave: () => fetchData()})}>
                 {t("button.addNew")}

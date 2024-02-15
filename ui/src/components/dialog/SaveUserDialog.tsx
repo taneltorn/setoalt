@@ -34,7 +34,6 @@ const SaveUserDialog: React.FC = () => {
     } = useForm<User>({defaultValues: DEFAULT_VALUES});
 
     const onSubmit = async (values: User) => {
-        console.log(values)
         const saveUser = () => context.id ? userService.updateUser(context.id, values) : userService.createUser(values);
         saveUser()
             .then(() => {
@@ -120,8 +119,7 @@ const SaveUserDialog: React.FC = () => {
                                 <TextInput
                                     size={"xl"}
                                     placeholder={t("view.admin.form.lastname")}
-                                    {...register("lastname", {required: t("field.required")})}
-                                    error={errors.username?.message}
+                                    {...register("lastname")}
                                 />
                             </InputWrapper>
                         </Grid.Col>

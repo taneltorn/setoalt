@@ -20,7 +20,6 @@ const CursorNote: React.FC<Properties> = ({pitch, ...props}) => {
         return calculateCursorNoteCoords(pitch, props.x, props.y, context);
     }, [pitch, props.x, props.y]);
 
-
     return (<>
         {context.cursorPosition >= 0 && <>
             <circle

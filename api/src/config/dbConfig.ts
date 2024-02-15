@@ -1,14 +1,19 @@
 import { Pool } from 'pg';
 import { config } from 'dotenv';
 import * as path from 'path';
+import log4js from "log4js";
+import * as process from "process";
 
 config({ path: path.resolve(__dirname, '../../../.env') });
 
-console.log("Creating new database pool");
-console.log(`host: ${process.env.POSTGRES_HOST}`);
-console.log(`database: ${process.env.POSTGRES_DB}`);
-console.log(`user: ${process.env.POSTGRES_USER}`);
-console.log(`port: ${process.env.POSTGRES_PORT}`);
+const logger = log4js.getLogger();
+logger.level = process.env.LOG_LEVEL;
+
+logger.info("Creating database pool");
+logger.info(`host: ${process.env.POSTGRES_HOST}`);
+logger.info(`database: ${process.env.POSTGRES_DB}`);
+logger.info(`user: ${process.env.POSTGRES_USER}`);
+logger.info(`port: ${process.env.POSTGRES_PORT}`);
 
 
 export const pool = new Pool({

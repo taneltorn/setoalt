@@ -14,11 +14,13 @@ export const Layout = {
             STROKE_WIDTH_BOLD: 3,
         },
         note: {
-            RADIUS: 7,
+            RADIUS: 8,
             REPEATING_OFFSET: 7,
             SPACING: 60,
             SHAPE: 0,
             DIMMED_OPACITY: 0.2,
+            QUARTER_NOTE_STROKE: 4,
+            HALF_NOTE_STROKE: 2,
         },
         divider: {
             BAR_HEIGHT: 140, // todo could use dimensions.y instead, am some svg weirdness

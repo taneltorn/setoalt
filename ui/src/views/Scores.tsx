@@ -1,4 +1,4 @@
-import {Button, CloseButton, Group, Input, Text, Title} from "@mantine/core";
+import {Button, CloseButton, Grid, Group, Input, Text, Title} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
@@ -65,7 +65,11 @@ const ScoreDetails: React.FC = () => {
                         />
                     }/>
             </Group>
-            <ScoreTable scores={filteredScores} refresh={fetchData}/>
+                <Grid>
+                    <Grid.Col span={{xl: 10, lg: 12}}>
+                        <ScoreTable scores={filteredScores} refresh={fetchData}/>
+                    </Grid.Col>
+                </Grid>
 
             <RemoveScoreDialog/>
 

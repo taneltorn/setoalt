@@ -2,12 +2,11 @@ import {pool} from "../config/dbConfig";
 import log4js from "log4js";
 import Mapper from "../utils/Mapper";
 
-
 class ScoreService {
     private logger = log4js.getLogger("ScoreService");
 
     constructor() {
-        this.logger.level = 'info';
+        this.logger.level = process.env.LOG_LEVEL;
     }
 
     public async findScores(user: any): Promise<any> {

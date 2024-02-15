@@ -119,8 +119,11 @@ export const isHighlighted = (note: Note, context: ScoreContextProperties) => {
 }
 
 
-export const range = (n: number) => {
-    return Array.from({length: n}, (_, index) => index + 1);
+export const range = (start: number, end?: number): number[] => {
+    if (!end) {
+        return Array.from({length: start}, (_, index) => index + 1);
+    }
+    return Array.from({length: end - start + 1}, (_, i) => start + i);
 }
 
 export const sort = (array: number[]) => {
@@ -135,18 +138,33 @@ export const transpose = (pitch: string, semitones: number): string => {
     return "";
 }
 
-// export const canShiftLeft = (currentPosition: number, note?: Note) => {
-//     if (currentPosition < 0) {
-//         return false;
-//     }
-//     if (note) {
-//         const maxPosition = currentPosition - 1 + durationToScalar(note.duration);
-//
-//         return maxPosition < (currentPosition - 1);
-//     }
-//
-//     return true;
-// }
+export const getPositionRange = (note: Note) => {
+    return range(note.position, note.position + durationToScalar(note.duration) - 1);
+}
+
+export const includeNotePositionRange = (voice: Voice, note: Note): number[] => {
+    if (!voice.occupiedPositions) {
+        return [];
+    }
+    const positionRange = getPositionRange(note);
+    return sort(Array.from(new Set([...voice.occupiedPositions, ...positionRange])));
+}
+
+export const excludeNotePositionRange = (voice: Voice, note: Note): number[] => {
+    if (!voice.occupiedPositions) {
+        return [];
+    }
+    const positionRange = getPositionRange(note);
+    return voice.occupiedPositions.filter(p => !positionRange.includes(p));
+}
+
+export const wouldProduceOverlap = (voice: Voice, note: Note) => {
+    if (!voice.occupiedPositions) {
+        return false;
+    }
+    const positionRange = getPositionRange(note);
+    return positionRange.some(p => voice.occupiedPositions && voice.occupiedPositions.includes(p));
+}
 
 export const DisplayError = (title: string, message: string) => {
     notifications.show({

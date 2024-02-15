@@ -86,7 +86,7 @@ const SaveScoreDialog: React.FC = () => {
                                             size={"lg"}
                                             {...field}
                                             disabled={false}
-                                            label={t(`label.${field.value?.toLowerCase()}`)}
+                                            label={t(`visibility.${field.value?.toLowerCase()}`)}
                                             checked={field.value === "PUBLIC"}
                                             onChange={(event) => field.onChange(event.currentTarget.checked ? "PUBLIC" : "PRIVATE")}
                                         />

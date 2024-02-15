@@ -6,10 +6,6 @@ import {Voice} from "../models/Voice";
 import {DividerType} from "../models/Divider.ts";
 import {StaveDimensions} from "../models/Dimensions.ts";
 
-export interface Filter {
-    voices?: string[];
-}
-
 export interface ScoreContextProperties {
 
     containerRef: RefObject<HTMLElement> | undefined;

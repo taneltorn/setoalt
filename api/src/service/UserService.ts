@@ -6,7 +6,7 @@ class UserService {
     private logger = log4js.getLogger("UserService");
 
     constructor() {
-        this.logger.level = 'info'; // todo to .env
+        this.logger.level = process.env.LOG_LEVEL;
     }
 
     public async findAll() {

@@ -7,16 +7,13 @@ import {User} from "../model/User";
 import {UserDTO} from "../model/UserDTO";
 import Mapper from "../utils/Mapper";
 
-const logger = log4js.getLogger("UserController");
-
-
 class UserController {
 
     router = express.Router();
     logger = log4js.getLogger("UserController");
 
     constructor() {
-        this.logger.level = 'info';
+        this.logger.level = process.env.LOG_LEVEL;
         this.initializeRoutes();
     }
 
@@ -32,9 +29,9 @@ class UserController {
             // @ts-ignore todo use custom type
             const user = req.user;
 
-            logger.info(`GET /api/users as user ${user.username}`);
+            this.logger.info(`GET /api/users as user ${user.username}`);
             if (user?.role !== 'ADMIN') {
-                logger.info(`Not authorized: ${user.username}`);
+                this.logger.info(`Not authorized: ${user.username}`);
                 res.status(403).json({error: "Not authorized"});
                 return;
             }
@@ -48,7 +45,7 @@ class UserController {
             const users = result.data.map((u: User) => Mapper.toUserDTO(u));
             res.status(200).json(users);
         } catch (err) {
-            logger.error(err)
+            this.logger.error(err)
             res.status(500).json({error: "An unexpected error occurred."});
         }
     }
@@ -58,17 +55,17 @@ class UserController {
             // @ts-ignore todo use custom type
             const user = req.user;
 
-            logger.info(`POST /api/users as user ${user.username}`);
+            this.logger.info(`POST /api/users as user ${user.username}`);
             const data = req.body;
 
             if (user?.role !== 'ADMIN') {
-                logger.info(`Not authorized: ${user.username}`);
+                this.logger.info(`Not authorized: ${user.username}`);
                 res.status(403).json({error: "Not authorized"});
                 return;
             }
 
             if (!data) {
-                logger.info(`Request body is null`);
+                this.logger.info(`Request body is null`);
                 res.status(400).json({error: "Missing user information"});
                 return;
             }
@@ -91,7 +88,7 @@ class UserController {
             }
             res.status(200).json(result.data);
         } catch (err) {
-            logger.error(err);
+            this.logger.error(err);
             res.status(500).json({error: "An unexpected error occurred."});
         }
     }
@@ -99,20 +96,20 @@ class UserController {
     async updateUser(req: Request, res: Response): Promise<void> {
         try {
             const id = parseInt(req.params.id);
-            logger.info(`PATCH /api/users/${id}`);
+            this.logger.info(`PATCH /api/users/${id}`);
 
             // @ts-ignore todo use custom type
             const user = req.user;
             const data = req.body;
 
             if (user?.role !== 'ADMIN') {
-                logger.info(`Not authorized: ${user.username}`);
+                this.logger.info(`Not authorized: ${user.username}`);
                 res.status(403).json({error: "Not authorized"});
                 return;
             }
 
             if (!data) {
-                logger.info(`Request body is null`);
+                this.logger.info(`Request body is null`);
                 res.status(400).json({error: "Missing user information"});
                 return;
             }
@@ -124,7 +121,7 @@ class UserController {
             }
             res.status(200).json(result.data);
         } catch (err) {
-            logger.error(err);
+            this.logger.error(err);
             res.status(500).json({error: "An unexpected error occurred."});
         }
     }
@@ -132,18 +129,18 @@ class UserController {
     async deleteUser(req: Request, res: Response): Promise<void> {
         try {
             const userId = parseInt(req.params.id);
-            logger.info(`DELETE /api/users/${userId}`);
+            this.logger.info(`DELETE /api/users/${userId}`);
 
             // @ts-ignore todo use custom type
             const user = req.user;
             if (user?.role !== 'ADMIN') {
-                logger.info(`Not authorized: ${user.username}`);
+                this.logger.info(`Not authorized: ${user.username}`);
                 res.status(403).json({error: "Not authorized"});
                 return;
             }
 
             if (isNaN(userId)) {
-                logger.info(`Invalid ID: ${userId}`);
+                this.logger.info(`Invalid ID: ${userId}`);
                 res.status(400).json({error: "Invalid ID"});
                 return;
             }
@@ -155,7 +152,7 @@ class UserController {
             }
             res.status(200).json({message: "User deleted successfully", deletedUser: result});
         } catch (err) {
-            logger.error(err);
+            this.logger.error(err);
             res.status(500).json({error: "An unexpected error occurred."});
         }
     }

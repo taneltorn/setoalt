@@ -9,11 +9,16 @@ import bodyParser from "body-parser";
 import AuthController from './controller/AuthController';
 import UserController from "./controller/UserController";
 import ScoreController from "./controller/ScoreController";
+import log4js from "log4js";
+import process from "process";
 
 const app = express();
 const port = 3000;
 
 config({path: path.resolve(__dirname, '../../.env')});
+
+const logger = log4js.getLogger();
+logger.level = process.env.LOG_LEVEL;
 
 app.use(cors({
     credentials: true,
@@ -39,5 +44,6 @@ app.get('/api/status', async (req: Request, res: Response): Promise<void> => {
 });
 
 app.listen(port, () => {
-    console.log(`Server running on port ${port}`);
+    logger.info(`Application started`);
+    logger.info(`Server running on port ${port}`);
 });

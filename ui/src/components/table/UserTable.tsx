@@ -47,7 +47,7 @@ const ScoreTable: React.FC<Properties> = ({users, refresh}) => {
                             <Table.Td>
                                 <Badge
                                     bg={[Role.ADMIN, Role.EDITOR].includes(user.role) ? theme.primaryColor : theme.colors.gray[4]}>
-                                    {user.role}
+                                    {t(`role.${user.role.toLowerCase()}`)}
                                 </Badge>
                             </Table.Td>
 

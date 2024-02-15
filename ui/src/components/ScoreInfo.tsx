@@ -11,19 +11,12 @@ const ScoreInfo: React.FC = () => {
     return (
         <div style={{marginTop: 20 , padding: "10px 15px", backgroundColor: "#f9f9f9    ", borderRadius: "16px"}}>
             <code>
-
                 <Grid>
                     <Grid.Col span={6}>
                         <pre><strong>Current position</strong></pre>
                         <pre>position: {context.currentPosition}, duration: {context.currentDuration}, voice: {context.currentVoice.name}</pre>
                     </Grid.Col>
-                    <Grid.Col span={6}>
-                        <pre><strong>Cursor</strong></pre>
-                        <pre>position: {context.cursorPosition}, coords: {x}/{y}, pixels: {cx}/{cy}</pre>
-                    </Grid.Col>
-                </Grid>
 
-                <Grid>
                     <Grid.Col span={6}>
                         <pre><strong>Current note</strong></pre>
                         {context.currentNote &&
@@ -31,10 +24,17 @@ const ScoreInfo: React.FC = () => {
                         {!context.currentNote && <pre>-</pre>}
 
                     </Grid.Col>
+                </Grid>
+
+                <Grid>
+                    <Grid.Col span={6}>
+                        <pre><strong>Occupied positions</strong></pre>
+                        <span style={{wordBreak: "break-word"}}>{JSON.stringify(context.occupiedPositions)}</span>
+                    </Grid.Col>
 
                     <Grid.Col span={6}>
-                        <pre><strong>Stave</strong></pre>
-                        <pre>name: {context.score.data.stave.name}, dimensions: {context.dimensions.x} x {context.dimensions.y}</pre>
+                        <pre><strong>Cursor</strong></pre>
+                        <pre>position: {context.cursorPosition}, coords: {x}/{y}, pixels: {cx}/{cy}</pre>
                     </Grid.Col>
                 </Grid>
 
@@ -50,7 +50,8 @@ const ScoreInfo: React.FC = () => {
                     </Grid.Col>
                 </Grid>
 
-                <Grid>
+
+                <Grid mt={"md"}>
                     <Grid.Col span={12}>
                         <pre><strong>Data</strong></pre>
                         {JSON.stringify(context.score)}

@@ -104,7 +104,7 @@ const EditScoreForm: React.FC<Properties> = ({score, isOpen}) => {
             {!isOpen &&
                 <Group>
                     <Badge bg={score?.visibility === "PUBLIC" ? theme.primaryColor : theme.colors.gray[5]}>
-                        {t(`label.${score?.visibility?.toLowerCase()}`)}
+                        {t(`visibility.${score?.visibility?.toLowerCase()}`)}
                     </Badge>
                 </Group>}
 
@@ -132,7 +132,7 @@ const EditScoreForm: React.FC<Properties> = ({score, isOpen}) => {
                                     size={"lg"}
                                     {...field}
                                     disabled={false}
-                                    label={t(`label.${field.value?.toLowerCase()}`)}
+                                    label={t(`visibility.${field.value?.toLowerCase()}`)}
                                     checked={field.value === "PUBLIC"}
                                     onChange={(event) => field.onChange(event.currentTarget.checked ? "PUBLIC" : "PRIVATE")}
                                 />

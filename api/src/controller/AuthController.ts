@@ -10,7 +10,7 @@ class AuthController {
     logger = log4js.getLogger("AuthController");
 
     constructor() {
-        this.logger.level = 'info';
+        this.logger.level = process.env.LOG_LEVEL;
         this.initializeRoutes();
     }
 
@@ -43,6 +43,8 @@ class AuthController {
                         user: {
                             id: user.id,
                             username: user.username,
+                            firstname: user.firstname,
+                            lastname: user.lastname,
                             role: user.role
                         }
                     });
@@ -58,7 +60,7 @@ class AuthController {
         }
     };
 
-    private logout = (req: Request, res: Response) => {
+    private logout = (_: Request, res: Response) => {
         res.clearCookie("token");
         res.status(200).json({ message: "Logged out successfully" });
     };

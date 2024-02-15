@@ -3,6 +3,8 @@ import {createContext, useContext} from 'react';
 export interface UserDetails {
     id: number;
     username: string;
+    firstname?: string;
+    lastname?: string;
     role: Role;
     isAuthorized: boolean;
     isAdmin: boolean;

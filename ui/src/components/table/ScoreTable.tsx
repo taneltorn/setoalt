@@ -58,7 +58,7 @@ const ScoreTable: React.FC<Properties> = ({scores, refresh}) => {
 
                             <Table.Td>
                                 <Badge bg={score?.visibility === "PUBLIC" ? theme.primaryColor : theme.colors.gray[5]}>
-                                    {t(`label.${score.visibility?.toLowerCase()}`)}
+                                    {t(`visibility.${score.visibility?.toLowerCase()}`)}
                                 </Badge>
                             </Table.Td>
 

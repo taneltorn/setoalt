@@ -9,8 +9,10 @@ import {IoHome, IoLogInOutline, IoSettingsOutline} from "react-icons/io5";
 import packageInfo from "../../../package.json";
 import {Role, useAuth} from "../../context/AuthContext.tsx";
 import {MdOutlineLogout} from "react-icons/md";
-import {FaUser, FaUserGraduate, FaUserTie} from "react-icons/fa";
+import {FaUser, FaUserGraduate} from "react-icons/fa";
 import DevMessage from "../DevMessage.tsx";
+import {RiAdminFill} from "react-icons/ri";
+import {CiUser} from "react-icons/ci";
 
 const routes = [
     {id: 'home', icon: <IoHome className={classes.icon} size={24}/>, link: "/"},
@@ -23,10 +25,10 @@ const protectedRoutes = [
 ];
 
 const icons = new Map([
-    [Role.ADMIN, <FaUserGraduate size={24}/>],
-    [Role.EDITOR, <FaUserTie size={24}/>],
+    [Role.ADMIN, <RiAdminFill size={24}/>],
+    [Role.EDITOR, <FaUserGraduate size={24}/>],
     [Role.USER, <FaUser size={24}/>],
-    ["guest", <FaUser size={24}/>]
+    ["guest", <CiUser size={24}/>]
 ]);
 
 const Sidebar: React.FC = () => {
@@ -46,7 +48,7 @@ const Sidebar: React.FC = () => {
                 <Group>
                     {icons.get(auth.currentUser?.role || "guest")}
                     <Text>
-                        {auth.currentUser?.username || "külaline"}
+                        {auth.currentUser?.firstname || auth.currentUser?.username || t("role.guest")}
                     </Text>
                 </Group>
                 <Code> {packageInfo.version}</Code>
