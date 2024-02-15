@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  backend:
+  api:
     build:
       context: ./api
     container_name: setoalt-api
@@ -20,12 +20,14 @@ services:
     networks:
       setoalt-network:
 
-  frontend:
+  ui:
     build:
       context: ./ui
       args:
         - VITE_API_URL=${VITE_API_URL}
     container_name: setoalt-ui
+    environment:
+      - VITE_API_URL=${VITE_API_URL}
     ports:
       - "80:80"
     restart: always

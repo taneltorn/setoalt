@@ -29,7 +29,7 @@ const ScoreInfo: React.FC = () => {
                 <Grid>
                     <Grid.Col span={6}>
                         <pre><strong>Occupied positions</strong></pre>
-                        <span style={{wordBreak: "break-word"}}>{JSON.stringify(context.occupiedPositions)}</span>
+                        <span style={{wordBreak: "break-word"}}>{JSON.stringify(context.currentVoice.occupiedPositions)}</span>
                     </Grid.Col>
 
                     <Grid.Col span={6}>
