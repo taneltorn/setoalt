@@ -1,5 +1,6 @@
 import React from 'react';
 import {Layout} from "../../../utils/constants.ts";
+import {useDevMode} from "../../../context/DevModeContext.tsx";
 
 interface Properties {
     x: number;
@@ -12,22 +13,34 @@ interface Properties {
 
 const HalfNote: React.FC<Properties> = ({x, y, fill, opacity, title, onClick}) => {
 
-    const strokeWidth = Layout.stave.note.HALF_NOTE_STROKE;
+    const {useHollowNotes} = useDevMode(); // todo remove
 
     return (<>
-        <circle
-            className={"hover-pointer"}
-            cx={x}
-            cy={y}
-            r={Layout.stave.note.RADIUS - strokeWidth / 2}
-            fill={"white"}
-            strokeWidth={strokeWidth}
-            stroke={fill}
-            opacity={opacity}
-            onClick={onClick}
-        >
-            <title>{title}</title>
-        </circle>
+        {useHollowNotes
+            ? <circle
+                className={"hover-pointer"}
+                cx={x}
+                cy={y}
+                r={Layout.stave.note.RADIUS - Layout.stave.note.HALF_NOTE_STROKE / 2}
+                fill={"white"}
+                strokeWidth={Layout.stave.note.HALF_NOTE_STROKE}
+                stroke={fill}
+                opacity={opacity}
+                onClick={onClick}
+            >
+                <title>{title}</title>
+            </circle>
+            : <circle
+                className={"hover-pointer"}
+                cx={x}
+                cy={y}
+                r={Layout.stave.note.RADIUS}
+                fill={fill}
+                opacity={opacity}
+                onClick={onClick}
+            >
+                <title>{title}</title>
+            </circle>}
     </>);
 };
 

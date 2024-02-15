@@ -10,7 +10,7 @@ import packageInfo from "../../../package.json";
 import {Role, useAuth} from "../../context/AuthContext.tsx";
 import {MdOutlineLogout} from "react-icons/md";
 import {FaUser, FaUserGraduate} from "react-icons/fa";
-import DevMessage from "../DevMessage.tsx";
+import DevPanel from "../DevPanel.tsx";
 import {RiAdminFill} from "react-icons/ri";
 import {CiUser} from "react-icons/ci";
 
@@ -120,7 +120,7 @@ const Sidebar: React.FC = () => {
                 </>}
 
                 <Box mt={"xl"}>
-                    <DevMessage/>
+                    <DevPanel/>
                 </Box>
             </div>
         </>

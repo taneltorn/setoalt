@@ -4,6 +4,8 @@ import {isEmpty} from "../utils/helpers.tsx";
 export interface DevModeContextProperties {
     isDevMode: boolean;
     setIsDevMode: (value: boolean) => void;
+    useHollowNotes: boolean;
+    setUseHollowNotes: (value: boolean) => void;
 }
 
 export const DevModeContext = React.createContext<DevModeContextProperties>({} as DevModeContextProperties)

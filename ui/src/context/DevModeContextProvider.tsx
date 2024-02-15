@@ -8,11 +8,12 @@ interface Properties {
 const DevModeContextProvider: React.FC<Properties> = ({children}) => {
 
     const [isDevMode, setIsDevMode] = useState<boolean>(false);
+    const [useHollowNotes, setUseHollowNotes] = useState<boolean>(false);
 
     const context = useMemo(() => ({
-        isDevMode,
-        setIsDevMode
-    }), [isDevMode]);
+        isDevMode, setIsDevMode,
+        useHollowNotes, setUseHollowNotes
+    }), [isDevMode, useHollowNotes]);
 
     return (
         <DevModeContext.Provider value={context}>

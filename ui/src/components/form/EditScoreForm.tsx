@@ -159,7 +159,6 @@ const EditScoreForm: React.FC<Properties> = ({score, isOpen}) => {
                 </Grid>
             </>}
 
-
             {!isOpen && score?.description &&
                 <Grid mt={"md"}>
                     <Grid.Col span={8}>

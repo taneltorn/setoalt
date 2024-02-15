@@ -67,7 +67,7 @@ const SaveUserDialog: React.FC = () => {
             hideSecondaryButton
             onClose={handleClose}
         >
-            <Box style={{width: 700}}>
+            <Box style={{width: 400}}>
                 <form onSubmit={handleSubmit(onSubmit)} noValidate>
                     {!context.id && <>
                         <Grid>
