@@ -20,10 +20,12 @@ config({path: path.resolve(__dirname, '../../.env')});
 const logger = log4js.getLogger();
 logger.level = process.env.LOG_LEVEL;
 
+
+const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
+
 app.use(cors({
     credentials: true,
-    origin: ["http://localhost:5173", "http://localhost"],
-    // origin: process.env.ALLOWED_ORIGIN,
+    origin: allowedOrigins,
 }));
 
 app.use(bodyParser.json());
