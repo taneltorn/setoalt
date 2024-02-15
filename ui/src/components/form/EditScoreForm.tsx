@@ -91,7 +91,8 @@ const EditScoreForm: React.FC<Properties> = ({score, isOpen}) => {
                     <Group>
                         {!isOpen
                             ?
-                            <Button size={"md"} onClick={() => navigate("edit")}>
+                            <Button size={"md"} variant={"outline"}
+                                    onClick={() => navigate("edit")}>
                                 {t("button.edit")}
                             </Button>
                             :

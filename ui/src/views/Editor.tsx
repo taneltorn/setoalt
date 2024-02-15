@@ -32,7 +32,8 @@ const Editor: React.FC = () => {
                 </Title>
 
                 {auth.currentUser?.isAuthorized &&
-                    <Button size={"md"} justify={"end"} onClick={() => open(DialogType.SAVE_SCORE)}>
+                    <Button size={"md"} justify={"end"} variant={"outline"}
+                            onClick={() => open(DialogType.SAVE_SCORE)}>
                         {t("button.save")}
                     </Button>}
             </Group>

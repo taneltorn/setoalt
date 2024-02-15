@@ -138,6 +138,7 @@
   "button": {
     "ok": "OK",
     "copy": "Kopeeri",
+    "remove": "Kustuta",
     "save": "Salvesta",
     "confirm": "Kinnita",
     "cancel": "Tühista",

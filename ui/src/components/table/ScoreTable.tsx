@@ -5,7 +5,7 @@ import {Score} from "../../models/Score.ts";
 import {useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {DialogType, useDialogContext} from "../../context/DialogContext.tsx";
-import {BsFillPencilFill, BsTrash} from "react-icons/bs";
+import {FaPencil, FaRegTrashCan} from "react-icons/fa6";
 
 interface Properties {
     scores: Score[];
@@ -64,15 +64,17 @@ const ScoreTable: React.FC<Properties> = ({scores, refresh}) => {
 
                             <Table.Td>
                                 <Group justify={"end"}>
-                                    <BsFillPencilFill
+                                    <FaPencil
                                         size={20}
                                         className={"hover-pointer"}
+                                        title={t("button.edit")}
                                         color={theme.colors.gray[7]}
                                         onClick={() => navigate(`/scores/${score.id}/edit`)}
                                     />
-                                    <BsTrash
+                                    <FaRegTrashCan
                                         size={20}
                                         className={"hover-pointer"}
+                                        title={t("button.remove")}
                                         color={theme.colors.gray[7]}
                                         onClick={() => open(DialogType.REMOVE_SCORE, {
                                             id: score.id,
