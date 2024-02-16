@@ -20,4 +20,4 @@ COPY --from=build /app/package.json ./package.json
 
 EXPOSE 3000
 
-CMD ["node", "dist/app.ts"]
+CMD ["node", "dist/app.js"]
