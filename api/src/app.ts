@@ -43,6 +43,8 @@ app.get('/api/status', async (req: Request, res: Response): Promise<void> => {
 });
 
 app.listen(port, () => {
+    logger.info(`Allowed origins:`)
+    logger.info(process.env.ALLOWED_ORIGINS);
     logger.info(`Application started`);
     logger.info(`Server running on port ${port}`);
 });
