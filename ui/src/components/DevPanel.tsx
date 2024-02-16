@@ -1,4 +1,4 @@
-import {Alert, Switch, Text} from "@mantine/core";
+import {Alert, Box, Switch, Text} from "@mantine/core";
 import {IoIosWarning} from "react-icons/io";
 import React from "react";
 import {useDevMode} from "../context/DevModeContext.tsx";
@@ -32,6 +32,10 @@ const DevPanel: React.FC = () => {
                 label={"Alt. noodid"}
                 onChange={() => setUseHollowNotes(!useHollowNotes)}
             />
+
+            {isDevMode && <Box mt={"xl"}>
+                VITE_API_URL: {import.meta.env.VITE_API_URL}
+            </Box>}
         </Alert>
     );
 }

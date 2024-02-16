@@ -9,16 +9,14 @@ import UserController from "./controller/UserController";
 import ScoreController from "./controller/ScoreController";
 import log4js from "log4js";
 import * as process from "process";
-import {config} from "dotenv";
-import * as path from "path";
 
 const app = express();
 const port = 3000;
 
-config({path: path.resolve(__dirname, '../../.env')});
-
 const logger = log4js.getLogger();
 logger.level = process.env.LOG_LEVEL;
+
+logger.info(`Log level: ${process.env.LOG_LEVEL}`)
 
 const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") || ["http://localhost"];
 
@@ -26,6 +24,7 @@ app.use(cors({
     credentials: true,
     origin: allowedOrigins,
 }));
+console.log("\nBACKEND HERE2")
 
 // todo something to try:
 // app.use((req, res, next) => {
@@ -44,6 +43,7 @@ app.use(cookieParser());
 app.use('/api/auth', AuthController);
 app.use('/api/scores', ScoreController);
 app.use('/api/users', UserController);
+console.log("\nBACKEND HERE3")
 
 app.get('/api/status', async (req: Request, res: Response): Promise<void> => {
     logger.info("GET /api/status");

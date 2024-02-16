@@ -16,6 +16,7 @@ services:
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
+      - LOG_LEVEL=${LOG_LEVEL}
     depends_on:
       - database
     networks:
