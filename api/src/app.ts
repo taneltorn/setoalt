@@ -1,7 +1,5 @@
 import express, {Request, Response} from 'express';
 import cors from "cors";
-import {config} from 'dotenv';
-import * as path from 'path';
 
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
@@ -10,18 +8,15 @@ import AuthController from './controller/AuthController';
 import UserController from "./controller/UserController";
 import ScoreController from "./controller/ScoreController";
 import log4js from "log4js";
-import process from "process";
+import * as process from "process";
 
 const app = express();
 const port = 3000;
 
-config({path: path.resolve(__dirname, '../../.env')});
-
 const logger = log4js.getLogger();
 logger.level = process.env.LOG_LEVEL;
 
-
-const allowedOrigins = process.env.ALLOWED_ORIGINS.split(',');
+const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") || ["http://localhost"];
 
 app.use(cors({
     credentials: true,
@@ -37,10 +32,12 @@ app.use('/api/scores', ScoreController);
 app.use('/api/users', UserController);
 
 app.get('/api/status', async (req: Request, res: Response): Promise<void> => {
-    console.log("GET /api/status");
+    logger.info("GET /api/status");
     try {
-        res.json("ok");
+        logger.info("OK");
+        res.json("OK");
     } catch (err) {
+        logger.error(err);
         res.status(500).json({error: err});
     }
 });

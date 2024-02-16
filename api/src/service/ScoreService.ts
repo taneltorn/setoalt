@@ -1,4 +1,4 @@
-import {pool} from "../config/dbConfig";
+import pool from "../config/dbConfig";
 import log4js from "log4js";
 import Mapper from "../utils/Mapper";
 

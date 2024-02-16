@@ -15,7 +15,6 @@ services:
       - POSTGRES_USER=${POSTGRES_USER}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD}
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
-      - ALLOWED_ORIGINS=${ALLOWED_ORIGINS}
     depends_on:
       - database
     networks:
@@ -27,8 +26,6 @@ services:
       args:
         - VITE_API_URL=${VITE_API_URL}
     container_name: setoalt-ui
-    environment:
-      - VITE_API_URL=${VITE_API_URL}
     ports:
       - "80:80"
     restart: always
