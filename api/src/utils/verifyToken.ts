@@ -1,9 +1,17 @@
 import {NextFunction, Request, Response} from 'express';
 import jwt from 'jsonwebtoken';
 
+import log4js from "log4js";
+const logger = log4js.getLogger("AuthController");
+
 export const verifyToken = (req: Request, res: Response, next: NextFunction) => {
+    logger.info(`Verifying token`);
+    logger.info(req.cookies);
+
     const token = req.cookies.token || '';
     if (!token) {
+        logger.info(`No token present`);
+
         return res.status(403).json({error: "A token is required for authentication"});
     }
 

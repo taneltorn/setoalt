@@ -23,6 +23,16 @@ app.use(cors({
     origin: allowedOrigins,
 }));
 
+// todo something to try:
+// app.use((req, res, next) => {
+//     res.setHeader("Access-Control-Allow-Origin", "https://yoursite.com");
+//     res.header(
+//         "Access-Control-Allow-Headers",
+//         "Origin, X-Requested-With, Content-Type, Accept"
+//     );
+//     next();
+// });
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
@@ -43,7 +53,7 @@ app.get('/api/status', async (req: Request, res: Response): Promise<void> => {
 });
 
 app.listen(port, () => {
-    logger.info(`Allowed origins:`)
+    logger.info(`Allowed origins: ${allowedOrigins}`)
     logger.info(process.env.ALLOWED_ORIGINS);
     logger.info(`Application started`);
     logger.info(`Server running on port ${port}`);

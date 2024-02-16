@@ -21,8 +21,11 @@ class AuthController {
     }
 
     private login = async (req: Request, res: Response) => {
-        const { username, password } = req.body;
         try {
+            const { username, password } = req.body;
+
+            this.logger.info(`Got login request for user ${username}`)
+
             const result = await userService.findByUsername(username);
             if (result.data) {
                 const user = result.data;
@@ -49,9 +52,11 @@ class AuthController {
                         }
                     });
                 } else {
+                    this.logger.info(`Invalid credentials`);
                     res.status(401).json({ error: "Invalid credentials" });
                 }
             } else {
+                this.logger.info(`User not found`);
                 res.status(404).json({ error: "User not found" });
             }
         } catch (err) {
@@ -61,11 +66,15 @@ class AuthController {
     };
 
     private logout = (_: Request, res: Response) => {
+        this.logger.info(`Got logout request`);
+
         res.clearCookie("token");
         res.status(200).json({ message: "Logged out successfully" });
     };
 
     private verifySession = (req: Request, res: Response) => {
+        this.logger.info(`Verifying session`);
+
         // @ts-ignore
         res.json({ message: "Session is valid", user: req.user });
     };
