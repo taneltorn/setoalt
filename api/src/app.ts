@@ -9,9 +9,13 @@ import UserController from "./controller/UserController";
 import ScoreController from "./controller/ScoreController";
 import log4js from "log4js";
 import * as process from "process";
+import {config} from "dotenv";
+import * as path from "path";
 
 const app = express();
 const port = 3000;
+
+config({path: path.resolve(__dirname, '../../.env')});
 
 const logger = log4js.getLogger();
 logger.level = process.env.LOG_LEVEL;
