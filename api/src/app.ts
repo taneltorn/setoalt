@@ -24,7 +24,6 @@ app.use(cors({
     credentials: true,
     origin: allowedOrigins,
 }));
-console.log("\nBACKEND HERE2")
 
 // todo something to try:
 // app.use((req, res, next) => {
@@ -43,7 +42,6 @@ app.use(cookieParser());
 app.use('/api/auth', AuthController);
 app.use('/api/scores', ScoreController);
 app.use('/api/users', UserController);
-console.log("\nBACKEND HERE3")
 
 app.get('/api/status', async (req: Request, res: Response): Promise<void> => {
     logger.info("GET /api/status");

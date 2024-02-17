@@ -16,14 +16,13 @@ const DevPanel: React.FC = () => {
             </Text>
 
 
-            {auth.currentUser?.isAdmin &&
-                <Switch
-                    mt={"lg"}
-                    className={"hover-pointer"}
-                    checked={isDevMode}
-                    label={"Dev mode"}
-                    onChange={() => setIsDevMode(!isDevMode)}
-                />}
+            <Switch
+                mt={"lg"}
+                className={"hover-pointer"}
+                checked={isDevMode}
+                label={"Dev mode"}
+                onChange={() => setIsDevMode(!isDevMode)}
+            />
 
             <Switch
                 mt={"lg"}
