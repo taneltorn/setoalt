@@ -18,11 +18,11 @@ logger.level = process.env.LOG_LEVEL;
 
 logger.info(`Log level: ${process.env.LOG_LEVEL}`)
 
-const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") || ["http://localhost"];
+// const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") || ["http://localhost"];
 
 app.use(cors({
     credentials: true,
-    origin: allowedOrigins,
+    origin: process.env.ALLOWED_ORIGIN,
 }));
 
 // app.use(function (req, res, next) {
@@ -68,8 +68,7 @@ app.get('/api/status', async (req: Request, res: Response): Promise<void> => {
 });
 
 app.listen(port, () => {
-    logger.info(`Allowed origins: ${allowedOrigins}`)
-    logger.info(process.env.ALLOWED_ORIGINS);
+    logger.info(`Allowed origin: ${process.env.ALLOWED_ORIGINS}`)
     logger.info(`Application started`);
     logger.info(`Server running on port ${port}`);
 });
