@@ -25,18 +25,18 @@ app.use(cors({
     origin: allowedOrigins,
 }));
 
-app.use(function (req, res, next) {
-    const origin = req.headers.origin;
-    if(allowedOrigins.indexOf(origin) > -1){
-        res.setHeader('Access-Control-Allow-Origin', origin);
-    }
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Accept');
-    // @ts-ignore
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    next();
-})
+// app.use(function (req, res, next) {
+//     const origin = req.headers.origin;
+//     if(allowedOrigins.indexOf(origin) > -1){
+//         res.setHeader('Access-Control-Allow-Origin', origin);
+//     }
+//     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
+//     res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type, Accept');
+//     // @ts-ignore
+//     res.setHeader('Access-Control-Allow-Credentials', true);
+//
+//     next();
+// })
 
 // todo something to try:
 // app.use((req, res, next) => {
