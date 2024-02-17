@@ -2,11 +2,9 @@ import {Alert, Box, Switch, Text} from "@mantine/core";
 import {IoIosWarning} from "react-icons/io";
 import React from "react";
 import {useDevMode} from "../context/DevModeContext.tsx";
-import {useAuth} from "../context/AuthContext.tsx";
 
 const DevPanel: React.FC = () => {
 
-    const auth = useAuth();
     const {isDevMode, setIsDevMode, useHollowNotes, setUseHollowNotes} = useDevMode();
 
     return (
