@@ -22,7 +22,7 @@ const allowedOrigins = process.env.ALLOWED_ORIGINS?.split(",") || ["http://local
 
 app.use(cors({
     credentials: true,
-    origin: "*",
+    origin: allowedOrigins,
 }));
 
 app.use(function (req, res, next) {
