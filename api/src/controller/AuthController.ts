@@ -32,11 +32,14 @@ class AuthController {
 
                 const isValid = await bcrypt.compare(password, user.password);
                 if (isValid) {
+                    this.logger.info(`Password is valid`);
+                    this.logger.info(`JWT secret key: ${process.env.JWT_SECRET_KEY}`); // todo: remove
+
                     const token = jwt.sign({
                         id: user.id,
                         username: user.username,
                         role: user.role,
-                    }, process.env.JWT_SECRET_KEY!, { expiresIn: "7d" });
+                    }, process.env.JWT_SECRET_KEY!, { expiresIn: "30d" });
                     res.cookie("token", token, {
                         httpOnly: true,
                         secure: true,
