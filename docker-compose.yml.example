@@ -27,13 +27,14 @@ services:
       context: https://github.com/taneltorn/setoalt.git#${BRANCH}:ui
       args:
         - VITE_API_URL=${VITE_API_URL}
-        - ENVIRONMENT=${ENVIRONMENT}
+        - VITE_ENVIRONMENT=${VITE_ENVIRONMENT}
     container_name: setoalt-ui
     ports:
       - "80:80"
     restart: always
     environment:
       - VITE_API_URL=${VITE_API_URL}
+      - VITE_ENVIRONMENT=${VITE_ENVIRONMENT}
     depends_on:
       - api
     networks:

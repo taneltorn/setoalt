@@ -92,7 +92,7 @@ const Sidebar: React.FC = () => {
 
                 <Divider mt={"lg"}/>
 
-                {!auth.currentUser && <>
+                 <>
                     <Group mt={"lg"} justify={"center"} hiddenFrom={"lg"}>
                         <Link to={"/login"}>
                             <IoLogInOutline className={classes.icon} size={24}/>
@@ -105,7 +105,7 @@ const Sidebar: React.FC = () => {
                             </Button>
                         </Link>
                     </Group>
-                </>}
+                </>
 
                 {auth.currentUser && <>
                     <Group mt={"lg"} justify={"center"} hiddenFrom={"lg"}>
