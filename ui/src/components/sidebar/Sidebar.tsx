@@ -1,7 +1,7 @@
 import React from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import {Box, Button, Code, Divider, Group, NavLink, Text} from "@mantine/core";
+import {Badge, Box, Button, Code, Divider, Group, NavLink, Text} from "@mantine/core";
 import classes from "./Sidebar.module.scss";
 import {GiGClef} from "react-icons/gi";
 import {PiSpeakerSimpleHigh} from "react-icons/pi";
@@ -53,6 +53,11 @@ const Sidebar: React.FC = () => {
                 </Group>
                 <Code> {packageInfo.version}</Code>
             </Group>
+
+
+            <Badge mb={"md"} bg="gray.5" style={{width: "100%"}}>
+                {import.meta.env.ENVIRONEMNT?.toUpperCase()}
+            </Badge>
 
             <Divider mb={"lg"}/>
 

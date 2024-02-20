@@ -2,9 +2,11 @@ import {Alert, Box, Switch, Text} from "@mantine/core";
 import {IoIosWarning} from "react-icons/io";
 import React from "react";
 import {useDevMode} from "../context/DevModeContext.tsx";
+import {useAuth} from "../context/AuthContext.tsx";
 
 const DevPanel: React.FC = () => {
 
+    const {currentUser} = useAuth();
     const {isDevMode, setIsDevMode, useHollowNotes, setUseHollowNotes} = useDevMode();
 
     return (
@@ -14,13 +16,13 @@ const DevPanel: React.FC = () => {
             </Text>
 
 
-            <Switch
+            {currentUser?.isAdmin && <Switch
                 mt={"lg"}
                 className={"hover-pointer"}
                 checked={isDevMode}
                 label={"Dev mode"}
                 onChange={() => setIsDevMode(!isDevMode)}
-            />
+            />}
 
             <Switch
                 mt={"lg"}

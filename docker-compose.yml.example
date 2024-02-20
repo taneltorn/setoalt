@@ -3,7 +3,7 @@ version: '3.8'
 services:
   api:
     build:
-      context: ./api
+      context: https://github.com/taneltorn/setoalt.git#${BRANCH}:api
     container_name: setoalt-api
     ports:
       - "3000:3000"
@@ -24,9 +24,10 @@ services:
 
   ui:
     build:
-      context: ./ui
+      context: https://github.com/taneltorn/setoalt.git#${BRANCH}:ui
       args:
         - VITE_API_URL=${VITE_API_URL}
+        - ENVIRONMENT=${ENVIRONMENT}
     container_name: setoalt-ui
     ports:
       - "80:80"
