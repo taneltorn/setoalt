@@ -56,7 +56,7 @@ const Sidebar: React.FC = () => {
 
 
             <Badge mb={"md"} bg="gray.5" style={{width: "100%"}}>
-                {import.meta.env.ENVIRONEMNT?.toUpperCase()}
+                {import.meta.env.ENVIRONMENT?.toUpperCase()}
             </Badge>
 
             <Divider mb={"lg"}/>
