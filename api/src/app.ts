@@ -4,6 +4,9 @@ import cors from "cors";
 import cookieParser from "cookie-parser";
 import bodyParser from "body-parser";
 
+import {config} from 'dotenv';
+import * as path from 'path';
+
 import AuthController from './controller/AuthController';
 import UserController from "./controller/UserController";
 import ScoreController from "./controller/ScoreController";
@@ -12,6 +15,8 @@ import * as process from "process";
 
 const app = express();
 const port = 3000;
+
+config({path: path.resolve(__dirname, '../../.env')});
 
 const logger = log4js.getLogger();
 logger.level = process.env.LOG_LEVEL;
@@ -83,7 +88,6 @@ app.get('/api/status', async (req: Request, res: Response): Promise<void> => {
 });
 
 app.listen(port, () => {
-    logger.info(`Allowed origin: ${process.env.ALLOWED_ORIGINS}`)
     logger.info(`Application started`);
     logger.info(`Server running on port ${port}`);
 });
