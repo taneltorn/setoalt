@@ -1,10 +1,12 @@
-import {Alert, Box, Switch, Text} from "@mantine/core";
+import {Alert, Switch, Text} from "@mantine/core";
 import {IoIosWarning} from "react-icons/io";
 import React from "react";
 import {useDevMode} from "../context/DevModeContext.tsx";
+import {useAuth} from "../context/AuthContext.tsx";
 
 const DevPanel: React.FC = () => {
 
+    const {currentUser} = useAuth();
     const {isDevMode, setIsDevMode, useHollowNotes, setUseHollowNotes} = useDevMode();
 
     return (
@@ -14,13 +16,13 @@ const DevPanel: React.FC = () => {
             </Text>
 
 
-             <Switch
+            {currentUser?.isAdmin && <Switch
                 mt={"lg"}
                 className={"hover-pointer"}
                 checked={isDevMode}
                 label={"Dev mode"}
                 onChange={() => setIsDevMode(!isDevMode)}
-            />
+            />}
 
             <Switch
                 mt={"lg"}
@@ -29,13 +31,6 @@ const DevPanel: React.FC = () => {
                 label={"Alt. noodid"}
                 onChange={() => setUseHollowNotes(!useHollowNotes)}
             />
-
-            {isDevMode && <Box mt={"xl"}>
-                VITE_API_URL: {import.meta.env.VITE_API_URL}
-                VITE_ENVIRONMENT: {import.meta.env.VITE_ENVIRONMENT}
-                VITE_TEST_BUILD: {import.meta.env.VITE_TEST_BUILD}
-                VITE_TEST_ENV: {import.meta.env.VITE_TEST_ENV}
-            </Box>}
         </Alert>
     );
 }
