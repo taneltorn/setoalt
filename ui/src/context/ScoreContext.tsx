@@ -18,6 +18,9 @@ export interface ScoreContextProperties {
 
     isEditMode: boolean;
     setIsEditMode: (value: boolean) => void;
+    isExportMode: boolean;
+    setIsExportMode: (value: boolean) => void;
+
     toggleEditMode: () => void;
     isTyping: boolean;
     setIsTyping: (value: boolean) => void;

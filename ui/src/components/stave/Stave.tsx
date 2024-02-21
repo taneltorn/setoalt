@@ -42,7 +42,8 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                     height: context.dimensions.y * context.dimensions.blocks + 30
                 }}>
 
-                <svg width={context.dimensions.x - 50} height={context.dimensions.y * context.dimensions.blocks}>
+                <svg id={"notation"} width={context.dimensions.x - 50}
+                     height={context.dimensions.y * context.dimensions.blocks}>
 
                     {range(context.score.data.breaks.length + 1)
                         .map((_, index) => (
@@ -52,9 +53,9 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                                 lines={context.score.data.stave.lines}
                             />))}
 
-                    {isEditMode && <CurrentPositionMarker/>}
+                    {isEditMode && !context.isExportMode && <CurrentPositionMarker/>}
 
-                    {context.score.data.breaks
+                    {!context.isExportMode && context.score.data.breaks
                         .map(position =>
                             <StaveBreak
                                 key={`break-${position}`}
@@ -77,8 +78,8 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                                 key={voice.name}
                                 voice={voice}
                             />)}
-                    {<CursorMarker/>}
 
+                    {!context.isExportMode && <CursorMarker/>}
 
                     {context.score.data.dividers
                         .map(divider =>

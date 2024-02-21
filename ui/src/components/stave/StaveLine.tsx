@@ -19,7 +19,7 @@ const StaveLine: React.FC<Properties> = ({line, offsetY}) => {
         + offsetY ;
 
     return (<g>
-        {context.isEditMode &&
+        {context.isEditMode && !context.isExportMode &&
             <text x={0} y={y + 5} fontSize={14} fill={"black"}>
                 {t(`pitch.${line.pitch.toLowerCase()}`)}
             </text>}

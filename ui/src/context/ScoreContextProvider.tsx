@@ -22,21 +22,21 @@ import useCursorCoords from "../hooks/useCursorCoords.tsx";
 import {calculateStaveDimensions} from "../utils/calculation.helpers.tsx";
 
 interface Properties {
-    showEditor?: boolean;
     children: React.ReactNode;
 }
 
-const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
+const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
     const [score, setScore] = useState<Score>({...EmptyScore});
 
     const [containerRef, setContainerRef] = useState<RefObject<HTMLElement> | undefined>();
 
-    const [isEditMode, setIsEditMode] = useState<boolean>(!!showEditor);
+    const [isEditMode, setIsEditMode] = useState<boolean>(false);
+    const [isExportMode, setIsExportMode] = useState<boolean>(false);
     const [isTyping, setIsTyping] = useState<boolean>(false);
 
     const [semitones, setSemitones] = useState<number>(0);
-    const [currentPosition, setCurrentPosition] = useState<number>(!!showEditor ? 0 : -1);
+    const [currentPosition, setCurrentPosition] = useState<number>( -1);
     const [currentNote, setCurrentNote] = useState<Note | undefined>();
     const [currentDuration, setCurrentDuration] = useState<string>("8n");
     const [currentVoice, setCurrentVoice] = useState<Voice>({...Voices[0]});
@@ -408,6 +408,7 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         dimensions,
         score, setScore,
         isEditMode, setIsEditMode,
+        isExportMode, setIsExportMode,
         toggleEditMode,
         isTyping, setIsTyping,
         endPosition,

@@ -175,10 +175,12 @@ export const calculateStaveDimensions = (score: Score): StaveDimensions => {
         + Layout.stave.container.LYRICS_BAR;
 
     const x = Layout.stave.container.WIDTH;
+    const blocks = score.data.breaks.length + 1;
 
     return {
         x: x,
         y: y,
-        blocks: score.data.breaks.length + 1,
+        blocks: blocks,
+        containerY: y * blocks,
     };
 }

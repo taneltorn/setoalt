@@ -57,7 +57,7 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
     }
 
     return (<>
-            {scoreContext.isEditMode &&
+            {scoreContext.isEditMode && !scoreContext.isExportMode &&
                 <foreignObject x={x - 20} y={y} width={Layout.stave.note.SPACING} height="40">
                     <input
                         onFocus={() => scoreContext.setIsTyping(true)}
@@ -65,16 +65,15 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
                         className={`lyric-input`}
                         disabled={!scoreContext.isEditMode}
                         value={value}
-
                         style={{width: Layout.stave.note.SPACING, fontWeight: Layout.stave.lyrics.FONT_WEIGHT, fontSize: Layout.stave.lyrics.FONT_SIZE}}
                         onChange={e => handleChange(e.target.value)}
                     />
                 </foreignObject>}
 
-            {!scoreContext.isEditMode &&
+            {(!scoreContext.isEditMode || scoreContext.isExportMode) &&
                 <text
                     className="hover-pointer"
-                    fill={lyric.position === scoreContext.currentPosition ? Color.stave.HIGHLIGHT : Color.stave.LYRICS}
+                    fill={lyric.position === scoreContext.currentPosition && !scoreContext.isExportMode ? Color.stave.HIGHLIGHT : Color.stave.LYRICS}
                     fontWeight={Layout.stave.lyrics.FONT_WEIGHT}
                     fontSize={Layout.stave.lyrics.FONT_SIZE}
                     x={x}

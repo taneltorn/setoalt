@@ -77,9 +77,8 @@ const EditScoreForm: React.FC<Properties> = ({score, isOpen}) => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-
-            <Group justify={"space-between"}>
-                <Group gap={4} align={"center"} mb={"xs"}>
+            <Group mb={"sm"} justify={"space-between"}>
+                <Group gap={4} align={"center"}>
                     <Link to={isOpen && score?.id ? `/scores/${score.id}` : "/scores"} style={{display: "flex"}}>
                         <IoChevronBack size={30}/>
                     </Link>
@@ -91,14 +90,19 @@ const EditScoreForm: React.FC<Properties> = ({score, isOpen}) => {
                     <Group>
                         {!isOpen
                             ?
-                            <Button size={"md"} variant={"outline"}
-                                    onClick={() => navigate("edit")}>
+                            <Button size={"md"} onClick={() => navigate("edit")}>
                                 {t("button.edit")}
                             </Button>
                             :
-                            <Button size={"md"} type={"submit"}>
-                                {t("button.save")}
-                            </Button>}
+                            <Group gap={4}>
+                                <Button size={"md"} variant={"subtle"} color={"gray.7"}
+                                        onClick={() => navigate(`/scores/${score?.id}`)}>
+                                    {t("button.cancel")}
+                                </Button>
+                                <Button size={"md"} type={"submit"}>
+                                    {t("button.save")}
+                                </Button>
+                            </Group>}
                     </Group>}
             </Group>
 

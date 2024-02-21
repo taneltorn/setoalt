@@ -23,7 +23,7 @@ const Editor: React.FC = () => {
     const auth = useAuth();
 
     return (
-        <ScoreContextProvider showEditor>
+        <ScoreContextProvider>
             <KeyPressHandler/>
 
             <Group justify={"space-between"} mb={"xs"}>
@@ -32,7 +32,8 @@ const Editor: React.FC = () => {
                 </Title>
 
                 {auth.currentUser?.isAuthorized &&
-                    <Button size={"md"} justify={"end"} variant={"outline"}
+                    <Button size={"md"}
+                            justify={"end"}
                             onClick={() => open(DialogType.SAVE_SCORE)}>
                         {t("button.save")}
                     </Button>}

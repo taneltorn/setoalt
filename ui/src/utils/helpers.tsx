@@ -112,6 +112,9 @@ export const isDimmed = (note: Note, voice: Voice, scoreContext: ScoreContextPro
 }
 
 export const isHighlighted = (note: Note, context: ScoreContextProperties) => {
+    if (context.isExportMode) {
+        return false;
+    }
     if (context.currentNote && context.isEditMode) {
         return context.currentNote.position === note.position && context.currentNote.pitch === note.pitch;
     }

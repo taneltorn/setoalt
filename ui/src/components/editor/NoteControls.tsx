@@ -30,7 +30,7 @@ const NoteControls: React.FC = () => {
                 disabled={!context.currentNote}
                 tooltip={t("tooltip.changeType")}
                 label={<Icon path={mdiCodeParentheses} size={0.7}/>}
-                shortKey={ShortKey.MICRO_TUNING}
+                shortKey={ShortKey.CHANGE_TYPE}
                 active={context.currentNote?.type === NoteType.SMALL}
                 onClick={handleTypeChange}
             />

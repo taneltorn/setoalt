@@ -1,12 +1,24 @@
 import {Button, Group, Text, Title} from "@mantine/core";
 import {useTranslation} from "react-i18next";
-import React from "react";
+import React, {useEffect, useState} from "react";
 import TextLink from "../components/common/TextLink.tsx";
 import {Link} from "react-router-dom";
+import Markdown from "react-markdown";
 
 const Home: React.FC = () => {
 
     const {t} = useTranslation();
+
+    const [changelog, setChangelog] = useState<string>("");
+
+
+    useEffect(() => {
+        fetch("/CHANGELOG.md")
+            .then(response => response.text())
+            .then(text => {
+                setChangelog(text);
+            });
+    }, []);
 
     return (
         <>
@@ -29,7 +41,7 @@ const Home: React.FC = () => {
                 />.
             </Text>
 
-            <Group gap={4} mt={"md"}>
+            <Group gap={4} mt={"md"} mb={"xl"}>
                 <Link to={"/scores/1"}>
                     <Button>Kuula näidet</Button>
                 </Link>
@@ -37,6 +49,12 @@ const Home: React.FC = () => {
                     <Button>Katseta</Button>
                 </Link>
             </Group>
+
+
+            <div>
+                <Markdown>{changelog}</Markdown>
+            </div>
+
 
         </>
     );
