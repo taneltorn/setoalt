@@ -30,7 +30,7 @@ const testConnection = async (maxRetries = 5, delay = 2000) => {
             logger.info('Connected to database successfully');
 
             const res = await client.query('SELECT NOW()');
-            logger.info('Current time from DB:', res.rows[0].now);
+            logger.info('Current time from database:', res.rows[0].now);
 
             client.release();
             return;

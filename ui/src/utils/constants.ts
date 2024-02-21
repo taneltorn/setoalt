@@ -15,6 +15,7 @@ export const Layout = {
         },
         note: {
             RADIUS: 8,
+            RADIUS_SMALL: 6,
             REPEATING_OFFSET: 7,
             SPACING: 60,
             SHAPE: 0,

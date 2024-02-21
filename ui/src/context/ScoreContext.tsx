@@ -1,5 +1,5 @@
 import React, {RefObject, useContext} from 'react';
-import {Note} from "../models/Note";
+import {Note, NoteType} from "../models/Note";
 import {isEmpty} from "../utils/helpers.tsx";
 import {Score} from "../models/Score";
 import {Voice} from "../models/Voice";
@@ -60,6 +60,7 @@ export interface ScoreContextProperties {
     insertNote: (pitch: string, position: number, moveToNext?: boolean) => void;
     removeNote: () => void;
 
+    changeType: (note: Note | undefined, type: NoteType | undefined) => void;
     changeDuration: (duration: string) => void;
     changePitch: (note: Note, pitch: string, moveToNext?: boolean) => void;
     increasePitch: () => void;

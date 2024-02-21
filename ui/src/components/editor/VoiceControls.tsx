@@ -1,13 +1,13 @@
 import React from 'react';
-import {useScoreContext} from "../../../context/ScoreContext.tsx";
-import {Voices} from "../../../utils/dictionaries.ts";
-import {Voice} from "../../../models/Voice.ts";
+import {useScoreContext} from "../../context/ScoreContext.tsx";
+import {Voices} from "../../utils/dictionaries.ts";
+import {Voice} from "../../models/Voice.ts";
 import {Button, Group, Menu} from "@mantine/core";
 import {PiSpeakerSimpleHigh} from "react-icons/pi";
-import ControlButton from "../../common/ControlButton.tsx";
+import ControlButton from "../common/ControlButton.tsx";
 import {GiGClef} from "react-icons/gi";
 import {useTranslation} from "react-i18next";
-import {DialogType, useDialogContext} from "../../../context/DialogContext.tsx";
+import {DialogType, useDialogContext} from "../../context/DialogContext.tsx";
 
 const VoiceControls: React.FC = () => {
 

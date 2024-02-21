@@ -1,13 +1,13 @@
 import React from 'react';
-import {useScoreContext} from "../../../context/ScoreContext";
+import {useScoreContext} from "../../context/ScoreContext.tsx";
 import {useTranslation} from "react-i18next";
 import {RiIncreaseDecreaseFill} from "react-icons/ri";
-import {DialogType, useDialogContext} from "../../../context/DialogContext";
-import {ShortKey} from "../../../utils/keymap";
+import {DialogType, useDialogContext} from "../../context/DialogContext.tsx";
+import {ShortKey} from "../../utils/keymap.ts";
 import {Group} from "@mantine/core";
-import ControlButton from "../../common/ControlButton.tsx";
+import ControlButton from "../common/ControlButton.tsx";
 
-const NoteControls: React.FC = () => {
+const PitchControls: React.FC = () => {
 
     const [t] = useTranslation();
     const context = useScoreContext();
@@ -21,7 +21,7 @@ const NoteControls: React.FC = () => {
     }
 
     return (
-        <Group gap={4} ml={"lg"}>
+        <Group gap={4}>
             <ControlButton
                 disabled={!context.currentNote}
                 tooltip={t("tooltip.microTuning")}
@@ -34,7 +34,6 @@ const NoteControls: React.FC = () => {
                 <ControlButton
                     key={pitch}
                     active={context.currentNote?.pitch === pitch}
-                    // label={`${index +1}`}
                     label={t(`pitch.${pitch.toLowerCase()}`)}
                     tooltip={t(`tooltip.${context.currentNote ? "changePitch" : "insertPitch"}`, {pitch: t(`pitch.${pitch}`)})}
                     shortKey={`${index + 1}`}
@@ -44,4 +43,4 @@ const NoteControls: React.FC = () => {
     )
 };
 
-export default NoteControls;
+export default PitchControls;

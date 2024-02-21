@@ -1,5 +1,6 @@
 export enum ShortKey {
-    MICRO_TUNING = "T",
+    MICRO_TUNING = "M",
+    CHANGE_TYPE = "T",
     SHIFT_LEFT = "Z",
     SHIFT_RIGHT = "X",
     DELETE_NOTE = "DELETE",

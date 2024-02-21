@@ -1,5 +1,5 @@
 import React, {RefObject, useEffect, useMemo, useState} from 'react';
-import {Note} from "../models/Note";
+import {Note, NoteType} from "../models/Note";
 import {Score} from "../models/Score";
 import {
     durationToScalar,
@@ -41,8 +41,6 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
     const [currentDuration, setCurrentDuration] = useState<string>("8n");
     const [currentVoice, setCurrentVoice] = useState<Voice>({...Voices[0]});
     const [cursorPosition, setCursorPosition] = useState<number>(0);
-
-    // const [occupiedPositions, setOccupiedPositions] = useState<number[]>([]);
 
     const audioContext = useAudioContext();
 
@@ -210,6 +208,15 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
             position: currentPosition
         });
     }
+
+    const changeType = (note: Note | undefined, type: NoteType | undefined) => {
+        if (!note) {
+            return;
+        }
+        note.type = type;
+        refresh();
+    }
+
     const insertOrUpdateNote = (pitch: string, position: number, moveToNext?: boolean) => {
         const note = getNote(position, currentVoice);
         if (note) {
@@ -410,8 +417,6 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         currentDuration, setCurrentDuration,
         cursorPosition, setCursorPosition,
 
-        // occupiedPositions, setOccupiedPositions,
-
         selectNote,
         selectPosition,
 
@@ -437,6 +442,7 @@ const ScoreContextProvider: React.FC<Properties> = ({showEditor, children}) => {
         insertNote,
         removeNote,
 
+        changeType,
         changeDuration,
         changePitch,
         increasePitch,

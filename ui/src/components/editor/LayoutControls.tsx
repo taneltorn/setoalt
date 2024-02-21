@@ -1,12 +1,12 @@
 import React from 'react';
-import {useScoreContext} from "../../../context/ScoreContext";
+import {useScoreContext} from "../../context/ScoreContext.tsx";
 import {useTranslation} from "react-i18next";
 import {FaBackspace} from "react-icons/fa";
-import {ShortKey} from "../../../utils/keymap";
+import {ShortKey} from "../../utils/keymap.ts";
 import {TfiShiftLeft, TfiShiftRight} from "react-icons/tfi";
-import ControlButton from "../../common/ControlButton.tsx";
+import ControlButton from "../common/ControlButton.tsx";
 import {Group} from "@mantine/core";
-import {DividerType} from "../../../models/Divider.ts";
+import {DividerType} from "../../models/Divider.ts";
 
 const LayoutControls: React.FC = () => {
 
@@ -15,11 +15,11 @@ const LayoutControls: React.FC = () => {
 
 
     return (
-        <Group gap={4} ml={"md"}>
+        <Group gap={4}>
             <ControlButton
                 tooltip={t("tooltip.insertBreak")}
                 shortKey={ShortKey.BREAK}
-                active={context.score.data.dividers.findIndex(d => d.type === DividerType.BREAK && d.position === context.currentPosition) >= 0}
+                active={context.score.data.breaks.findIndex(p => p === context.currentPosition) >= 0}
                 label={"↵"}
                 onClick={() => context.toggleBreak(context.currentPosition)}
             />

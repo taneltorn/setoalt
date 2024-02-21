@@ -4,6 +4,7 @@ import {useAudioContext} from "../context/AudioContext";
 import {ShortKey} from "../utils/keymap";
 import {range} from "../utils/helpers.tsx";
 import {DialogType, useDialogContext} from "../context/DialogContext";
+import {NoteType} from "../models/Note.ts";
 
 const KeyPressHandler: React.FC = () => {
 
@@ -62,6 +63,11 @@ const KeyPressHandler: React.FC = () => {
                     break;
                 case ShortKey.DECREASE_PITCH:
                     scoreContext.decreasePitch();
+                    break;
+                case ShortKey.CHANGE_TYPE:
+                    scoreContext.changeType(scoreContext.currentNote, scoreContext.currentNote?.type === NoteType.SMALL
+                        ? undefined
+                        : NoteType.SMALL);
                     break;
                 case ShortKey.BREAK:
                     scoreContext.toggleBreak(scoreContext.currentPosition);

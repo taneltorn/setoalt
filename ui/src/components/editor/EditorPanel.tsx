@@ -1,22 +1,24 @@
 import React from 'react';
-import NoteControls from "./controls/NoteControls.tsx";
-import DurationControls from "./controls/DurationControls.tsx";
-import LayoutControls from "./controls/LayoutControls.tsx";
+import PitchControls from "./PitchControls.tsx";
+import DurationControls from "./DurationControls.tsx";
+import LayoutControls from "./LayoutControls.tsx";
 import {Group} from "@mantine/core";
-import MiscControls from "./controls/MiscControls.tsx";
+import ScoreControls from "./ScoreControls.tsx";
 import classes from "./EditorPanel.module.scss";
-import VoiceControls from "./controls/VoiceControls.tsx";
+import VoiceControls from "./VoiceControls.tsx";
 import {Layout} from "../../utils/constants.ts";
+import NoteControls from "./NoteControls.tsx";
 
 const EditorPanel: React.FC = () => {
 
     return (<>
             <Group style={{maxWidth: Layout.stave.container.WIDTH}} className={classes.panel}>
                 <VoiceControls/>
-                <NoteControls/>
+                <PitchControls/>
                 <DurationControls/>
+                <NoteControls/>
                 <LayoutControls/>
-                <MiscControls/>
+                <ScoreControls/>
             </Group>
         </>
     )

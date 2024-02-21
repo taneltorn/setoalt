@@ -69,12 +69,6 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                                 text: context.score.data.lyrics.find(l => l.position === (n - 1))?.text || ""
                             }}/>)}
 
-                    {context.score.data.dividers
-                        .map(divider =>
-                            <StaveDivider
-                                key={`divider-${divider.position}`}
-                                divider={divider}
-                            />)}
 
                     {context.score.data.voices
                         .filter(v => isEditMode || !v.options?.hidden)
@@ -84,6 +78,14 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                                 voice={voice}
                             />)}
                     {<CursorMarker/>}
+
+
+                    {context.score.data.dividers
+                        .map(divider =>
+                            <StaveDivider
+                                key={`divider-${divider.position}`}
+                                divider={divider}
+                            />)}
                 </svg>
             </div>
         </>

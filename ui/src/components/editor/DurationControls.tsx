@@ -1,10 +1,10 @@
 import React from 'react';
-import {DurationToShortKey} from "../../../utils/mapping.ts";
-import {useScoreContext} from "../../../context/ScoreContext.tsx";
-import {Durations} from "../../../utils/dictionaries.ts";
+import {DurationToShortKey} from "../../utils/mapping.ts";
+import {useScoreContext} from "../../context/ScoreContext.tsx";
+import {Durations} from "../../utils/dictionaries.ts";
 import {useTranslation} from "react-i18next";
 import {Group} from "@mantine/core";
-import ControlButton from "../../common/ControlButton.tsx";
+import ControlButton from "../common/ControlButton.tsx";
 import Icon from "@mdi/react";
 import {mdiMusicNoteEighth, mdiMusicNoteHalf, mdiMusicNoteQuarter} from "@mdi/js";
 
@@ -20,7 +20,7 @@ const DurationControls: React.FC = () => {
     const context = useScoreContext();
 
     return (
-        <Group gap={4} ml={"lg"} className={"panel"}>
+        <Group gap={4}>
             {Durations.map(duration =>
                 <ControlButton
                     key={duration}

@@ -7,17 +7,18 @@ interface Properties {
     fill: string;
     opacity: number;
     title: string;
+    radius: number;
     onClick: () => void;
 }
 
-const EightNote: React.FC<Properties> = ({x, y, fill, opacity, title, onClick}) => {
+const EightNote: React.FC<Properties> = ({x, y, fill, radius, opacity, title, onClick}) => {
 
     return (
         <circle
             className={"hover-pointer"}
             cx={x}
             cy={y}
-            r={Layout.stave.note.RADIUS}
+            r={radius}
             fill={fill}
             opacity={opacity}
             onClick={onClick}

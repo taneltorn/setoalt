@@ -1,5 +1,4 @@
 export enum DividerType {
-    BREAK = "Break",
     BAR = "Bar",
     SEPARATOR = "Separator"
 }

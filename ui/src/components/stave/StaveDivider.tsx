@@ -4,6 +4,7 @@ import {Color, Layout} from "../../utils/constants";
 import {useTranslation} from "react-i18next";
 import {Divider, DividerType} from "../../models/Divider.ts";
 import {calculateDividerCoords} from "../../utils/calculation.helpers.tsx";
+import {useDevMode} from "../../context/DevModeContext.tsx";
 
 interface Properties {
     divider: Divider;
@@ -12,6 +13,7 @@ interface Properties {
 const StaveDivider: React.FC<Properties> = ({divider}) => {
 
     const [t] = useTranslation();
+    const {isDevMode} = useDevMode();
     const context = useScoreContext();
     const [isHovering, setIsHovering] = useState(false);
 
@@ -27,7 +29,7 @@ const StaveDivider: React.FC<Properties> = ({divider}) => {
         <>
             {context.isEditMode &&
                 <text x={x}
-                      y={y + 15}
+                      y={y + 20}
                       fill={Color.accent.PRIMARY}
                       fontSize={18}>
                     {isHovering ? "✖" : ""}
@@ -45,13 +47,13 @@ const StaveDivider: React.FC<Properties> = ({divider}) => {
                 onClick={() => context.removeDivider(divider.position)}
                 onMouseOver={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
-                opacity={0}
+                opacity={isDevMode ? 0.1 : 0}
                 x={x}
                 y={y}
                 width={Layout.stave.divider.CONTAINER_WIDTH}
                 height={height}
             >
-                <title>{t("editor.tooltip.removeDivider")}</title>
+                <title>{t("tooltip.removeDivider")}</title>
             </rect>
         </>
     )

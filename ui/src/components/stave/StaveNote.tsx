@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {Color, Layout} from "../../utils/constants";
-import {Note} from "../../models/Note";
+import {Note, NoteType} from "../../models/Note";
 import {Voice} from "../../models/Voice";
 import {useScoreContext} from "../../context/ScoreContext";
 import {useTranslation} from "react-i18next";
@@ -30,6 +30,7 @@ const StaveNote: React.FC<Properties> = ({note, voice}) => {
     const commonAttributes = {
         x: x,
         y: y,
+        radius: note.type === NoteType.SMALL ? Layout.stave.note.RADIUS_SMALL: Layout.stave.note.RADIUS,
         title: t(`pitch.${note.pitch.toLowerCase()}`),
         fill: isHighlighted(note, context) ? Color.stave.HIGHLIGHT : note.color || voice.color || "black",
         opacity: isDimmed(note, voice, context) ? Layout.stave.note.DIMMED_OPACITY : 1,
@@ -37,7 +38,6 @@ const StaveNote: React.FC<Properties> = ({note, voice}) => {
     };
 
     return (<>
-
         {note.duration === "8n" && <EightNote {...commonAttributes} />}
         {note.duration === "4n" && <QuarterNote {...commonAttributes} />}
         {note.duration === "2n" && <HalfNote {...commonAttributes} />}

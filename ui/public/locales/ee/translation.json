@@ -101,7 +101,8 @@
     "changeTempo": "Muuda tempot",
     "showVoice": "Näita hääl",
     "hideVoice": "Peida hääl",
-    "transpose": "Transponeeri"
+    "transpose": "Transponeeri",
+    "changeType": "Muuda suurust"
   },
   "dialog": {
     "saveScore": {
