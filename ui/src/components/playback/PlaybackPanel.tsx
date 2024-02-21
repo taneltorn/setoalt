@@ -9,11 +9,11 @@ const PlaybackPanel: React.FC = () => {
 
     return (
         <Group justify={"space-between"}>
-        <Group mb={"md"} gap={4}>
-            <PlaybackControls/>
-            <TempoSlider/>
-            <VoiceFilter/>
-        </Group>
+            <Group mb={"md"} gap={4}>
+                <PlaybackControls/>
+                <TempoSlider/>
+                <VoiceFilter/>
+            </Group>
             <Group>
                 <ExportControls/>
             </Group>
