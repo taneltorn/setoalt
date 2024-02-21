@@ -1,10 +1,10 @@
-import React, {useState} from 'react';
+import React, {useState} from "react";
 import {useScoreContext} from "../../context/ScoreContext";
 import {Button, Group, Loader} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import {FaRegFilePdf} from "react-icons/fa6";
-import { jsPDF } from 'jspdf'
-import 'svg2pdf.js'
+import { jsPDF } from "jspdf";
+import "svg2pdf.js";
 
 const ExportControls: React.FC = () => {
 
@@ -12,14 +12,14 @@ const ExportControls: React.FC = () => {
     const context = useScoreContext();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const doc = new jsPDF('l', 'pt', [context.dimensions.x, context.dimensions.containerY]);
+    const doc = new jsPDF("l", "pt", [context.dimensions.x, context.dimensions.containerY]);
 
     const exportToPdf = () => {
         setIsLoading(true);
         context.setIsExportMode(true);
 
         setTimeout(() => {
-            const element = document.getElementById('notation');
+            const element = document.getElementById("notation");
             if (element) {
                 doc.svg(element, {
                     width: context.dimensions.x,

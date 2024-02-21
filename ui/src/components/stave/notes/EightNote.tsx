@@ -1,5 +1,4 @@
-import React from 'react';
-import {Layout} from "../../../utils/constants.ts";
+import React from "react";
 
 interface Properties {
     x: number;
