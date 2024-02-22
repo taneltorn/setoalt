@@ -4,20 +4,17 @@ export const Voices: Voice[] = [
     {
         name: "torrõ",
         color: "black",
-        notes: [],
-        options: {}
+        notes: []
     },
     {
         name: "killõ",
         color: "#1aa7ec",
-        notes: [],
-        options: {}
+        notes: []
     },
     {
         name: "al. torrõ",
         color: "black",
-        notes: [],
-        options: {  }
+        notes: []
     },
 ];
 

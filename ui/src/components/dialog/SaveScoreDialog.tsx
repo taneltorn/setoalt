@@ -35,6 +35,8 @@ const SaveScoreDialog: React.FC = () => {
 
     const onSubmit = async (values: Score) => {
         const score = {...values, data: context.score.data};
+        score.data.voices.forEach(v => v.hidden = false);
+
         const saveScore = () => score.id ? scoreService.updateScore(score.id, score) : scoreService.createScore(score);
         saveScore()
             .then(() => {

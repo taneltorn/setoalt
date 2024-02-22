@@ -108,7 +108,7 @@ export const getDurationOffset = (a: string, b: string) => {
 
 export const isDimmed = (note: Note, voice: Voice, scoreContext: ScoreContextProperties) => {
     return !scoreContext.score.data.stave.lines.find(l => l.pitch === note.pitch) ||
-        scoreContext.isEditMode && voice.options?.hidden;
+        scoreContext.isEditMode && voice.hidden;
 }
 
 export const isHighlighted = (note: Note, context: ScoreContextProperties) => {

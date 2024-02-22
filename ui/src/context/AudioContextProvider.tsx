@@ -24,7 +24,7 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
     const playNote = (note: Note, voice?: Voice, options?: PlaybackOptions) => {
         if (!(note.position >= 0)) return;
 
-        if (!voice?.options?.hidden) {
+        if (!voice?.hidden) {
             player.playNote(note, voice, options);
         }
     }

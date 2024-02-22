@@ -5,11 +5,5 @@ export interface Voice {
     notes: Note[];
     color: string;
     occupiedPositions?: number[];
-    options?: VoiceOptions;
-}
-
-
-export interface VoiceOptions {
     hidden?: boolean;
-    disableOffset?: boolean;
 }

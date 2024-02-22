@@ -13,16 +13,14 @@ const VoiceFilter: React.FC = () => {
         if (!v) {
             return;
         }
-        v.options = v.options || {};
-        v.options.hidden = !v.options.hidden;
+        v.hidden = !v.hidden;
         context.refresh();
     }
 
     const toggleShowAll = () => {
-        const allVoicesVisible = context.score.data.voices.every(v => !v.options?.hidden);
+        const allVoicesVisible = context.score.data.voices.every(v => !v.hidden);
         context.score.data.voices.forEach(v => {
-            v.options = v.options || {};
-            v.options.hidden = allVoicesVisible
+            v.hidden = allVoicesVisible
                 ? v.name !== context.currentVoice.name
                 : false;
         });
@@ -34,8 +32,7 @@ const VoiceFilter: React.FC = () => {
             {!context.isEditMode && context.score.data.voices.map(voice => (
                 <VoiceFilterButton
                     key={voice.name}
-                    active={!voice.options?.hidden}
-                    // active={context.filter.voices === undefined || !!context.filter.voices?.includes(voice.name)}
+                    active={!voice.hidden}
                     label={voice.name}
                     onClick={() => toggleVoice(voice)}
                 />
@@ -43,8 +40,8 @@ const VoiceFilter: React.FC = () => {
 
             {context.isEditMode &&
                 <VoiceFilterButton
-                    active={context.score.data.voices.every(v => !v.options?.hidden)}
-                    label={"Näita kõiki"}
+                    active={context.score.data.voices.every(v => !v.hidden)}
+                    label={"Näita kõiki"} // todo
                     onClick={toggleShowAll}
                 />}
         </Group>

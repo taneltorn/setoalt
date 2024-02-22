@@ -71,7 +71,7 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
 
 
                     {context.score.data.voices
-                        .filter(v => isEditMode || !v.options?.hidden)
+                        .filter(v => isEditMode || !v.hidden)
                         .map(voice =>
                             <VoiceLine
                                 key={voice.name}

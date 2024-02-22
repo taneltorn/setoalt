@@ -94,12 +94,12 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     const getNote = (position: number, voice?: Voice): Note | undefined => {
         const notes = voice
             ? score.data.voices.find(v => v.name === voice.name)?.notes || []
-            : score.data.voices.filter(v => !v.options?.hidden).flatMap(v => v.notes) || [];
+            : score.data.voices.filter(v => !v.hidden).flatMap(v => v.notes) || [];
         return notes.find(n => n.position === position);
     }
 
     const getNotes = (position: number): Note[] => {
-        const notes = score.data.voices.filter(v => !v.options?.hidden).flatMap(v => v.notes) || [];
+        const notes = score.data.voices.filter(v => !v.hidden).flatMap(v => v.notes) || [];
         return notes.filter(n => n.position === position);
     }
 
