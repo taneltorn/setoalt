@@ -4,6 +4,7 @@ import React, {useEffect} from "react";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../context/AuthContext.tsx";
+import Page from "../Page.tsx";
 
 type LoginFormValues = {
     username: string
@@ -34,7 +35,7 @@ const Login: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <Page title={t("view.login.title")}>
             <Title order={1} mb={"xs"}>{t("view.login.title")}</Title>
 
             <Grid mb={"md"}>
@@ -60,7 +61,7 @@ const Login: React.FC = () => {
                     </form>
                 </Grid.Col>
             </Grid>
-        </>
+        </Page>
     );
 }
 

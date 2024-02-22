@@ -1,10 +1,14 @@
 {
+  "page": {
+    "title": "Seto alternatiivne noodikiri"
+  },
   "brand": {
     "title": "Seto alt."
   },
   "view": {
     "home": {
       "title": "Seto alternatiivne noodikiri",
+      "pageTitle": "Avaleht",
       "description": "Antud veebileht on osa Kirjandusmuuseumi loovuurimuslikust projektist \"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\"."
     },
     "scores": {

@@ -34,7 +34,7 @@ const ScoreInfo: React.FC = () => {
 
                     <Grid.Col span={6}>
                         <pre><strong>Cursor</strong></pre>
-                        <pre>position: {context.cursorPosition}, coords: {x}/{y}, pixels: {cx}/{cy}</pre>
+                        <pre>position: {context.cursorPosition}, coords: {x}/{y}, pixels: {cx}/{cy}, scroll: {context.containerRef?.current?.scrollLeft}</pre>
                     </Grid.Col>
                 </Grid>
 
@@ -50,6 +50,12 @@ const ScoreInfo: React.FC = () => {
                     </Grid.Col>
                 </Grid>
 
+                <Grid>
+                    <Grid.Col span={6}>
+                        <pre><strong>Dimensions</strong></pre>
+                        <pre>stave: {context.dimensions.x} x {context.dimensions.y}, container: {context.dimensions.x} x {context.dimensions.containerY}</pre>
+                    </Grid.Col>
+                </Grid>
 
                 <Grid mt={"md"}>
                     <Grid.Col span={12}>

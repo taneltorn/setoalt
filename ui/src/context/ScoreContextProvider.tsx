@@ -20,6 +20,7 @@ import {DividerType} from "../models/Divider.ts";
 import {StaveDimensions} from "../models/Dimensions.ts";
 import useCursorCoords from "../hooks/useCursorCoords.tsx";
 import {calculateStaveDimensions} from "../utils/calculation.helpers.tsx";
+import {Layout} from "../utils/constants.ts";
 
 interface Properties {
     children: React.ReactNode;
@@ -36,7 +37,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     const [isTyping, setIsTyping] = useState<boolean>(false);
 
     const [semitones, setSemitones] = useState<number>(0);
-    const [currentPosition, setCurrentPosition] = useState<number>( -1);
+    const [currentPosition, setCurrentPosition] = useState<number>(-1);
     const [currentNote, setCurrentNote] = useState<Note | undefined>();
     const [currentDuration, setCurrentDuration] = useState<string>("8n");
     const [currentVoice, setCurrentVoice] = useState<Voice>({...Voices[0]});
@@ -44,15 +45,15 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
     const audioContext = useAudioContext();
 
-    const mousePosition = useCursorCoords(containerRef);
+    const cursorCoords = useCursorCoords(containerRef);
 
     useMemo(() => {
-        let position = mousePosition.x + (score.data.breaks[mousePosition.y - 1] || 0);
-        if (position > score.data.breaks[mousePosition.y]) {
+        let position = cursorCoords.x + (score.data.breaks[cursorCoords.y - 1] || 0);
+        if (position > score.data.breaks[cursorCoords.y]) {
             position = -1;
         }
         setCursorPosition(position);
-    }, [mousePosition.x, mousePosition.y]);
+    }, [cursorCoords.x, cursorCoords.y]);
 
     const toggleEditMode = () => {
         setIsEditMode(!isEditMode);
@@ -385,7 +386,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         refresh();
     }
 
-    const dimensions: StaveDimensions = useMemo<StaveDimensions>(() => calculateStaveDimensions(score), [score]);
+    const dimensions: StaveDimensions = useMemo<StaveDimensions>(() => calculateStaveDimensions(score), [score, score.data.breaks, score.data.voices]);
 
     const endPosition: number = useMemo<number>(() => {
         const notes = score.data.voices.flatMap(v => v.notes).sort((a, b) => a.position - b.position);
@@ -400,6 +401,24 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     useEffect(() => {
         audioContext.setTempo(score.defaultTempo || 80);
     }, [score.defaultTempo]);
+
+    useEffect(() => {
+        // todo optimize
+        const x = currentPosition * Layout.stave.note.SPACING + Layout.stave.container.PADDING_X_START;
+        if (containerRef?.current) {
+            if (x > (Layout.stave.container.MAX_WIDTH + containerRef.current.scrollLeft - Layout.stave.container.PADDING_X_END)
+                || x <= containerRef.current.scrollLeft) {
+                containerRef?.current.scrollTo(x - Layout.stave.container.PADDING_X_START, 0)
+            }
+        }
+
+        let position = cursorCoords.x + (score.data.breaks[cursorCoords.y - 1] || 0);
+        if (position > score.data.breaks[cursorCoords.y]) {
+            position = -1;
+        }
+        setCursorPosition(position);
+    }, [currentPosition]);
+
 
     const context = useMemo(() => ({
         containerRef,

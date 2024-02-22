@@ -12,7 +12,7 @@ import NoteControls from "./NoteControls.tsx";
 const EditorPanel: React.FC = () => {
 
     return (<>
-            <Group style={{maxWidth: Layout.stave.container.WIDTH}} className={classes.panel}>
+            <Group style={{maxWidth: Layout.stave.container.MAX_WIDTH}} className={classes.panel}>
                 <VoiceControls/>
                 <PitchControls/>
                 <DurationControls/>

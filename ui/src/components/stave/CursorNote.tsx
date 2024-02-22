@@ -3,7 +3,6 @@ import {Layout} from "../../utils/constants";
 import {useScoreContext} from "../../context/ScoreContext";
 import {calculateCursorNoteCoords} from "../../utils/calculation.helpers.tsx";
 import {useDevMode} from "../../context/DevModeContext.tsx";
-import useCursorCoords from "../../hooks/useCursorCoords.tsx";
 
 interface Properties {
     pitch: string;
@@ -17,14 +16,12 @@ const CursorNote: React.FC<Properties> = ({pitch, ...props}) => {
     const {isDevMode} = useDevMode();
     const [opacity, setOpacity] = useState<number>(isDevMode ? 0.2 : 0);
 
-    const coords = useCursorCoords(context.containerRef);
-
     const {x, y} = useMemo(() => {
         return calculateCursorNoteCoords(pitch, props.x, props.y, context);
     }, [pitch, props.x, props.y]);
 
     return (<>
-        {context.cursorPosition >= 0 && coords.x <= 20 && <>
+        {context.cursorPosition >= 0 && <>
             <circle
                 className={"hover-pointer"}
                 cx={x}

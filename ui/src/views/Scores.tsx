@@ -9,6 +9,7 @@ import {DisplayError} from "../utils/helpers.tsx";
 import {useAuth} from "../context/AuthContext.tsx";
 import RemoveScoreDialog from "../components/dialog/RemoveScoreDialog.tsx";
 import {CiSearch} from "react-icons/ci";
+import Page from "../Page.tsx";
 
 const ScoreDetails: React.FC = () => {
 
@@ -44,7 +45,7 @@ const ScoreDetails: React.FC = () => {
     }, [scores, search]);
 
     return (
-        <>
+        <Page title={t("view.scores.title")}>
             <Title order={1} mb={"xs"}>{t("view.scores.title")}</Title>
             <Text mb={"lg"}>{t("view.scores.description")}</Text>
 
@@ -77,7 +78,7 @@ const ScoreDetails: React.FC = () => {
                 <Button mt={"md"} onClick={() => navigate("/editor")}>
                     {t("button.addNew")}
                 </Button>}
-        </>
+        </Page>
     );
 }
 

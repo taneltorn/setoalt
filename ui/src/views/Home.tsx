@@ -4,6 +4,7 @@ import React, {useEffect, useState} from "react";
 import TextLink from "../components/common/TextLink.tsx";
 import {Link} from "react-router-dom";
 import Markdown from "react-markdown";
+import Page from "../Page.tsx";
 
 const Home: React.FC = () => {
 
@@ -21,7 +22,7 @@ const Home: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <Page title={t("view.home.pageTitle")}>
             <Title order={1} mb={"xs"}>{t("view.home.title")}</Title>
             <Text>{t("view.home.description")}</Text>
 
@@ -54,9 +55,7 @@ const Home: React.FC = () => {
             <div>
                 <Markdown>{changelog}</Markdown>
             </div>
-
-
-        </>
+        </Page>
     );
 }
 

@@ -1,5 +1,10 @@
 # Muudatused
 
+## 0.1.29
+- Lisatud horisontaalne kerimine (scroll)
+- Suurendatud lehe maksimaalset laiust
+- Lisatud lehtede pealkirjad (lehitseja sakil)
+
 ## 0.1.28
 - Lisatud PDF eksport
 - Lisatud noodi väiksemaks muutmine - vajuta "()" nuppu või T klahvi.

@@ -8,6 +8,7 @@ import SaveUserDialog from "../components/dialog/SaveUserDialog.tsx";
 import {DialogType, useDialogContext} from "../context/DialogContext.tsx";
 import {User} from "../models/User.ts";
 import RemoveUserDialog from "../components/dialog/RemoveUserDialog.tsx";
+import Page from "../Page.tsx";
 
 const Admin: React.FC = () => {
 
@@ -31,7 +32,7 @@ const Admin: React.FC = () => {
     }, []);
 
     return (
-        <>
+        <Page title={t("view.admin.title")}>
             <Title order={1} mb={"xs"}>{t("view.admin.title")}</Title>
             <Text>{t("view.admin.description")} </Text>
 
@@ -47,7 +48,7 @@ const Admin: React.FC = () => {
 
             <SaveUserDialog/>
             <RemoveUserDialog/>
-        </>
+        </Page>
     );
 }
 

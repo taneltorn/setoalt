@@ -1,5 +1,4 @@
 import React, {useEffect, useRef} from 'react';
-import {Layout} from "../../utils/constants";
 import VoiceLine from "./VoiceLine";
 import {Score} from "../../models/Score";
 import {useScoreContext} from "../../context/ScoreContext";
@@ -11,6 +10,7 @@ import StaveDivider from "./StaveDivider.tsx";
 import StaveBreak from "./StaveBreak.tsx";
 import CursorMarker from "./CursorMarker.tsx";
 import EditorPanel from "../editor/EditorPanel.tsx";
+import {Layout} from "../../utils/constants.ts";
 
 interface Properties {
     score?: Score;
@@ -35,14 +35,13 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                 ref={ref}
                 style={{
                     marginTop: 15,
-                    maxWidth: Layout.stave.container.WIDTH,
-                    minWidth: Layout.stave.container.WIDTH,
+                    maxWidth: Layout.stave.container.MAX_WIDTH,
                     overflowX: "scroll",
-                    overflow: "scroll",
                     height: context.dimensions.y * context.dimensions.blocks + 30
                 }}>
 
-                <svg id={"notation"} width={context.dimensions.x - 50}
+                <svg id={"notation"}
+                     width={context.dimensions.x}
                      height={context.dimensions.y * context.dimensions.blocks}>
 
                     {range(context.score.data.breaks.length + 1)

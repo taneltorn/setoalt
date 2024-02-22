@@ -167,18 +167,26 @@ export const getBreakOffset = (position: number, context: ScoreContextProperties
     };
 }
 
-
 export const calculateStaveDimensions = (score: Score): StaveDimensions => {
     const bottomLineY = score.data.stave.lines.slice(-1)?.[0]?.y || 0;
     const y = Layout.stave.container.SYMBOLS_BAR
         + Layout.stave.line.SPACING * bottomLineY
         + Layout.stave.container.LYRICS_BAR;
 
-    const x = Layout.stave.container.WIDTH;
+
+    const distances = score.data.voices.flatMap(v => v.notes).map(n => {
+        const nearestBreak = score.data.breaks.filter(p => p <= n.position).slice(-1)?.[0] || 0;
+        return n.position - nearestBreak;
+    })
+    const x = Math.max(...distances) * Layout.stave.note.SPACING + Layout.stave.container.PADDING_X_START + Layout.stave.container.PADDING_X_END;
+
+    // const x = Math.max(getMaxPosition(score.data.voices.flatMap(v => v.notes).map(n => n.position), score.data.breaks), 0)
+
+    // const x = Layout.stave.container.WIDTH;
     const blocks = score.data.breaks.length + 1;
 
     return {
-        x: x,
+        x: Math.max(x, Layout.stave.container.MAX_WIDTH),
         y: y,
         blocks: blocks,
         containerY: y * blocks,

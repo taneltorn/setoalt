@@ -19,11 +19,11 @@ const useCursorCoords = (elementRef: RefObject<HTMLElement> | undefined): MouseP
         const updateMousePosition = (ev: MouseEvent) => {
             if (elementRef.current) {
                 const rect = elementRef.current.getBoundingClientRect();
-                const cx = ev.clientX - rect.left;
+                const cx = ev.clientX - rect.left + (elementRef.current.scrollLeft || 0);
                 const cy = ev.clientY - rect.top;
 
                 let x = Math.round(cx / Layout.stave.note.SPACING) - 1;
-                const y = Math.floor(cy / 200) ; // todo should be dynamic
+                const y = Math.floor(cy / 200); // todo should be dynamic
 
                 setCursorPosition({
                     x, y, cx: Math.round(cx), cy: Math.round(cy)

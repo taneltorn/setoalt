@@ -14,6 +14,7 @@ import SaveScoreDialog from "../components/dialog/SaveScoreDialog.tsx";
 import {DialogType, useDialogContext} from "../context/DialogContext.tsx";
 import {useDevMode} from "../context/DevModeContext.tsx";
 import {useAuth} from "../context/AuthContext.tsx";
+import Page from "../Page.tsx";
 
 const Editor: React.FC = () => {
 
@@ -24,31 +25,33 @@ const Editor: React.FC = () => {
 
     return (
         <ScoreContextProvider>
-            <KeyPressHandler/>
+            <Page title={t("view.editor.title")}>
+                <KeyPressHandler/>
 
-            <Group justify={"space-between"} mb={"xs"}>
-                <Title order={1} mb={"xs"}>
-                    {t("view.editor.title")}
-                </Title>
+                <Group justify={"space-between"} mb={"xs"}>
+                    <Title order={1} mb={"xs"}>
+                        {t("view.editor.title")}
+                    </Title>
 
-                {auth.currentUser?.isAuthorized &&
-                    <Button size={"md"}
-                            justify={"end"}
-                            onClick={() => open(DialogType.SAVE_SCORE)}>
-                        {t("button.save")}
-                    </Button>}
-            </Group>
+                    {auth.currentUser?.isAuthorized &&
+                        <Button size={"md"}
+                                justify={"end"}
+                                onClick={() => open(DialogType.SAVE_SCORE)}>
+                            {t("button.save")}
+                        </Button>}
+                </Group>
 
-            <PlaybackPanel/>
-            <Stave isEditMode/>
+                <PlaybackPanel/>
+                <Stave isEditMode/>
 
-            <StaveSelectionDialog/>
-            <MicroTuningDialog/>
-            <ResetScoreDialog/>
-            <SaveScoreDialog/>
-            <TransposeDialog/>
+                <StaveSelectionDialog/>
+                <MicroTuningDialog/>
+                <ResetScoreDialog/>
+                <SaveScoreDialog/>
+                <TransposeDialog/>
 
-            {isDevMode && <ScoreInfo/>}
+                {isDevMode && <ScoreInfo/>}
+            </Page>
         </ScoreContextProvider>
     );
 }

@@ -16,6 +16,7 @@ import {DisplayError} from "../utils/helpers.tsx";
 import {Link} from "react-router-dom";
 import {FaAngleLeft} from "react-icons/fa6";
 import RemoveScoreDialog from "../components/dialog/RemoveScoreDialog.tsx";
+import Page from "../Page.tsx";
 
 interface Properties {
     isEditMode?: boolean;
@@ -50,37 +51,38 @@ const ScoreDetails: React.FC<Properties> = ({isEditMode}) => {
 
     return (
         <ScoreContextProvider>
-            <KeyPressHandler/>
+            <Page title={score?.name}>
+                <KeyPressHandler/>
 
-            {noData && <>
-                <Alert mb={"md"} color={"red"} icon={<IoIosWarning size={40}/>}>
-                    <Text fw={500}>{t("view.scores.details.noData")}</Text>
-                </Alert>
-                <Link to={"/scores"}>
-                    <Group>
-                        <FaAngleLeft size={24} color={theme.primaryColor}/>
-                        <Text size={"lg"}>{t("view.scores.details.back")}</Text>
-                    </Group>
-                </Link>
-            </>}
+                {noData && <>
+                    <Alert mb={"md"} color={"red"} icon={<IoIosWarning size={40}/>}>
+                        <Text fw={500}>{t("view.scores.details.noData")}</Text>
+                    </Alert>
+                    <Link to={"/scores"}>
+                        <Group>
+                            <FaAngleLeft size={24} color={theme.primaryColor}/>
+                            <Text size={"lg"}>{t("view.scores.details.back")}</Text>
+                        </Group>
+                    </Link>
+                </>}
 
-            {scoreService.isLoading && <>
-                <Loader/>
-                <StaveSkeleton/>
-            </>}
+                {scoreService.isLoading && <>
+                    <Loader/>
+                    <StaveSkeleton/>
+                </>}
 
-            {score && !scoreService.isLoading && <>
-                <EditScoreForm
-                    score={score}
-                    isOpen={isEditMode}
-                />
+                {score && !scoreService.isLoading && <>
+                    <EditScoreForm
+                        score={score}
+                        isOpen={isEditMode}
+                    />
 
-                {isDevMode && <ScoreInfo/>}
+                    {isDevMode && <ScoreInfo/>}
 
-                <TransposeDialog/>
-                <RemoveScoreDialog/>
-            </>}
-
+                    <TransposeDialog/>
+                    <RemoveScoreDialog/>
+                </>}
+            </Page>
         </ScoreContextProvider>
     );
 }
