@@ -1,5 +1,6 @@
 import AppRouter from "./AppRouter.tsx";
 import {Notifications} from "@mantine/notifications";
+import "./i18n";
 
 function App() {
 

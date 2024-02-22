@@ -1,6 +1,6 @@
 import React from 'react';
 import {Outlet} from "react-router-dom";
-import {AppShell} from "@mantine/core";
+import {Alert, AppShell, Text} from "@mantine/core";
 import Sidebar from "./components/sidebar/Sidebar.tsx";
 
 const Layout: React.FC = () => {
@@ -15,6 +15,14 @@ const Layout: React.FC = () => {
                 <Sidebar/>
             </AppShell.Navbar>
             <AppShell.Main id={"content"}>
+                {import.meta.env.VITE_ENVIRONMENT === "dev" &&
+                    <Alert mb={"md"}>
+                        <Text mr={"md"} fw={"bold"}>
+                            See on rakenduse arendusversioon!
+                        </Text>
+                        Kasuta rakenduse test versiooni, mis asub aadressil:
+                        <a href={"http://157.230.76.45"}>http://157.230.76.45</a>
+                    </Alert>}
                 <Outlet/>
             </AppShell.Main>
         </AppShell>
