@@ -1,5 +1,9 @@
 # Muudatused
 
+## 0.1.30
+- Lisatud hääle lisamise võimalus
+- Pisiparandused
+
 ## 0.1.29
 - Lisatud horisontaalne kerimine (scroll)
 - Suurendatud lehe maksimaalset laiust
