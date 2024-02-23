@@ -15,7 +15,7 @@ import {
 import {Voice} from "../models/Voice";
 import {ScoreContext} from './ScoreContext';
 import {useAudioContext} from "./AudioContext";
-import {Voices} from "../utils/dictionaries";
+import {DefaultVoices} from "../utils/dictionaries";
 import {DividerType} from "../models/Divider.ts";
 import {StaveDimensions} from "../models/Dimensions.ts";
 import useCursorCoords from "../hooks/useCursorCoords.tsx";
@@ -40,7 +40,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     const [currentPosition, setCurrentPosition] = useState<number>(-1);
     const [currentNote, setCurrentNote] = useState<Note | undefined>();
     const [currentDuration, setCurrentDuration] = useState<string>("8n");
-    const [currentVoice, setCurrentVoice] = useState<Voice>({...Voices[0]});
+    const [currentVoice, setCurrentVoice] = useState<Voice>({...DefaultVoices[0]});
     const [cursorPosition, setCursorPosition] = useState<number>(0);
 
     const audioContext = useAudioContext();
@@ -179,14 +179,14 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     }
 
     const shiftLeft = () => {
-        // todo atm does not take into account prev note duration
-        // if (currentPosition <= 0 || !!getNote(currentPosition - 1, currentVoice)) return;
+        if (currentPosition <= 0 || !!getNote(currentPosition - 1, currentVoice)) return;
 
         const newPosition = currentPosition - 1;
         if (!currentVoice.occupiedPositions?.includes(newPosition)) {
             shiftNotes(newPosition, -1);
             refresh();
             setCurrentPosition(newPosition);
+            setCurrentNote(getNote(newPosition, currentVoice));
         }
     }
 

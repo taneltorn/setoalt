@@ -38,6 +38,7 @@ const StaveNote: React.FC<Properties> = ({note, voice}) => {
     };
 
     return (<>
+        {/*todo use single component */}
         {note.duration === "8n" && <EightNote {...commonAttributes} />}
         {note.duration === "4n" && <QuarterNote {...commonAttributes} />}
         {note.duration === "2n" && <HalfNote {...commonAttributes} />}

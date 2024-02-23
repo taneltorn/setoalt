@@ -6,11 +6,13 @@ export enum DialogType {
     CLEAR_SCORE,
     SAVE_SCORE,
     REMOVE_SCORE,
+    REMOVE_VOICE,
     SAVE_USER,
     REMOVE_USER,
     TRANSPOSE,
     STAVE_SELECTION,
     JSON,
+    ADD_VOICE,
 }
 
 export interface Properties {

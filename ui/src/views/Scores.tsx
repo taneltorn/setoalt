@@ -66,11 +66,12 @@ const ScoreDetails: React.FC = () => {
                         />
                     }/>
             </Group>
-                <Grid>
-                    <Grid.Col span={{xl: 10, lg: 12}}>
-                        <ScoreTable scores={filteredScores} refresh={fetchData}/>
-                    </Grid.Col>
-                </Grid>
+
+            <Grid>
+                <Grid.Col span={{xl: 10, lg: 12}}>
+                    <ScoreTable scores={filteredScores} refresh={fetchData}/>
+                </Grid.Col>
+            </Grid>
 
             <RemoveScoreDialog/>
 

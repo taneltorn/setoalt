@@ -186,3 +186,7 @@ export const DisplaySuccess = (title: string, message: string) => {
         color: "white"
     });
 }
+
+export const clone = (object: any): any => {
+    return JSON.parse(JSON.stringify(object));
+}

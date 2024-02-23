@@ -8,10 +8,11 @@ interface Properties {
     fill: string;
     opacity: number;
     title: string;
+    radius: number;
     onClick: () => void;
 }
 
-const HalfNote: React.FC<Properties> = ({x, y, fill, opacity, title, onClick}) => {
+const HalfNote: React.FC<Properties> = ({x, y, fill, radius, opacity, title, onClick}) => {
 
     const {useHollowNotes} = useDevMode(); // todo remove
 
@@ -21,7 +22,7 @@ const HalfNote: React.FC<Properties> = ({x, y, fill, opacity, title, onClick}) =
                 className={"hover-pointer"}
                 cx={x}
                 cy={y}
-                r={Layout.stave.note.RADIUS - Layout.stave.note.HALF_NOTE_STROKE / 2}
+                r={radius  - Layout.stave.note.QUARTER_NOTE_STROKE / 2}
                 fill={"white"}
                 strokeWidth={Layout.stave.note.HALF_NOTE_STROKE}
                 stroke={fill}
@@ -34,7 +35,7 @@ const HalfNote: React.FC<Properties> = ({x, y, fill, opacity, title, onClick}) =
                 className={"hover-pointer"}
                 cx={x}
                 cy={y}
-                r={Layout.stave.note.RADIUS}
+                r={radius}
                 fill={fill}
                 opacity={opacity}
                 onClick={onClick}

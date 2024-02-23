@@ -16,57 +16,54 @@ const PlaybackControls: React.FC = () => {
     const {open} = useDialogContext();
 
     return (
-        <>
+        <Group gap={4}>
+            <Button
+                px={0}
+                title={t("tooltip.playPrevious")}
+                color={"gray.4"}
+                variant={"transparent"}
+                onClick={() => playPrevious(context)}
+            >
+                <AiOutlineBackward size={40}/>
+            </Button>
 
-            <Group gap={4}>
-                <Button
-                    px={0}
-                    title={t("tooltip.playPrevious")}
-                    color={"gray.4"}
-                    variant={"transparent"}
-                    onClick={() => playPrevious(context)}
-                >
-                    <AiOutlineBackward size={40}/>
+            {isPlaying
+                ? <Button px={0}
+                          h={60}
+                          title={t("tooltip.stopPlayback")}
+                          color={"black"}
+                          variant={"transparent"}
+                          onClick={() => stopPlayback()}>
+                    <AiFillPauseCircle size={60}/>
                 </Button>
+                : <Button px={0}
+                          h={60}
+                          title={t("tooltip.startPlayback")}
+                          color={theme.primaryColor}
+                          variant={"transparent"}
+                          onClick={() => startPlayback(context)}>
+                    <AiFillPlayCircle size={60}/>
+                </Button>}
 
-                {isPlaying
-                    ? <Button px={0}
-                              h={60}
-                              title={t("tooltip.stopPlayback")}
-                              color={"black"}
-                              variant={"transparent"}
-                              onClick={() => stopPlayback()}>
-                        <AiFillPauseCircle size={60}/>
-                    </Button>
-                    : <Button px={0}
-                              h={60}
-                              title={t("tooltip.startPlayback")}
-                              color={theme.primaryColor}
-                              variant={"transparent"}
-                              onClick={() => startPlayback(context)}>
-                        <AiFillPlayCircle size={60}/>
-                    </Button>}
+            <Button
+                px={0}
+                title={t("tooltip.resetPlayback")}
+                color={"gray.4"}
+                variant={"transparent"}
+                onClick={() => resetPlayback(context)}
+            >
+                <AiOutlineUndo size={40}/>
+            </Button>
 
-                <Button
-                    px={0}
-                    title={t("tooltip.resetPlayback")}
-                    color={"gray.4"}
-                    variant={"transparent"}
-                    onClick={() => resetPlayback(context)}
-                >
-                    <AiOutlineUndo size={40}/>
-                </Button>
-
-                <Button
-                    px={0}
-                    title={t("tooltip.playNext")}
-                    color={"gray.4"}
-                    variant={"transparent"}
-                    onClick={() => playNext(context)}
-                >
-                    <AiOutlineForward size={40}/>
-                </Button>
-            </Group>
+            <Button
+                px={0}
+                title={t("tooltip.playNext")}
+                color={"gray.4"}
+                variant={"transparent"}
+                onClick={() => playNext(context)}
+            >
+                <AiOutlineForward size={40}/>
+            </Button>
 
             <Button
                 px={0}
@@ -77,7 +74,7 @@ const PlaybackControls: React.FC = () => {
             >
                 <GiTunePitch size={40}/>
             </Button>
-        </>
+        </Group>
     );
 };
 

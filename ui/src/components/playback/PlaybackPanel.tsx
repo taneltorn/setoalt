@@ -8,8 +8,8 @@ import ExportControls from "./ExportControls.tsx";
 const PlaybackPanel: React.FC = () => {
 
     return (
-        <Group justify={"space-between"}>
-            <Group mb={"md"} gap={4}>
+        <Group justify={"space-between"} mb={"md"} >
+            <Group gap={"xl"}>
                 <PlaybackControls/>
                 <TempoSlider/>
                 <VoiceFilter/>

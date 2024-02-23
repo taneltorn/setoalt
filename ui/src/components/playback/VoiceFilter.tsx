@@ -28,7 +28,7 @@ const VoiceFilter: React.FC = () => {
     }
 
     return (
-        <Group gap={4} ml={"xl"}>
+        <Group gap={4} justify={"end"}>
             {!context.isEditMode && context.score.data.voices.map(voice => (
                 <VoiceFilterButton
                     key={voice.name}

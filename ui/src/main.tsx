@@ -12,7 +12,7 @@ import {AuthContextProvider} from "./context/AuthContextProvider.tsx";
 import DevModeContextProvider from "./context/DevModeContextProvider.tsx";
 
 const theme = createTheme({
-    fontFamily: ' Montserrat, sans-serif',
+    fontFamily: 'Verdana, Montserrat, sans-serif',
     defaultRadius: 'xl',
     primaryColor: 'red',
     primaryShade: 9,

@@ -38,7 +38,7 @@ const ExportControls: React.FC = () => {
     }
 
     return (
-        <Group gap={4} ml={"xl"}>
+        <Group gap={4}>
             <Button
                 title={t(`tooltip.exportToPdf`)}
                 variant={"outline"}

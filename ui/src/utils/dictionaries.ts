@@ -1,6 +1,6 @@
 import {Voice} from "../models/Voice";
 
-export const Voices: Voice[] = [
+export const DefaultVoices: Voice[] = [
     {
         name: "torrõ",
         color: "black",
@@ -10,12 +10,7 @@ export const Voices: Voice[] = [
         name: "killõ",
         color: "#1aa7ec",
         notes: []
-    },
-    {
-        name: "al. torrõ",
-        color: "black",
-        notes: []
-    },
+    }
 ];
 
 export const Durations: string[] = [

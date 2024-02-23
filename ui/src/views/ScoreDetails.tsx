@@ -5,7 +5,6 @@ import ScoreContextProvider from "../context/ScoreContextProvider.tsx";
 import {useParams} from "react-router";
 import useScoreService from "../services/ScoreService.tsx";
 import StaveSkeleton from "../components/stave/StaveSkeleton.tsx";
-import TransposeDialog from "../components/dialog/TransposeDialog.tsx";
 import KeyPressHandler from "../components/KeyPressHandler.tsx";
 import {IoIosWarning} from "react-icons/io";
 import EditScoreForm from "../components/form/EditScoreForm.tsx";
@@ -17,6 +16,7 @@ import {Link} from "react-router-dom";
 import {FaAngleLeft} from "react-icons/fa6";
 import RemoveScoreDialog from "../components/dialog/RemoveScoreDialog.tsx";
 import Page from "../Page.tsx";
+import EditorDialogs from "./EditorDialogs.tsx";
 
 interface Properties {
     isEditMode?: boolean;
@@ -79,7 +79,7 @@ const ScoreDetails: React.FC<Properties> = ({isEditMode}) => {
 
                     {isDevMode && <ScoreInfo/>}
 
-                    <TransposeDialog/>
+                    <EditorDialogs/>
                     <RemoveScoreDialog/>
                 </>}
             </Page>
