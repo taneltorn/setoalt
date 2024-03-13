@@ -1,4 +1,4 @@
-import {Voice} from "../models/Voice.ts";
+import {Voice, VoiceType} from "../models/Voice.ts";
 import {ScoreContextProperties} from "../context/ScoreContext.tsx";
 import {Layout} from "./constants.ts";
 import {Note} from "../models/Note.ts";
@@ -7,6 +7,8 @@ import {Divider} from "../models/Divider.ts";
 import {Score} from "../models/Score.ts";
 import {StaveDimensions} from "../models/Dimensions.ts";
 import {Lyric} from "../models/Lyric.ts";
+
+// todo: could refactor a lot here
 
 export const calculateBreakCoords = (position: number, context: ScoreContextProperties): XY => {
     const offset = getBreakOffset(position, context);
@@ -22,7 +24,7 @@ export const calculateBreakCoords = (position: number, context: ScoreContextProp
 }
 
 export const calculateDividerCoords = (divider: Divider, context: ScoreContextProperties): XY => {
-    const offset = getOffset(divider.position, context);
+    const offset = getOffset(divider.position, context, 0, true);
 
     const x = Layout.stave.container.PADDING_X_START
         + divider.position * Layout.stave.note.SPACING
@@ -71,10 +73,9 @@ export const calculateCurrentPositionCoords = (context: ScoreContextProperties):
 export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreContextProperties): XY => {
     const offset = getOffset(note.position, context);
 
-    // todo make dynamic, not killõ specific
-    if (voice.name === "killõ") {
+    if (voice.type === VoiceType.KILLO) {
         const positionOccupied = context.score.data.voices
-            .filter(v => v.name !== "killõ")
+            .filter(v => v.type !== VoiceType.KILLO)
             .flatMap(v => v.notes)
             .find(n => n.position === note.position && n.pitch === note.pitch);
         if (positionOccupied) {
@@ -140,10 +141,10 @@ export const calculateLineBlockOffset = (index: number, context: ScoreContextPro
     }
 }
 
-export const getOffset = (position: number, context: ScoreContextProperties, indexOffsetY?: number): XY => {
+export const getOffset = (position: number, context: ScoreContextProperties, indexOffsetY?: number, greedy?: boolean): XY => {
     const breakpoints = context.score.data.breaks;
 
-    let index = breakpoints.findIndex(b => position < b);
+    let index = breakpoints.findIndex(b => greedy? position <= b : position < b);
     if (index === -1) {
         index = breakpoints.length;
     }

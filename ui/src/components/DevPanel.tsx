@@ -7,14 +7,13 @@ import {useAuth} from "../context/AuthContext.tsx";
 const DevPanel: React.FC = () => {
 
     const {currentUser} = useAuth();
-    const {isDevMode, setIsDevMode, useHollowNotes, setUseHollowNotes} = useDevMode();
+    const {isDevMode, setIsDevMode} = useDevMode();
 
     return (
         <Alert mb={"md"} color={"red"} icon={<IoIosWarning size={40}/>}>
             <Text variant={"light"} fw={500}>
                 Tegemist on arendusjärgus oleva veebirakendusega. Kõik, mida näed, võib muutuda.
             </Text>
-
 
             {currentUser?.isAdmin && <Switch
                 mt={"lg"}
@@ -23,14 +22,6 @@ const DevPanel: React.FC = () => {
                 label={"Dev mode"}
                 onChange={() => setIsDevMode(!isDevMode)}
             />}
-
-            <Switch
-                mt={"lg"}
-                className={"hover-pointer"}
-                checked={useHollowNotes}
-                label={"Alt. noodid"}
-                onChange={() => setUseHollowNotes(!useHollowNotes)}
-            />
         </Alert>
     );
 }

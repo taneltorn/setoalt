@@ -1,13 +1,15 @@
-import {Voice} from "../models/Voice";
+import {Voice, VoiceType} from "../models/Voice";
 
 export const DefaultVoices: Voice[] = [
     {
         name: "torrõ",
+        type: VoiceType.TORRO,
         color: "black",
         notes: []
     },
     {
         name: "killõ",
+        type: VoiceType.KILLO,
         color: "#1aa7ec",
         notes: []
     }

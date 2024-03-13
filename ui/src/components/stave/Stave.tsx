@@ -21,10 +21,12 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
 
     const context = useScoreContext();
     const ref = useRef<HTMLDivElement>(null);
+    const svgRef = useRef<SVGSVGElement>(null);
 
     useEffect(() => {
         context.setScore(score || EmptyScore);
         context.setContainerRef(ref);
+        context.setSvgRef(svgRef);
         context.setIsEditMode(!!isEditMode);
     }, []);
 
@@ -41,6 +43,7 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                 }}>
 
                 <svg id={"notation"}
+                     ref={svgRef}
                      width={context.dimensions.x}
                      height={context.dimensions.y * context.dimensions.blocks}>
 
@@ -69,8 +72,8 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                                 text: context.score.data.lyrics.find(l => l.position === (n - 1))?.text || ""
                             }}/>)}
 
-
                     {context.score.data.voices
+                        .sort((a, b) => (a.type || 0) - (b.type || 0))
                         .filter(v => isEditMode || !v.hidden)
                         .map(voice =>
                             <VoiceLine

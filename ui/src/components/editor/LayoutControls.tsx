@@ -21,7 +21,7 @@ const LayoutControls: React.FC = () => {
                 shortKey={ShortKey.BREAK}
                 active={context.score.data.breaks.findIndex(p => p === context.currentPosition) >= 0}
                 label={"↵"}
-                onClick={() => context.toggleBreak(context.currentPosition)}
+                onClick={() => context.toggleBreak()}
             />
             <ControlButton
                 tooltip={t("tooltip.insertDivider")}
@@ -29,7 +29,7 @@ const LayoutControls: React.FC = () => {
                 active={context.score.data.dividers.findIndex(d => [DividerType.BAR, DividerType.SEPARATOR].includes(d.type)
                     && d.position === (context.currentPosition)) >= 0}
                 label={"|"}
-                onClick={context.toggleInlineDivider}
+                onClick={context.toggleDivider}
             />
             <ControlButton
                 tooltip={t("tooltip.shiftLeft")}

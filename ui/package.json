@@ -1,6 +1,6 @@
 {
   "name": "frontend",
-  "version": "0.1.30",
+  "version": "0.1.31",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -29,7 +29,6 @@
     "react-markdown": "^9.0.1",
     "react-router": "^6.18.0",
     "react-router-dom": "^6.18.0",
-    "svg2pdf.js": "^2.2.3",
     "tone": "^14.7.77"
   },
   "devDependencies": {

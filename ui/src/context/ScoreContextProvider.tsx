@@ -31,6 +31,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     const [score, setScore] = useState<Score>({...EmptyScore});
 
     const [containerRef, setContainerRef] = useState<RefObject<HTMLElement> | undefined>();
+    const [svgRef, setSvgRef] = useState<RefObject<SVGSVGElement> | undefined>();
 
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
     const [isExportMode, setIsExportMode] = useState<boolean>(false);
@@ -321,8 +322,10 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         }
     }
 
-    const toggleBreak = (position: number) => {
+    const toggleBreak = () => {
+        const position = currentNote ? (currentNote.position + durationToScalar(currentNote.duration)) : (currentPosition + 1);
         const breakpoint = context.score.data.breaks.find(b => b === position);
+
         if (breakpoint) {
             removeBreak(position);
             return;
@@ -341,9 +344,8 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         refresh();
     }
 
-    const toggleInlineDivider = () => {
-        const position = currentPosition;
-
+    const toggleDivider = () => {
+        const position = currentNote ? (currentNote.position + durationToScalar(currentNote.duration)) : (currentPosition + 1);
         const divider = context.score.data.dividers.find(it => it.position === position);
         if (divider) {
             if (divider.type === DividerType.BAR) {
@@ -403,12 +405,12 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     }, [score.defaultTempo]);
 
     useEffect(() => {
-        // todo optimize
+        // todo fix and re-implement properly
         const x = currentPosition * Layout.stave.note.SPACING + Layout.stave.container.PADDING_X_START;
         if (containerRef?.current) {
             if (x > (Layout.stave.container.MAX_WIDTH + containerRef.current.scrollLeft - Layout.stave.container.PADDING_X_END)
                 || x <= containerRef.current.scrollLeft) {
-                containerRef?.current.scrollTo(x - Layout.stave.container.PADDING_X_START, 0)
+                // containerRef?.current.scrollTo(x - Layout.stave.container.PADDING_X_START, 0)
             }
         }
 
@@ -420,9 +422,14 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     }, [currentPosition]);
 
 
+
+
     const context = useMemo(() => ({
         containerRef,
         setContainerRef,
+
+        svgRef,
+        setSvgRef,
 
         dimensions,
         score, setScore,
@@ -451,7 +458,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         toggleBreak,
         insertBreak,
         removeBreak,
-        toggleInlineDivider,
+        toggleDivider,
         insertDivider,
         removeDivider,
         semitones,
@@ -468,7 +475,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         increasePitch,
         decreasePitch,
         clear
-    }), [containerRef, endPosition, isEditMode, isTyping, dimensions, semitones, score, score.data.voices, currentNote, currentPosition, currentVoice, currentDuration, cursorPosition]);
+    }), [containerRef, endPosition, isEditMode, isExportMode, isTyping, dimensions, semitones, score, score.data.voices, currentNote, currentPosition, currentVoice, currentDuration, cursorPosition]);
 
     return (
         <ScoreContext.Provider value={context}>

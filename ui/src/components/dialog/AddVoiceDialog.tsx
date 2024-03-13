@@ -2,12 +2,12 @@ import React, {useEffect, useState} from 'react';
 import Dialog from "./Dialog";
 import {DialogType, useDialogContext} from "../../context/DialogContext";
 import {useTranslation} from "react-i18next";
-import {Button, Group, InputWrapper, NativeSelect, TextInput} from "@mantine/core";
+import {Button, ColorPicker, Group, InputWrapper, NativeSelect, Switch, TextInput} from "@mantine/core";
 import {useScoreContext} from '../../context/ScoreContext.tsx';
 import {useForm} from 'react-hook-form';
 import {Layout} from "../../utils/constants.ts";
 import {clone} from "../../utils/helpers.tsx";
-import {Voice} from '../../models/Voice.ts';
+import {Voice, VoiceType} from '../../models/Voice.ts';
 
 interface FormValues {
     name: string;
@@ -16,6 +16,7 @@ interface FormValues {
 
 const DEFAULT_VALUES = {
     name: "",
+    type: VoiceType.TORRO,
     color: "#00000",
 }
 
@@ -25,6 +26,8 @@ const AddVoiceDialog: React.FC = () => {
     const dialogContext = useDialogContext();
     const scoreContext = useScoreContext();
     const [copyFrom, setCopyFrom] = useState<string>("-");
+    const [color, setColor] = useState<string>(DEFAULT_VALUES.color);
+    const [voiceType, setVoiceType] = useState<VoiceType>(VoiceType.TORRO);
     const [voiceNames, setVoiceNames] = useState<string[]>([]);
 
     const {
@@ -36,7 +39,8 @@ const AddVoiceDialog: React.FC = () => {
     const onSubmit = async (values: FormValues) => {
         const voice = {
             name: values.name,
-            color: values.color,
+            type: voiceType,
+            color: color,
             notes: copyFrom ? clone(scoreContext.score.data.voices.find(v => v.name === copyFrom)?.notes || []) : []
         }
         scoreContext.score.data.voices.push(voice);
@@ -58,8 +62,11 @@ const AddVoiceDialog: React.FC = () => {
         >
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
 
-                <InputWrapper size={"lg"} labelProps={Layout.form.LABEL_PROPS}
-                              label={t("dialog.addVoice.name")}>
+                <InputWrapper
+                    size={"lg"}
+                    labelProps={Layout.form.LABEL_PROPS}
+                    label={t("dialog.addVoice.name")}
+                >
                     <TextInput
                         size={"xl"}
                         placeholder={t("dialog.addVoice.name")}
@@ -68,19 +75,41 @@ const AddVoiceDialog: React.FC = () => {
                     />
                 </InputWrapper>
 
-                <InputWrapper mt={"lg"}
-                              size={"lg"} labelProps={Layout.form.LABEL_PROPS}
-                              label={t("dialog.addVoice.color")}>
-                    <TextInput
+                <InputWrapper
+                    mt={"lg"}
+                    size={"lg"}
+                    labelProps={Layout.form.LABEL_PROPS}
+                    label={t("dialog.addVoice.type.label")}
+                >
+                    <Switch
                         size={"xl"}
-                        placeholder={t("dialog.addVoice.color")}
-                        {...register("color", {required: t("field.required")})}
-                        error={errors.color?.message}
+                        className={"hover-pointer"}
+                        checked={voiceType === VoiceType.KILLO}
+                        label={t(`dialog.addVoice.type.${voiceType}`)}
+                        onChange={() => setVoiceType(voiceType === VoiceType.TORRO ? VoiceType.KILLO : VoiceType.TORRO)}
                     />
                 </InputWrapper>
 
-                <InputWrapper mt={"lg"} size={"lg"} labelProps={Layout.form.LABEL_PROPS}
-                              label={t("dialog.addVoice.copyFrom")}>
+                <InputWrapper
+                    mt={"lg"}
+                    size={"lg"}
+                    labelProps={Layout.form.LABEL_PROPS}
+                    label={t("dialog.addVoice.color")}
+                >
+                    <ColorPicker
+                        format="hex"
+                        defaultValue={color}
+                        onChange={setColor}
+                        swatches={['#000000', '#777777', '#1aa7ec']}
+                    />
+                </InputWrapper>
+
+                <InputWrapper
+                    mt={"lg"}
+                    size={"lg"}
+                    labelProps={Layout.form.LABEL_PROPS}
+                    label={t("dialog.addVoice.copyFrom")}
+                >
                     <NativeSelect
                         size={"xl"}
                         value={copyFrom}

@@ -11,6 +11,9 @@ export interface ScoreContextProperties {
     containerRef: RefObject<HTMLElement> | undefined;
     setContainerRef: (ref: RefObject<HTMLElement>) => void;
 
+    svgRef: RefObject<SVGSVGElement> | undefined;
+    setSvgRef: (ref: RefObject<SVGSVGElement>) => void;
+
     dimensions: StaveDimensions;
 
     score: Score;
@@ -50,11 +53,11 @@ export interface ScoreContextProperties {
     getNote: (position: number, voice?: Voice) => Note | undefined;
     getNotes: (position: number) => Note[];
 
-    toggleBreak: (position: number) => void;
+    toggleBreak: () => void;
     insertBreak: (position: number) => void;
     removeBreak: (position: number) => void;
 
-    toggleInlineDivider: () => void;
+    toggleDivider: () => void;
     insertDivider: (position: number, type: DividerType) => void;
     removeDivider: (position: number) => void;
 

@@ -70,10 +70,10 @@ const KeyPressHandler: React.FC = () => {
                         : NoteType.SMALL);
                     break;
                 case ShortKey.BREAK:
-                    scoreContext.toggleBreak(scoreContext.currentPosition);
+                    scoreContext.toggleBreak();
                     break;
                 case ShortKey.DIVIDER:
-                    scoreContext.toggleInlineDivider();
+                    scoreContext.toggleDivider();
                     break;
             }
         }

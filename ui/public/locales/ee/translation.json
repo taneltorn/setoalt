@@ -108,7 +108,7 @@
     "hideVoice": "Peida hääl",
     "transpose": "Transponeeri",
     "changeType": "Muuda suurust",
-    "exportToPdf": "Salvesta PDF"
+    "exportToPng": "Salvesta PNG"
   },
   "dialog": {
     "saveScore": {
@@ -129,6 +129,11 @@
     "addVoice": {
       "title": "Lisa hääl",
       "name": "Nimi",
+      "type": {
+        "label": "Hääletüüp",
+        "0": "Torrõ",
+        "1": "Killõ"
+      },
       "color": "Värv (HEX-kood)",
       "copyFrom": "Kopeeri noodid olemasolevalt häälelt?"
     },

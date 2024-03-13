@@ -9,7 +9,7 @@ const ScoreInfo: React.FC = () => {
     const {x, y, cx, cy} = useCursorCoords(context.containerRef);
 
     return (
-        <div style={{marginTop: 20 , padding: "10px 15px", backgroundColor: "#f9f9f9    ", borderRadius: "16px"}}>
+        <div style={{marginTop: 20 , padding: "10px 15px", backgroundColor: "#f9f9f9", borderRadius: "16px"}}>
             <code>
                 <Grid>
                     <Grid.Col span={6}>

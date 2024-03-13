@@ -42,7 +42,7 @@ const CursorNote: React.FC<Properties> = ({pitch, ...props}) => {
                 height={40}
                 fill={"red"}
                 width={100}
-                onClick={() => context.insertOrUpdateNote(pitch, context.cursorPosition, true)}
+                onClick={() => context.insertOrUpdateNote(pitch, context.cursorPosition, false)}
             />
         </>}
     </>);

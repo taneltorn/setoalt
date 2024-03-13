@@ -2,9 +2,7 @@ import React, {useState} from "react";
 import {useScoreContext} from "../../context/ScoreContext";
 import {Button, Group, Loader} from "@mantine/core";
 import {useTranslation} from "react-i18next";
-import {FaRegFilePdf} from "react-icons/fa6";
-import { jsPDF } from "jspdf";
-import "svg2pdf.js";
+import {BsFiletypePng} from "react-icons/bs";
 
 const ExportControls: React.FC = () => {
 
@@ -12,41 +10,66 @@ const ExportControls: React.FC = () => {
     const context = useScoreContext();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
-    const doc = new jsPDF("l", "pt", [context.dimensions.x, context.dimensions.containerY]);
-
-    const exportToPdf = () => {
+    const exportToPng = () => {
         setIsLoading(true);
         context.setIsExportMode(true);
 
         setTimeout(() => {
-            const element = document.getElementById("notation");
-            if (element) {
-                doc.svg(element, {
-                    width: context.dimensions.x,
-                    height: context.dimensions.containerY
+            downloadPng()
+                .finally(() => {
+                    context.setIsExportMode(false);
+                    setIsLoading(false);
                 })
-                    .then(() => {
-                        doc.save(`${context.score?.name
-                            .toLowerCase()
-                            .replaceAll(" ", "_") || "noodistus"}.pdf`);
-                    });
-            }
+        }, 1000);
+    }
 
-            context.setIsExportMode(false);
-            setIsLoading(false);
-        }, 3000);
+    const downloadPng = async () => {
+        const svg = context.svgRef?.current;
+        if (!svg) {
+            return;
+        }
+
+        const serializer = new XMLSerializer();
+        let source = serializer.serializeToString(svg);
+
+        source = source.replace(/(<svg[^>]+xmlns="http:\/\/www\.w3\.org\/2000\/svg")/, '$1 xmlns:xlink="http://www.w3.org/1999/xlink"');
+        source = '<?xml version="1.0" standalone="no"?>\r\n' + source;
+
+        const url = "data:image/svg+xml;charset=utf-8," + encodeURIComponent(source);
+        const img = new Image();
+        img.src = url;
+        img.onload = () => {
+            const canvas = document.createElement('canvas');
+            canvas.width = img.width;
+            canvas.height = img.height;
+
+            const ctx = canvas.getContext('2d');
+            if (ctx) {
+                ctx.fillStyle = '#FFFFFF'; // white
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+                ctx.drawImage(img, 0, 0);
+                const canvasUrl = canvas.toDataURL("image/png");
+
+                const link = document.createElement('a');
+                link.download = 'image.png';
+                link.href = canvasUrl;
+                link.click();
+            }
+        };
     }
 
     return (
         <Group gap={4}>
             <Button
-                title={t(`tooltip.exportToPdf`)}
+                title={t(`tooltip.exportToPng`)}
                 variant={"outline"}
                 color={"black"}
-                onClick={exportToPdf}
+                onClick={exportToPng}
+                disabled={isLoading}
                 leftSection={isLoading && <Loader size={20}/>}
             >
-                <FaRegFilePdf size={24} />
+                <BsFiletypePng size={24}/>
             </Button>
         </Group>
     );
