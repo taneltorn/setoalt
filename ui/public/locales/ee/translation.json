@@ -134,7 +134,7 @@
         "0": "Torrõ",
         "1": "Killõ"
       },
-      "color": "Värv (HEX-kood)",
+      "color": "Värv",
       "copyFrom": "Kopeeri noodid olemasolevalt häälelt?"
     },
     "removeVoice": {

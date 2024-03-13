@@ -4,6 +4,7 @@
 - Eraldaja ja reavahe lisatakse aktiivsest positsioonist paremale (varem lisati vasakule)
 - Eelmise punktiga seoses ei liigutata hiirega nooti lisades enam kursorit edasi (loogiliselt vajalik, et vältida tühje positsioone, mis tekiksid, kui reavahe lisatakse kohe pärast uue noodi lisamist)
 - PDF eksport asendatud PNG-ga 
+- Lisatud värvivalija (uue hääle lisamisel)
 - Eemaldasin ajutiselt vasakule/paremale automaatse kerimise, kuna see ei töötanud korralikult väiksematel ekraanidel (tulevikus vaja korralikult implementeerida)
 
 ## 0.1.30
