@@ -58,7 +58,7 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
 
     return (<>
             {scoreContext.isEditMode && !scoreContext.isExportMode &&
-                <foreignObject x={x - 20} y={y} width={Layout.stave.note.SPACING} height="40">
+                <foreignObject key={`lyric-${lyric.position}`} x={x - 20} y={y} width={Layout.stave.note.SPACING} height="40">
                     <input
                         onFocus={() => scoreContext.setIsTyping(true)}
                         onBlur={() => save()}

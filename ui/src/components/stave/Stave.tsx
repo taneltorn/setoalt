@@ -45,7 +45,9 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                 <svg id={"notation"}
                      ref={svgRef}
                      width={context.dimensions.x}
-                     height={context.dimensions.y * context.dimensions.blocks}>
+                     height={context.dimensions.y * context.dimensions.blocks}
+                     style={{padding: "0 5px"}}
+                >
 
                     {range(context.score.data.breaks.length + 1)
                         .map((_, index) => (

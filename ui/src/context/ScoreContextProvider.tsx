@@ -383,6 +383,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         score.data.dividers = [];
         score.data.lyrics = [];
         score.data.voices = [];
+        setCurrentVoice({...DefaultVoices[0]});
         setCurrentPosition(0);
         setCurrentNote(undefined);
         refresh();
@@ -475,7 +476,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         increasePitch,
         decreasePitch,
         clear
-    }), [containerRef, endPosition, isEditMode, isExportMode, isTyping, dimensions, semitones, score, score.data.voices, currentNote, currentPosition, currentVoice, currentDuration, cursorPosition]);
+    }), [containerRef, endPosition, isEditMode, isExportMode, isTyping, dimensions, semitones, score, score.data.lyrics,  currentNote, currentPosition, currentVoice, currentDuration, cursorPosition]);
 
     return (
         <ScoreContext.Provider value={context}>
