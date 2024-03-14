@@ -1,9 +1,10 @@
 # Muudatused
 
-### [0.1.32]
+### [0.1.32] - *14.03.2024*
 - PNG-ekspordil jäävad noodijooned noodinimedega tähistatuks
 - Nihutamine toimub nüüd klahvidega B ja N (varem oli X ja Z) - muudatus seoses tulevase undo/redoga
 - Parandatud viga, kus pärast lähtestamist ei olnud võimalik osadele positsioonidele hiirega nooti lisada
+- Parandatud viga, kus pärast transponeerimist klahvidega liikudes mängitakse nooti originaalkõrgusel
 - Pisiparandused
 
 ### [0.1.31] - *13.03.2024*

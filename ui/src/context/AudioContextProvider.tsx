@@ -49,7 +49,9 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
         stopPlayback();
 
         const position = context.next();
-        playPosition(context.score, position, context.isEditMode ? context.currentVoice : undefined);
+        playPosition(context.score, position, context.isEditMode ? context.currentVoice : undefined, {
+            transpose: context.semitones
+        });
 
     }
 
@@ -57,7 +59,9 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
         stopPlayback();
 
         const position = context.previous();
-        playPosition(context.score, position, context.isEditMode ? context.currentVoice : undefined);
+        playPosition(context.score, position, context.isEditMode ? context.currentVoice : undefined, {
+            transpose: context.semitones
+        });
     }
 
 

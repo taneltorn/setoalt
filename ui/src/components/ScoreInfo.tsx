@@ -55,6 +55,11 @@ const ScoreInfo: React.FC = () => {
                         <pre><strong>Dimensions</strong></pre>
                         <pre>stave: {context.dimensions.x} x {context.dimensions.y}, container: {context.dimensions.x} x {context.dimensions.containerY}</pre>
                     </Grid.Col>
+
+                    <Grid.Col span={6}>
+                        <pre><strong>Semitones</strong></pre>
+                        <pre>{context.semitones}</pre>
+                    </Grid.Col>
                 </Grid>
 
                 <Grid mt={"md"}>
