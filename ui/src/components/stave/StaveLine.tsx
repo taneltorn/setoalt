@@ -19,14 +19,14 @@ const StaveLine: React.FC<Properties> = ({line, offsetY}) => {
         + offsetY ;
 
     return (<g>
-        {context.isEditMode &&
+        {(context.isEditMode || context.isExportMode) &&
             <text x={0} y={y + 5} fontSize={14} fill={"black"}>
                 {t(`pitch.${line.pitch.toLowerCase()}`)}
             </text>}
             <line
                 key={line.pitch}
                 className={`hover-pointer`}
-                x1={context.isEditMode ? 25 : 0} y1={y}
+                x1={(context.isEditMode || context.isExportMode) ? 25 : 0} y1={y}
                 x2={context.dimensions.x} y2={y}
                 stroke={line.color}
                 strokeWidth={line.strokeWidth}
