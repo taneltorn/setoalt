@@ -16,17 +16,16 @@ const StaveLine: React.FC<Properties> = ({line, offsetY}) => {
 
     const y = Layout.stave.container.SYMBOLS_BAR
         + (line.y - (line.detune || 0) / 100) * Layout.stave.line.SPACING
-        + offsetY ;
+        + offsetY;
 
     return (<g>
-        {(context.isEditMode || context.isExportMode) &&
             <text x={0} y={y + 5} fontSize={14} fill={"black"}>
                 {t(`pitch.${line.pitch.toLowerCase()}`)}
-            </text>}
+            </text>
             <line
                 key={line.pitch}
                 className={`hover-pointer`}
-                x1={(context.isEditMode || context.isExportMode) ? 25 : 0} y1={y}
+                x1={25} y1={y}
                 x2={context.dimensions.x} y2={y}
                 stroke={line.color}
                 strokeWidth={line.strokeWidth}

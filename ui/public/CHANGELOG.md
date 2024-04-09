@@ -1,5 +1,10 @@
 # Muudatused
 
+### [0.1.33] - *09.04.2024*
+- Noodinimed koguaeg nähtaval
+- Lisatud pagineerimine
+- Pisiparandused
+
 ### [0.1.32] - *14.03.2024*
 - PNG-ekspordil jäävad noodijooned noodinimedega tähistatuks
 - Nihutamine toimub nüüd klahvidega B ja N (varem oli X ja Z) - muudatus seoses tulevase undo/redoga
