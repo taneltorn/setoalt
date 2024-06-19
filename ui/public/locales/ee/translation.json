@@ -1,6 +1,9 @@
 {
   "page": {
-    "title": "Seto alternatiivne noodikiri"
+    "title": "Seto alternatiivne noodikiri",
+    "loading": "Laen andmeid...",
+    "noData": "Andmeid ei leitud.",
+    "goBack": "Tagasi"
   },
   "brand": {
     "title": "Seto alt."
@@ -41,21 +44,23 @@
     },
     "admin": {
       "title": "Adminpaneel",
-      "description": "Kasutajate haldus",
-      "table": {
-        "id": "ID",
-        "username": "Kasutajanimi",
-        "name": "Nimi",
-        "role": "Roll"
-      },
-      "form": {
-        "username": "Kasutajanimi",
-        "password": "Parool",
-        "firstname": "Eesnimi",
-        "lastname": "Perekonnanimi",
-        "role": "Roll",
-        "editor": "Toimetaja",
-        "user": "Tavakasutaja"
+      "description": "Siin saad hallata kasutajaid ja muud",
+      "users": {
+        "table": {
+          "id": "ID",
+          "username": "Kasutajanimi",
+          "name": "Nimi",
+          "role": "Roll"
+        },
+        "form": {
+          "username": "Kasutajanimi",
+          "password": "Parool",
+          "firstname": "Eesnimi",
+          "lastname": "Perekonnanimi",
+          "role": "Roll",
+          "editor": "Toimetaja",
+          "user": "Tavakasutaja"
+        }
       }
     },
     "login": {
@@ -104,7 +109,7 @@
     "stopPlayback": "Peata",
     "resetPlayback": "Algusesse",
     "changeTempo": "Muuda tempot",
-    "showVoice": "Näita hääl",
+    "showVoice": "Näita häält",
     "hideVoice": "Peida hääl",
     "transpose": "Transponeeri",
     "changeType": "Muuda suurust",
@@ -157,6 +162,9 @@
       "description": "Oled sa kindel, et soovid sisestatud andmed lähtestada?"
     }
   },
+  "placeholder": {
+    "search": "Otsi"
+  },
   "button": {
     "ok": "OK",
     "copy": "Kopeeri",
@@ -164,11 +172,16 @@
     "save": "Salvesta",
     "confirm": "Kinnita",
     "cancel": "Tühista",
-    "edit": "Redigeeri",
+    "edit": "Muuda",
     "close": "Sulge redaktor",
     "reset": "Lähtesta",
     "submit": "Saada",
-    "addNew": "Lisa uus"
+    "add": "Lisa",
+    "addNew": "Lisa uus",
+    "pngExport": "PNG",
+    "showAll": "Näita kõiki",
+    "showActive": "Näita aktiivset",
+    "removeVoice": "Kustuta hääl"
   },
   "table": {
     "noData": "Andmeid ei leitud."

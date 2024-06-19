@@ -21,6 +21,7 @@ config({path: path.resolve(__dirname, '../../.env')});
 const logger = log4js.getLogger();
 logger.level = process.env.LOG_LEVEL;
 
+logger.info(`Starting API service`)
 logger.info(`Log level: ${process.env.LOG_LEVEL}`)
 logger.info(`Allowed origin: ${process.env.ALLOWED_ORIGIN}`)
 

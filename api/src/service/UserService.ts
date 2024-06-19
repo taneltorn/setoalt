@@ -16,7 +16,6 @@ class UserService {
                 SELECT *
                 FROM setoalt.users
                 WHERE deleted_at IS NULL
-                AND role != 'ADMIN'
                 ORDER BY id ASC
             `;
             const result = await pool.query(query);

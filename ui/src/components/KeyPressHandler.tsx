@@ -90,7 +90,7 @@ const KeyPressHandler: React.FC = () => {
                     audioContext.stopPlayback();
                     break;
                 }
-                audioContext.startPlayback(scoreContext);
+                audioContext.startPlaybackNEW(scoreContext);
                 break;
             default:
                 break;

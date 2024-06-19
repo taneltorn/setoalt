@@ -7,6 +7,7 @@ import {Voice} from "../models/Voice.ts";
 const useAudioPlayer = () => {
 
     const synths: { [key: string]: Tone.Synth } = {};
+    const polySynth = new Tone.PolySynth().toDestination();
 
     const playNote = (note: Note, voice?: Voice, options?: PlaybackOptions) => {
         if (note.hidden) {
@@ -26,8 +27,31 @@ const useAudioPlayer = () => {
         }
     }
 
+    const playNotes = (notes: Note[]) => {
+        try {
+            console.log("playing notes: ");
+
+            const filteredNotes: Note[] = notes.reduce((acc, note) => {
+                const key = `${note.pitch}-${note.duration}`;
+                if (!acc.map.has(key)) {
+                    acc.map.set(key, true);
+                    acc.result.push(note);
+                }
+                return acc;
+            }, { map: new Map<string, boolean>(), result: [] as Note[] }).result;
+            console.log(filteredNotes);
+
+            const pitches = filteredNotes.map(n => n.pitch);
+            const durations = filteredNotes.map(n => n.duration);
+            polySynth.triggerAttackRelease(pitches, durations);
+        } catch (e) {
+            console.log(e);
+        }
+    }
+
     return {
-        playNote
+        playNote,
+        playNotes,
     }
 };
 

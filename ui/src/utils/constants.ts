@@ -4,8 +4,8 @@ export const Layout = {
             MAX_WIDTH: 1450,
             PADDING_X_START: 60,
             PADDING_X_END: 60,
-            SYMBOLS_BAR: 15,
-            LYRICS_BAR: 80
+            SYMBOLS_BAR: 50,
+            LYRICS_BAR: 70
         },
         line: {
             SPACING: 12,
@@ -24,29 +24,22 @@ export const Layout = {
             HALF_NOTE_STROKE: 2,
         },
         divider: {
-            BAR_HEIGHT: 140, // todo could use dimensions.y instead, am some svg weirdness
             SEPARATOR_HEIGHT: 30,
             WIDTH: 2,
             CONTAINER_WIDTH: 15,
         },
         position: {
             WIDTH: 24,
-            HEIGHT: 4,
+            HEIGHT: 6,
         },
         cursor: {
-            WIDTH: 24,
-            HEIGHT: 150, // todo could use dimensions.y instead, am some svg weirdness
-            Y_OFFSET: 10
+            WIDTH: 24
         },
         lyrics: {
             HEIGHT: 20,
-            FONT_SIZE: 18,
+            FONT_SIZE: 16,
             FONT_WEIGHT: 600
         }
-    },
-    // todo remove, use LYRICS_BAR instead of HEIGHT
-    lyrics: {
-        HEIGHT: 100,
     },
     form: {
         LABEL_PROPS: {

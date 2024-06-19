@@ -10,7 +10,7 @@ import packageInfo from "../../../package.json";
 import {Role, useAuth} from "../../context/AuthContext.tsx";
 import {MdOutlineLogout} from "react-icons/md";
 import {FaUser, FaUserGraduate} from "react-icons/fa";
-import DevPanel from "../DevPanel.tsx";
+import DevPanel from "./DevPanel.tsx";
 import {RiAdminFill} from "react-icons/ri";
 import {CiUser} from "react-icons/ci";
 
@@ -24,7 +24,7 @@ const protectedRoutes = [
     {id: 'admin', icon: <IoSettingsOutline className={classes.icon} size={24}/>, link: "/admin"},
 ];
 
-const icons = new Map([
+export const UserIcons = new Map([
     [Role.ADMIN, <RiAdminFill size={24}/>],
     [Role.EDITOR, <FaUserGraduate size={24}/>],
     [Role.USER, <FaUser size={24}/>],
@@ -46,7 +46,7 @@ const Sidebar: React.FC = () => {
         <>
             <Group py={"sm"} justify={"space-between"} visibleFrom={"lg"}>
                 <Group>
-                    {icons.get(auth.currentUser?.role || "guest")}
+                    {UserIcons.get(auth.currentUser?.role || "guest")}
                     <Text>
                         {auth.currentUser?.firstname || auth.currentUser?.username || t("role.guest")}
                     </Text>

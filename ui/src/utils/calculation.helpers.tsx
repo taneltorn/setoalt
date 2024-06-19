@@ -14,10 +14,9 @@ export const calculateBreakCoords = (position: number, context: ScoreContextProp
     const offset = getBreakOffset(position, context);
     const x = Layout.stave.container.PADDING_X_START
         + position * Layout.stave.note.SPACING
-        - Layout.stave.note.RADIUS
         - offset.x;
 
-    const y = Layout.stave.container.SYMBOLS_BAR
+    const y = Layout.stave.container.SYMBOLS_BAR / 2
         + offset.y;
 
     return {x: x, y: y};
@@ -34,7 +33,8 @@ export const calculateDividerCoords = (divider: Divider, context: ScoreContextPr
         - offset.x;
 
     const y = Layout.stave.container.SYMBOLS_BAR
-        + offset.y;
+        + offset.y
+        - Layout.stave.divider.SEPARATOR_HEIGHT / 2;
 
     return {x: x, y: y};
 }
@@ -47,10 +47,8 @@ export const calculateLyricCoords = (lyric: Lyric, context: ScoreContextProperti
         - Layout.stave.note.RADIUS * 1.8
         - offset.x;
 
-    const y = Layout.stave.container.SYMBOLS_BAR
-        + context.dimensions.y
-        + Layout.stave.lyrics.HEIGHT
-        - Layout.stave.container.LYRICS_BAR
+    const y = context.dimensions.y
+        -  Layout.stave.container.LYRICS_BAR / 2
         + offset.y;
 
     return {x: x, y: y};
@@ -65,7 +63,7 @@ export const calculateCurrentPositionCoords = (context: ScoreContextProperties):
         - Layout.stave.note.RADIUS / 2
         - offset.x;
 
-    const y = offset.y + Layout.stave.cursor.Y_OFFSET;
+    const y = offset.y;
 
     return {x: x, y: y};
 }
@@ -107,7 +105,7 @@ export const calculateCursorCoords = (context: ScoreContextProperties): XY => {
         - Layout.stave.note.RADIUS / 2
         - offset.x;
 
-    const y = offset.y + Layout.stave.cursor.Y_OFFSET;
+    const y = offset.y;
 
     return {x: x, y: y};
 }
@@ -119,8 +117,8 @@ export const calculateCursorNoteCoords = (pitch: string, cursorX: number, cursor
         const x = cursorX + Layout.stave.cursor.WIDTH / 2;
         const y = cursorY
             + Layout.stave.container.SYMBOLS_BAR
-            + ((line?.y || 0) - (line.detune || 0) / 100) * Layout.stave.line.SPACING
-            - Layout.stave.cursor.Y_OFFSET;
+            + (line?.y || 0) * Layout.stave.line.SPACING
+            // - Layout.stave.cursor.Y_OFFSET;
         return {
             x, y
         }
@@ -128,7 +126,7 @@ export const calculateCursorNoteCoords = (pitch: string, cursorX: number, cursor
     return {x: 0, y: 0}
 }
 
-export const calculateLineBlockOffset = (index: number, context: ScoreContextProperties): XY => {
+export const calculateStaveBlockCoords = (index: number, context: ScoreContextProperties): XY => {
     if (index === 0 || context.score.data.breaks.length === 0) {
         return {
             x: 0,
@@ -136,8 +134,8 @@ export const calculateLineBlockOffset = (index: number, context: ScoreContextPro
         }
     }
     return {
-        x: context.score.data.breaks[index] * Layout.stave.note.SPACING,
-        y: index * (context.dimensions.y + Layout.stave.container.SYMBOLS_BAR)
+        x:  0,
+        y: index * (context.dimensions.y)
     }
 }
 
@@ -151,7 +149,7 @@ export const getOffset = (position: number, context: ScoreContextProperties, ind
 
     return {
         x: index > 0 && breakpoints[index - 1] ? breakpoints[index - 1] * Layout.stave.note.SPACING : 0,
-        y: (index + (indexOffsetY || 0)) * (context.dimensions.y + Layout.stave.container.SYMBOLS_BAR),
+        y: (index + (indexOffsetY || 0)) * (context.dimensions.y),
     };
 }
 

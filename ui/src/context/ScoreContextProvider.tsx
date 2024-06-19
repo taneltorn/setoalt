@@ -46,7 +46,9 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
     const audioContext = useAudioContext();
 
-    const cursorCoords = useCursorCoords(containerRef);
+    const dimensions: StaveDimensions = useMemo<StaveDimensions>(() => calculateStaveDimensions(score), [score, score.data.breaks, score.data.voices]);
+
+    const cursorCoords = useCursorCoords(containerRef, dimensions);
 
     useMemo(() => {
         let position = cursorCoords.x + (score.data.breaks[cursorCoords.y - 1] || 0);
@@ -382,14 +384,13 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         score.data.breaks = [];
         score.data.dividers = [];
         score.data.lyrics = [];
-        score.data.voices = [];
+        score.data.voices = [...DefaultVoices];
         setCurrentVoice({...DefaultVoices[0]});
         setCurrentPosition(0);
         setCurrentNote(undefined);
         refresh();
     }
 
-    const dimensions: StaveDimensions = useMemo<StaveDimensions>(() => calculateStaveDimensions(score), [score, score.data.breaks, score.data.voices]);
 
     const endPosition: number = useMemo<number>(() => {
         const notes = score.data.voices.flatMap(v => v.notes).sort((a, b) => a.position - b.position);

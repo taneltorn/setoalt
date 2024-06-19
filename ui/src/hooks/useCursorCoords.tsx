@@ -1,5 +1,6 @@
 import {RefObject, useState, useEffect} from 'react';
 import {Layout} from "../utils/constants.ts";
+import {StaveDimensions} from "../models/Dimensions.ts";
 
 type MousePosition = {
     x: number;
@@ -8,7 +9,7 @@ type MousePosition = {
     cy: number;
 };
 
-const useCursorCoords = (elementRef: RefObject<HTMLElement> | undefined): MousePosition => {
+const useCursorCoords = (elementRef: RefObject<HTMLElement> | undefined, dimensions: StaveDimensions): MousePosition => {
 
     const [cursorPosition, setCursorPosition] = useState<MousePosition>({x: 0, y: 0, cx: 0, cy: 0});
 
@@ -23,7 +24,7 @@ const useCursorCoords = (elementRef: RefObject<HTMLElement> | undefined): MouseP
                 const cy = ev.clientY - rect.top;
 
                 let x = Math.round(cx / Layout.stave.note.SPACING) - 1;
-                const y = Math.floor(cy / 200); // todo should be dynamic
+                const y = Math.floor(cy / dimensions.y);
 
                 setCursorPosition({
                     x, y, cx: Math.round(cx), cy: Math.round(cy)
@@ -41,7 +42,7 @@ const useCursorCoords = (elementRef: RefObject<HTMLElement> | undefined): MouseP
                 currentElement.removeEventListener('mousemove', updateMousePosition);
             }
         };
-    }, [elementRef?.current]);
+    }, [elementRef?.current, dimensions]);
 
     return cursorPosition;
 };

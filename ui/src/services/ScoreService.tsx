@@ -18,7 +18,9 @@ const useScoreService = () => {
             withCredentials: true
         })
             .then(response => {
-                setIsLoading(false);
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 200)
                 return response.data;
             })
             .catch(error => {
@@ -26,7 +28,6 @@ const useScoreService = () => {
                 throw error;
             });
     }
-
 
     const fetchScores = async (): Promise<Score[]> => {
         setIsLoading(true);
@@ -37,7 +38,9 @@ const useScoreService = () => {
             withCredentials: true
         })
             .then(response => {
-                setIsLoading(false);
+                setTimeout(() => {
+                    setIsLoading(false);
+                }, 200)
                 return response.data;
             })
             .catch(error => {

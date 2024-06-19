@@ -7,7 +7,7 @@ import {Score} from "../models/Score";
 import {Line} from "../models/Line";
 import {Coordinates} from "../models/Coordinates";
 import {ScoreContextProperties} from "../context/ScoreContext";
-import {NoteRange} from "./dictionaries.ts";
+import {DefaultVoices, NoteRange} from "./dictionaries.ts";
 import {notifications} from "@mantine/notifications";
 import {IoMdAlert} from "react-icons/io";
 import {StavePPT} from "../staves/StavePPT.ts";
@@ -23,7 +23,7 @@ export const EmptyScore: Score = {
         breaks: [],
         dividers: [],
         lyrics: [],
-        voices: []
+        voices: [...DefaultVoices]
     }
 }
 
@@ -95,7 +95,7 @@ export const getPreviousPitch = (pitches: string[], currentPitch: string): strin
 
 export const getLineCoords = (line: Line, startingY: number, context: ScoreContextProperties): Coordinates => {
     const y = startingY
-        + (line.y - (line.detune || 0) / 100) * Layout.stave.line.SPACING
+        + line.y * Layout.stave.line.SPACING
         + Layout.stave.container.SYMBOLS_BAR;
 
     return {x: context.dimensions.x, y: y};

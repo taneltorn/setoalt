@@ -1,18 +1,17 @@
 import React from "react";
-import Editor from "./views/Editor.tsx";
-import ScoreDetails from "./views/ScoreDetails.tsx";
 import {
     createBrowserRouter,
     RouterProvider,
 } from "react-router-dom";
 import Layout from "./Layout.tsx";
-import Home from "./views/Home.tsx";
-import Scores from "./views/Scores.tsx";
-import Login from "./views/Login.tsx";
+import Home from "./views/landing/Home.tsx";
+import Scores from "./views/scores/ScoreList.tsx";
+import Login from "./views/landing/Login.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
-import Admin from "./views/Admin.tsx";
-import ApiStatus from "./views/ApiStatus.tsx";
+import Admin from "./views/admin/Admin.tsx";
+import ApiStatus from "./views/landing/ApiStatus.tsx";
 import {Role} from "./context/AuthContext.tsx";
+import ScoreManager from "./views/scores/ScoreManager.tsx";
 
 const router = createBrowserRouter([
     {
@@ -33,19 +32,19 @@ const router = createBrowserRouter([
             },
             {
                 path: "/scores/:id",
-                element: <ScoreDetails/>,
+                element: <ScoreManager mode={"details"}/>,
             },
             {
                 path: "/scores/:id/edit",
                 element: (
                     <ProtectedRoute allowedRoles={[Role.ADMIN, Role.EDITOR]}>
-                        <ScoreDetails isEditMode />
+                        <ScoreManager mode={"form"}/>
                     </ProtectedRoute>
                 ),
             },
             {
                 path: "/editor",
-                element: <Editor/>,
+                element: <ScoreManager mode={"editor"}/>,
             },
             {
                 path: "/api-status",
@@ -54,7 +53,7 @@ const router = createBrowserRouter([
             {
                 path: "/admin",
                 element: (
-                    <ProtectedRoute allowedRoles={[Role.ADMIN, Role.EDITOR]}>
+                    <ProtectedRoute allowedRoles={[Role.ADMIN]}>
                         <Admin />
                     </ProtectedRoute>
                 ),

@@ -13,6 +13,11 @@ interface Properties {
     children: React.ReactNode;
 }
 
+interface GroupedNote {
+    position: number;
+    notes: Note[];
+}
+
 const AudioContextProvider: React.FC<Properties> = ({children}) => {
 
     const player = useAudioPlayer();
@@ -30,6 +35,22 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
     }
 
     const playPosition = (score: Score, position: number, voice?: Voice, options?: PlaybackOptions) => {
+        score.data.voices
+            .filter(v => voice ? v.name === voice.name : true)
+            .forEach(voice => {
+                voice.notes
+                    .filter(note => note.position === position)
+                    .forEach(note => {
+                        const line = score.data.stave.lines.find(l => l.pitch === note.pitch);
+                        playNote(note, voice, {
+                            detune: note.detune || line?.detune,
+                            transpose: options?.transpose
+                        });
+                    });
+            });
+    }
+
+    const playPositionNEW = (score: Score, position: number, voice?: Voice, options?: PlaybackOptions) => {
         score.data.voices
             .filter(v => voice ? v.name === voice.name : true)
             .forEach(voice => {
@@ -114,6 +135,62 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
         Tone.Transport.start();
     };
 
+    const startPlaybackNEW = (context: ScoreContextProperties) => {
+        stopPlayback();
+        setIsPlaying(true);
+
+        if (Tone.context.state !== 'running') {
+            Tone.context.resume();
+        }
+
+        const startPosition = context.currentPosition >= context.endPosition ? 0 : Math.max(0, context.currentPosition);
+
+        const endTimes: number[] = [];
+        const events: Array<[number, { position: number, notes: Note[] }]> = [];
+
+        const groupedNotes: GroupedNote[] = Object.values(
+            context.score.data.voices
+                .flatMap(v => v.notes)
+                .filter(n => n.position >= startPosition)
+                .reduce((acc, note) => {
+                    if (!acc[note.position]) {
+                        acc[note.position] = {
+                            position: note.position,
+                            notes: []
+                        };
+                    }
+                    acc[note.position].notes.push(note);
+                    return acc;
+                }, {} as { [key: number]: GroupedNote })
+        );
+
+        groupedNotes.forEach(group => {
+            const t = positionToSeconds(group.position - startPosition);
+            events.push([t, {position: group.position, notes: group.notes}]);
+
+            const times = group.notes.map(n => t + Tone.Time(n.duration).toSeconds());
+            endTimes.push(...times);
+        });
+
+        if (!sequenceRef.current) {
+            sequenceRef.current = new Tone.Part((_, event) => {
+                player.playNotes(event.notes)
+                context.setCurrentPosition(event.position);
+            }, events).start(0);
+        }
+
+        const longestDuration = Math.max(...endTimes, 0);
+
+        Tone.Transport.scheduleOnce(() => {
+            resetPlayback(context);
+        }, `+${longestDuration}`);
+
+        sequenceRef.current.loop = false;
+        sequenceRef.current.loopEnd = longestDuration;
+
+        Tone.Transport.start();
+    };
+
     const stopPlayback = () => {
         setIsPlaying(false);
 
@@ -149,6 +226,7 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
         playNext,
         playPrevious,
         startPlayback,
+        startPlaybackNEW,
         stopPlayback,
         resetPlayback,
 

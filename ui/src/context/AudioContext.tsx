@@ -22,6 +22,7 @@ export interface AudioContextProperties {
     playPrevious: (scoreContext: ScoreContextProperties) => void;
 
     startPlayback: (context: ScoreContextProperties) => void;
+    startPlaybackNEW: (context: ScoreContextProperties) => void;
     stopPlayback: () => void;
     resetPlayback: (context: ScoreContextProperties) => void;
 
