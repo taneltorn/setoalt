@@ -25,7 +25,7 @@ const NoteTypeControls: React.FC = () => {
     }
 
     return (
-        <Group gap={"xs"}>
+        <Group gap={4}>
             <ControlButton
                 disabled={!context.currentNote}
                 tooltip={t("tooltip.changeType")}

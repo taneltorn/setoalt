@@ -21,7 +21,7 @@ const NotePitchControls: React.FC = () => {
     }
 
     return (
-        <Group gap={"xs"}>
+        <Group gap={4}>
             {pitches.map((pitch, index) =>
                 <ControlButton
                     key={pitch}

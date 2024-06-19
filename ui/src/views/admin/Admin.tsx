@@ -1,10 +1,12 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
-import {Tabs, Text, Title} from "@mantine/core";
+import {Tabs, Text} from "@mantine/core";
 import Page from "../../Page.tsx";
 import UserManagement from "./panel/UserManagement.tsx";
 import {FaUser} from "react-icons/fa";
 import {IoMdSettings} from "react-icons/io";
+import Header from "../../components/controls/Header.tsx";
+import Description from "../../components/controls/Description.tsx";
 
 const Admin: React.FC = () => {
 
@@ -12,25 +14,20 @@ const Admin: React.FC = () => {
 
     return (
         <Page title={t("view.admin.title")}>
-            <Title order={1} mb={"lg"}>
-                {t("view.admin.title")}
-            </Title>
-
-            <Text mb={"lg"}>
-                {t("view.admin.description")}
-            </Text>
+            <Header text={t("view.admin.title")}/>
+            <Description text={t("view.admin.description")}/>
 
             <Tabs defaultValue="users">
                 <Tabs.List>
                     <Tabs.Tab value="users" leftSection={<FaUser size={24}/>}>
                         <Text size={"lg"}>
-                            Kasutajad
+                            {t("view.admin.users.tab")}
                         </Text>
                     </Tabs.Tab>
 
-                    <Tabs.Tab value="other" leftSection={<IoMdSettings size={24}/>}>
+                    <Tabs.Tab value="settings" leftSection={<IoMdSettings size={24}/>}>
                         <Text size={"lg"}>
-                            Seaded
+                            {t("view.admin.settings.tab")}
                         </Text>
                     </Tabs.Tab>
                 </Tabs.List>
@@ -38,7 +35,7 @@ const Admin: React.FC = () => {
                 <Tabs.Panel value="users" pt={"xl"}>
                     <UserManagement/>
                 </Tabs.Panel>
-                <Tabs.Panel value={"other"} pt={"xl"}>
+                <Tabs.Panel value={"settings"} pt={"xl"}>
                     <Text>
                         Muud sätted
                     </Text>

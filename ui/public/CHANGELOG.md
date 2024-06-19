@@ -1,5 +1,14 @@
 # Muudatused
 
+### [0.2.0] - 
+- 
+- Paigutusvigade parandamine
+- Häälte lisamise ümberkujundamine
+- Admin vaate ümberkujundamine
+- Lisatud võimalus redaktoris aktiveerida positsioon ilma nooti valimata 
+- Pisiparandused
+- Refaktooring, refaktooring, refaktooring
+
 ### [0.1.33] - *09.04.2024*
 - Noodinimed koguaeg nähtaval
 - Lisatud pagineerimine

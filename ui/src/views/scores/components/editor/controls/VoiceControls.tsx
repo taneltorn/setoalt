@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React from 'react';
 import {Voice} from "../../../../../models/Voice.ts";
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {Button, Grid, Group} from "@mantine/core";
@@ -15,22 +15,12 @@ const VoiceControls: React.FC = () => {
     const {t} = useTranslation();
     const context = useScoreContext();
     const {open, close} = useDialogContext();
-    const [allVoicesShown, setAllVoicesShown] = useState<boolean>(false);
 
     const showAllVoices = () => {
         context.score.data.voices.forEach(v => {
             v.hidden = false;
         })
         context.refresh();
-        setAllVoicesShown(true);
-    }
-
-    const showActiveVoice = () => {
-        context.score.data.voices.forEach(v => {
-            v.hidden = v.name !== context.currentVoice.name;
-        })
-        context.refresh();
-        setAllVoicesShown(false);
     }
 
     const changeVoice = (voice: Voice) => {
@@ -42,7 +32,6 @@ const VoiceControls: React.FC = () => {
             v.hidden = v.name !== voice.name;
         });
         context.refresh();
-        setAllVoicesShown(false);
     }
 
     const handleVoiceAdd = (voice: Voice) => {
@@ -62,8 +51,8 @@ const VoiceControls: React.FC = () => {
     }
 
     return (
-        <Grid mt={"xl"} mb={"md"}>
-            <Grid.Col span={10}>
+        <Grid mt={"md"}>
+            <Grid.Col span={9}>
                 <Group gap={4}>
                     {context.score.data.voices.map(voice => (
                         <FilterButton
@@ -84,7 +73,21 @@ const VoiceControls: React.FC = () => {
                         })}>
                         {t("button.addNew")}
                     </Button>
+                </Group>
+            </Grid.Col>
+            <Grid.Col span={3}>
+                <Group gap={4} justify={"end"}>
 
+                    {context.score.data.voices.some(v => v.hidden) &&
+                        <Button
+                            size={"xs"}
+                            color={"blue"}
+                            leftSection={<MdRecordVoiceOver size={20}/>}
+                            variant={"subtle"}
+                            onClick={showAllVoices}
+                        >
+                            {t("button.showAll")}
+                        </Button>}
                     {!DefaultVoices.map(v => v.name).includes(context.currentVoice.name) &&
                         <Button
                             size={"xs"}
@@ -100,21 +103,8 @@ const VoiceControls: React.FC = () => {
                         </Button>}
                 </Group>
             </Grid.Col>
-
-            <Grid.Col span={2}>
-                <Group gap={"xs"} justify={"end"}>
-                    <Button
-                        size={"xs"}
-                        color={"blue"}
-                        leftSection={<MdRecordVoiceOver size={20}/>}
-                        variant={"subtle"}
-                        onClick={!allVoicesShown ? showAllVoices : showActiveVoice}
-                    >
-                        {!allVoicesShown ? t("button.showAll") : t("button.showActive")}
-                    </Button>
-                </Group>
-            </Grid.Col>
         </Grid>
+
     );
 };
 

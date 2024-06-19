@@ -38,13 +38,13 @@ const router = createBrowserRouter([
                 path: "/scores/:id/edit",
                 element: (
                     <ProtectedRoute allowedRoles={[Role.ADMIN, Role.EDITOR]}>
-                        <ScoreManager mode={"form"}/>
+                        <ScoreManager mode={"edit"}/>
                     </ProtectedRoute>
                 ),
             },
             {
                 path: "/editor",
-                element: <ScoreManager mode={"editor"}/>,
+                element: <ScoreManager mode={"new"}/>,
             },
             {
                 path: "/api-status",

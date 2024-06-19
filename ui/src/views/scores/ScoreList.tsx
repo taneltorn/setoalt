@@ -1,4 +1,4 @@
-import {Badge, Button, Group, Text, Title, useMantineTheme} from "@mantine/core";
+import {Badge, Button, Group, useMantineTheme} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import React, {useEffect, useState} from "react";
 import {useNavigate} from "react-router-dom";
@@ -6,7 +6,6 @@ import useScoreService from "../../services/ScoreService.tsx";
 import {Score} from "../../models/Score.ts";
 import {DisplayError} from "../../utils/helpers.tsx";
 import {useAuth} from "../../context/AuthContext.tsx";
-import RemoveScoreDialog from "./components/common/dialog/RemoveScoreDialog.tsx";
 import Page from "../../Page.tsx";
 import PaginatedTable, {Row} from "../../components/table/PaginatedTable.tsx";
 import TextLink from "../../components/controls/TextLink.tsx";
@@ -15,6 +14,10 @@ import {DialogType, useDialogContext} from "../../context/DialogContext.tsx";
 import SearchInput from "../../components/controls/SearchInput.tsx";
 import {BiPlus} from "react-icons/bi";
 import IconButton from "../../components/controls/IconButton.tsx";
+import RemoveScoreDialog from "./components/dialog/RemoveScoreDialog.tsx";
+import Header from "../../components/controls/Header.tsx";
+import Description from "../../components/controls/Description.tsx";
+import ControlPanel from "../../components/controls/ControlPanel.tsx";
 
 const ScoreList: React.FC = () => {
 
@@ -52,26 +55,25 @@ const ScoreList: React.FC = () => {
 
     return (
         <Page title={t("view.scores.title")}>
-            <Title order={1} mb={"lg"}>
-                {t("view.scores.title")}
-            </Title>
+            <Header text={t("view.scores.title")}/>
+            <Description text={t("view.scores.description")}/>
 
-            <Text mb={"lg"}>
-                {t("view.scores.description")}
-            </Text>
 
-            <Group justify={"space-between"} mb={"md"}>
-                <SearchInput onChange={handleSearch}
-                             onClear={() => setFilteredScores(scores)}/>
-
-                {auth.currentUser?.isAuthorized &&
+            <ControlPanel
+                leftSection={
+                    <SearchInput
+                        onChange={handleSearch}
+                        onClear={() => setFilteredScores(scores)}
+                    />}
+                rightSection={auth.currentUser?.isAuthorized &&
                     <Button size={"md"}
-                            variant={"subtle"}
+                            variant={"outline"}
                             leftSection={<BiPlus size={24}/>}
                             onClick={() => navigate("/editor")}>
                         {t("button.addNew")}
                     </Button>}
-            </Group>
+            />
+
 
             <PaginatedTable
                 isLoading={scoreService.isLoading}
@@ -99,6 +101,7 @@ const ScoreList: React.FC = () => {
                             bg={score?.visibility === "PUBLIC" ? theme.primaryColor : theme.colors.gray[5]}>
                             {t(`visibility.${score.visibility?.toLowerCase()}`)}
                         </Badge>,
+                        auth.currentUser?.isAuthorized &&
                         <Group justify={"end"} wrap={"nowrap"} gap={4}>
                             <IconButton
                                 icon={<FaPencil size={20}/>}

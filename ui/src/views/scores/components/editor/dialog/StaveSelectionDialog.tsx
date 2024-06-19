@@ -8,7 +8,7 @@ import {Button, Card, Group} from "@mantine/core";
 import {StavePPT} from "../../../../../staves/StavePPT.ts";
 import {StaveOldDiatonic} from "../../../../../staves/StaveOldDiatonic.ts";
 import {StaveDiatonic} from "../../../../../staves/StaveDiatonic.ts";
-import StavePreview from "../../common/stave/StavePreview.tsx";
+import StavePreview from "../../stave/StavePreview.tsx";
 
 const StaveSelectionDialog: React.FC = () => {
 

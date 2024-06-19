@@ -20,7 +20,7 @@ const NoteDurationControls: React.FC = () => {
     const context = useScoreContext();
 
     return (
-        <Group gap={"xs"}>
+        <Group gap={4}>
             {Durations.map(duration =>
                 <ControlButton
                     key={duration}

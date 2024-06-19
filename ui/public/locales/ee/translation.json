@@ -44,8 +44,9 @@
     },
     "admin": {
       "title": "Adminpaneel",
-      "description": "Siin saad hallata kasutajaid ja muud",
+      "description": "Siin saad hallata kasutajaid ja muid seadeid.",
       "users": {
+        "tab": "Kasutajad",
         "table": {
           "id": "ID",
           "username": "Kasutajanimi",
@@ -61,6 +62,9 @@
           "editor": "Toimetaja",
           "user": "Tavakasutaja"
         }
+      },
+      "settings": {
+        "tab": "Seaded"
       }
     },
     "login": {
@@ -184,6 +188,7 @@
     "removeVoice": "Kustuta hääl"
   },
   "table": {
+    "results": "Kokku: {{count}}",
     "noData": "Andmeid ei leitud."
   },
   "visibility": {

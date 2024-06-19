@@ -1,17 +1,17 @@
-import {Button, Group, Text, Title} from "@mantine/core";
+import {Button, Group, Text} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import React, {useEffect, useState} from "react";
 import TextLink from "../../components/controls/TextLink.tsx";
 import {Link} from "react-router-dom";
 import Markdown from "react-markdown";
 import Page from "../../Page.tsx";
+import Header from "../../components/controls/Header.tsx";
+import Description from "../../components/controls/Description.tsx";
 
 const Home: React.FC = () => {
 
     const {t} = useTranslation();
-
     const [changelog, setChangelog] = useState<string>("");
-
 
     useEffect(() => {
         fetch("/CHANGELOG.md")
@@ -23,8 +23,8 @@ const Home: React.FC = () => {
 
     return (
         <Page title={t("view.home.pageTitle")}>
-            <Title order={1} mb={"xs"}>{t("view.home.title")}</Title>
-            <Text>{t("view.home.description")}</Text>
+            <Header text={t("view.home.title")}/>
+            <Description text={t("view.home.description")}/>
 
             <Text mt={"lg"} fw={600}>Tähtis teadaanne!</Text>
             <Text>
@@ -50,7 +50,6 @@ const Home: React.FC = () => {
                     <Button>Katseta</Button>
                 </Link>
             </Group>
-
 
             <div>
                 <Markdown>{changelog}</Markdown>

@@ -44,19 +44,20 @@ const PaginatedTable: React.FC<Properties> = ({isLoading, columns, rows, ...prop
                 </Table.Tbody>
             </Table>
 
-            <Group justify={"space-between"}>
-                <Text>
-                    Tulemusi: {rows.length }
-                </Text>
-                <Pagination
-                    mt={"md"}
-                    mb={"md"}
-                    total={Math.ceil(rows.length / itemsPerPage)}
-                    onChange={v => setCurrentPage(v)}
-                />
-            </Group>
-
-            {!rows.length &&
+            {rows.length
+                ?
+                <Group justify={"space-between"}>
+                    <Text size={"sm"} fw={600} c={"gray.8"}>
+                        {t("table.results", {count: rows.length})}
+                    </Text>
+                    <Pagination
+                        mt={"md"}
+                        mb={"md"}
+                        total={Math.ceil(rows.length / itemsPerPage)}
+                        onChange={v => setCurrentPage(v)}
+                    />
+                </Group>
+                :
                 <Alert variant={"transparent"}>
                     <Group justify={"center"}>
                         <Text>
