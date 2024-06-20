@@ -12,13 +12,13 @@ const MicroTuningDialog: React.FC = () => {
     const [t] = useTranslation();
     const context = useScoreContext();
     const {close} = useDialogContext();
-    const {playNote} = useAudioContext();
-    const [detune, setDetune] = useState<number>(context.currentNote?.detune || 0);
+    const {playNotes} = useAudioContext();
+    const [detune, setDetune] = useState<number>(context.activeNote?.detune || 0);
 
     const handleSave = () => {
-        if (context.currentNote) {
-            context.currentNote.detune = detune;
-            playNote(context.currentNote, context.currentVoice, {detune: detune, transpose: context.semitones});
+        if (context.activeNote) {
+            context.activeNote.detune = detune;
+            playNotes([context.activeNote], context.transposition);
             context.refresh();
         }
         close();
@@ -26,12 +26,12 @@ const MicroTuningDialog: React.FC = () => {
 
     const handleClose = () => {
         close();
-        setDetune(context.currentNote?.detune || 0);
+        setDetune(context.activeNote?.detune || 0);
     }
 
     useEffect(() => {
-        setDetune(context.currentNote?.detune || 0);
-    }, [context.currentNote]);
+        setDetune(context.activeNote?.detune || 0);
+    }, [context.activeNote]);
 
     return (
         <Dialog
@@ -47,7 +47,7 @@ const MicroTuningDialog: React.FC = () => {
             onClose={handleClose}
         >
             <Text mb={"xl"}>
-                {t("dialog.microTuning.description", {pitch: t(`pitch.${context.currentNote?.pitch}`)})}
+                {t("dialog.microTuning.description", {pitch: t(`pitch.${context.activeNote?.pitch}`)})}
             </Text>
 
             <Slider

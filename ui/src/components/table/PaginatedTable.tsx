@@ -30,17 +30,19 @@ const PaginatedTable: React.FC<Properties> = ({isLoading, columns, rows, ...prop
             <Table highlightOnHover verticalSpacing={"sm"}>
                 <Table.Thead>
                     <Table.Tr>
-                        {columns.map(c => <Table.Th>{c}</Table.Th>)}
+                        {columns.map((column, index) => <Table.Th key={index}>{column}</Table.Th>)}
                     </Table.Tr>
                 </Table.Thead>
                 <Table.Tbody>
                     {rows
                         .slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage)
-                        .map(r => <Table.Tr>
-                            {r.data.map(c => <Table.Td>
-                                {c}
-                            </Table.Td>)}
-                        </Table.Tr>)}
+                        .map((row, rowIndex) =>
+                            <Table.Tr key={rowIndex}>
+                                {row.data.map((cell, cellIndex) =>
+                                    <Table.Td key={cellIndex}>
+                                        {cell}
+                                    </Table.Td>)}
+                            </Table.Tr>)}
                 </Table.Tbody>
             </Table>
 

@@ -12,7 +12,12 @@
     "home": {
       "title": "Seto alternatiivne noodikiri",
       "pageTitle": "Avaleht",
-      "description": "Antud veebileht on osa Kirjandusmuuseumi loovuurimuslikust projektist \"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\"."
+      "description": "Antud veebileht on osa Kirjandusmuuseumi loovuurimuslikust projektist \"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\".",
+      "label": {
+        "example": "Kuula näidet",
+        "experiment": "Katseta",
+        "tab": "Muudatused"
+      }
     },
     "scores": {
       "title": "Kuula",

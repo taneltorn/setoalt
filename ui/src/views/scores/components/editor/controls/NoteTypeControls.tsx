@@ -14,24 +14,24 @@ const NoteTypeControls: React.FC = () => {
     const context = useScoreContext();
 
     const handleTypeChange = () => {
-        if (!context.currentNote) {
+        if (!context.activeNote) {
             return;
         }
-        if (context.currentNote.type === NoteType.SMALL) {
-            context.changeType(context.currentNote, undefined);
+        if (context.activeNote.type === NoteType.SMALL) {
+            context.changeType(context.activeNote, undefined);
             return;
         }
-        context.changeType(context.currentNote, NoteType.SMALL);
+        context.changeType(context.activeNote, NoteType.SMALL);
     }
 
     return (
         <Group gap={4}>
             <ControlButton
-                disabled={!context.currentNote}
+                disabled={!context.activeNote}
                 tooltip={t("tooltip.changeType")}
                 label={<Icon path={mdiCodeParentheses} size={0.7}/>}
                 shortKey={ShortKey.CHANGE_TYPE}
-                active={context.currentNote?.type === NoteType.SMALL}
+                active={context.activeNote?.type === NoteType.SMALL}
                 onClick={handleTypeChange}
             />
         </Group>

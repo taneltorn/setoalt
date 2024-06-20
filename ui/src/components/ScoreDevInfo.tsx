@@ -14,14 +14,14 @@ const ScoreDevInfo: React.FC = () => {
                 <Grid>
                     <Grid.Col span={6}>
                         <pre><strong>Current position</strong></pre>
-                        <pre>position: {context.currentPosition}, duration: {context.currentDuration}, voice: {context.currentVoice.name}</pre>
+                        <pre>position: {context.activePosition}, duration: {context.activeDuration}, voice: {context.activeVoice.name}</pre>
                     </Grid.Col>
 
                     <Grid.Col span={6}>
-                        <pre><strong>Current note</strong></pre>
-                        {context.currentNote &&
-                            <pre>position: {context.currentNote?.position}, pitch: {context.currentNote?.pitch}, duration: {context.currentNote?.duration}, detune: {context.currentNote?.detune|| 0}</pre>}
-                        {!context.currentNote && <pre>-</pre>}
+                        <pre><strong>Active note</strong></pre>
+                        {context.activeNote &&
+                            <pre>position: {context.activeNote?.position}, pitch: {context.activeNote?.pitch}, duration: {context.activeNote?.duration}, detune: {context.activeNote?.detune|| 0}</pre>}
+                        {!context.activeNote && <pre>-</pre>}
 
                     </Grid.Col>
                 </Grid>
@@ -29,7 +29,7 @@ const ScoreDevInfo: React.FC = () => {
                 <Grid>
                     <Grid.Col span={6}>
                         <pre><strong>Occupied positions</strong></pre>
-                        <span style={{wordBreak: "break-word"}}>{JSON.stringify(context.currentVoice.occupiedPositions)}</span>
+                        <span style={{wordBreak: "break-word"}}>{JSON.stringify(context.activeVoice.occupiedPositions)}</span>
                     </Grid.Col>
 
                     <Grid.Col span={6}>
@@ -58,7 +58,7 @@ const ScoreDevInfo: React.FC = () => {
 
                     <Grid.Col span={6}>
                         <pre><strong>Semitones</strong></pre>
-                        <pre>{context.semitones}</pre>
+                        <pre>{context.transposition}</pre>
                     </Grid.Col>
                 </Grid>
 

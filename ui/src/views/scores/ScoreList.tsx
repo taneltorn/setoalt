@@ -1,14 +1,13 @@
-import {Badge, Button, Group, useMantineTheme} from "@mantine/core";
+import {Badge, Button, Group, Text, useMantineTheme} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import React, {useEffect, useState} from "react";
-import {useNavigate} from "react-router-dom";
+import {Link, useNavigate} from "react-router-dom";
 import useScoreService from "../../services/ScoreService.tsx";
 import {Score} from "../../models/Score.ts";
 import {DisplayError} from "../../utils/helpers.tsx";
 import {useAuth} from "../../context/AuthContext.tsx";
 import Page from "../../Page.tsx";
 import PaginatedTable, {Row} from "../../components/table/PaginatedTable.tsx";
-import TextLink from "../../components/controls/TextLink.tsx";
 import {FaPencil, FaRegTrashCan} from "react-icons/fa6";
 import {DialogType, useDialogContext} from "../../context/DialogContext.tsx";
 import SearchInput from "../../components/controls/SearchInput.tsx";
@@ -74,7 +73,6 @@ const ScoreList: React.FC = () => {
                     </Button>}
             />
 
-
             <PaginatedTable
                 isLoading={scoreService.isLoading}
                 columns={[
@@ -87,7 +85,11 @@ const ScoreList: React.FC = () => {
                 rows={filteredScores.map(score => ({
                     name: score.name,
                     data: [
-                        <TextLink to={`/scores/${score.id}`} label={score.name}/>,
+                        <Link to={`/scores/${score.id}`}>
+                            <Text fz={"md"} c={"red"} fw={"bold"}>
+                                {score.name}
+                            </Text>
+                        </Link>,
                         t(`stave.${score.data.stave.name.toLowerCase()}`),
                         <Group gap={4}>
                             {score.data.voices

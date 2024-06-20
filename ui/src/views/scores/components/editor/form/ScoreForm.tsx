@@ -24,8 +24,8 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
     const {register, handleSubmit, control, formState: {errors}} = useFormContext<Score>();
 
     const handleFocus = {
-        onFocus: () => context.setIsTyping(true),
-        onBlur: () => context.setIsTyping(false)
+        onFocus: () => context.setIsTypeMode(true),
+        onBlur: () => context.setIsTypeMode(false)
     }
 
     return (

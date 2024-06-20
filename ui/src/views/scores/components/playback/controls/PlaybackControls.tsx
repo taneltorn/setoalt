@@ -11,7 +11,7 @@ const PlaybackControls: React.FC = () => {
 
     const {t} = useTranslation();
     const theme = useMantineTheme();
-    const {isPlaying, playPrevious, playNext, startPlayback, stopPlayback, resetPlayback} = useAudioContext();
+    const {isPlaying, startPlayback, stopPlayback, resetPlayback} = useAudioContext();
     const context = useScoreContext();
     const {open} = useDialogContext();
 
@@ -22,7 +22,7 @@ const PlaybackControls: React.FC = () => {
                 title={t("tooltip.playPrevious")}
                 color={"gray.4"}
                 variant={"transparent"}
-                onClick={() => playPrevious(context)}
+                onClick={() => context.previous()}
             >
                 <AiOutlineBackward size={40}/>
             </Button>
@@ -60,7 +60,7 @@ const PlaybackControls: React.FC = () => {
                 title={t("tooltip.playNext")}
                 color={"gray.4"}
                 variant={"transparent"}
-                onClick={() => playNext(context)}
+                onClick={() => context.next()}
             >
                 <AiOutlineForward size={40}/>
             </Button>
@@ -68,7 +68,7 @@ const PlaybackControls: React.FC = () => {
             <Button
                 px={0}
                 title={t("tooltip.transpose")}
-                color={context.semitones !== 0 ? "black" : "gray.4"}
+                color={context.transposition !== 0 ? "black" : "gray.4"}
                 variant={"transparent"}
                 onClick={() => open(DialogType.TRANSPOSE)}
             >

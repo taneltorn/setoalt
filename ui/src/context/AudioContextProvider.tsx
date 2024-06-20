@@ -2,12 +2,10 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Note} from "../models/Note";
 import * as Tone from "tone";
 import {Playback} from "../utils/constants";
-import {positionToSeconds} from "../utils/helpers.tsx";
-import useAudioPlayer from "../hooks/useAudioPlayer";
-import {Voice} from "../models/Voice";
-import {AudioContext, PlaybackOptions} from "./AudioContext";
+import {excludeDuplicates, noteToFrequency, positionToSeconds} from "../utils/helpers.tsx";
+import {AudioContext} from "./AudioContext";
 import {ScoreContextProperties} from "./ScoreContext";
-import {Score} from "../models/Score";
+import useAudioPlayer from "../hooks/useAudioPlayer.tsx";
 
 interface Properties {
     children: React.ReactNode;
@@ -26,66 +24,14 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [tempo, setTempo] = useState<number>(Playback.DEFAULT_TEMPO);
 
-    const playNote = (note: Note, voice?: Voice, options?: PlaybackOptions) => {
-        if (!(note.position >= 0)) return;
+    const playNotes = (notes: Note[], transpose?: number) => {
+        const unique = excludeDuplicates(notes);
 
-        if (!voice?.hidden) {
-            player.playNote(note, voice, options);
-        }
+        const frequencies = unique.map(n => noteToFrequency(n, transpose));
+        const durations = unique.map(n => n.duration);
+
+        player.playNotes(frequencies, durations);
     }
-
-    const playPosition = (score: Score, position: number, voice?: Voice, options?: PlaybackOptions) => {
-        score.data.voices
-            .filter(v => voice ? v.name === voice.name : true)
-            .forEach(voice => {
-                voice.notes
-                    .filter(note => note.position === position)
-                    .forEach(note => {
-                        const line = score.data.stave.lines.find(l => l.pitch === note.pitch);
-                        playNote(note, voice, {
-                            detune: note.detune || line?.detune,
-                            transpose: options?.transpose
-                        });
-                    });
-            });
-    }
-
-    const playPositionNEW = (score: Score, position: number, voice?: Voice, options?: PlaybackOptions) => {
-        score.data.voices
-            .filter(v => voice ? v.name === voice.name : true)
-            .forEach(voice => {
-                voice.notes
-                    .filter(note => note.position === position)
-                    .forEach(note => {
-                        const line = score.data.stave.lines.find(l => l.pitch === note.pitch);
-                        playNote(note, voice, {
-                            detune: note.detune || line?.detune,
-                            transpose: options?.transpose
-                        });
-                    });
-            });
-    }
-
-    const playNext = (context: ScoreContextProperties) => {
-        stopPlayback();
-
-        const position = context.next();
-        playPosition(context.score, position, context.isEditMode ? context.currentVoice : undefined, {
-            transpose: context.semitones
-        });
-
-    }
-
-    const playPrevious = (context: ScoreContextProperties) => {
-        stopPlayback();
-
-        const position = context.previous();
-        playPosition(context.score, position, context.isEditMode ? context.currentVoice : undefined, {
-            transpose: context.semitones
-        });
-    }
-
-
     const startPlayback = (context: ScoreContextProperties) => {
         stopPlayback();
         setIsPlaying(true);
@@ -94,62 +40,14 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
             Tone.context.resume();
         }
 
-        const startPosition = context.currentPosition >= context.endPosition ? 0 : Math.max(0, context.currentPosition);
-
-        const endTimes: number[] = [];
-        const events: Array<[number, { note: Note, voice: Voice }]> = [];
-        context.score.data.voices.forEach(voice => {
-            voice.notes
-                .filter(n => n.position >= startPosition)
-                .forEach(note => {
-                    const t = positionToSeconds(note.position - startPosition);
-                    events.push([t, {note: note, voice: voice}]);
-                    const noteEndTime = t + Tone.Time(note.duration).toSeconds();
-                    endTimes.push(noteEndTime);
-                });
-        });
-
-        if (!sequenceRef.current) {
-            sequenceRef.current = new Tone.Part((_, event) => {
-                const line = context.score.data.stave.lines.find(l => l.pitch === event.note.pitch);
-                playNote(event.note, event.voice, {
-                    detune: event.note.detune || line?.detune,
-                    transpose: context.semitones
-                });
-
-                context.setCurrentPosition(event.note.position);
-
-                const notes = context.getNotes(event.note.position);
-                context.setCurrentNote(notes.length === 1 ? event.note : undefined);
-            }, events).start(0);
-        }
-
-        const longestDuration = Math.max(...endTimes, 0);
-        Tone.Transport.scheduleOnce(() => {
-            resetPlayback(context);
-        }, `+${longestDuration}`);
-
-        sequenceRef.current.loop = false;
-        sequenceRef.current.loopEnd = longestDuration;
-
-        Tone.Transport.start();
-    };
-
-    const startPlaybackNEW = (context: ScoreContextProperties) => {
-        stopPlayback();
-        setIsPlaying(true);
-
-        if (Tone.context.state !== 'running') {
-            Tone.context.resume();
-        }
-
-        const startPosition = context.currentPosition >= context.endPosition ? 0 : Math.max(0, context.currentPosition);
+        const startPosition = context.activePosition >= context.endPosition ? 0 : Math.max(0, context.activePosition);
 
         const endTimes: number[] = [];
         const events: Array<[number, { position: number, notes: Note[] }]> = [];
 
         const groupedNotes: GroupedNote[] = Object.values(
             context.score.data.voices
+                .filter(v => !v.hidden)
                 .flatMap(v => v.notes)
                 .filter(n => n.position >= startPosition)
                 .reduce((acc, note) => {
@@ -174,13 +72,12 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
 
         if (!sequenceRef.current) {
             sequenceRef.current = new Tone.Part((_, event) => {
-                player.playNotes(event.notes)
-                context.setCurrentPosition(event.position);
+                playNotes(event.notes, context.transposition)
+                context.setActivePosition(event.position);
             }, events).start(0);
         }
 
         const longestDuration = Math.max(...endTimes, 0);
-
         Tone.Transport.scheduleOnce(() => {
             resetPlayback(context);
         }, `+${longestDuration}`);
@@ -207,8 +104,7 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
 
     const resetPlayback = (context: ScoreContextProperties) => {
         stopPlayback();
-        context.setCurrentPosition(0);
-        context.setCurrentNote(context.getNote(0));
+        context.activate(0);
         context.refresh();
     };
 
@@ -221,12 +117,9 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
         isPlaying,
         setIsPlaying,
 
-        playNote,
-        playPosition,
-        playNext,
-        playPrevious,
+        playNotes,
+
         startPlayback,
-        startPlaybackNEW,
         stopPlayback,
         resetPlayback,
 

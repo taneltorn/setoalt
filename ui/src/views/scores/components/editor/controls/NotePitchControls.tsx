@@ -17,7 +17,7 @@ const NotePitchControls: React.FC = () => {
     const pitches = context.score.data.stave.lines.map(l => l.pitch).reverse();
 
     const handleClick = (pitch: string) => {
-        context.insertOrUpdateNote(pitch, context.currentPosition, true);
+        context.insertOrUpdateNote(pitch, context.activePosition);
     }
 
     return (
@@ -25,20 +25,21 @@ const NotePitchControls: React.FC = () => {
             {pitches.map((pitch, index) =>
                 <ControlButton
                     key={pitch}
-                    active={context.currentNote?.pitch === pitch}
+                    active={context.getNotes(context.activePosition).map(n => n.pitch).includes(pitch)}
+                    // active={context.activeNote?.pitch === pitch}
                     label={t(`pitch.${pitch.toLowerCase()}`)}
-                    tooltip={t(`tooltip.${context.currentNote ? "changePitch" : "insertPitch"}`, {pitch: t(`pitch.${pitch}`)})}
+                    tooltip={t(`tooltip.${context.activeNote ? "changePitch" : "insertPitch"}`, {pitch: t(`pitch.${pitch}`)})}
                     shortKey={`${index + 1}`}
                     onClick={() => handleClick(pitch)}
                 />)}
 
 
             <ControlButton
-                disabled={!context.currentNote}
+                disabled={!context.activeNote}
                 tooltip={t("tooltip.microTuning")}
                 label={<RiIncreaseDecreaseFill size={24}/>}
                 shortKey={ShortKey.MICRO_TUNING}
-                active={!!context.currentNote?.detune || !!context.score.data.stave.lines.find(l => l.pitch === context.currentNote?.pitch)?.detune}
+                active={!!context.activeNote?.detune || !!context.score.data.stave.lines.find(l => l.pitch === context.activeNote?.pitch)?.detune}
                 onClick={() => dialogContext.open(DialogType.MICRO_TUNING)}
             />
         </Group>

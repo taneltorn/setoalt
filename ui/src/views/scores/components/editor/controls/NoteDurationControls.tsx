@@ -25,7 +25,7 @@ const NoteDurationControls: React.FC = () => {
                 <ControlButton
                     key={duration}
                     className={"me-1"}
-                    active={context.currentDuration === duration}
+                    active={context.activeDuration === duration}
                     label={<Icon path={icons.get(duration) || mdiMusicNoteHalf} size={1}/>}
                     tooltip={t(`tooltip.changeDuration.${duration}`)}
                     shortKey={DurationToShortKey.get(duration)}

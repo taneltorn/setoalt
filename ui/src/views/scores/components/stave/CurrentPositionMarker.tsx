@@ -12,10 +12,10 @@ const CurrentPositionMarker: React.FC = () => {
 
     const {x, y} = useMemo(() => {
         return calculateCurrentPositionCoords( context);
-    }, [context.currentPosition, context.score.data.stave, breaksDependency]);
+    }, [context.activePosition, context.score.data.stave, breaksDependency]);
 
     return (<>
-        {context.currentPosition >= 0 &&
+        {context.activePosition >= 0 &&
             <rect
                 x={x}
                 y={y}

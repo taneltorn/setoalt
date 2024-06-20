@@ -55,10 +55,10 @@ export const calculateLyricCoords = (lyric: Lyric, context: ScoreContextProperti
 }
 
 export const calculateCurrentPositionCoords = (context: ScoreContextProperties): XY => {
-    const offset = getOffset(context.currentPosition, context);
+    const offset = getOffset(context.activePosition, context);
 
     const x = Layout.stave.container.PADDING_X_START
-        + context.currentPosition * Layout.stave.note.SPACING
+        + context.activePosition * Layout.stave.note.SPACING
         - Layout.stave.cursor.WIDTH / 2
         - Layout.stave.note.RADIUS / 2
         - offset.x;

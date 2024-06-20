@@ -32,7 +32,7 @@ const StaveNote: React.FC<Properties> = ({note, voice}) => {
             r={note.type === NoteType.SMALL ? Layout.stave.note.RADIUS_SMALL : Layout.stave.note.RADIUS}
             fill={isHighlighted(note, context) ? Color.stave.HIGHLIGHT : note.color || voice.color || "black"}
             opacity={isDimmed(note, voice, context) ? Layout.stave.note.DIMMED_OPACITY : 1}
-            onClick={() => context.selectNote(note)}
+            onClick={() => context.activate(note.position)}
         >
             <title>{t(`pitch.${note.pitch.toLowerCase()}`)}</title>
         </circle>

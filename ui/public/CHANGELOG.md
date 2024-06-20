@@ -1,8 +1,7 @@
-# Muudatused
-
 ### [0.2.0] - 
-- 
-- Paigutusvigade parandamine
+- Heli taasesituse kvaliteedi parandamine
+- Lisatud ülemine riba
+- Paigutusvigade parandamine (lisatud ka parem mobiilseadmete tugi)
 - Häälte lisamise ümberkujundamine
 - Admin vaate ümberkujundamine
 - Lisatud võimalus redaktoris aktiveerida positsioon ilma nooti valimata 

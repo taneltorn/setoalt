@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect} from "react";
 import {Grid} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import Page from "../../../Page.tsx";

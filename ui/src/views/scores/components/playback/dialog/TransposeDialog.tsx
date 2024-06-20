@@ -11,15 +11,15 @@ const TransposeDialog: React.FC = () => {
     const [t] = useTranslation();
     const context = useScoreContext();
     const {close} = useDialogContext();
-    const [semitones, setSemitones] = useState<number>(context.semitones);
+    const [transposition, setTransposition] = useState<number>(context.transposition);
 
     const handleSave = () => {
-        context.setSemitones(semitones);
+        context.setTransposition(transposition);
         close();
     }
 
     const handleClose = () => {
-        setSemitones(context.semitones);
+        setTransposition(context.transposition);
         close();
     }
 
@@ -33,25 +33,25 @@ const TransposeDialog: React.FC = () => {
             showTertiaryButton
             onPrimaryButtonClick={handleSave}
             onSecondaryButtonClick={handleClose}
-            onTertiaryButtonClick={() => setSemitones(0)}
+            onTertiaryButtonClick={() => setTransposition(0)}
             onClose={handleClose}
         >
             <Text mb={"xl"}>
-                {t("dialog.transpose.description", {pitch: t(`pitch.${context.currentNote?.pitch}`)})}
+                {t("dialog.transpose.description", {pitch: t(`pitch.${context.activeNote?.pitch}`)})}
             </Text>
 
             <Slider
                 mb={"xl"}
-                thumbChildren={`${semitones > 0 ? "+" : ""}${semitones}`}
+                thumbChildren={`${transposition > 0 ? "+" : ""}${transposition}`}
                 color="black"
                 label={null}
                 min={Playback.MIN_TRANSPOSE}
                 max={Playback.MAX_TRANSPOSE}
                 step={Playback.TRANSPOSE_SLIDER_STEP}
-                defaultValue={semitones}
-                value={semitones}
+                defaultValue={transposition}
+                value={transposition}
                 thumbSize={40}
-                onChange={v => setSemitones(+v)}
+                onChange={v => setTransposition(+v)}
                 styles={{thumb: {borderWidth: rem(2), padding: rem(11)}}}
             />
         </Dialog>

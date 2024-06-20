@@ -5,11 +5,13 @@ import {useTranslation} from "react-i18next";
 import FilterButton from "../../../../../components/controls/FilterButton.tsx";
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {Voice} from "../../../../../models/Voice.ts";
+import {useAudioContext} from "../../../../../context/AudioContext.tsx";
 
 const VoiceFilter: React.FC = () => {
 
     const {t} = useTranslation();
     const context = useScoreContext();
+    const {stopPlayback} = useAudioContext();
 
     const toggleVoice = (voice: Voice) => {
         const v = context.score.data.voices.find(v => v.name === voice.name);
@@ -18,6 +20,7 @@ const VoiceFilter: React.FC = () => {
         }
         v.hidden = !v.hidden;
         context.refresh();
+        stopPlayback();
     }
 
     const showAllVoices = () => {
@@ -25,6 +28,7 @@ const VoiceFilter: React.FC = () => {
             v.hidden = false;
         })
         context.refresh();
+        stopPlayback();
     }
 
     return (
@@ -34,7 +38,7 @@ const VoiceFilter: React.FC = () => {
                     {context.score.data.voices.map(voice => (
                         <FilterButton
                             key={voice.name}
-                            active={context.isEditMode ? voice.name === context.currentVoice.name : !voice.hidden}
+                            active={context.isEditMode ? voice.name === context.activeVoice.name : !voice.hidden}
                             label={voice.name}
                             onClick={() => toggleVoice(voice)}
                         />))}

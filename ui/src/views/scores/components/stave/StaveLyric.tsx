@@ -22,14 +22,9 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
     }, [lyric.position, scoreContext.score.data.stave, breaksDependency]);
 
 
-    const handleNoteClick = () => {
+    const handleClick = () => {
         audioContext.stopPlayback();
-        audioContext.playPosition(scoreContext.score, lyric.position, undefined, {transpose: scoreContext.semitones});
-
-        const notes = scoreContext.getNotes(lyric.position);
-
-        scoreContext.setCurrentNote(notes.length === 1 ? notes[0] : undefined);
-        scoreContext.setCurrentPosition(lyric.position);
+        scoreContext.activate(lyric.position)
     }
 
     const handleChange = (value: string) => {
@@ -53,14 +48,14 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
             }
         }
         scoreContext.refresh();
-        scoreContext.setIsTyping(false);
+        scoreContext.setIsTypeMode(false);
     }
 
     return (<>
             {scoreContext.isEditMode && !scoreContext.isExportMode &&
                 <foreignObject key={`lyric-${lyric.position}`} x={x - 20} y={y} width={Layout.stave.note.SPACING} height="40">
                     <input
-                        onFocus={() => scoreContext.setIsTyping(true)}
+                        onFocus={() => scoreContext.setIsTypeMode(true)}
                         onBlur={() => save()}
                         className={`lyric-input`}
                         disabled={!scoreContext.isEditMode}
@@ -73,12 +68,12 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
             {(!scoreContext.isEditMode || scoreContext.isExportMode) &&
                 <text
                     className="hover-pointer"
-                    fill={lyric.position === scoreContext.currentPosition && !scoreContext.isExportMode ? Color.stave.HIGHLIGHT : Color.stave.LYRICS}
+                    fill={lyric.position === scoreContext.activePosition && !scoreContext.isExportMode ? Color.stave.HIGHLIGHT : Color.stave.LYRICS}
                     fontWeight={Layout.stave.lyrics.FONT_WEIGHT}
                     fontSize={Layout.stave.lyrics.FONT_SIZE}
                     x={x}
                     y={y}
-                    onClick={handleNoteClick}
+                    onClick={handleClick}
                 >{lyric.text}</text>}
         </>
     )

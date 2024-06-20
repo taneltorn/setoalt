@@ -23,11 +23,15 @@ const VoiceControls: React.FC = () => {
         context.refresh();
     }
 
-    const changeVoice = (voice: Voice) => {
-        context.setCurrentVoice(voice);
+    const showActiveVoice = () => {
+        context.score.data.voices.forEach(v => {
+            v.hidden = v.name !== context.activeVoice.name;
+        })
+        context.refresh();
+    }
 
-        const note = context.getNote(context.currentPosition, voice);
-        context.setCurrentNote(note);
+    const changeVoice = (voice: Voice) => {
+        context.setActiveVoice(voice);
         context.score.data.voices.forEach(v => {
             v.hidden = v.name !== voice.name;
         });
@@ -57,7 +61,7 @@ const VoiceControls: React.FC = () => {
                     {context.score.data.voices.map(voice => (
                         <FilterButton
                             key={voice.name}
-                            active={context.isEditMode ? voice.name === context.currentVoice.name : !voice.hidden}
+                            active={context.isEditMode ? voice.name === context.activeVoice.name : !voice.hidden}
                             label={voice.name}
                             onClick={() => changeVoice(voice)}
                         />))}
@@ -78,7 +82,8 @@ const VoiceControls: React.FC = () => {
             <Grid.Col span={3}>
                 <Group gap={4} justify={"end"}>
 
-                    {context.score.data.voices.some(v => v.hidden) &&
+                    {context.score.data.voices.some(v => v.hidden)
+                        ?
                         <Button
                             size={"xs"}
                             color={"blue"}
@@ -87,16 +92,27 @@ const VoiceControls: React.FC = () => {
                             onClick={showAllVoices}
                         >
                             {t("button.showAll")}
+                        </Button>
+                        :
+                        <Button
+                            size={"xs"}
+                            color={"blue"}
+                            leftSection={<MdRecordVoiceOver size={20}/>}
+                            variant={"subtle"}
+                            onClick={showActiveVoice}
+                        >
+                            {t("button.showActive")}
                         </Button>}
-                    {!DefaultVoices.map(v => v.name).includes(context.currentVoice.name) &&
+
+                    {!DefaultVoices.map(v => v.name).includes(context.activeVoice.name) &&
                         <Button
                             size={"xs"}
                             color={"red"}
                             leftSection={<FaRegTrashCan size={20}/>}
                             variant={"subtle"}
                             onClick={() => open(DialogType.REMOVE_VOICE, {
-                                name: context.currentVoice.name,
-                                onRemove: () => handleVoiceRemove(context.currentVoice)
+                                name: context.activeVoice.name,
+                                onRemove: () => handleVoiceRemove(context.activeVoice)
                             })}
                         >
                             {t("button.removeVoice")}

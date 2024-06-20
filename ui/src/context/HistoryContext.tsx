@@ -7,7 +7,7 @@ import {Voice} from "../models/Voice";
 
 export interface State {
     score: Score;
-    currentNote?: Note;
+    activeNote?: Note;
     position: number;
     duration: string;
     voice: Voice;

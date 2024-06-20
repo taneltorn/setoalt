@@ -13,7 +13,7 @@ const KeyPressHandler: React.FC = () => {
     const dialogContext = useDialogContext();
 
     const handleKeyPress = (event: KeyboardEvent) => {
-        if (scoreContext.isTyping || dialogContext.active !== undefined) {
+        if (scoreContext.isTypeMode || dialogContext.active !== undefined) {
             return;
         }
 
@@ -27,14 +27,14 @@ const KeyPressHandler: React.FC = () => {
             if (range(9).includes(+event.key)) {
                 const pitch = scoreContext.score.data.stave.lines.map(l => l.pitch).reverse()[+event.key - 1];
                 if (pitch) {
-                    scoreContext.insertOrUpdateNote(pitch, scoreContext.currentPosition, true);
+                    scoreContext.insertOrUpdateNote(pitch, scoreContext.activePosition);
                 }
                 return;
             }
 
             switch (event.key.toUpperCase()) {
                 case ShortKey.MICRO_TUNING:
-                    if (scoreContext.currentNote) {
+                    if (scoreContext.activeNote) {
                         dialogContext.open(DialogType.MICRO_TUNING);
                     }
                     break;
@@ -59,13 +59,13 @@ const KeyPressHandler: React.FC = () => {
                     scoreContext.changeDuration("8n");
                     break;
                 case ShortKey.INCREASE_PITCH:
-                    scoreContext.increasePitch();
+                    scoreContext.increaseActiveNotePitch();
                     break;
                 case ShortKey.DECREASE_PITCH:
-                    scoreContext.decreasePitch();
+                    scoreContext.decreaseActiveNotePitch();
                     break;
                 case ShortKey.CHANGE_TYPE:
-                    scoreContext.changeType(scoreContext.currentNote, scoreContext.currentNote?.type === NoteType.SMALL
+                    scoreContext.changeType(scoreContext.activeNote, scoreContext.activeNote?.type === NoteType.SMALL
                         ? undefined
                         : NoteType.SMALL);
                     break;
@@ -80,17 +80,19 @@ const KeyPressHandler: React.FC = () => {
 
         switch (event.key.toUpperCase()) {
             case ShortKey.PREVIOUS:
-                audioContext.playPrevious(scoreContext);
+                // audioContext.playPrevious(scoreContext);
+                scoreContext.previous();
                 break;
             case ShortKey.NEXT:
-                audioContext.playNext(scoreContext);
+                scoreContext.next();
+                // audioContext.playNext(scoreContext);
                 break;
             case ShortKey.START_PLAYBACK:
                 if (audioContext.isPlaying) {
                     audioContext.stopPlayback();
                     break;
                 }
-                audioContext.startPlaybackNEW(scoreContext);
+                audioContext.startPlayback(scoreContext);
                 break;
             default:
                 break;

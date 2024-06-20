@@ -18,7 +18,7 @@ const LayoutControls: React.FC = () => {
             <ControlButton
                 tooltip={t("tooltip.insertBreak")}
                 shortKey={ShortKey.BREAK}
-                active={context.score.data.breaks.findIndex(p => p === context.currentPosition) >= 0}
+                active={context.score.data.breaks.findIndex(p => p === context.activePosition) >= 0}
                 label={"↵"}
                 onClick={() => context.toggleBreak()}
             />
@@ -26,7 +26,7 @@ const LayoutControls: React.FC = () => {
                 tooltip={t("tooltip.insertDivider")}
                 shortKey={ShortKey.DIVIDER}
                 active={context.score.data.dividers.findIndex(d => [DividerType.BAR, DividerType.SEPARATOR].includes(d.type)
-                    && d.position === (context.currentPosition)) >= 0}
+                    && d.position === (context.activePosition)) >= 0}
                 label={"|"}
                 onClick={context.toggleDivider}
             />
@@ -45,7 +45,7 @@ const LayoutControls: React.FC = () => {
             <ControlButton
                 tooltip={t("tooltip.removeNote")}
                 shortKey={ShortKey.REMOVE_NOTE}
-                disabled={!context.currentNote}
+                disabled={!context.activeNote}
                 label={<FaBackspace size={20}/>}
                 onClick={() => context.removeNote()}
             />

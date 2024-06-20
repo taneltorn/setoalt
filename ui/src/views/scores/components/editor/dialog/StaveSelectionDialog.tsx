@@ -45,7 +45,7 @@ const StaveSelectionDialog: React.FC = () => {
         >
             <Group className={"hover-pointer"} wrap={"nowrap"}>
                 {[StavePPT, StaveOldDiatonic, StaveDiatonic].map((s, index) =>
-                    <Card onClick={() => setStave(s)} p={"xl"} shadow={"md"}>
+                    <Card key={`stave-${s}`} onClick={() => setStave(s)} p={"xl"} shadow={"md"}>
                         <Card.Section opacity={s.name === stave.name ? 1 : 0.3}>
                             <StavePreview
                                 key={index}

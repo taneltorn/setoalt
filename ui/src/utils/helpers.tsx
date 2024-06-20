@@ -79,6 +79,34 @@ export const pitchToFrequency = (pitch: string, detune?: number): number => {
         : frequency;
 };
 
+export const excludeDuplicates = (notes: Note[]) => {
+    const filteredNotes: Note[] = notes.reduce((acc, note) => {
+        const key = `${note.pitch}-${note.duration}`;
+        if (!acc.map.has(key)) {
+            acc.map.set(key, true);
+            acc.result.push(note);
+        }
+        return acc;
+    }, { map: new Map<string, boolean>(), result: [] as Note[] }).result;
+
+    return filteredNotes;
+}
+
+export const noteToFrequency = (note: Note, transposition?: number): number => {
+    const frequency = Frequency(transpose(note.pitch, transposition)).toFrequency();
+    return note.detune
+        ? Frequency(frequency).transpose(note.detune / 100).toFrequency()
+        : frequency;
+};
+
+export const createNote = (pitch: string, position: number, duration: string): Note=> {
+    return {
+        pitch: pitch,
+        position: position > 0 ? position : 0,
+        duration: duration,
+    }
+}
+
 export const getPositions = (voices: Voice[]) => {
     return sort(Array.from(new Set(voices.flatMap(v => v.notes).map(n => n.position))));
 }
@@ -105,7 +133,6 @@ export const getDurationOffset = (a: string, b: string) => {
     return durationToScalar(a) - durationToScalar(b);
 }
 
-
 export const isDimmed = (note: Note, voice: Voice, scoreContext: ScoreContextProperties) => {
     return !scoreContext.score.data.stave.lines.find(l => l.pitch === note.pitch) ||
         scoreContext.isEditMode && voice.hidden;
@@ -115,12 +142,8 @@ export const isHighlighted = (note: Note, context: ScoreContextProperties) => {
     if (context.isExportMode) {
         return false;
     }
-    if (context.currentNote && context.isEditMode) {
-        return context.currentNote.position === note.position && context.currentNote.pitch === note.pitch;
-    }
-    return context.currentPosition === note.position;
+    return context.activePosition === note.position;
 }
-
 
 export const range = (start: number, end?: number): number[] => {
     if (!end) {
@@ -133,10 +156,13 @@ export const sort = (array: number[]) => {
     return array.sort((a, b) => (a || 0) - (b || 0));
 }
 
-export const transpose = (pitch: string, semitones: number): string => {
+export const transpose = (pitch: string, transposition?: number): string => {
+    if (!transposition) {
+        return pitch;
+    }
     const index = NoteRange.findIndex(n => n === pitch);
     if (index !== undefined) {
-        return NoteRange[index + semitones];
+        return NoteRange[index + transposition];
     }
     return "";
 }

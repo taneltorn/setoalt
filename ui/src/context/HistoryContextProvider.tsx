@@ -21,7 +21,7 @@ const HistoryContextProvider: React.FC<Properties> = ({children}) => {
         }
         history.push({
             score: structuredClone(score),
-            currentNote: structuredClone(note),
+            activeNote: structuredClone(note),
             position: position,
             voice: structuredClone(voice),
             duration: duration,
@@ -35,10 +35,9 @@ const HistoryContextProvider: React.FC<Properties> = ({children}) => {
             if (state) {
                 // todo why is clone needed here for triggering rerender?
                 context.setScore(structuredClone(state.score));
-                context.setCurrentNote(structuredClone(state.currentNote));
-                context.setCurrentVoice(structuredClone(state.voice));
-                context.setCurrentPosition(state.position);
-                context.setCurrentDuration(state.duration);
+                context.setActiveVoice(structuredClone(state.voice));
+                context.setActivePosition(state.position);
+                // context.setD(state.duration);
                 setHistory({...history});
             }
         }
