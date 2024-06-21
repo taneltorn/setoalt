@@ -12,12 +12,15 @@
     "home": {
       "title": "Seto alternatiivne noodikiri",
       "pageTitle": "Avaleht",
-      "description": "Antud veebileht on osa Kirjandusmuuseumi loovuurimuslikust projektist \"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\".",
+      "description": "Antud veebileht on osa Kirjandusmuuseumi loovuurimuslikust projektist <strong>\"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\"</strong>.",
       "label": {
         "example": "Kuula näidet",
         "experiment": "Katseta",
         "tab": "Muudatused"
       }
+    },
+    "user": {
+      "title": ""
     },
     "scores": {
       "title": "Kuula",
@@ -43,6 +46,7 @@
         "name": "Nimi",
         "description": "Kirjeldus",
         "defaultTempo": "Vaikimisi tempo (BPM)",
+        "defaultTransposition": "Vaikimisi helikõrgus (pooltoonides)",
         "text": "Laulusõnad",
         "visibility": "Nähtavus"
       }
@@ -92,7 +96,7 @@
     "logout": "Logi välja"
   },
   "tooltip": {
-    "changeDuration": {
+    "changeNoteDuration": {
       "2n": "Poolnoot",
       "4n": "Veerandnoot",
       "8n": "Kaheksandiknoot"
@@ -120,8 +124,9 @@
     "changeTempo": "Muuda tempot",
     "showVoice": "Näita häält",
     "hideVoice": "Peida hääl",
-    "transpose": "Transponeeri",
+    "transpose": "Muuda helikõrgust",
     "changeType": "Muuda suurust",
+    "splitNote": "Poolita noot",
     "exportToPng": "Salvesta PNG"
   },
   "dialog": {
@@ -131,7 +136,7 @@
     },
     "removeScore": {
       "title": "Oled sa kindel?",
-      "description": "Kustuta noodistus {{name}}?"
+      "description": "Kustuta noodistus <b>{{name}}</b>?"
     },
     "saveUser": {
       "title": "Salvesta kasutaja"
@@ -164,7 +169,11 @@
     },
     "transpose": {
       "title": "Transponeerimine",
-      "description": "Transponeeri noodistust pooltoonides."
+      "description": "Muuda helikõrgust noodistust pooltoonides."
+    },
+    "changeTempo": {
+      "title": "Muuda tempot",
+      "description": "Muuda taasesitust kiiremaks või aeglasemaks."
     },
     "resetScore": {
       "title": "Lähtesta andmed?",
@@ -177,6 +186,7 @@
   "button": {
     "ok": "OK",
     "copy": "Kopeeri",
+    "clone": "Kopeeri",
     "remove": "Kustuta",
     "save": "Salvesta",
     "confirm": "Kinnita",
@@ -193,7 +203,7 @@
     "removeVoice": "Kustuta hääl"
   },
   "table": {
-    "results": "Kokku: {{count}}",
+    "results": "Kokku: {{count}} | Kuva:",
     "noData": "Andmeid ei leitud."
   },
   "visibility": {

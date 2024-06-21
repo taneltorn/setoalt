@@ -1,6 +1,6 @@
 import React from 'react';
 import Dialog from "../../../../components/dialog/Dialog.tsx";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 import {Text} from "@mantine/core";
 import {DialogType, useDialogContext} from "../../../../context/DialogContext.tsx";
 import useScoreService from "../../../../services/ScoreService.tsx";
@@ -34,7 +34,11 @@ const RemoveScoreDialog: React.FC = () => {
             onClose={close}
         >
             <Text>
-                {t("dialog.removeScore.description", {name: context.name})}
+                <Trans
+                    i18nKey="dialog.removeScore.description"
+                    values={{name: context.name}}
+                    components={{ b: <strong /> }}
+                />
             </Text>
         </Dialog>
     )

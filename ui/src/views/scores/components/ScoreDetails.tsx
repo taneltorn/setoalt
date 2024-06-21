@@ -1,6 +1,6 @@
 import React from "react";
 import Page from "../../../Page.tsx";
-import {Badge, Grid, Text, useMantineTheme} from "@mantine/core";
+import {Badge, Grid, useMantineTheme} from "@mantine/core";
 import {Score} from "../../../models/Score.ts";
 import Header from "../../../components/controls/Header.tsx";
 import {useTranslation} from "react-i18next";
@@ -29,9 +29,9 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
         <Page title={score.name}>
             <Header
                 text={score.name}
-                leftSection={<BackLink/>}
+                leftSection={<BackLink to={"/scores"}/>}
                 rightSection={
-                    <Badge bg={score?.visibility === "PUBLIC" ? theme.primaryColor : theme.colors.gray[5]}>
+                    <Badge py={"sm"} bg={score?.visibility === "PUBLIC" ? theme.primaryColor : theme.colors.gray[5]}>
                         {t(`visibility.${score?.visibility?.toLowerCase()}`)}
                     </Badge>
                 }/>
@@ -54,11 +54,7 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
 
             <Grid>
                 <Grid.Col span={8}>
-                    <Text fz={18}>
-                        <pre>
-                            {score?.text}
-                        </pre>
-                    </Text>
+                    <pre>{score?.text}</pre>
                 </Grid.Col>
             </Grid>
         </Page>

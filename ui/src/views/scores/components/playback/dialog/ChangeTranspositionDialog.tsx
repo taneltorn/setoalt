@@ -1,27 +1,35 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {useTranslation} from "react-i18next";
 import {rem, Slider, Text} from "@mantine/core";
 import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {Playback} from "../../../../../utils/constants.ts";
 import Dialog from "../../../../../components/dialog/Dialog.tsx";
+import {useAudioContext} from "../../../../../context/AudioContext.tsx";
 
-const TransposeDialog: React.FC = () => {
+const ChangeTranspositionDialog: React.FC = () => {
 
     const [t] = useTranslation();
-    const context = useScoreContext();
+    const scoreContext = useScoreContext();
+    const audioContext = useAudioContext();
     const {close} = useDialogContext();
-    const [transposition, setTransposition] = useState<number>(context.transposition);
+    const [transposition, setTransposition] = useState<number>(scoreContext.transposition);
 
     const handleSave = () => {
-        context.setTransposition(transposition);
+        audioContext.setTransposition(transposition);
         close();
     }
 
     const handleClose = () => {
-        setTransposition(context.transposition);
+        setTransposition(scoreContext.transposition);
         close();
     }
+
+    useEffect(() => {
+        if (scoreContext.score.defaultTransposition) {
+            setTransposition(scoreContext.score.defaultTransposition)
+        }
+    }, [scoreContext.score.defaultTransposition]);
 
     return (
         <Dialog
@@ -37,7 +45,7 @@ const TransposeDialog: React.FC = () => {
             onClose={handleClose}
         >
             <Text mb={"xl"}>
-                {t("dialog.transpose.description", {pitch: t(`pitch.${context.activeNote?.pitch}`)})}
+                {t("dialog.transpose.description", {pitch: t(`pitch.${scoreContext.activeNote?.pitch}`)})}
             </Text>
 
             <Slider
@@ -48,7 +56,7 @@ const TransposeDialog: React.FC = () => {
                 min={Playback.MIN_TRANSPOSE}
                 max={Playback.MAX_TRANSPOSE}
                 step={Playback.TRANSPOSE_SLIDER_STEP}
-                defaultValue={transposition}
+                defaultValue={Playback.DEFAULT_TRANSPOSITION}
                 value={transposition}
                 thumbSize={40}
                 onChange={v => setTransposition(+v)}
@@ -58,4 +66,4 @@ const TransposeDialog: React.FC = () => {
     )
 };
 
-export default TransposeDialog;
+export default ChangeTranspositionDialog;

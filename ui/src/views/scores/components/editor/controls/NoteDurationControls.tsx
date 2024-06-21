@@ -6,13 +6,8 @@ import {useTranslation} from "react-i18next";
 import {Group} from "@mantine/core";
 import ControlButton from "../../../../../components/controls/ControlButton.tsx";
 import Icon from "@mdi/react";
-import {mdiMusicNoteEighth, mdiMusicNoteHalf, mdiMusicNoteQuarter} from "@mdi/js";
-
-const icons = new Map([
-    ["2n", mdiMusicNoteHalf],
-    ["4n", mdiMusicNoteQuarter],
-    ["8n", mdiMusicNoteEighth]
-]);
+import {Icons} from "../../../../../utils/icons.ts";
+import {mdiMusicNoteQuarter} from "@mdi/js";
 
 const NoteDurationControls: React.FC = () => {
 
@@ -24,12 +19,12 @@ const NoteDurationControls: React.FC = () => {
             {Durations.map(duration =>
                 <ControlButton
                     key={duration}
-                    className={"me-1"}
-                    active={context.activeDuration === duration}
-                    label={<Icon path={icons.get(duration) || mdiMusicNoteHalf} size={1}/>}
-                    tooltip={t(`tooltip.changeDuration.${duration}`)}
+                    active={context.activeNote ? context.activeNote.duration === duration : context.activeDuration === duration}
+                    disabled={context.activeNote?.duration === "16n"}
+                    label={<Icon path={Icons.get(duration) || mdiMusicNoteQuarter} size={1}/>}
+                    tooltip={t(`tooltip.changeNoteDuration.${duration}`)}
                     shortKey={DurationToShortKey.get(duration)}
-                    onClick={() => context.changeDuration(duration)}
+                    onClick={() => context.setActiveDuration(duration)}
                 />)}
         </Group>
     )

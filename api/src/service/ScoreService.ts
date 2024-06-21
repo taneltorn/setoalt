@@ -58,16 +58,17 @@ class ScoreService {
     public async insertScore(score: any, user: any): Promise<any> {
         try {
             this.logger.info(`Inserting new score`);
-            const query = `INSERT INTO setoalt.scores(name, description, data, default_tempo, text, visibility,
+            const query = `INSERT INTO setoalt.scores(name, description, data, default_tempo, default_transposition, text, visibility,
                                                       created_by,
                                                       deleted_at)
-                           VALUES ($1, $2, $3, $4, $5, $6, $7, $8)
+                           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
                            RETURNING *`;
             const result = await pool.query(query, [
                 score.name,
                 score.description,
                 score.data,
                 score.defaultTempo,
+                score.defaultTransposition,
                 score.text,
                 score.visibility,
                 user.username,
@@ -91,11 +92,12 @@ class ScoreService {
                     description   = $2,
                     data          = $3,
                     default_tempo = $4,
-                    text          = $5,
-                    visibility    = $6,
-                    modified_by   = $7,
+                    default_transposition = $5,
+                    text          = $6,
+                    visibility    = $7,
+                    modified_by   = $8,
                     modified_at   = NOW()
-                WHERE id = $8
+                WHERE id = $9
                 RETURNING *;
             `;
             const result = await pool.query(query, [
@@ -103,6 +105,7 @@ class ScoreService {
                 updatedScore.description,
                 updatedScore.data,
                 updatedScore.defaultTempo,
+                updatedScore.defaultTransposition,
                 updatedScore.text,
                 updatedScore.visibility,
                 user.username,

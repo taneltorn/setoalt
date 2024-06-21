@@ -2,7 +2,6 @@ import React from 'react';
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {useTranslation} from "react-i18next";
 import {
-    Group,
     Input,
     Slider,
     Switch,
@@ -46,7 +45,12 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
                 />
             </Input.Wrapper>
 
-            <Group mb={"lg"}>
+            <Input.Wrapper
+                label={t("view.editor.form.visibility")}
+                size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                error={errors.visibility?.message}
+                mb={"lg"}
+            >
                 <Controller
                     name="visibility"
                     control={control}
@@ -61,7 +65,8 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
                         />
                     )}
                 />
-            </Group>
+            </Input.Wrapper>
+
 
             <Input.Wrapper
                 label={t("view.editor.form.description")}
@@ -116,6 +121,28 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
                     placeholder={t("view.editor.form.text")}
                     {...register("text")}
                     {...handleFocus}
+                />
+            </Input.Wrapper>
+
+            <Input.Wrapper
+                label={t("view.editor.form.defaultTransposition")}
+                size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                error={errors.defaultTransposition?.message}
+                mt={"xl"}
+            >
+                <Controller
+                    name="defaultTransposition"
+                    control={control}
+                    render={({field}) => (
+                        <Slider
+                            size={"xl"}
+                            mt={"md"}
+                            min={Playback.MIN_TRANSPOSE}
+                            max={Playback.MAX_TRANSPOSE}
+                            value={field.value}
+                            onChange={field.onChange}
+                        />
+                    )}
                 />
             </Input.Wrapper>
         </form>

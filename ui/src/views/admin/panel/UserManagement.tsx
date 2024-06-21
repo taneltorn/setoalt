@@ -86,6 +86,7 @@ const UserManagement: React.FC = () => {
                         </Badge>,
                         <Group justify={"end"} gap={4}>
                             <IconButton
+                                title={t("button.edit")}
                                 icon={<FaPencil size={20}/>}
                                 onClick={() => open(DialogType.SAVE_USER, {
                                     id: user.id,
@@ -95,6 +96,7 @@ const UserManagement: React.FC = () => {
                             />
 
                             <IconButton
+                                title={t("button.remove")}
                                 icon={<FaRegTrashCan size={20}/>}
                                 onClick={() => open(DialogType.REMOVE_SCORE, {
                                     id: user.id,

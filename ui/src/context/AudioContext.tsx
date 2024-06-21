@@ -21,6 +21,9 @@ export interface AudioContextProperties {
 
     tempo: number;
     setTempo: (value: number) => void;
+
+    transposition: number;
+    setTransposition: (value: number) => void;
 }
 
 export const AudioContext = React.createContext<AudioContextProperties>({} as AudioContextProperties);

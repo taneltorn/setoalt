@@ -47,22 +47,22 @@ const KeyPressHandler: React.FC = () => {
                     break;
                 case ShortKey.REMOVE_NOTE:
                 case ShortKey.DELETE_NOTE:
-                    scoreContext.removeNote();
+                    scoreContext.removeNote(scoreContext.activePosition, true);
                     break;
                 case ShortKey.HALF_NOTE:
-                    scoreContext.changeDuration("2n");
+                    scoreContext.setActiveDuration("2n");
                     break;
                 case ShortKey.QUARTER_NOTE:
-                    scoreContext.changeDuration("4n");
+                    scoreContext.setActiveDuration("4n");
                     break;
                 case ShortKey.EIGHT_NOTE:
-                    scoreContext.changeDuration("8n");
+                    scoreContext.setActiveDuration("8n");
                     break;
                 case ShortKey.INCREASE_PITCH:
-                    scoreContext.increaseActiveNotePitch();
+                    scoreContext.increaseNotePitch();
                     break;
                 case ShortKey.DECREASE_PITCH:
-                    scoreContext.decreaseActiveNotePitch();
+                    scoreContext.decreaseNotePitch();
                     break;
                 case ShortKey.CHANGE_TYPE:
                     scoreContext.changeType(scoreContext.activeNote, scoreContext.activeNote?.type === NoteType.SMALL
@@ -80,12 +80,10 @@ const KeyPressHandler: React.FC = () => {
 
         switch (event.key.toUpperCase()) {
             case ShortKey.PREVIOUS:
-                // audioContext.playPrevious(scoreContext);
                 scoreContext.previous();
                 break;
             case ShortKey.NEXT:
                 scoreContext.next();
-                // audioContext.playNext(scoreContext);
                 break;
             case ShortKey.START_PLAYBACK:
                 if (audioContext.isPlaying) {

@@ -8,9 +8,10 @@ import {PiSpeakerSimpleHigh} from "react-icons/pi";
 import {IoHome, IoSettingsOutline} from "react-icons/io5";
 import {Role, useAuth} from "../../context/AuthContext.tsx";
 import {MdOutlineLogout} from "react-icons/md";
-import {FaUser, FaUserGraduate} from "react-icons/fa";
+import {FaUser} from "react-icons/fa";
 import {RiAdminFill} from "react-icons/ri";
 import {CiUser} from "react-icons/ci";
+import {useAudioContext} from "../../context/AudioContext.tsx";
 
 const routes = [
     {id: 'home', icon: <IoHome className={classes.icon} size={24}/>, link: "/"},
@@ -24,7 +25,7 @@ const protectedRoutes = [
 
 export const UserIcons = new Map([
     [Role.ADMIN, <RiAdminFill size={24}/>],
-    [Role.EDITOR, <FaUserGraduate size={24}/>],
+    [Role.EDITOR, <FaUser size={24}/>],
     [Role.USER, <FaUser size={24}/>],
     ["guest", <CiUser size={24}/>]
 ]);
@@ -39,10 +40,12 @@ const Sidebar: React.FC<Properties> = (props) => {
     const location = useLocation();
     const navigate = useNavigate();
     const auth = useAuth();
+    const {stopPlayback} = useAudioContext();
 
     const handleNavigate = (link: string) => {
         navigate(link);
         props.onNavigation();
+        stopPlayback();
     }
 
     const handleLogout = () => {

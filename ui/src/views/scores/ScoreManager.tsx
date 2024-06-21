@@ -4,7 +4,7 @@ import ScoreContextProvider from "../../context/ScoreContextProvider.tsx";
 import {useParams} from "react-router";
 import useScoreService from "../../services/ScoreService.tsx";
 import KeyPressHandler from "../../components/KeyPressHandler.tsx";
-import ScoreDevInfo from "../../components/ScoreDevInfo.tsx";
+import DevInfo from "../../components/DevInfo.tsx";
 import {useDevMode} from "../../context/DevModeContext.tsx";
 import {useTranslation} from "react-i18next";
 import {DisplayError} from "../../utils/helpers.tsx";
@@ -14,6 +14,7 @@ import ScoreDetails from "./components/ScoreDetails.tsx";
 import ScoreDialogs from "./components/dialog/ScoreDialogs.tsx";
 import ScoreEditor from "./components/ScoreEditor.tsx";
 import CleanEditor from "./components/CleanEditor.tsx";
+import HistoryContextProvider from "../../context/HistoryContextProvider.tsx";
 
 interface Properties {
     mode: "details" | "edit" | "new";
@@ -46,24 +47,26 @@ const ScoreManager: React.FC<Properties> = ({mode}) => {
     }, []);
 
     return (
-        <ScoreContextProvider>
-            <LoadingOverlay isLoading={scoreService.isLoading}>
-                <NoDataAlert
-                    visible={noData}
-                    goBackUrl={"/scores"}
-                    goBackText={t("view.scores.details.back")}
-                />
+        <HistoryContextProvider>
+            <ScoreContextProvider>
+                <LoadingOverlay isLoading={scoreService.isLoading}>
+                    <NoDataAlert
+                        visible={noData}
+                        goBackUrl={"/scores"}
+                        goBackText={t("view.scores.details.back")}
+                    />
 
-                {mode === "details" && score && <ScoreDetails score={score}/>}
-                {mode === "edit" && score && <ScoreEditor score={score}/>}
-                {mode === "new" && <CleanEditor/>}
+                    {mode === "details" && score && <ScoreDetails score={score}/>}
+                    {mode === "edit" && score && <ScoreEditor score={score}/>}
+                    {mode === "new" && <CleanEditor/>}
 
-                {isDevMode && <ScoreDevInfo/>}
-            </LoadingOverlay>
+                    {isDevMode && <DevInfo/>}
+                </LoadingOverlay>
 
-            <KeyPressHandler/>
-            <ScoreDialogs/>
-        </ScoreContextProvider>
+                <KeyPressHandler/>
+                <ScoreDialogs/>
+            </ScoreContextProvider>
+        </HistoryContextProvider>
     );
 }
 

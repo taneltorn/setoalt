@@ -7,10 +7,10 @@ import {
     EmptyScore,
     excludeNotePositionRange,
     getDurationOffset,
-    getNextPitch,
+    getNextPitch, getPositionRange,
     getPositions,
     getPreviousPitch,
-    includeNotePositionRange,
+    includeNotePositionRange, sort,
     wouldProduceOverlap,
 } from "../utils/helpers.tsx";
 import {Voice} from "../models/Voice";
@@ -21,6 +21,9 @@ import {DividerType} from "../models/Divider.ts";
 import {StaveDimensions} from "../models/Dimensions.ts";
 import useCursorCoords from "../hooks/useCursorCoords.tsx";
 import {calculateStaveDimensions} from "../utils/calculation.helpers.tsx";
+import {Layout, Playback} from "../utils/constants.ts";
+import {HalfPosition} from "../models/HalfPosition.ts";
+import {useHistoryContext} from "./HistoryContext.tsx";
 
 interface Properties {
     children: React.ReactNode;
@@ -29,8 +32,9 @@ interface Properties {
 const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
     const audioContext = useAudioContext();
+    const historyContext = useHistoryContext();
 
-    const [score, setScore] = useState<Score>({...EmptyScore});
+    const [score, setScore] = useState<Score>(structuredClone(EmptyScore));
 
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
     const [isExportMode, setIsExportMode] = useState<boolean>(false);
@@ -39,32 +43,26 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     const [containerRef, setContainerRef] = useState<RefObject<HTMLElement> | undefined>();
     const [svgRef, setSvgRef] = useState<RefObject<SVGSVGElement> | undefined>();
 
-    const [transposition, setTransposition] = useState<number>(0);
     const [activePosition, setActivePosition] = useState<number>(-1);
     const [activeDuration, setActiveDuration] = useState<string>("8n");
     const [activeVoice, setActiveVoice] = useState<Voice>({...DefaultVoices[0]});
 
-    const dimensions: StaveDimensions = useMemo<StaveDimensions>(
-        () => calculateStaveDimensions(score), [score, score.data.breaks, score.data.voices]);
-
-    const cursorCoords = useCursorCoords(containerRef, dimensions);
-
-
     const activate = (position: number) => {
         const notes = getNotes(position);
         if (notes.length) {
-            audioContext.playNotes(notes, transposition);
+            audioContext.stopPlayback();
+            audioContext.playNotes(notes);
+            if (["2n", "4n", "8n"].includes(notes[0].duration as string)) {
+                setActiveDuration(notes[0].duration)
+            }
         }
         setActivePosition(position);
-        if (activeNote?.duration) {
-            setActiveDuration(activeNote.duration)
-        }
     }
 
     const next = () => {
         let position: number;
         if (isEditMode) {
-            const note = getNotes(activePosition)?.[0]; // todo take durations into account
+            const note = getNote(activePosition, activeVoice);
             position = note
                 ? note.position + durationToScalar(note.duration)
                 : activePosition + 1;
@@ -81,7 +79,6 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         if (isEditMode) {
             const closestNote: Note | undefined = score.data.voices
                 .filter(v => !v.hidden)
-                // .filter(v => currentVoice ? v.name === currentVoice.name : true)
                 .flatMap(v => v.notes)
                 .filter(n => n.position < activePosition)
                 .slice(-1)?.[0];
@@ -113,8 +110,15 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         return notes.find(n => n.position === position);
     }
 
+    const updateActiveDuration = (duration: string) => {
+        setActiveDuration(duration);
+        changeNoteDuration(duration);
+    }
+
     const insertOrUpdateNote = (pitch: string, pos?: number, dur?: string) => {
-        const position = pos || activePosition;
+        takeSnapshot();
+
+        const position = Math.max(pos !== undefined ? pos : activePosition, 0);
         const duration = dur || activeDuration;
 
         const note = getNote(position, activeVoice);
@@ -143,54 +147,54 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         }
     }
 
-    const removeNote = () => {
-        if (activeNote && activeVoice) {
+    const removeNote = (position: number, moveToPrevious?: boolean) => {
+        const note = getNote(position, activeVoice);
+        if (note && activeVoice) {
             const voice = score.data.voices.find(v => v.name === activeVoice.name);
             if (voice) {
-                voice.notes = voice.notes.filter(n => n.position !== activeNote.position);
+                voice.notes = voice.notes.filter(n => n.position !== note.position);
 
-                activeVoice.occupiedPositions = excludeNotePositionRange(activeVoice, activeNote);
+                activeVoice.occupiedPositions = excludeNotePositionRange(activeVoice, note);
             }
             refresh();
         }
-        previous();
-    }
-
-    const increaseActiveNotePitch = () => {
-        if (activeNote) {
-            const pitch = getNextPitch(score.data.stave.lines.map(l => l.pitch), activeNote.pitch);
-            changePitch(activeNote, pitch);
+        if (moveToPrevious) {
+            previous();
         }
     }
 
-    const decreaseActiveNotePitch = () => {
-        if (activeNote) {
-            const pitch = getPreviousPitch(score.data.stave.lines.map(l => l.pitch), activeNote.pitch);
-            changePitch(activeNote, pitch);
+    const changeNoteDuration = (duration: string, position?: number, skipShifting?: boolean) => {
+        const note = position ? getNote(position, activeVoice) : activeNote;
+        if (note) {
+            if (!skipShifting) {
+                const offset = getDurationOffset(duration, note.duration)
+                shiftNotes(note.position, offset);
+            }
+            note.duration = duration;
+            audioContext.playNotes([note]);
         }
     }
 
+    const increaseNotePitch = (position?: number) => {
+        const note = position ? getNote(position, activeVoice) : activeNote;
+        if (note) {
+            const pitch = getNextPitch(score.data.stave.lines.map(l => l.pitch), note.pitch);
+            changePitch(note, pitch);
+        }
+    }
+
+    const decreaseNotePitch = (position?: number) => {
+        const note = position ? getNote(position, activeVoice) : activeNote;
+        if (note) {
+            const pitch = getPreviousPitch(score.data.stave.lines.map(l => l.pitch), note.pitch);
+            changePitch(note, pitch);
+        }
+    }
 
     const changePitch = (note: Note, pitch: string) => {
         note.pitch = pitch;
         activate(note.position);
         refresh();
-    }
-
-    const changeDuration = (duration: string) => {
-        setActiveDuration(duration);
-
-        if (activeNote) {
-            activeVoice.occupiedPositions = excludeNotePositionRange(activeVoice, activeNote);
-
-            const offset = getDurationOffset(duration, activeNote.duration)
-            shiftNotes(activeNote.position, offset);
-
-            activeNote.duration = duration;
-            activeVoice.occupiedPositions = includeNotePositionRange(activeVoice, activeNote);
-
-            audioContext.playNotes([activeNote], transposition);
-        }
     }
 
     const shiftNotes = (position: number, offset: number) => {
@@ -292,19 +296,18 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         refresh();
     }
 
-
     const refresh = () => {
         setScore({...score});
     }
 
-    const clear = () => {
-        score.data.breaks = [];
-        score.data.dividers = [];
-        score.data.lyrics = [];
-        score.data.voices = [...DefaultVoices];
+    const reset = () => {
+        setScore(structuredClone(EmptyScore));
         setActiveVoice({...DefaultVoices[0]});
         setActivePosition(0);
-        refresh();
+    }
+
+    const takeSnapshot = () => {
+        historyContext.push(score, activeVoice, activePosition, activeDuration);
     }
 
     const activeNote = useMemo(() => {
@@ -324,6 +327,44 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         return Math.max(lastLyric?.position || 0, ((lastNote?.position || 0) + (lastNote?.duration ? durationToScalar(lastNote.duration) : 0)));
     }, [score]);
 
+    const dimensions: StaveDimensions = useMemo<StaveDimensions>(
+        () => calculateStaveDimensions(score), [score, score.data.breaks, score.data.voices]);
+
+    const halfPositions: HalfPosition[] = useMemo(() => {
+        const sixteenthNotes = score.data.voices
+            .find(v => v.name === activeVoice.name)?.notes
+            .filter(n => n.duration === "16n") || [];
+        if (sixteenthNotes.length) {
+            return sixteenthNotes
+                .map(n => ({
+                    position: n.position,
+                    cutoffCoordStart: (n.position + 0.75) * Layout.stave.note.SPACING,
+                    cutoffCoordEnd: (n.position + 1.25) * Layout.stave.note.SPACING
+                }));
+        }
+        return [];
+    }, [score, activeVoice, activeDuration]);
+
+    const duplicateNoteKeys: string[] = useMemo<string[]>(() => {
+        const duplicates = new Set<string>();
+        const seen = new Set<string>();
+
+        score.data.voices
+            .filter(v => isEditMode || !v.hidden)
+            .forEach(v => {
+                v.notes.forEach(n => {
+                    const key = `${n.position}-${n.pitch}-${v.type}`;
+                    if (seen.has(key)) {
+                        duplicates.add(`${key}-${v.name}`);
+                    } else {
+                        seen.add(key);
+                    }
+                });
+            });
+        return Array.from(duplicates);
+    }, [score, isEditMode, score.data.voices, activeVoice]);
+
+    const cursorCoords = useCursorCoords(containerRef, dimensions, halfPositions);
 
     const cursorPosition = useMemo(() => {
         let position = cursorCoords.x + (score.data.breaks[cursorCoords.y - 1] || 0);
@@ -334,8 +375,22 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     }, [cursorCoords.x, cursorCoords.y]);
 
     useEffect(() => {
-        audioContext.setTempo(score.defaultTempo || 80);
-    }, [score.defaultTempo]);
+        audioContext.setTempo(score.defaultTempo || Playback.DEFAULT_TEMPO);
+        audioContext.setTransposition(score.defaultTransposition || Playback.DEFAULT_TRANSPOSITION);
+    }, [score.defaultTempo, score.defaultTransposition]);
+
+    useEffect(() => {
+        const voice = score.data.voices.find(v => v.name === activeVoice.name);
+        if (voice) {
+            let occupiedPositions: number[] = [];
+            voice.notes.forEach(n => {
+                occupiedPositions = occupiedPositions.concat(getPositionRange(n));
+            });
+            activeVoice.occupiedPositions = sort(Array.from(new Set(occupiedPositions)));
+        }
+        refresh()
+    }, [score.data.voices, activeVoice, activeDuration]);
+
 
     const context = useMemo(() => ({
         score, setScore,
@@ -349,7 +404,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         previous,
 
         activeNote,
-        activeDuration,
+        activeDuration, setActiveDuration: updateActiveDuration,
         activePosition, setActivePosition,
         activeVoice, setActiveVoice,
         cursorPosition,
@@ -367,30 +422,28 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         insertDivider,
         removeDivider,
 
-
-        transposition,
-        setTransposition,
-
         insertLyric,
         insertOrUpdateNote,
         insertNote,
         removeNote,
 
         changeType,
-        changeDuration,
-        increaseActiveNotePitch,
-        decreaseActiveNotePitch,
+        changeNoteDuration,
+        increaseNotePitch,
+        decreaseNotePitch,
 
         refresh,
-        clear,
+        reset,
 
+        duplicateNoteKeys,
+        halfPositions,
         dimensions,
         endPosition,
 
         containerRef, setContainerRef,
         svgRef, setSvgRef,
 
-    }), [containerRef, endPosition, isEditMode, isExportMode, isTypeMode, dimensions, transposition, score, score.data.lyrics,
+    }), [containerRef, endPosition, isEditMode, isExportMode, isTypeMode, dimensions, score, score.data.lyrics,
         activeNote, activePosition, activeVoice, activeDuration, cursorPosition]);
 
     return (

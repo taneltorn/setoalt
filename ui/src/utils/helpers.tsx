@@ -63,7 +63,7 @@ export const positionToSeconds = (x: number): number => {
     const eighthNotes = Math.floor(x);
     x -= eighthNotes;
 
-    const sixteenthNotes = x;
+    const sixteenthNotes = x * 2;
 
     return (wholeNotes * wholeNoteDuration) +
         (halfNotes * halfNoteDuration) +
@@ -72,24 +72,15 @@ export const positionToSeconds = (x: number): number => {
         (sixteenthNotes * sixteenthNoteDuration);
 }
 
-export const pitchToFrequency = (pitch: string, detune?: number): number => {
-    const frequency = Frequency(pitch).toFrequency();
-    return detune
-        ? Frequency(frequency).transpose(detune / 100).toFrequency()
-        : frequency;
-};
-
-export const excludeDuplicates = (notes: Note[]) => {
-    const filteredNotes: Note[] = notes.reduce((acc, note) => {
+export const excludeDuplicates = (notes: Note[]): Note[] => {
+    return notes.reduce((acc, note) => {
         const key = `${note.pitch}-${note.duration}`;
         if (!acc.map.has(key)) {
             acc.map.set(key, true);
             acc.result.push(note);
         }
         return acc;
-    }, { map: new Map<string, boolean>(), result: [] as Note[] }).result;
-
-    return filteredNotes;
+    }, {map: new Map<string, boolean>(), result: [] as Note[]}).result;
 }
 
 export const noteToFrequency = (note: Note, transposition?: number): number => {
@@ -99,7 +90,7 @@ export const noteToFrequency = (note: Note, transposition?: number): number => {
         : frequency;
 };
 
-export const createNote = (pitch: string, position: number, duration: string): Note=> {
+export const createNote = (pitch: string, position: number, duration: string): Note => {
     return {
         pitch: pitch,
         position: position > 0 ? position : 0,
@@ -131,11 +122,6 @@ export const getLineCoords = (line: Line, startingY: number, context: ScoreConte
 
 export const getDurationOffset = (a: string, b: string) => {
     return durationToScalar(a) - durationToScalar(b);
-}
-
-export const isDimmed = (note: Note, voice: Voice, scoreContext: ScoreContextProperties) => {
-    return !scoreContext.score.data.stave.lines.find(l => l.pitch === note.pitch) ||
-        scoreContext.isEditMode && voice.hidden;
 }
 
 export const isHighlighted = (note: Note, context: ScoreContextProperties) => {

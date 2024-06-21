@@ -3,24 +3,27 @@ import {useScoreContext} from "../context/ScoreContext.tsx";
 import useCursorCoords from "../hooks/useCursorCoords.tsx";
 import {Grid} from "@mantine/core";
 
-const ScoreDevInfo: React.FC = () => {
+const DevInfo: React.FC = () => {
 
     const context = useScoreContext();
     const {x, y, cx, cy} = useCursorCoords(context.containerRef, context.dimensions);
 
     return (
-        <div style={{marginTop: 20 , padding: "10px 15px", backgroundColor: "#f9f9f9", borderRadius: "16px"}}>
+        <div style={{marginTop: 20, padding: "10px 15px", backgroundColor: "#f9f9f9", borderRadius: "16px"}}>
+            <p>{JSON.stringify(context.duplicateNoteKeys)}</p>
+
             <code>
+
                 <Grid>
                     <Grid.Col span={6}>
-                        <pre><strong>Current position</strong></pre>
+                        <pre><strong>State</strong></pre>
                         <pre>position: {context.activePosition}, duration: {context.activeDuration}, voice: {context.activeVoice.name}</pre>
                     </Grid.Col>
 
                     <Grid.Col span={6}>
                         <pre><strong>Active note</strong></pre>
                         {context.activeNote &&
-                            <pre>position: {context.activeNote?.position}, pitch: {context.activeNote?.pitch}, duration: {context.activeNote?.duration}, detune: {context.activeNote?.detune|| 0}</pre>}
+                            <pre>position: {context.activeNote?.position}, pitch: {context.activeNote?.pitch}, duration: {context.activeNote?.duration}, detune: {context.activeNote?.detune || 0}</pre>}
                         {!context.activeNote && <pre>-</pre>}
 
                     </Grid.Col>
@@ -29,7 +32,8 @@ const ScoreDevInfo: React.FC = () => {
                 <Grid>
                     <Grid.Col span={6}>
                         <pre><strong>Occupied positions</strong></pre>
-                        <span style={{wordBreak: "break-word"}}>{JSON.stringify(context.activeVoice.occupiedPositions)}</span>
+                        <span
+                            style={{wordBreak: "break-word"}}>{JSON.stringify(context.activeVoice.occupiedPositions)}</span>
                     </Grid.Col>
 
                     <Grid.Col span={6}>
@@ -41,7 +45,8 @@ const ScoreDevInfo: React.FC = () => {
                 <Grid>
                     <Grid.Col span={6}>
                         <pre><strong>Notes</strong></pre>
-                        <span style={{wordBreak: "break-word"}}>{JSON.stringify(context.score.data.voices.flatMap(v => v.notes).map(n => n.position))}</span>
+                        <span
+                            style={{wordBreak: "break-word"}}>{JSON.stringify(context.score.data.voices.flatMap(v => v.notes).map(n => n.position))}</span>
                     </Grid.Col>
 
                     <Grid.Col span={6}>
@@ -73,4 +78,4 @@ const ScoreDevInfo: React.FC = () => {
     );
 }
 
-export default ScoreDevInfo;
+export default DevInfo;

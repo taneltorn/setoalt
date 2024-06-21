@@ -2,21 +2,18 @@ import React, {useContext} from 'react';
 import {isEmpty} from "../utils/helpers.tsx";
 import {ScoreContextProperties} from "./ScoreContext";
 import {Score} from "../models/Score";
-import {Note} from "../models/Note";
 import {Voice} from "../models/Voice";
 
 export interface State {
     score: Score;
-    activeNote?: Note;
-    position: number;
-    duration: string;
-    voice: Voice;
+    activeVoice: Voice;
+    activePosition: number;
+    activeDuration: string;
 }
 
 export interface HistoryContextProperties {
-
     history: State[];
-    push: (score: Score, position: number, note: Note | undefined, duration: string, voice: Voice) => void;
+    push: (score: Score, activeVoice: Voice, activePosition: number, activeDuration: string) => void;
     undo: (context: ScoreContextProperties) => void;
 }
 

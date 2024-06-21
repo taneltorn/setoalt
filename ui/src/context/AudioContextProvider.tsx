@@ -23,11 +23,12 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
 
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [tempo, setTempo] = useState<number>(Playback.DEFAULT_TEMPO);
+    const [transposition, setTransposition] = useState<number>(Playback.DEFAULT_TRANSPOSITION);
 
-    const playNotes = (notes: Note[], transpose?: number) => {
+    const playNotes = (notes: Note[]) => {
         const unique = excludeDuplicates(notes);
 
-        const frequencies = unique.map(n => noteToFrequency(n, transpose));
+        const frequencies = unique.map(n => noteToFrequency(n, transposition));
         const durations = unique.map(n => n.duration);
 
         player.playNotes(frequencies, durations);
@@ -72,7 +73,7 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
 
         if (!sequenceRef.current) {
             sequenceRef.current = new Tone.Part((_, event) => {
-                playNotes(event.notes, context.transposition)
+                playNotes(event.notes)
                 context.setActivePosition(event.position);
             }, events).start(0);
         }
@@ -104,7 +105,7 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
 
     const resetPlayback = (context: ScoreContextProperties) => {
         stopPlayback();
-        context.activate(0);
+        context.setActivePosition(0);
         context.refresh();
     };
 
@@ -114,18 +115,16 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
 
     const context = useMemo(() => ({
 
-        isPlaying,
-        setIsPlaying,
+        isPlaying, setIsPlaying,
 
         playNotes,
-
         startPlayback,
         stopPlayback,
         resetPlayback,
 
-        tempo,
-        setTempo,
-    }), [isPlaying, tempo]);
+        tempo, setTempo,
+        transposition, setTransposition,
+    }), [isPlaying, tempo, transposition]);
 
     return (
         <AudioContext.Provider value={context}>

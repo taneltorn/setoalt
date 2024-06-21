@@ -12,7 +12,7 @@ const ResetScoreDialog: React.FC = () => {
     const {close} = useDialogContext();
 
     const confirm = () => {
-        context.clear();
+        context.reset();
         close();
     }
 

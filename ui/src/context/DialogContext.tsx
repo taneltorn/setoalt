@@ -10,6 +10,7 @@ export enum DialogType {
     SAVE_USER,
     REMOVE_USER,
     TRANSPOSE,
+    CHANGE_TEMPO,
     STAVE_SELECTION,
     JSON,
     ADD_VOICE,

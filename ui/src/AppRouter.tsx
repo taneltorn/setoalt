@@ -4,12 +4,11 @@ import {
     RouterProvider,
 } from "react-router-dom";
 import Layout from "./Layout.tsx";
-import Home from "./views/landing/Home.tsx";
+import Home from "./views/Home.tsx";
 import Scores from "./views/scores/ScoreList.tsx";
-import Login from "./views/landing/Login.tsx";
+import Login from "./views/Login.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Admin from "./views/admin/Admin.tsx";
-import ApiStatus from "./views/landing/ApiStatus.tsx";
 import {Role} from "./context/AuthContext.tsx";
 import ScoreManager from "./views/scores/ScoreManager.tsx";
 
@@ -45,10 +44,6 @@ const router = createBrowserRouter([
             {
                 path: "/editor",
                 element: <ScoreManager mode={"new"}/>,
-            },
-            {
-                path: "/api-status",
-                element: <ApiStatus/>,
             },
             {
                 path: "/admin",

@@ -4,6 +4,7 @@ import {isEmpty} from "../utils/helpers.tsx";
 import {Score} from "../models/Score";
 import {Voice} from "../models/Voice";
 import {StaveDimensions} from "../models/Dimensions.ts";
+import {HalfPosition} from "../models/HalfPosition.ts";
 
 export interface ScoreContextProperties {
 
@@ -17,9 +18,6 @@ export interface ScoreContextProperties {
     isTypeMode: boolean;
     setIsTypeMode: (value: boolean) => void;
 
-    transposition: number;
-    setTransposition: (semitones: number) => void;
-
     activate: (position: number) => void;
     next: () => void;
     previous: () => void;
@@ -28,6 +26,8 @@ export interface ScoreContextProperties {
     activePosition: number;
     setActivePosition: (position: number) => void;
     activeDuration: string;
+    setActiveDuration: (duration: string) => void;
+
     activeVoice: Voice;
     setActiveVoice: (voice: Voice) => void;
     cursorPosition: number;
@@ -36,7 +36,7 @@ export interface ScoreContextProperties {
     getNotes: (position: number) => Note[];
 
     insertOrUpdateNote: (pitch: string, position?: number, duration?: string) => void;
-    removeNote: () => void;
+    removeNote: (position: number, moveToPrevious?: boolean) => void;
     insertLyric: (text: string) => void;
 
     toggleBreak: () => void;
@@ -45,16 +45,19 @@ export interface ScoreContextProperties {
     removeDivider: (position: number) => void;
 
     changeType: (note: Note | undefined, type: NoteType | undefined) => void;
-    changeDuration: (duration: string) => void;
-    increaseActiveNotePitch: () => void;
-    decreaseActiveNotePitch: () => void;
+    changeNoteDuration: (duration: string, position?: number, skipShifting?: boolean) => void;
+    increaseNotePitch: (position?: number) => void;
+    decreaseNotePitch: (position?: number) => void;
 
     shiftLeft: () => void;
     shiftRight: () => void;
 
     refresh: () => void;
-    clear: () => void;
+    reset: () => void;
 
+    duplicateNoteKeys: string[];
+
+    halfPositions: HalfPosition[];
     dimensions: StaveDimensions;
     endPosition: number;
 

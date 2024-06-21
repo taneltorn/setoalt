@@ -48,7 +48,7 @@ export const calculateLyricCoords = (lyric: Lyric, context: ScoreContextProperti
         - offset.x;
 
     const y = context.dimensions.y
-        -  Layout.stave.container.LYRICS_BAR / 2
+        - Layout.stave.container.LYRICS_BAR / 2
         + offset.y;
 
     return {x: x, y: y};
@@ -87,13 +87,33 @@ export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreCont
         - offset.x;
 
     const line = context.score.data.stave.lines.find(l => l.pitch === note.pitch);
-    const detune = note.detune || line?.detune || 0;
+    // const detune = note.detune || line?.detune || 0;                     // if microtonality should affect y
 
     const y = Layout.stave.container.SYMBOLS_BAR
-        + ((line?.y || 0) - detune / 100) * Layout.stave.line.SPACING
+        // + ((line?.y || 0) - detune / 100) * Layout.stave.line.SPACING    // if microtonality should affect y
+        + (line?.y || 0) * Layout.stave.line.SPACING
         + offset.y;
 
     return {x: x, y: y};
+}
+
+export const calculateNoteOpacity = (note: Note, voice: Voice, context: ScoreContextProperties): number => {
+    if (voice.name === context.activeVoice.name) {
+        return 1;
+    }
+
+    const key = `${note.position}-${note.pitch}-${voice.type}-${voice.name}`;
+    if (context.duplicateNoteKeys.includes(key)) {
+        return 0;
+    }
+
+    if (!voice.hidden) {
+        return 1
+    }
+
+    return context.duplicateNoteKeys.includes(key)
+        ? 0
+        : (context.isEditMode ? 0.1 : 0);
 }
 
 export const calculateCursorCoords = (context: ScoreContextProperties): XY => {
@@ -118,7 +138,7 @@ export const calculateCursorNoteCoords = (pitch: string, cursorX: number, cursor
         const y = cursorY
             + Layout.stave.container.SYMBOLS_BAR
             + (line?.y || 0) * Layout.stave.line.SPACING
-            // - Layout.stave.cursor.Y_OFFSET;
+        // - Layout.stave.cursor.Y_OFFSET;
         return {
             x, y
         }
@@ -134,7 +154,7 @@ export const calculateStaveBlockCoords = (index: number, context: ScoreContextPr
         }
     }
     return {
-        x:  0,
+        x: 0,
         y: index * (context.dimensions.y)
     }
 }
@@ -142,7 +162,7 @@ export const calculateStaveBlockCoords = (index: number, context: ScoreContextPr
 export const getOffset = (position: number, context: ScoreContextProperties, indexOffsetY?: number, greedy?: boolean): XY => {
     const breakpoints = context.score.data.breaks;
 
-    let index = breakpoints.findIndex(b => greedy? position <= b : position < b);
+    let index = breakpoints.findIndex(b => greedy ? position <= b : position < b);
     if (index === -1) {
         index = breakpoints.length;
     }

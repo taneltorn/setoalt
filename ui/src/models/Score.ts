@@ -9,6 +9,7 @@ export interface Score {
     description?: string;
     data: ScoreData;
     defaultTempo?: number;
+    defaultTransposition?: number;
     text?: string;
     visibility?: string;
     createdBy?: string;

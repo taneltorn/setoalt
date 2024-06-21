@@ -1,14 +1,14 @@
 import React from 'react';
 import PlaybackControls from "./controls/PlaybackControls.tsx";
 import {Group} from "@mantine/core";
-import TempoControls from "./controls/TempoControls.tsx";
+import ActiveNotes from "./controls/ActiveNotes.tsx";
 
 const ScorePlaybackPanel: React.FC = () => {
 
     return (
-        <Group gap={4}>
+        <Group gap={"xl"}>
             <PlaybackControls/>
-            <TempoControls/>
+            <ActiveNotes/>
         </Group>
     );
 };

@@ -3,10 +3,11 @@ import {Button, Group, Tabs, Text} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import {Link} from "react-router-dom";
 import Markdown from "react-markdown";
-import Page from "../../Page.tsx";
-import Header from "../../components/controls/Header.tsx";
-import Description from "../../components/controls/Description.tsx";
+import Page from "../Page.tsx";
+import Header from "../components/controls/Header.tsx";
+import Description from "../components/controls/Description.tsx";
 import {FaGitAlt} from "react-icons/fa";
+import { Trans } from 'react-i18next';
 
 const Home: React.FC = () => {
 
@@ -24,7 +25,7 @@ const Home: React.FC = () => {
     return (
         <Page title={t("view.home.pageTitle")}>
             <Header text={t("view.home.title")}/>
-            <Description text={t("view.home.description")}/>
+            <Description text={<Trans i18nKey="view.home.description" />}/>
 
             <Group gap={4} mt={"md"} mb={"xl"}>
                 <Link to={"/scores/1"}>

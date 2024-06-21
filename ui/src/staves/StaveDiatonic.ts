@@ -30,7 +30,7 @@ export const StaveDiatonic: Stave = {
         },
         {
             pitch: "f#4",
-            y: 6,
+            y: 7,
             color: Color.stave.SECONDARY_LINE,
             strokeWidth: Layout.stave.line.SECONDARY_LINE_STROKE_WIDTH
         },

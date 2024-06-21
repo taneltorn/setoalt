@@ -1,5 +1,4 @@
 import React, {useMemo, useState} from 'react';
-import {Note} from "../models/Note";
 import {Score} from "../models/Score";
 import {Voice} from "../models/Voice";
 import {ScoreContextProperties} from './ScoreContext';
@@ -15,30 +14,38 @@ const HistoryContextProvider: React.FC<Properties> = ({children}) => {
     const MAX_ENTRIES = 10;
     const [history, setHistory] = useState<State[]>([]);
 
-    const push = (score: Score, position: number, note: Note | undefined, duration: string, voice: Voice) => {
+    const push = (score: Score, activeVoice: Voice, activePosition: number, activeDuration: string) => {
+        console.log("pushing")
         if (history.length >= MAX_ENTRIES) {
             history.shift();
         }
+
         history.push({
             score: structuredClone(score),
-            activeNote: structuredClone(note),
-            position: position,
-            voice: structuredClone(voice),
-            duration: duration,
+            activeVoice: structuredClone(activeVoice),
+            activePosition: activePosition,
+            activeDuration: activeDuration,
         });
-        setHistory({...history});
+
+        setHistory(structuredClone(history));
+        // setHistory({...history}); // strucuredClone needed?
     }
 
     const undo = (context: ScoreContextProperties) => {
+        console.log("undo")
+
         if (history.length > 0) {
             const state = history.pop();
+            console.log(state)
             if (state) {
-                // todo why is clone needed here for triggering rerender?
-                context.setScore(structuredClone(state.score));
-                context.setActiveVoice(structuredClone(state.voice));
-                context.setActivePosition(state.position);
-                // context.setD(state.duration);
-                setHistory({...history});
+
+                context.setScore(state.score);
+                // context.setActiveVoice(state.activeVoice);
+                context.setActivePosition(state.activePosition);
+                context.setActiveDuration(state.activeDuration);
+                setHistory(structuredClone(history));
+                // setHistory({...history});
+                // context.refresh();
             }
         }
     }

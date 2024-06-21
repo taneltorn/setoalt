@@ -6,6 +6,8 @@ import {Button, Group, useMantineTheme} from "@mantine/core";
 import {useAudioContext} from "../../../../../context/AudioContext.tsx";
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
+import {Playback} from "../../../../../utils/constants.ts";
+import {IoIosSpeedometer} from "react-icons/io";
 
 const PlaybackControls: React.FC = () => {
 
@@ -13,10 +15,11 @@ const PlaybackControls: React.FC = () => {
     const theme = useMantineTheme();
     const {isPlaying, startPlayback, stopPlayback, resetPlayback} = useAudioContext();
     const context = useScoreContext();
+    const {tempo, transposition} = useAudioContext();
     const {open} = useDialogContext();
 
     return (
-        <Group gap={"xs"}>
+        <Group gap={4}>
             <Button
                 px={0}
                 title={t("tooltip.playPrevious")}
@@ -65,15 +68,27 @@ const PlaybackControls: React.FC = () => {
                 <AiOutlineForward size={40}/>
             </Button>
 
-            <Button
-                px={0}
-                title={t("tooltip.transpose")}
-                color={context.transposition !== 0 ? "black" : "gray.4"}
-                variant={"transparent"}
-                onClick={() => open(DialogType.TRANSPOSE)}
-            >
-                <GiTunePitch size={40}/>
-            </Button>
+            <Group ml={"md"}>
+                <Button
+                    px={0}
+                    title={t("tooltip.transpose")}
+                    color={transposition !== Playback.DEFAULT_TRANSPOSITION ? "black" : "gray.4"}
+                    variant={"transparent"}
+                    onClick={() => open(DialogType.TRANSPOSE)}
+                >
+                    <GiTunePitch size={40}/>
+                </Button>
+
+                <Button
+                    px={0}
+                    title={t("tooltip.changeTempo")}
+                    color={tempo !== Playback.DEFAULT_TEMPO ? "black" : "gray.4"}
+                    variant={"transparent"}
+                    onClick={() => open(DialogType.CHANGE_TEMPO)}
+                >
+                    <IoIosSpeedometer size={40}/>
+                </Button>
+            </Group>
         </Group>
     );
 };

@@ -4,7 +4,7 @@ import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import useScoreService from "../../services/ScoreService.tsx";
 import {Score} from "../../models/Score.ts";
-import {DisplayError} from "../../utils/helpers.tsx";
+import {DisplayError, DisplaySuccess} from "../../utils/helpers.tsx";
 import {useAuth} from "../../context/AuthContext.tsx";
 import Page from "../../Page.tsx";
 import PaginatedTable, {Row} from "../../components/table/PaginatedTable.tsx";
@@ -17,6 +17,7 @@ import RemoveScoreDialog from "./components/dialog/RemoveScoreDialog.tsx";
 import Header from "../../components/controls/Header.tsx";
 import Description from "../../components/controls/Description.tsx";
 import ControlPanel from "../../components/controls/ControlPanel.tsx";
+import {FaRegCopy} from "react-icons/fa";
 
 const ScoreList: React.FC = () => {
 
@@ -43,6 +44,21 @@ const ScoreList: React.FC = () => {
         setFilteredScores(scores.filter(r => r.name?.toLowerCase().includes(value?.toLowerCase())));
     }
 
+    const cloneScore = (score: Score) => {
+        const clone = {...score};
+        clone.name = `${clone.name} koopia`;
+
+        scoreService.createScore(clone)
+            .then(() => {
+                DisplaySuccess(t("toast.success.title"), t("toast.success.saveScore"));
+                fetchData();
+            })
+            .catch(() => DisplayError(
+                t("toast.error.title"),
+                t("toast.error.saveScore"),
+            ));
+    }
+
     useEffect(() => {
         fetchData();
         return () => scoreService.cancelSource.cancel();
@@ -56,7 +72,6 @@ const ScoreList: React.FC = () => {
         <Page title={t("view.scores.title")}>
             <Header text={t("view.scores.title")}/>
             <Description text={t("view.scores.description")}/>
-
 
             <ControlPanel
                 leftSection={
@@ -96,7 +111,6 @@ const ScoreList: React.FC = () => {
                                 .slice(0, 3)
                                 .map(v => v.name)
                                 .join(", ")}
-
                         </Group>,
                         score.createdBy,
                         <Badge
@@ -106,11 +120,19 @@ const ScoreList: React.FC = () => {
                         auth.currentUser?.isAuthorized &&
                         <Group justify={"end"} wrap={"nowrap"} gap={4}>
                             <IconButton
+                                title={t("button.clone")}
+                                icon={<FaRegCopy size={20}/>}
+                                onClick={() => cloneScore(score)}
+                            />
+
+                            <IconButton
+                                title={t("button.edit")}
                                 icon={<FaPencil size={20}/>}
                                 onClick={() => navigate(`/scores/${score.id}/edit`)}
                             />
 
                             <IconButton
+                                title={t("button.remove")}
                                 icon={<FaRegTrashCan size={20}/>}
                                 onClick={() => open(DialogType.REMOVE_SCORE, {
                                     id: score.id,

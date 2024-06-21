@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Grid} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import Page from "../../../Page.tsx";
@@ -46,7 +46,7 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
 
     return (
         <Page title={score.name}>
-            <Header text={score.name} leftSection={<BackLink/>}/>
+            <Header text={score.name} leftSection={<BackLink to={`/scores/${score.id}`}/>}/>
             <Description text={score.description}/>
 
             <ControlPanel
@@ -54,7 +54,6 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
                 rightSection={
                     <ScoreControls
                         onPrimaryButtonClick={methods.handleSubmit(onSubmit)}
-                        hideSecondaryButton
                         onSecondaryButtonClick={() => navigate(`/scores/${score?.id}`)}
                     />}
             />

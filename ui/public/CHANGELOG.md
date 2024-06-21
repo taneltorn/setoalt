@@ -1,10 +1,17 @@
 ### [0.2.0] - 
+- Lisatud kaheksandinoodi poolitamine
 - Heli taasesituse kvaliteedi parandamine
 - Lisatud ülemine riba
+- Lisatud noodistuse kloonimine
 - Paigutusvigade parandamine (lisatud ka parem mobiilseadmete tugi)
 - Häälte lisamise ümberkujundamine
 - Admin vaate ümberkujundamine
-- Lisatud võimalus redaktoris aktiveerida positsioon ilma nooti valimata 
+- Võimalus salvestada transponeeringut
+- Lisatud tulemuste arvu valimine
+- Tempo muutmine viidud üle hüpikaknasse
+- Väike noot tehtud veidi suuremaks
+- Lisatud võimalus redaktoris aktiveerida positsioon ilma nooti valimata
+- Üldise disaini parandus
 - Pisiparandused
 - Refaktooring, refaktooring, refaktooring
 

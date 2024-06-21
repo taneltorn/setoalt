@@ -22,6 +22,7 @@ CREATE TABLE IF NOT EXISTS setoalt.scores
     description TEXT,
     data JSON NOT NULL,
     default_tempo INTEGER,
+    default_transposition INTEGER,
     text TEXT,
     visibility VARCHAR(255) NOT NULL,
     created_by VARCHAR(255),

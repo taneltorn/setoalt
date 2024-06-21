@@ -15,7 +15,7 @@ export const Layout = {
         },
         note: {
             RADIUS: 8,
-            RADIUS_SMALL: 5,
+            RADIUS_SMALL: 6,
             REPEATING_OFFSET: 7,
             SPACING: 60,
             SHAPE: 0,
@@ -64,6 +64,7 @@ export const Color = {
 export const Playback = {
     MIN_TEMPO: 40,
     DEFAULT_TEMPO: 80,
+    DEFAULT_TRANSPOSITION: 0,
     MAX_TEMPO: 120,
     TEMPO_SLIDER_STEP: 2,
     MIN_DETUNE: -100,

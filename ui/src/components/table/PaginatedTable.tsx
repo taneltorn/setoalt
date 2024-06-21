@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Alert, Group, Pagination, Table, Text} from "@mantine/core";
+import {Alert, Button, Group, Pagination, Table, Text} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import LoadingOverlay from "../LoadingOverlay.tsx";
 
@@ -19,11 +19,14 @@ const PaginatedTable: React.FC<Properties> = ({isLoading, columns, rows, ...prop
 
     const {t} = useTranslation();
     const [currentPage, setCurrentPage] = useState(1);
-    const itemsPerPage = props.itemsPerPage || 20;
+    const itemsPerPageOptions = [10, 20, 50];
+
+    const [itemsPerPage, setItemsPerPage] = useState<number>(props.itemsPerPage || itemsPerPageOptions[0]);
+
 
     useEffect(() => {
         setCurrentPage(1);
-    }, [rows]);
+    }, [rows, itemsPerPage]);
 
     return (
         <LoadingOverlay isLoading={!!isLoading}>
@@ -49,9 +52,17 @@ const PaginatedTable: React.FC<Properties> = ({isLoading, columns, rows, ...prop
             {rows.length
                 ?
                 <Group justify={"space-between"}>
-                    <Text size={"sm"} fw={600} c={"gray.8"}>
-                        {t("table.results", {count: rows.length})}
-                    </Text>
+                    <Group gap={4}>
+                        <Text size={"sm"} c={"gray.8"} mr={4}>
+                            {t("table.results", {count: rows.length})}
+                        </Text>
+                        {itemsPerPageOptions.map(it => (
+                            <Button key={it}
+                                    size={"xs"}
+                                    variant={it === itemsPerPage ? "filled" : "outline"}
+                                    onClick={() => setItemsPerPage(it)}>{it}
+                            </Button>))}
+                    </Group>
                     <Pagination
                         mt={"md"}
                         mb={"md"}

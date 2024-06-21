@@ -47,7 +47,7 @@ const LayoutControls: React.FC = () => {
                 shortKey={ShortKey.REMOVE_NOTE}
                 disabled={!context.activeNote}
                 label={<FaBackspace size={20}/>}
-                onClick={() => context.removeNote()}
+                onClick={() => context.removeNote(context.activePosition, true)}
             />
         </Group>
     )
