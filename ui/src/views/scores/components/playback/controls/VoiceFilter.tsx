@@ -38,7 +38,7 @@ const VoiceFilter: React.FC = () => {
                     {context.score.data.voices.map(voice => (
                         <FilterButton
                             key={voice.name}
-                            active={context.isEditMode ? voice.name === context.activeVoice.name : !voice.hidden}
+                            active={context.isEditMode ? voice.name === context.activeVoice : !voice.hidden}
                             label={voice.name}
                             onClick={() => toggleVoice(voice)}
                         />))}

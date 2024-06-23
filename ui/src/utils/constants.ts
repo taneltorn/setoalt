@@ -2,7 +2,7 @@ export const Layout = {
     stave: {
         container: {
             MAX_WIDTH: 1450,
-            PADDING_X_START: 60,
+            PADDING_X_START: 100,
             PADDING_X_END: 60,
             SYMBOLS_BAR: 50,
             LYRICS_BAR: 70
@@ -42,9 +42,12 @@ export const Layout = {
         }
     },
     form: {
+        LABEL_SIZE: "xl",
         LABEL_PROPS: {
-            fw: 600, ml: 0, mb: 8
-        }
+            fw: 600, mb: "xs"
+        },
+        WRAPPER_BOTTOM_MARGIN: "xl",
+        SLIDER_SIZE: "lg"
     }
 }
 
@@ -66,7 +69,7 @@ export const Playback = {
     DEFAULT_TEMPO: 80,
     DEFAULT_TRANSPOSITION: 0,
     MAX_TEMPO: 120,
-    TEMPO_SLIDER_STEP: 2,
+    TEMPO_SLIDER_STEP: 1,
     MIN_DETUNE: -100,
     MAX_DETUNE: 100,
     DETUNE_SLIDER_STEP: 1,

@@ -14,7 +14,7 @@ const ControlButton: React.FC<Properties> = (props) => {
     return (
         <ActionIcon
             title={props.title}
-            color={"black"}
+            color={"gray"}
             size={"lg"}
             className={"control-button"}
             variant={"transparent"}

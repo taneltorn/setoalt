@@ -73,6 +73,7 @@ const AddVoiceDialog: React.FC = () => {
                         placeholder={t("dialog.addVoice.name")}
                         {...register("name", {required: t("field.required")})}
                         error={errors.name?.message}
+                        autoComplete={"off"}
                     />
                 </InputWrapper>
 

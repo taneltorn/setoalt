@@ -13,7 +13,6 @@ import SearchInput from "../../../components/controls/SearchInput.tsx";
 import SaveUserDialog from "../dialog/SaveUserDialog.tsx";
 import RemoveUserDialog from "../dialog/RemoveUserDialog.tsx";
 import IconButton from "../../../components/controls/IconButton.tsx";
-import ControlPanel from "../../../components/controls/ControlPanel.tsx";
 
 const UserManagement: React.FC = () => {
 
@@ -51,20 +50,18 @@ const UserManagement: React.FC = () => {
 
     return (
         <>
-            <ControlPanel
-                leftSection={
-                    <SearchInput
-                        onChange={handleSearch}
-                        onClear={() => setFilteredUsers(users)}
-                    />}
-                rightSection={
-                    <Button size={"md"}
-                            variant={"outline"}
-                            leftSection={<BiPlus size={24}/>}
-                            onClick={() => open(DialogType.SAVE_USER, {onSave: () => fetchData()})}>
-                        {t("button.addNew")}
-                    </Button>}
-            />
+            <Group justify={"space-between"}>
+                <SearchInput
+                    onChange={handleSearch}
+                    onClear={() => setFilteredUsers(users)}
+                />
+                <Button size={"md"}
+                        variant={"outline"}
+                        leftSection={<BiPlus size={24}/>}
+                        onClick={() => open(DialogType.SAVE_USER, {onSave: () => fetchData()})}>
+                    {t("button.addNew")}
+                </Button>
+            </Group>
 
             <PaginatedTable
                 isLoading={userService.isLoading}

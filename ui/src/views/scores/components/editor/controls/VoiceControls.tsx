@@ -1,5 +1,4 @@
 import React from 'react';
-import {Voice} from "../../../../../models/Voice.ts";
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {Button, Grid, Group} from "@mantine/core";
 import FilterButton from "../../../../../components/controls/FilterButton.tsx";
@@ -9,6 +8,7 @@ import {useTranslation} from "react-i18next";
 import {FaPlus} from "react-icons/fa";
 import {DefaultVoices} from "../../../../../utils/dictionaries.ts";
 import {FaRegTrashCan} from "react-icons/fa6";
+import {Voice} from "../../../../../models/Voice.ts";
 
 const VoiceControls: React.FC = () => {
 
@@ -25,30 +25,30 @@ const VoiceControls: React.FC = () => {
 
     const showActiveVoice = () => {
         context.score.data.voices.forEach(v => {
-            v.hidden = v.name !== context.activeVoice.name;
+            v.hidden = v.name !== context.activeVoice;
         })
         context.refresh();
     }
 
-    const changeVoice = (voice: Voice) => {
-        context.setActiveVoice(voice);
+    const changeVoice = (name: string) => {
+        context.setActiveVoice(name);
         context.score.data.voices.forEach(v => {
-            v.hidden = v.name !== voice.name;
+            v.hidden = v.name !== name;
         });
         context.refresh();
     }
 
     const handleVoiceAdd = (voice: Voice) => {
-        changeVoice(voice);
+        changeVoice(voice.name);
         close();
     }
 
-    const handleVoiceRemove = (voice: Voice) => {
+    const handleVoiceRemove = (name: string) => {
         context.score.data.voices = context.score.data.voices
-            .filter(v => v.name !== voice.name);
+            .filter(v => v.name !== name);
 
         if (context.score.data.voices[0]) {
-            changeVoice(context.score.data.voices[0]);
+            changeVoice(context.score.data.voices[0].name);
         }
         context.refresh();
         close();
@@ -61,9 +61,9 @@ const VoiceControls: React.FC = () => {
                     {context.score.data.voices.map(voice => (
                         <FilterButton
                             key={voice.name}
-                            active={context.isEditMode ? voice.name === context.activeVoice.name : !voice.hidden}
+                            active={context.isEditMode ? voice.name === context.activeVoice : !voice.hidden}
                             label={voice.name}
-                            onClick={() => changeVoice(voice)}
+                            onClick={() => changeVoice(voice.name)}
                         />))}
 
                     <Button
@@ -104,14 +104,14 @@ const VoiceControls: React.FC = () => {
                             {t("button.showActive")}
                         </Button>}
 
-                    {!DefaultVoices.map(v => v.name).includes(context.activeVoice.name) &&
+                    {!DefaultVoices.map(v => v.name).includes(context.activeVoice) &&
                         <Button
                             size={"xs"}
                             color={"red"}
                             leftSection={<FaRegTrashCan size={20}/>}
                             variant={"subtle"}
                             onClick={() => open(DialogType.REMOVE_VOICE, {
-                                name: context.activeVoice.name,
+                                name: context.activeVoice,
                                 onRemove: () => handleVoiceRemove(context.activeVoice)
                             })}
                         >

@@ -40,7 +40,7 @@ const Home: React.FC = () => {
                 <Tabs.List>
                     <Tabs.Tab value="changelog" leftSection={<FaGitAlt size={24}/>}>
                         <Text size={"lg"}>
-                            {t("view.home.label.tab")}
+                            {t("view.home.tab.changes")}
                         </Text>
                     </Tabs.Tab>
                 </Tabs.List>

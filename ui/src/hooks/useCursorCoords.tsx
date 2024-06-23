@@ -21,7 +21,10 @@ const useCursorCoords = (elementRef: RefObject<HTMLElement> | undefined, dimensi
         const updateMousePosition = (ev: MouseEvent) => {
             if (elementRef.current) {
                 const rect = elementRef.current.getBoundingClientRect();
-                const cx = ev.clientX - rect.left + (elementRef.current.scrollLeft || 0);
+                const cx = ev.clientX - rect.left
+                    + (elementRef.current.scrollLeft || 0)
+                    - Layout.stave.container.PADDING_X_START
+                    + Layout.stave.note.SPACING;
                 const cy = ev.clientY - rect.top;
 
                 let x = Math.round(cx / Layout.stave.note.SPACING) - 1;

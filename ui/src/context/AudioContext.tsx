@@ -2,6 +2,7 @@ import React, {useContext} from 'react';
 import {Note} from "../models/Note";
 import {isEmpty} from "../utils/helpers.tsx";
 import {ScoreContextProperties} from "./ScoreContext";
+import {Stave} from "../models/Stave.ts";
 
 export interface PlaybackOptions {
     detune?: number;
@@ -13,7 +14,7 @@ export interface AudioContextProperties {
     isPlaying: boolean;
     setIsPlaying: (value: boolean) => void;
 
-    playNotes: (notes: Note[], transpose?: number) => void;
+    playNotes: (notes: Note[], stave: Stave) => void;
 
     startPlayback: (context: ScoreContextProperties) => void;
     stopPlayback: () => void;

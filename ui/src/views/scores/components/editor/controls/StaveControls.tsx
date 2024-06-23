@@ -1,6 +1,6 @@
 import React from 'react';
 import ControlButton from "../../../../../components/controls/ControlButton.tsx";
-import {GiGClef} from "react-icons/gi";
+import {GiFClef} from "react-icons/gi";
 import {useTranslation} from "react-i18next";
 import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
 
@@ -12,7 +12,7 @@ const StaveControls: React.FC = () => {
     return (
         <ControlButton
             tooltip={t("tooltip.staveSelection")}
-            label={<GiGClef size={30}/>}
+            label={<GiFClef size={18}/>}
             onClick={() => open(DialogType.STAVE_SELECTION)}
         />
     )

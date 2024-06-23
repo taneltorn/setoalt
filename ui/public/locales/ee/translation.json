@@ -1,6 +1,6 @@
 {
   "page": {
-    "title": "Seto alternatiivne noodikiri",
+    "title": "Seto laulu alternatiivne noodikiri",
     "loading": "Laen andmeid...",
     "noData": "Andmeid ei leitud.",
     "goBack": "Tagasi"
@@ -10,14 +10,21 @@
   },
   "view": {
     "home": {
-      "title": "Seto alternatiivne noodikiri",
       "pageTitle": "Avaleht",
-      "description": "Antud veebileht on osa Kirjandusmuuseumi loovuurimuslikust projektist <strong>\"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\"</strong>.",
+      "title": "Seto laulu alternatiivne noodikiri",
+      "description": "Antud veebirakendus on osa Kirjandusmuuseumi loovuurimuslikust projektist <strong>\"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\"</strong>.",
       "label": {
         "example": "Kuula näidet",
-        "experiment": "Katseta",
-        "tab": "Muudatused"
+        "experiment": "Katseta"
+      },
+      "tab": {
+        "changes": "Muudatused"
       }
+    },
+    "error": {
+      "title": "Viga!",
+      "description": "Midagi läks valesti!",
+      "returnToHome": "Tagasi avalehel"
     },
     "user": {
       "title": ""
@@ -28,6 +35,10 @@
       "details": {
         "noData": "Antud noodistust ei leitud.",
         "back": "Vaata kõiki noodistusi"
+      },
+      "notFound": {
+        "text": "Noodistust ei leitud.",
+        "goBack": "Vaata kõiki noodistusi"
       },
       "table": {
         "name": "Nimi",
@@ -41,12 +52,18 @@
     "editor": {
       "title": "Redaktor",
       "description": "Redaktor võimaldab katsetada uute noodistuste loomisega.",
+      "tab": {
+        "editor": "Noodistus",
+        "data": "Andmed",
+        "stave": "Noodijoonestik"
+      },
       "form": {
         "title": "Pealkiri",
         "name": "Nimi",
         "description": "Kirjeldus",
         "defaultTempo": "Vaikimisi tempo (BPM)",
         "defaultTransposition": "Vaikimisi helikõrgus (pooltoonides)",
+        "lineDetuning": "Noodijoonte mikrotonaalsus (tsentides)",
         "text": "Laulusõnad",
         "visibility": "Nähtavus"
       }
@@ -54,8 +71,11 @@
     "admin": {
       "title": "Adminpaneel",
       "description": "Siin saad hallata kasutajaid ja muid seadeid.",
+      "tab": {
+        "users": "Kasutajad",
+        "settings": "Seaded"
+      },
       "users": {
-        "tab": "Kasutajad",
         "table": {
           "id": "ID",
           "username": "Kasutajanimi",
@@ -71,9 +91,6 @@
           "editor": "Toimetaja",
           "user": "Tavakasutaja"
         }
-      },
-      "settings": {
-        "tab": "Seaded"
       }
     },
     "login": {
@@ -127,7 +144,9 @@
     "transpose": "Muuda helikõrgust",
     "changeType": "Muuda suurust",
     "splitNote": "Poolita noot",
-    "exportToPng": "Salvesta PNG"
+    "exportToPng": "Salvesta PNG",
+    "undo": "Võta tagasi",
+    "redo": "Tee uuesti"
   },
   "dialog": {
     "saveScore": {

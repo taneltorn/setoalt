@@ -16,7 +16,6 @@ import IconButton from "../../components/controls/IconButton.tsx";
 import RemoveScoreDialog from "./components/dialog/RemoveScoreDialog.tsx";
 import Header from "../../components/controls/Header.tsx";
 import Description from "../../components/controls/Description.tsx";
-import ControlPanel from "../../components/controls/ControlPanel.tsx";
 import {FaRegCopy} from "react-icons/fa";
 
 const ScoreList: React.FC = () => {
@@ -73,20 +72,19 @@ const ScoreList: React.FC = () => {
             <Header text={t("view.scores.title")}/>
             <Description text={t("view.scores.description")}/>
 
-            <ControlPanel
-                leftSection={
-                    <SearchInput
-                        onChange={handleSearch}
-                        onClear={() => setFilteredScores(scores)}
-                    />}
-                rightSection={auth.currentUser?.isAuthorized &&
+            <Group justify={"space-between"}>
+                <SearchInput
+                    onChange={handleSearch}
+                    onClear={() => setFilteredScores(scores)}
+                />
+                {auth.currentUser?.isAuthorized &&
                     <Button size={"md"}
                             variant={"outline"}
                             leftSection={<BiPlus size={24}/>}
                             onClick={() => navigate("/editor")}>
                         {t("button.addNew")}
                     </Button>}
-            />
+            </Group>
 
             <PaginatedTable
                 isLoading={scoreService.isLoading}
@@ -101,7 +99,7 @@ const ScoreList: React.FC = () => {
                     name: score.name,
                     data: [
                         <Link to={`/scores/${score.id}`}>
-                            <Text fz={"md"} c={"red"} fw={"bold"}>
+                            <Text fz={"md"} c={theme.primaryColor} fw={"bold"}>
                                 {score.name}
                             </Text>
                         </Link>,

@@ -54,20 +54,6 @@ export const calculateLyricCoords = (lyric: Lyric, context: ScoreContextProperti
     return {x: x, y: y};
 }
 
-export const calculateCurrentPositionCoords = (context: ScoreContextProperties): XY => {
-    const offset = getOffset(context.activePosition, context);
-
-    const x = Layout.stave.container.PADDING_X_START
-        + context.activePosition * Layout.stave.note.SPACING
-        - Layout.stave.cursor.WIDTH / 2
-        - Layout.stave.note.RADIUS / 2
-        - offset.x;
-
-    const y = offset.y;
-
-    return {x: x, y: y};
-}
-
 export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreContextProperties): XY => {
     const offset = getOffset(note.position, context);
 
@@ -98,7 +84,7 @@ export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreCont
 }
 
 export const calculateNoteOpacity = (note: Note, voice: Voice, context: ScoreContextProperties): number => {
-    if (voice.name === context.activeVoice.name) {
+    if (voice.name === context.activeVoice) {
         return 1;
     }
 
@@ -114,6 +100,20 @@ export const calculateNoteOpacity = (note: Note, voice: Voice, context: ScoreCon
     return context.duplicateNoteKeys.includes(key)
         ? 0
         : (context.isEditMode ? 0.1 : 0);
+}
+
+export const calculateCurrentPositionCoords = (context: ScoreContextProperties): XY => {
+    const offset = getOffset(context.activePosition, context);
+
+    const x = Layout.stave.container.PADDING_X_START
+        + context.activePosition * Layout.stave.note.SPACING
+        - Layout.stave.cursor.WIDTH / 2
+        - Layout.stave.note.RADIUS / 2
+        - offset.x;
+
+    const y = offset.y;
+
+    return {x: x, y: y};
 }
 
 export const calculateCursorCoords = (context: ScoreContextProperties): XY => {

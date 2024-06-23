@@ -9,7 +9,7 @@ import Header from "../../../components/controls/Header.tsx";
 import Description from "../../../components/controls/Description.tsx";
 import ScorePlaybackPanel from "./playback/ScorePlaybackPanel.tsx";
 import Stave from "./stave/Stave.tsx";
-import ControlPanel from "../../../components/controls/ControlPanel.tsx";
+import {Group} from "@mantine/core";
 
 const CleanEditor: React.FC = () => {
 
@@ -18,18 +18,18 @@ const CleanEditor: React.FC = () => {
 
     return (
         <Page title={t("view.editor.title")}>
-            <Header text={t("view.editor.title")}/>
+            <Group justify={"space-between"}>
+                <Header text={t("view.editor.title")}/>
+                <ScoreControls
+                    onPrimaryButtonClick={() => open(DialogType.SAVE_SCORE)}
+                    primaryButtonRequiresAuth
+                    hideSecondaryButton
+                />
+            </Group>
+
             <Description text={t("view.editor.description")}/>
 
-            <ControlPanel
-                leftSection={<ScorePlaybackPanel/>}
-                rightSection={
-                    <ScoreControls
-                        onPrimaryButtonClick={() => open(DialogType.SAVE_SCORE)}
-                        primaryButtonRequiresAuth
-                        hideSecondaryButton
-                    />}
-            />
+            <ScorePlaybackPanel/>
 
             <VoiceControls/>
             <ScoreEditorPanel/>

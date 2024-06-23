@@ -1,6 +1,5 @@
 import React, {useMemo, useState} from 'react';
 import {Score} from "../models/Score";
-import {Voice} from "../models/Voice";
 import {ScoreContextProperties} from './ScoreContext';
 import {HistoryContext, State} from "./HistoryContext";
 
@@ -8,53 +7,107 @@ interface Properties {
     children: React.ReactNode;
 }
 
-// todo IMPLEMENT IN FUTURE
 const HistoryContextProvider: React.FC<Properties> = ({children}) => {
 
-    const MAX_ENTRIES = 10;
-    const [history, setHistory] = useState<State[]>([]);
+    const MAX_ENTRIES = 20;
+    const [undoStates, setUndoStates] = useState<State[]>([]);
+    const [redoStates, setRedoStates] = useState<State[]>([]);
+    const [recoverStates, setRecoverStates] = useState<State[]>([]);
 
-    const push = (score: Score, activeVoice: Voice, activePosition: number, activeDuration: string) => {
-        console.log("pushing")
-        if (history.length >= MAX_ENTRIES) {
-            history.shift();
-        }
-
-        history.push({
-            score: structuredClone(score),
-            activeVoice: structuredClone(activeVoice),
-            activePosition: activePosition,
-            activeDuration: activeDuration,
+    const push = (score: Score, activePosition: number, activeDuration: string, activeVoice: string) => {
+        setUndoStates(prevHistory => {
+            const newHistory = [...prevHistory, {
+                score: structuredClone(score),
+                activeVoice: activeVoice,
+                activePosition: activePosition,
+                activeDuration: activeDuration,
+            }];
+            if (newHistory.length > MAX_ENTRIES) {
+                newHistory.shift();
+            }
+            return newHistory;
         });
 
-        setHistory(structuredClone(history));
-        // setHistory({...history}); // strucuredClone needed?
+        setRedoStates([]);
+        setRecoverStates([]);
     }
 
     const undo = (context: ScoreContextProperties) => {
-        console.log("undo")
+        setRecoverStates(prevHistory => [...prevHistory, {
+            score: structuredClone(context.score),
+            activeVoice: context.activeVoice,
+            activePosition: context.activePosition,
+            activeDuration: context.activeDuration,
+        }]);
 
-        if (history.length > 0) {
-            const state = history.pop();
-            console.log(state)
+        setUndoStates(prevHistory => {
+            const newHistory = [...prevHistory];
+            const state = newHistory.pop();
             if (state) {
-
                 context.setScore(state.score);
-                // context.setActiveVoice(state.activeVoice);
+                context.setActiveVoice(state.activeVoice);
                 context.setActivePosition(state.activePosition);
                 context.setActiveDuration(state.activeDuration);
-                setHistory(structuredClone(history));
-                // setHistory({...history});
-                // context.refresh();
             }
-        }
+            return newHistory;
+        });
+
+        setRedoStates(prevHistory => {
+            const state = [...undoStates].pop();
+            if (state) {
+                return [...prevHistory, {
+                    score: structuredClone(state.score),
+                    activeVoice: state.activeVoice,
+                    activePosition: state.activePosition,
+                    activeDuration: state.activeDuration,
+                }];
+            }
+            return prevHistory;
+        });
+    }
+
+    const redo = (context: ScoreContextProperties) => {
+
+        setUndoStates(prevHistory => {
+            const state = [...redoStates].pop();
+            if (state) {
+                return [...prevHistory, {
+                    score: structuredClone(state.score),
+                    activeVoice: state.activeVoice,
+                    activePosition: state.activePosition,
+                    activeDuration: state.activeDuration,
+                }];
+            }
+            return prevHistory;
+        });
+
+        setRedoStates(prevHistory => {
+            const newHistory = [...prevHistory];
+            newHistory.pop();
+            return newHistory
+        })
+
+        setRecoverStates(prevHistory => {
+            const newHistory = [...prevHistory];
+            const state = newHistory.pop();
+            if (state) {
+                context.setScore(state.score);
+                context.setActiveVoice(state.activeVoice);
+                context.setActivePosition(state.activePosition);
+                context.setActiveDuration(state.activeDuration);
+            }
+            return newHistory;
+        });
     }
 
     const context = useMemo(() => ({
-        history,
+        undoStates, setUndoStates,
+        redoStates, setRedoStates,
+        recoverStates, setRecoverStates,
         push,
-        undo
-    }), [history]);
+        undo,
+        redo
+    }), [undoStates, redoStates, recoverStates]);
 
     return (
         <HistoryContext.Provider value={context}>

@@ -7,8 +7,8 @@ import packageInfo from "../package.json";
 import {useAuth} from "./context/AuthContext.tsx";
 import {useTranslation} from "react-i18next";
 import {useDevMode} from "./context/DevModeContext.tsx";
-import {FaReact} from "react-icons/fa";
 import {IoAlertCircleOutline} from "react-icons/io5";
+import Logo from "./components/Logo.tsx";
 
 const Layout: React.FC = () => {
 
@@ -39,7 +39,7 @@ const Layout: React.FC = () => {
                     />
                     <Group visibleFrom={"md"}>
                         <Link to={"/"}>
-                            <FaReact size={32}/>
+                            <Logo/>
                         </Link>
 
                         <Code> {packageInfo.version}</Code>
@@ -54,7 +54,7 @@ const Layout: React.FC = () => {
 
                     <Group>
                         <Alert color={"red"} py={4} icon={<IoAlertCircleOutline size={24}/>}>
-                            Tegemist on arendusjärgus oleva veebirakendusega.
+                            Tegemist on arendusjärgus oleva rakendusega.
                         </Alert>
 
                         {UserIcons.get(auth.currentUser?.role || "guest")}

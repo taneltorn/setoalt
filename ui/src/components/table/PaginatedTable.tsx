@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Alert, Button, Group, Pagination, Table, Text} from "@mantine/core";
+import {Alert, Button, Group, Pagination, Table, Text, useMantineTheme} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import LoadingOverlay from "../LoadingOverlay.tsx";
 
@@ -18,6 +18,7 @@ export interface Row {
 const PaginatedTable: React.FC<Properties> = ({isLoading, columns, rows, ...props}) => {
 
     const {t} = useTranslation();
+    const theme = useMantineTheme();
     const [currentPage, setCurrentPage] = useState(1);
     const itemsPerPageOptions = [10, 20, 50];
 
@@ -59,6 +60,7 @@ const PaginatedTable: React.FC<Properties> = ({isLoading, columns, rows, ...prop
                         {itemsPerPageOptions.map(it => (
                             <Button key={it}
                                     size={"xs"}
+                                    color={it === itemsPerPage ? theme.primaryColor : "gray.7"}
                                     variant={it === itemsPerPage ? "filled" : "outline"}
                                     onClick={() => setItemsPerPage(it)}>{it}
                             </Button>))}

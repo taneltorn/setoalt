@@ -15,4 +15,6 @@ export enum ShortKey {
     START_PLAYBACK = " ",
     PREVIOUS = "ARROWLEFT",
     NEXT = "ARROWRIGHT",
+    UNDO = "Z",
+    REDO = "Y",
 }

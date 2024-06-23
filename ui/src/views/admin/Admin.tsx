@@ -21,13 +21,13 @@ const Admin: React.FC = () => {
                 <Tabs.List>
                     <Tabs.Tab value="users" leftSection={<FaUser size={24}/>}>
                         <Text size={"lg"}>
-                            {t("view.admin.users.tab")}
+                            {t("view.admin.tab.users")}
                         </Text>
                     </Tabs.Tab>
 
                     <Tabs.Tab value="settings" leftSection={<IoMdSettings size={24}/>}>
                         <Text size={"lg"}>
-                            {t("view.admin.settings.tab")}
+                            {t("view.admin.tab.settings")}
                         </Text>
                     </Tabs.Tab>
                 </Tabs.List>

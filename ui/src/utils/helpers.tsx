@@ -11,6 +11,7 @@ import {DefaultVoices, NoteRange} from "./dictionaries.ts";
 import {notifications} from "@mantine/notifications";
 import {IoMdAlert} from "react-icons/io";
 import {StavePPT} from "../staves/StavePPT.ts";
+import {Stave} from "../models/Stave.ts";
 
 export const isEmpty = (object: any) => {
     return !object || Object.keys(object).length === 0 || object.length === 0;
@@ -74,7 +75,7 @@ export const positionToSeconds = (x: number): number => {
 
 export const excludeDuplicates = (notes: Note[]): Note[] => {
     return notes.reduce((acc, note) => {
-        const key = `${note.pitch}-${note.duration}`;
+        const key = `${note.pitch}-${note.duration}-${note.detune || 0}`;
         if (!acc.map.has(key)) {
             acc.map.set(key, true);
             acc.result.push(note);
@@ -83,10 +84,12 @@ export const excludeDuplicates = (notes: Note[]): Note[] => {
     }, {map: new Map<string, boolean>(), result: [] as Note[]}).result;
 }
 
-export const noteToFrequency = (note: Note, transposition?: number): number => {
+export const noteToFrequency = (note: Note, stave: Stave, transposition?: number): number => {
     const frequency = Frequency(transpose(note.pitch, transposition)).toFrequency();
-    return note.detune
-        ? Frequency(frequency).transpose(note.detune / 100).toFrequency()
+    const detune = (note.detune || 0) + (stave.lines.find(l => l.pitch === note.pitch)?.detune || 0);
+
+    return detune
+        ? Frequency(frequency).transpose(detune / 100).toFrequency()
         : frequency;
 };
 
@@ -154,31 +157,31 @@ export const transpose = (pitch: string, transposition?: number): string => {
 }
 
 export const getPositionRange = (note: Note) => {
-    return range(note.position, note.position + durationToScalar(note.duration) - 1);
+    return range(note.position, note.position + durationToScalar(note.duration) - 0.5);
 }
 
-export const includeNotePositionRange = (voice: Voice, note: Note): number[] => {
-    if (!voice.occupiedPositions) {
+export const includeNotePositionRange = (note: Note, occupiedPositions: number[] | undefined): number[] => {
+    if (!occupiedPositions) {
         return [];
     }
     const positionRange = getPositionRange(note);
-    return sort(Array.from(new Set([...voice.occupiedPositions, ...positionRange])));
+    return sort(Array.from(new Set([...occupiedPositions, ...positionRange])));
 }
 
-export const excludeNotePositionRange = (voice: Voice, note: Note): number[] => {
-    if (!voice.occupiedPositions) {
+export const excludeNotePositionRange = (note: Note, occupiedPositions: number[] | undefined): number[] => {
+    if (!occupiedPositions) {
         return [];
     }
     const positionRange = getPositionRange(note);
-    return voice.occupiedPositions.filter(p => !positionRange.includes(p));
+    return occupiedPositions.filter(p => !positionRange.includes(p));
 }
 
-export const wouldProduceOverlap = (voice: Voice, note: Note) => {
-    if (!voice.occupiedPositions) {
+export const wouldProduceOverlap = (note: Note, occupiedPositions: number[] | undefined) => {
+    if (!occupiedPositions) {
         return false;
     }
     const positionRange = getPositionRange(note);
-    return positionRange.some(p => voice.occupiedPositions && voice.occupiedPositions.includes(p));
+    return positionRange.some(p => occupiedPositions && occupiedPositions.includes(p));
 }
 
 export const DisplayError = (title: string, message: string) => {
@@ -201,4 +204,11 @@ export const DisplaySuccess = (title: string, message: string) => {
 
 export const clone = (object: any): any => {
     return JSON.parse(JSON.stringify(object));
+}
+
+export const getDetuneLabel = (detune: number | undefined): string => {
+    if (!detune) {
+        return "";
+    }
+    return ` (${detune > 0 ? "+" : ""}${detune})`
 }

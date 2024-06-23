@@ -1,26 +1,34 @@
-### [0.2.0] - 
+### [0.2.0] -
+
 - Lisatud kaheksandinoodi poolitamine
 - Heli taasesituse kvaliteedi parandamine
 - Lisatud ülemine riba
 - Lisatud noodistuse kloonimine
+- Lisatud undo/redo
+- Lisatud noodijoonte mikrotonaalne muutmine
 - Paigutusvigade parandamine (lisatud ka parem mobiilseadmete tugi)
 - Häälte lisamise ümberkujundamine
 - Admin vaate ümberkujundamine
-- Võimalus salvestada transponeeringut
+- Lisatud 404 vealeht
+- Lisatud võimalus salvestada transponeeringut
 - Lisatud tulemuste arvu valimine
 - Tempo muutmine viidud üle hüpikaknasse
-- Väike noot tehtud veidi suuremaks
+- Väike noot muudetud veidi suuremaks
+- Parandatud laulusõnade kuvamist
 - Lisatud võimalus redaktoris aktiveerida positsioon ilma nooti valimata
-- Üldise disaini parandus
+- Eemaldatud lehitseja poolsed soovitused hääle lisamise aknas
+- Üldise disaini ühtlustamine
 - Pisiparandused
 - Refaktooring, refaktooring, refaktooring
 
 ### [0.1.33] - *09.04.2024*
+
 - Noodinimed koguaeg nähtaval
 - Lisatud pagineerimine
 - Pisiparandused
 
 ### [0.1.32] - *14.03.2024*
+
 - PNG-ekspordil jäävad noodijooned noodinimedega tähistatuks
 - Nihutamine toimub nüüd klahvidega B ja N (varem oli X ja Z) - muudatus seoses tulevase undo/redoga
 - Parandatud viga, kus pärast lähtestamist ei olnud võimalik osadele positsioonidele hiirega nooti lisada
@@ -28,27 +36,34 @@
 - Pisiparandused
 
 ### [0.1.31] - *13.03.2024*
+
 - Eraldaja ja reavahe lisatakse aktiivsest positsioonist paremale (varem lisati vasakule)
-- Eelmise punktiga seoses ei liigutata hiirega nooti lisades enam kursorit edasi (loogiliselt vajalik, et vältida tühje positsioone, mis tekiksid, kui reavahe lisatakse kohe pärast uue noodi lisamist)
-- PDF eksport asendatud PNG-ga 
+- Eelmise punktiga seoses ei liigutata hiirega nooti lisades enam kursorit edasi (loogiliselt vajalik, et vältida tühje
+  positsioone, mis tekiksid, kui reavahe lisatakse kohe pärast uue noodi lisamist)
+- PDF eksport asendatud PNG-ga
 - Lisatud värvivalija (uue hääle lisamisel)
-- Eemaldasin ajutiselt vasakule/paremale automaatse kerimise, kuna see ei töötanud korralikult väiksematel ekraanidel (tulevikus vaja korralikult implementeerida)
+- Eemaldasin ajutiselt vasakule/paremale automaatse kerimise, kuna see ei töötanud korralikult väiksematel ekraanidel (
+  tulevikus vaja korralikult implementeerida)
 
 ### [0.1.30] - *23.02.2024*
+
 - Lisatud hääle lisamise võimalus
 - Pisiparandused
 
 ### [0.1.29] - *22.02.2024*
+
 - Lisatud horisontaalne kerimine (scroll)
 - Suurendatud lehe maksimaalset laiust
 - Lisatud lehtede pealkirjad (lehitseja sakil)
 
 ### [0.1.28] - *21.02.2024*
+
 - Lisatud PDF eksport
 - Lisatud noodi väiksemaks muutmine - vajuta "()" nuppu või T klahvi.
 - Parandatud viga, kus hiirega ei olnud võimalik eraldajat eemaldada
 
 ### [0.1.27] - *17.02.2024*
+
 - Lisatud sisselogimise funktsionaalsus
 - Lisatud noodistuste salvestamine
 - Lisatud noodistuste muutmine
@@ -64,3 +79,5 @@
 - Redaktoris on numbrite asemel nootide nimed
 - Laulusõnad ja noodivahed on muudetud veidi suuremaks
 - D# on nüüd E♭ - pühendusega Žannale :)
+
+### ...

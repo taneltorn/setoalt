@@ -4,7 +4,7 @@ import Icon from "@mdi/react";
 import {Icons} from "../../../../../utils/icons.ts";
 import {mdiMusicNoteQuarter} from "@mdi/js";
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
-import {excludeDuplicates} from "../../../../../utils/helpers.tsx";
+import {excludeDuplicates, getDetuneLabel} from "../../../../../utils/helpers.tsx";
 import {Note} from "../../../../../models/Note.ts";
 
 const ActiveNotes: React.FC = () => {
@@ -25,7 +25,7 @@ const ActiveNotes: React.FC = () => {
                 <Badge key={i} py={0} variant={"transparent"} color={"gray.7"}>
                     <Group gap={4}>
                         <Icon path={Icons.get(n.duration) || mdiMusicNoteQuarter} size={1}/>
-                        {n.pitch}
+                        {n.pitch}{getDetuneLabel(n.detune)}
                     </Group>
                 </Badge>)}
         </Group>

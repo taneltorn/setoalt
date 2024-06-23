@@ -23,7 +23,7 @@ import useCursorCoords from "../hooks/useCursorCoords.tsx";
 import {calculateStaveDimensions} from "../utils/calculation.helpers.tsx";
 import {Layout, Playback} from "../utils/constants.ts";
 import {HalfPosition} from "../models/HalfPosition.ts";
-import {useHistoryContext} from "./HistoryContext.tsx";
+import {useHistory} from "./HistoryContext.tsx";
 
 interface Properties {
     children: React.ReactNode;
@@ -32,7 +32,7 @@ interface Properties {
 const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
     const audioContext = useAudioContext();
-    const historyContext = useHistoryContext();
+    const history = useHistory();
 
     const [score, setScore] = useState<Score>(structuredClone(EmptyScore));
 
@@ -45,13 +45,13 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
     const [activePosition, setActivePosition] = useState<number>(-1);
     const [activeDuration, setActiveDuration] = useState<string>("8n");
-    const [activeVoice, setActiveVoice] = useState<Voice>({...DefaultVoices[0]});
+    const [activeVoice, setActiveVoice] = useState<string>(DefaultVoices[0].name);
 
     const activate = (position: number) => {
         const notes = getNotes(position);
         if (notes.length) {
             audioContext.stopPlayback();
-            audioContext.playNotes(notes);
+            audioContext.playNotes(notes, score.data.stave);
             if (["2n", "4n", "8n"].includes(notes[0].duration as string)) {
                 setActiveDuration(notes[0].duration)
             }
@@ -60,6 +60,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     }
 
     const next = () => {
+        // todo take half positions into account (currently they are skipped)
         let position: number;
         if (isEditMode) {
             const note = getNote(activePosition, activeVoice);
@@ -103,9 +104,9 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         return notes.filter(n => n.position === position);
     }
 
-    const getNote = (position: number, voice?: Voice): Note | undefined => {
-        const notes = voice
-            ? score.data.voices.find(v => v.name === voice.name)?.notes || []
+    const getNote = (position: number, voiceName?: string): Note | undefined => {
+        const notes = voiceName
+            ? score.data.voices.find(v => v.name === voiceName)?.notes || []
             : score.data.voices.filter(v => !v.hidden).flatMap(v => v.notes) || [];
         return notes.find(n => n.position === position);
     }
@@ -115,7 +116,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         changeNoteDuration(duration);
     }
 
-    const insertOrUpdateNote = (pitch: string, pos?: number, dur?: string) => {
+    const insertOrUpdateNote = (pitch: string, pos?: number, dur?: string, moveToNext?: boolean) => {
         takeSnapshot();
 
         const position = Math.max(pos !== undefined ? pos : activePosition, 0);
@@ -126,35 +127,40 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
             changePitch(note, pitch);
             return;
         }
-        insertNote(pitch, position, duration);
+        insertNote(pitch, position, duration, moveToNext);
     }
 
-    const insertNote = (pitch: string, position: number, duration: string) => {
+    const insertNote = (pitch: string, position: number, duration: string, moveToNext?: boolean) => {
         const note: Note = createNote(pitch, position, duration);
-        if (wouldProduceOverlap(activeVoice, note)) {
-            note.duration = "8n";
-        }
+        const voice = score.data.voices.find(v => v.name === activeVoice);
 
-        const voice = score.data.voices.find(v => v.name === activeVoice.name);
         if (voice) {
-            activeVoice.occupiedPositions = includeNotePositionRange(activeVoice, note);
+            if (wouldProduceOverlap(note, voice.occupiedPositions)) {
+                note.duration = "8n";
+            }
+            voice.occupiedPositions = includeNotePositionRange(note, voice.occupiedPositions);
 
             voice.notes.push(note);
             voice.notes.sort((a, b) => (a.position || 0) - (b.position || 0));
 
             activate(position);
             refresh();
+
+            if (moveToNext) {
+                next();
+            }
         }
     }
 
     const removeNote = (position: number, moveToPrevious?: boolean) => {
+        takeSnapshot();
+
         const note = getNote(position, activeVoice);
         if (note && activeVoice) {
-            const voice = score.data.voices.find(v => v.name === activeVoice.name);
+            const voice = score.data.voices.find(v => v.name === activeVoice);
             if (voice) {
                 voice.notes = voice.notes.filter(n => n.position !== note.position);
-
-                activeVoice.occupiedPositions = excludeNotePositionRange(activeVoice, note);
+                voice.occupiedPositions =  excludeNotePositionRange(note, voice.occupiedPositions)
             }
             refresh();
         }
@@ -166,12 +172,13 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     const changeNoteDuration = (duration: string, position?: number, skipShifting?: boolean) => {
         const note = position ? getNote(position, activeVoice) : activeNote;
         if (note) {
+            console.log(note)
             if (!skipShifting) {
                 const offset = getDurationOffset(duration, note.duration)
                 shiftNotes(note.position, offset);
             }
             note.duration = duration;
-            audioContext.playNotes([note]);
+            audioContext.playNotes([note],  score.data.stave);
         }
     }
 
@@ -198,27 +205,37 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     }
 
     const shiftNotes = (position: number, offset: number) => {
-        score.data.voices
-            .find(v => v.name === activeVoice.name)?.notes
-            .filter(n => n.position > position)
-            .forEach(n => {
-                n.position += offset;
-            });
-        activeVoice.occupiedPositions = activeVoice.occupiedPositions?.map(n => n > position ? (n + offset) : n);
+        const voice = score.data.voices.find(v => v.name === activeVoice);
+        if (voice) {
+            voice.notes
+                .filter(n => n.position > position)
+                .forEach(n => {
+                    n.position += offset;
+                });
+            voice.occupiedPositions = voice.occupiedPositions?.map(n => n > position ? (n + offset) : n);
+        }
     }
 
     const shiftLeft = () => {
-        if (activePosition <= 0 || !!getNote(activePosition - 1, activeVoice)) return;
+        takeSnapshot();
 
-        const newPosition = activePosition - 1;
-        if (!activeVoice.occupiedPositions?.includes(newPosition)) {
-            shiftNotes(newPosition, -1);
-            activate(newPosition);
-            refresh();
+        if (activePosition <= 0 || !!getNote(activePosition - 1, activeVoice)) {
+            return;
+        }
+        const voice = score.data.voices.find(v => v.name === activeVoice);
+        if (voice) {
+            const newPosition = activePosition - 1;
+            if (!voice.occupiedPositions?.includes(newPosition)) {
+                shiftNotes(newPosition, -1);
+                activate(newPosition);
+                refresh();
+            }
         }
     }
 
     const shiftRight = () => {
+        takeSnapshot();
+
         if (activePosition < 0) return;
         shiftNotes(activePosition - 1, 1);
         setActivePosition(activePosition + 1);
@@ -226,6 +243,8 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     }
 
     const insertLyric = (text: string) => {
+        takeSnapshot();
+
         const lyric = score.data.lyrics.find(l => l.position === activePosition);
         if (lyric) {
             lyric.text = text;
@@ -238,6 +257,8 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     }
 
     const changeType = (note: Note | undefined, type: NoteType | undefined) => {
+        takeSnapshot();
+
         if (!note) {
             return;
         }
@@ -246,6 +267,8 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     }
 
     const toggleBreak = () => {
+        takeSnapshot();
+
         const position = activeNote ? (activeNote.position + durationToScalar(activeNote.duration)) : (activePosition + 1);
         const breakpoint = context.score.data.breaks.find(b => b === position);
 
@@ -268,6 +291,8 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     }
 
     const toggleDivider = () => {
+        takeSnapshot();
+
         const position = activeNote ? (activeNote.position + durationToScalar(activeNote.duration)) : (activePosition + 1);
         const divider = context.score.data.dividers.find(it => it.position === position);
         if (divider) {
@@ -302,12 +327,15 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
     const reset = () => {
         setScore(structuredClone(EmptyScore));
-        setActiveVoice({...DefaultVoices[0]});
+        setActiveVoice(DefaultVoices[0].name);
         setActivePosition(0);
+        history.setUndoStates([]);
+        history.setRedoStates([]);
+        history.setRecoverStates([]);
     }
 
     const takeSnapshot = () => {
-        historyContext.push(score, activeVoice, activePosition, activeDuration);
+        history.push(score, activePosition, activeDuration, activeVoice);
     }
 
     const activeNote = useMemo(() => {
@@ -323,7 +351,6 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         const lastNote = notes.slice(-1).pop();
         const lastLyric = lyrics.slice(-1).pop();
 
-
         return Math.max(lastLyric?.position || 0, ((lastNote?.position || 0) + (lastNote?.duration ? durationToScalar(lastNote.duration) : 0)));
     }, [score]);
 
@@ -332,7 +359,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
     const halfPositions: HalfPosition[] = useMemo(() => {
         const sixteenthNotes = score.data.voices
-            .find(v => v.name === activeVoice.name)?.notes
+            .find(v => v.name === activeVoice)?.notes
             .filter(n => n.duration === "16n") || [];
         if (sixteenthNotes.length) {
             return sixteenthNotes
@@ -380,13 +407,13 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     }, [score.defaultTempo, score.defaultTransposition]);
 
     useEffect(() => {
-        const voice = score.data.voices.find(v => v.name === activeVoice.name);
+        const voice = score.data.voices.find(v => v.name === activeVoice);
         if (voice) {
             let occupiedPositions: number[] = [];
             voice.notes.forEach(n => {
                 occupiedPositions = occupiedPositions.concat(getPositionRange(n));
             });
-            activeVoice.occupiedPositions = sort(Array.from(new Set(occupiedPositions)));
+            voice.occupiedPositions = sort(Array.from(new Set(occupiedPositions)));
         }
         refresh()
     }, [score.data.voices, activeVoice, activeDuration]);
@@ -439,6 +466,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         halfPositions,
         dimensions,
         endPosition,
+        takeSnapshot,
 
         containerRef, setContainerRef,
         svgRef, setSvgRef,

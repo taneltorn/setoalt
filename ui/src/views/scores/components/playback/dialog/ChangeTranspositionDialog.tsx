@@ -13,7 +13,7 @@ const ChangeTranspositionDialog: React.FC = () => {
     const scoreContext = useScoreContext();
     const audioContext = useAudioContext();
     const {close} = useDialogContext();
-    const [transposition, setTransposition] = useState<number>(scoreContext.transposition);
+    const [transposition, setTransposition] = useState<number>(audioContext.transposition);
 
     const handleSave = () => {
         audioContext.setTransposition(transposition);
@@ -21,7 +21,7 @@ const ChangeTranspositionDialog: React.FC = () => {
     }
 
     const handleClose = () => {
-        setTransposition(scoreContext.transposition);
+        setTransposition(audioContext.transposition);
         close();
     }
 

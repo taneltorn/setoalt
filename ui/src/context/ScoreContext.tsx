@@ -2,7 +2,6 @@ import React, {RefObject, useContext} from 'react';
 import {Note, NoteType} from "../models/Note";
 import {isEmpty} from "../utils/helpers.tsx";
 import {Score} from "../models/Score";
-import {Voice} from "../models/Voice";
 import {StaveDimensions} from "../models/Dimensions.ts";
 import {HalfPosition} from "../models/HalfPosition.ts";
 
@@ -28,14 +27,14 @@ export interface ScoreContextProperties {
     activeDuration: string;
     setActiveDuration: (duration: string) => void;
 
-    activeVoice: Voice;
-    setActiveVoice: (voice: Voice) => void;
+    activeVoice: string;
+    setActiveVoice: (name: string) => void;
     cursorPosition: number;
 
-    getNote: (position: number, voice?: Voice) => Note | undefined;
+    getNote: (position: number, voiceName?: string) => Note | undefined;
     getNotes: (position: number) => Note[];
 
-    insertOrUpdateNote: (pitch: string, position?: number, duration?: string) => void;
+    insertOrUpdateNote: (pitch: string, position?: number, duration?: string, moveToNext?: boolean) => void;
     removeNote: (position: number, moveToPrevious?: boolean) => void;
     insertLyric: (text: string) => void;
 
@@ -60,6 +59,7 @@ export interface ScoreContextProperties {
     halfPositions: HalfPosition[];
     dimensions: StaveDimensions;
     endPosition: number;
+    takeSnapshot: () => void;
 
     containerRef: RefObject<HTMLElement> | undefined;
     setContainerRef: (ref: RefObject<HTMLElement>) => void;

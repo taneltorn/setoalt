@@ -11,10 +11,12 @@ import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Admin from "./views/admin/Admin.tsx";
 import {Role} from "./context/AuthContext.tsx";
 import ScoreManager from "./views/scores/ScoreManager.tsx";
+import Error from "./views/Error.tsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
+        // errorElement: <Error/>,
         element: <Layout/>,
         children: [
             {

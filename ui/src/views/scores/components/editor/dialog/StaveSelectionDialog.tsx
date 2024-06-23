@@ -18,6 +18,7 @@ const StaveSelectionDialog: React.FC = () => {
     const [stave, setStave] = useState<Stave>(context.score.data.stave);
 
     const handleSave = () => {
+        context.takeSnapshot();
         context.score.data.stave = stave;
         context.refresh();
         close();

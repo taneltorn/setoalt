@@ -5,11 +5,13 @@ import {ShortKey} from "../utils/keymap";
 import {range} from "../utils/helpers.tsx";
 import {DialogType, useDialogContext} from "../context/DialogContext";
 import {NoteType} from "../models/Note.ts";
+import {useHistory} from "../context/HistoryContext.tsx";
 
 const KeyPressHandler: React.FC = () => {
 
     const audioContext = useAudioContext();
     const scoreContext = useScoreContext();
+    const history = useHistory();
     const dialogContext = useDialogContext();
 
     const handleKeyPress = (event: KeyboardEvent) => {
@@ -27,9 +29,26 @@ const KeyPressHandler: React.FC = () => {
             if (range(9).includes(+event.key)) {
                 const pitch = scoreContext.score.data.stave.lines.map(l => l.pitch).reverse()[+event.key - 1];
                 if (pitch) {
-                    scoreContext.insertOrUpdateNote(pitch, scoreContext.activePosition);
+                    scoreContext.insertOrUpdateNote(pitch, scoreContext.activePosition, scoreContext.activeDuration, true);
                 }
                 return;
+            }
+
+            if (event.ctrlKey || event.metaKey) {
+                switch (event.key.toUpperCase()) {
+                    case ShortKey.UNDO:
+                        if (history.undoStates.length) {
+                            history.undo(scoreContext);
+                        }
+                        return;
+                    case ShortKey.REDO:
+                        if (history.redoStates.length) {
+                            history.redo(scoreContext);
+                        }
+                        return;
+                    default:
+                        break;
+                }
             }
 
             switch (event.key.toUpperCase()) {

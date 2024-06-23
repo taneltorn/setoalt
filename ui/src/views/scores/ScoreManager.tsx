@@ -9,7 +9,7 @@ import {useDevMode} from "../../context/DevModeContext.tsx";
 import {useTranslation} from "react-i18next";
 import {DisplayError} from "../../utils/helpers.tsx";
 import LoadingOverlay from "../../components/LoadingOverlay.tsx";
-import NoDataAlert from "../../components/NoDataAlert.tsx";
+import ScoreNotFound from "./components/ScoreNotFound.tsx";
 import ScoreDetails from "./components/ScoreDetails.tsx";
 import ScoreDialogs from "./components/dialog/ScoreDialogs.tsx";
 import ScoreEditor from "./components/ScoreEditor.tsx";
@@ -50,11 +50,7 @@ const ScoreManager: React.FC<Properties> = ({mode}) => {
         <HistoryContextProvider>
             <ScoreContextProvider>
                 <LoadingOverlay isLoading={scoreService.isLoading}>
-                    <NoDataAlert
-                        visible={noData}
-                        goBackUrl={"/scores"}
-                        goBackText={t("view.scores.details.back")}
-                    />
+                    {noData && <ScoreNotFound/>}
 
                     {mode === "details" && score && <ScoreDetails score={score}/>}
                     {mode === "edit" && score && <ScoreEditor score={score}/>}

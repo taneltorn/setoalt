@@ -6,6 +6,7 @@ import {excludeDuplicates, noteToFrequency, positionToSeconds} from "../utils/he
 import {AudioContext} from "./AudioContext";
 import {ScoreContextProperties} from "./ScoreContext";
 import useAudioPlayer from "../hooks/useAudioPlayer.tsx";
+import {Stave} from "../models/Stave.ts";
 
 interface Properties {
     children: React.ReactNode;
@@ -25,10 +26,10 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
     const [tempo, setTempo] = useState<number>(Playback.DEFAULT_TEMPO);
     const [transposition, setTransposition] = useState<number>(Playback.DEFAULT_TRANSPOSITION);
 
-    const playNotes = (notes: Note[]) => {
-        const unique = excludeDuplicates(notes);
+    const playNotes = (notes: Note[], stave: Stave) => {
+        const unique = excludeDuplicates(notes).filter(n => !n.hidden);
 
-        const frequencies = unique.map(n => noteToFrequency(n, transposition));
+        const frequencies = unique.map(n => noteToFrequency(n, stave, transposition));
         const durations = unique.map(n => n.duration);
 
         player.playNotes(frequencies, durations);
@@ -73,7 +74,7 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
 
         if (!sequenceRef.current) {
             sequenceRef.current = new Tone.Part((_, event) => {
-                playNotes(event.notes)
+                playNotes(event.notes, context.score.data.stave)
                 context.setActivePosition(event.position);
             }, events).start(0);
         }

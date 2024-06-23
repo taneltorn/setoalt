@@ -3,7 +3,7 @@ import NotePitchControls from "./controls/NotePitchControls.tsx";
 import NoteDurationControls from "./controls/NoteDurationControls.tsx";
 import LayoutControls from "./controls/LayoutControls.tsx";
 import {Group} from "@mantine/core";
-import MiscControls from "./controls/MiscControls.tsx";
+import HistoryControls from "./controls/HistoryControls.tsx";
 import {Layout} from "../../../../utils/constants.ts";
 import NoteTypeControls from "./controls/NoteTypeControls.tsx";
 import StaveControls from "./controls/StaveControls.tsx";
@@ -17,7 +17,7 @@ const ScoreEditorPanel: React.FC = () => {
             <NoteDurationControls/>
             <NoteTypeControls/>
             <LayoutControls/>
-            <MiscControls/>
+            <HistoryControls/>
         </Group>
     )
 };

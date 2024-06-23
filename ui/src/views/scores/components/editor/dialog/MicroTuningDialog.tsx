@@ -17,8 +17,9 @@ const MicroTuningDialog: React.FC = () => {
 
     const handleSave = () => {
         if (context.activeNote) {
+            context.takeSnapshot();
             context.activeNote.detune = detune;
-            playNotes([context.activeNote], context.transposition);
+            playNotes([context.activeNote], context.score.data.stave);
             context.refresh();
         }
         close();

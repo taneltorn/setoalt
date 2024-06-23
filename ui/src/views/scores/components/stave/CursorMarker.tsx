@@ -19,16 +19,17 @@ const CursorMarker: React.FC = () => {
         const note = context.getNote(context.cursorPosition, context.activeVoice);
         if (note) return true;
 
-        return !context.activeVoice.occupiedPositions?.includes(context.cursorPosition);
+        return !context.score.data.voices.find(v => v.name === context.activeVoice)?.occupiedPositions?.includes(context.cursorPosition);
     }, [context.isEditMode, context.cursorPosition, context.activeVoice]);
 
     return (<>
             <rect
                 x={x - Layout.stave.note.SPACING / 2 - Layout.stave.note.RADIUS / 2}
+                // x={x}
                 y={y}
                 width={Layout.stave.note.SPACING * 1.5}
                 height={context.dimensions.y}
-                opacity={0.05}
+                opacity={x >= (Layout.stave.container.PADDING_X_START - Layout.stave.note.SPACING) ? 0.05 : 0}
                 fill={"gray"}
                 onClick={() => context.activate(context.cursorPosition)}
             />

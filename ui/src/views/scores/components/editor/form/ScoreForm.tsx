@@ -3,13 +3,12 @@ import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {useTranslation} from "react-i18next";
 import {
     Input,
-    Slider,
     Switch,
     Textarea,
     TextInput
 } from "@mantine/core";
 import {Controller, useFormContext} from "react-hook-form";
-import {Layout, Playback} from "../../../../../utils/constants.ts";
+import {Layout} from "../../../../../utils/constants.ts";
 import {Score} from "../../../../../models/Score.ts";
 
 interface Properties {
@@ -29,12 +28,12 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
 
     return (
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
-
             <Input.Wrapper
                 label={t("view.editor.form.name")}
-                size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                size={Layout.form.LABEL_SIZE}
+                labelProps={Layout.form.LABEL_PROPS}
                 error={errors.name?.message}
-                mb={"lg"}
+                mb={Layout.form.WRAPPER_BOTTOM_MARGIN}
             >
                 <TextInput
                     size={"xl"}
@@ -47,9 +46,10 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
 
             <Input.Wrapper
                 label={t("view.editor.form.visibility")}
-                size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                size={Layout.form.LABEL_SIZE}
+                labelProps={Layout.form.LABEL_PROPS}
                 error={errors.visibility?.message}
-                mb={"lg"}
+                mb={Layout.form.WRAPPER_BOTTOM_MARGIN}
             >
                 <Controller
                     name="visibility"
@@ -67,12 +67,12 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
                 />
             </Input.Wrapper>
 
-
             <Input.Wrapper
                 label={t("view.editor.form.description")}
-                size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                size={Layout.form.LABEL_SIZE}
+                labelProps={Layout.form.LABEL_PROPS}
                 error={errors.description?.message}
-                mt={"xl"}
+                mb={Layout.form.WRAPPER_BOTTOM_MARGIN}
             >
                 <Textarea
                     size={"xl"}
@@ -86,32 +86,11 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
             </Input.Wrapper>
 
             <Input.Wrapper
-                label={t("view.editor.form.defaultTempo")}
-                size={"lg"} labelProps={Layout.form.LABEL_PROPS}
-                error={errors.defaultTempo?.message}
-                mt={"xl"}
-            >
-                <Controller
-                    name="defaultTempo"
-                    control={control}
-                    render={({field}) => (
-                        <Slider
-                            size={"xl"}
-                            mt={"md"}
-                            min={Playback.MIN_TEMPO}
-                            max={Playback.MAX_TEMPO}
-                            value={field.value}
-                            onChange={field.onChange}
-                        />
-                    )}
-                />
-            </Input.Wrapper>
-
-            <Input.Wrapper
                 label={t("view.editor.form.text")}
-                size={"lg"} labelProps={Layout.form.LABEL_PROPS}
+                size={Layout.form.LABEL_SIZE}
+                labelProps={Layout.form.LABEL_PROPS}
                 error={errors.text?.message}
-                mt={"xl"}
+                mb={Layout.form.WRAPPER_BOTTOM_MARGIN}
             >
                 <Textarea
                     size={"xl"}
@@ -121,28 +100,6 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
                     placeholder={t("view.editor.form.text")}
                     {...register("text")}
                     {...handleFocus}
-                />
-            </Input.Wrapper>
-
-            <Input.Wrapper
-                label={t("view.editor.form.defaultTransposition")}
-                size={"lg"} labelProps={Layout.form.LABEL_PROPS}
-                error={errors.defaultTransposition?.message}
-                mt={"xl"}
-            >
-                <Controller
-                    name="defaultTransposition"
-                    control={control}
-                    render={({field}) => (
-                        <Slider
-                            size={"xl"}
-                            mt={"md"}
-                            min={Playback.MIN_TRANSPOSE}
-                            max={Playback.MAX_TRANSPOSE}
-                            value={field.value}
-                            onChange={field.onChange}
-                        />
-                    )}
                 />
             </Input.Wrapper>
         </form>

@@ -1,6 +1,6 @@
 import React from "react";
 import Page from "../../../Page.tsx";
-import {Badge, Grid, useMantineTheme} from "@mantine/core";
+import {Badge, Group, Text, useMantineTheme} from "@mantine/core";
 import {Score} from "../../../models/Score.ts";
 import Header from "../../../components/controls/Header.tsx";
 import {useTranslation} from "react-i18next";
@@ -11,7 +11,6 @@ import {useNavigate} from "react-router-dom";
 import VoiceFilter from "./playback/controls/VoiceFilter.tsx";
 import Stave from "./stave/Stave.tsx";
 import ScorePlaybackPanel from "./playback/ScorePlaybackPanel.tsx";
-import ControlPanel from "../../../components/controls/ControlPanel.tsx";
 import BackLink from "../../../components/controls/BackLink.tsx";
 
 interface Properties {
@@ -27,36 +26,34 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
 
     return (
         <Page title={score.name}>
-            <Header
-                text={score.name}
-                leftSection={<BackLink to={"/scores"}/>}
-                rightSection={
-                    <Badge py={"sm"} bg={score?.visibility === "PUBLIC" ? theme.primaryColor : theme.colors.gray[5]}>
-                        {t(`visibility.${score?.visibility?.toLowerCase()}`)}
-                    </Badge>
-                }/>
-            <Description text={score.description}/>
-
-            <ControlPanel
-                leftSection={<ScorePlaybackPanel/>}
-                rightSection={
-                    auth.currentUser?.isAuthorized &&
+            <Group justify={"space-between"}>
+                <Header
+                    text={score.name}
+                    leftSection={<BackLink to={"/scores"}/>}
+                    rightSection={
+                        <Badge py={"sm"}
+                               bg={score?.visibility === "PUBLIC" ? theme.primaryColor : theme.colors.gray[5]}>
+                            {t(`visibility.${score?.visibility?.toLowerCase()}`)}
+                        </Badge>
+                    }/>
+                {auth.currentUser?.isAuthorized &&
                     <ScoreControls
                         primaryButtonLabel={t("button.edit")}
                         primaryButtonVariant={"outline"}
                         onPrimaryButtonClick={() => navigate("edit")}
                         hideSecondaryButton
                     />}
-            />
+            </Group>
+            <Description text={score.description}/>
+            <ScorePlaybackPanel/>
 
             <VoiceFilter/>
             <Stave score={score}/>
 
-            <Grid>
-                <Grid.Col span={8}>
-                    <pre>{score?.text}</pre>
-                </Grid.Col>
-            </Grid>
+            {score.text && <>
+                <Text fw={600}>Laulusõnad</Text>
+                <pre style={{whiteSpace: "pre-wrap"}}>{score?.text}</pre>
+            </>}
         </Page>
     );
 }
