@@ -33,10 +33,7 @@ const ScoreList: React.FC = () => {
     const fetchData = () => {
         scoreService.fetchScores()
             .then(r => setScores(r))
-            .catch(() => DisplayError(
-                t("toast.error.title"),
-                t("toast.error.fetchData"),
-            ));
+            .catch(() => DisplayError(t("toast.error.fetchData")));
     }
 
     const handleSearch = (value: string) => {
@@ -45,17 +42,14 @@ const ScoreList: React.FC = () => {
 
     const cloneScore = (score: Score) => {
         const clone = {...score};
-        clone.name = `${clone.name} koopia`;
+        clone.name = t("view.scores.clonedScore", {name: clone.name});
 
         scoreService.createScore(clone)
             .then(() => {
-                DisplaySuccess(t("toast.success.title"), t("toast.success.saveScore"));
+                DisplaySuccess(t("toast.success.saveScore"));
                 fetchData();
             })
-            .catch(() => DisplayError(
-                t("toast.error.title"),
-                t("toast.error.saveScore"),
-            ));
+            .catch(() => DisplayError(t("toast.error.saveScore")));
     }
 
     useEffect(() => {

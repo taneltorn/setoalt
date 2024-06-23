@@ -47,7 +47,8 @@
         "visibility": "Nähtavus",
         "createdBy": "Looja"
       },
-      "search": "Otsi noodistust"
+      "search": "Otsi noodistust",
+      "clonedScore": "{{name}} koopia"
     },
     "editor": {
       "title": "Redaktor",
@@ -246,14 +247,12 @@
   },
   "toast": {
     "success": {
-      "title": "OK",
       "saveScore": "Noodistus salvestatud.",
       "saveUser": "Kasutaja salvestatud.",
       "removeScore": "Noodistus kustutatud.",
       "removeUser": "Kasutaja kustutatud."
     },
     "error": {
-      "title": "Viga!",
       "message": "Midagi läks valesti.",
       "fetchData": "Ei õnnestunud andmeid laadida.",
       "wrongCredentials": "Vale kasutajanimi/parool",

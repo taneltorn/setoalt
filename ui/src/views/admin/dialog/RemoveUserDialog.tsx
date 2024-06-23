@@ -15,11 +15,11 @@ const RemoveUserDialog: React.FC = () => {
     const confirm = async () => {
         userService.removeUser(context.id)
             .then(() => {
-                DisplaySuccess(t("toast.success.title"), t("toast.success.removeUser"))
+                DisplaySuccess(t("toast.success.removeUser"))
                 close();
                 context.onRemove && context.onRemove();
             })
-            .catch(() => DisplayError(t("toast.error.title"), t("toast.error.removeUser")));
+            .catch(() => DisplayError(t("toast.error.removeUser")));
     }
 
     return (

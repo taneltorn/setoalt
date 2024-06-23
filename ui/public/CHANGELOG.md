@@ -2,14 +2,15 @@
 
 - Lisatud kaheksandinoodi poolitamine
 - Heli taasesituse kvaliteedi parandamine
-- Lisatud ülemine riba
+- Lisatud võimalus heliväljundit muuta (klaver, viiul, flööt, kitarr)
 - Lisatud noodistuse kloonimine
 - Lisatud undo/redo
 - Lisatud noodijoonte mikrotonaalne muutmine
 - Paigutusvigade parandamine (lisatud ka parem mobiilseadmete tugi)
 - Häälte lisamise ümberkujundamine
 - Admin vaate ümberkujundamine
-- Lisatud 404 vealeht
+- Lisatud üldine vealeht
+- Lisatud ülemine tööriba
 - Lisatud võimalus salvestada transponeeringut
 - Lisatud tulemuste arvu valimine
 - Tempo muutmine viidud üle hüpikaknasse

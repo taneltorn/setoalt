@@ -18,9 +18,7 @@ const useScoreService = () => {
             withCredentials: true
         })
             .then(response => {
-                setTimeout(() => {
-                    setIsLoading(false);
-                }, 200)
+                setIsLoading(false);
                 return response.data;
             })
             .catch(error => {
@@ -38,9 +36,7 @@ const useScoreService = () => {
             withCredentials: true
         })
             .then(response => {
-                setTimeout(() => {
-                    setIsLoading(false);
-                }, 200)
+                setIsLoading(false);
                 return response.data;
             })
             .catch(error => {

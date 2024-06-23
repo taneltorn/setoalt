@@ -26,10 +26,7 @@ const UserManagement: React.FC = () => {
     const fetchData = () => {
         userService.fetchUsers()
             .then(r => setUsers(r))
-            .catch(() => DisplayError(
-                t("toast.error.title"),
-                t("toast.error.fetchData"),
-            ));
+            .catch(() => DisplayError(t("toast.error.fetchData")));
     }
 
     const handleSearch = (value: string) => {

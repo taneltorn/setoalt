@@ -37,11 +37,11 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
                     });
                     return data;
                 } else {
-                    DisplayError(t("toast.error.title"), t("toast.error.wrongCredentials"));
+                    DisplayError(t("toast.error.wrongCredentials"));
                 }
             })
             .catch(() => {
-                DisplayError(t("toast.error.title"), t("toast.error.message"));
+                DisplayError(t("toast.error.message"));
                 setCurrentUser(null);
             });
     }
@@ -54,7 +54,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
             });
             setCurrentUser(null);
         } catch (e) {
-            DisplayError(t("toast.error.title"), t("toast.error.message"));
+            DisplayError(t("toast.error.message"));
             setCurrentUser(null);
         }
     }
@@ -77,7 +77,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
                 }
             })
             .catch(() => {
-                DisplayError(t("toast.error.title"), t("toast.error.message"));
+                DisplayError(t("toast.error.message"));
                 setCurrentUser(null);
             });
     }

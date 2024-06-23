@@ -10,18 +10,25 @@ import Description from "../../../components/controls/Description.tsx";
 import ScorePlaybackPanel from "./playback/ScorePlaybackPanel.tsx";
 import Stave from "./stave/Stave.tsx";
 import {Group} from "@mantine/core";
+import {useAudioContext} from "../../../context/AudioContext.tsx";
 
 const CleanEditor: React.FC = () => {
 
     const {t} = useTranslation();
     const {open} = useDialogContext();
+    const {stopPlayback} = useAudioContext();
+
+    const handleClick = () => {
+        stopPlayback();
+        open(DialogType.SAVE_SCORE)
+    }
 
     return (
         <Page title={t("view.editor.title")}>
             <Group justify={"space-between"}>
                 <Header text={t("view.editor.title")}/>
                 <ScoreControls
-                    onPrimaryButtonClick={() => open(DialogType.SAVE_SCORE)}
+                    onPrimaryButtonClick={handleClick}
                     primaryButtonRequiresAuth
                     hideSecondaryButton
                 />

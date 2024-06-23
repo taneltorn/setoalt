@@ -36,11 +36,11 @@ const SaveScoreDialog: React.FC = () => {
         const saveScore = () => score.id ? scoreService.updateScore(score.id, score) : scoreService.createScore(score);
         saveScore()
             .then(() => {
-                DisplaySuccess(t("toast.success.title"), t("toast.success.saveScore"))
+                DisplaySuccess(t("toast.success.saveScore"))
                 close();
                 navigate("/scores");
             })
-            .catch(() => DisplayError(t("toast.error.title"), t("toast.error.saveScore")));
+            .catch(() => DisplayError(t("toast.error.saveScore")));
     }
 
     return (

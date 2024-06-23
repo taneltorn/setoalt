@@ -39,7 +39,7 @@ const ScoreManager: React.FC<Properties> = ({mode}) => {
                 setScore(r);
             })
             .catch(() => {
-                DisplayError(t("toast.error.title"), t("toast.error.fetchScore"));
+                DisplayError(t("toast.error.fetchScore"));
                 setNoData(true);
             });
 

@@ -20,6 +20,7 @@ import {FaClipboardList} from "react-icons/fa";
 import {IoMusicalNotes} from "react-icons/io5";
 import StaveParameters from "./editor/form/StaveParameters.tsx";
 import {GiFClef} from "react-icons/gi";
+import {useAudioContext} from "../../../context/AudioContext.tsx";
 
 interface Properties {
     score: Score;
@@ -29,22 +30,28 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
 
     const {t} = useTranslation();
     const context = useScoreContext();
+    const {stopPlayback} = useAudioContext();
     const scoreService = useScoreService();
     const navigate = useNavigate();
 
     const methods = useForm<Score>({defaultValues: {...score}});
 
     const onSubmit = async (values: Score) => {
+        stopPlayback();
         const score = {...values, data: {...context.score.data, stave: values.data.stave}};
-        // const score = values;
         score.data.voices.forEach(v => v.hidden = false);
         const saveScore = () => score.id ? scoreService.updateScore(score.id, score) : scoreService.createScore(score);
         saveScore()
             .then(() => {
-                DisplaySuccess(t("toast.success.title"), t("toast.success.saveScore"));
+                DisplaySuccess(t("toast.success.saveScore"));
                 navigate(`/scores/${score.id}`);
             })
-            .catch(() => DisplayError(t("toast.error.title"), t("toast.error.saveScore")));
+            .catch(() => DisplayError(t("toast.error.saveScore")));
+    }
+
+    const handleCancel = () => {
+        stopPlayback();
+        navigate(`/scores/${score?.id}`);
     }
 
     return (
@@ -53,7 +60,7 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
                 <Header text={score.name} leftSection={<BackLink to={`/scores/${score.id}`}/>}/>
                 <ScoreControls
                     onPrimaryButtonClick={methods.handleSubmit(onSubmit)}
-                    onSecondaryButtonClick={() => navigate(`/scores/${score?.id}`)}
+                    onSecondaryButtonClick={handleCancel}
                 />
             </Group>
 

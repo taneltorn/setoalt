@@ -36,11 +36,11 @@ const SaveUserDialog: React.FC = () => {
         const saveUser = () => context.id ? userService.updateUser(context.id, values) : userService.createUser(values);
         saveUser()
             .then(() => {
-                DisplaySuccess(t("toast.success.title"), t("toast.success.saveUser"))
+                DisplaySuccess(t("toast.success.saveUser"))
                 handleClose();
                 context.onSave && context.onSave();
             })
-            .catch(() => DisplayError(t("toast.error.title"), t("toast.error.saveUser")));
+            .catch(() => DisplayError(t("toast.error.saveUser")));
     }
 
     const handleClose = () => {

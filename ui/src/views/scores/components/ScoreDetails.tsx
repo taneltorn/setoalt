@@ -12,6 +12,7 @@ import VoiceFilter from "./playback/controls/VoiceFilter.tsx";
 import Stave from "./stave/Stave.tsx";
 import ScorePlaybackPanel from "./playback/ScorePlaybackPanel.tsx";
 import BackLink from "../../../components/controls/BackLink.tsx";
+import {useAudioContext} from "../../../context/AudioContext.tsx";
 
 interface Properties {
     score: Score;
@@ -21,8 +22,14 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
 
     const [t] = useTranslation();
     const theme = useMantineTheme();
+    const {stopPlayback} = useAudioContext();
     const auth = useAuth();
     const navigate = useNavigate();
+
+    const handleClick = () => {
+        stopPlayback();
+        navigate("edit");
+    }
 
     return (
         <Page title={score.name}>
@@ -40,7 +47,7 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
                     <ScoreControls
                         primaryButtonLabel={t("button.edit")}
                         primaryButtonVariant={"outline"}
-                        onPrimaryButtonClick={() => navigate("edit")}
+                        onPrimaryButtonClick={handleClick}
                         hideSecondaryButton
                     />}
             </Group>

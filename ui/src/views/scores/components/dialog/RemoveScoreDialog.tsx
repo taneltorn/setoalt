@@ -15,11 +15,11 @@ const RemoveScoreDialog: React.FC = () => {
     const confirm = async () => {
         scoreService.removeScore(context.id)
             .then(() => {
-                DisplaySuccess(t("toast.success.title"), t("toast.success.removeScore"))
+                DisplaySuccess(t("toast.success.removeScore"))
                 close();
                 context.onRemove && context.onRemove();
             })
-            .catch(() => DisplayError(t("toast.error.title"), t("toast.error.removeScore")));
+            .catch(() => DisplayError(t("toast.error.removeScore")));
     }
 
     return (

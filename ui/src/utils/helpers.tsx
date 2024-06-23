@@ -9,9 +9,10 @@ import {Coordinates} from "../model/Coordinates";
 import {ScoreContextProperties} from "../context/ScoreContext";
 import {DefaultVoices, NoteRange} from "./dictionaries.ts";
 import {notifications} from "@mantine/notifications";
-import {IoMdAlert} from "react-icons/io";
 import {StavePPT} from "../staves/StavePPT.ts";
 import {Stave} from "../model/Stave.ts";
+import {FaRegCheckCircle} from "react-icons/fa";
+import {RiErrorWarningFill} from "react-icons/ri";
 
 export const isEmpty = (object: any) => {
     return !object || Object.keys(object).length === 0 || object.length === 0;
@@ -184,21 +185,23 @@ export const wouldProduceOverlap = (note: Note, occupiedPositions: number[] | un
     return positionRange.some(p => occupiedPositions && occupiedPositions.includes(p));
 }
 
-export const DisplayError = (title: string, message: string) => {
+export const DisplayError = (message: string) => {
     notifications.show({
-        title: title,
+        color: 'red',
         message: message,
-        icon: <IoMdAlert color={"red"} size={40}/>,
-        color: "white"
+        p: "md",
+        withBorder: true,
+        icon: <RiErrorWarningFill size={32}/>,
     });
 }
 
-export const DisplaySuccess = (title: string, message: string) => {
+export const DisplaySuccess = (message: string) => {
     notifications.show({
-        title: title,
+        color: 'white',
         message: message,
-        icon: <IoMdAlert color={"green"} size={40}/>,
-        color: "white"
+        p: "md",
+        withBorder: true,
+        icon: <FaRegCheckCircle color={"green"} size={32}/>,
     });
 }
 

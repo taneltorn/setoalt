@@ -63,7 +63,7 @@ const Layout: React.FC = () => {
                                 </Group>
                             </Alert>
                             :
-                            <Alert py={4} icon={<IoAlertCircleOutline size={24}/>}>
+                            <Alert py={4} color={"blue"} icon={<IoAlertCircleOutline size={24}/>}>
                                 Tegemist on arendusjärgus oleva rakendusega.
                             </Alert>}
 
