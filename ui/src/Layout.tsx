@@ -1,6 +1,6 @@
 import React from 'react';
 import {Link, Outlet} from "react-router-dom";
-import {Alert, AppShell, Burger, Code, Group, Switch, Text} from "@mantine/core";
+import {Alert, AppShell, Box, Burger, Code, Group, Switch, Text} from "@mantine/core";
 import Sidebar from "./components/sidebar/Sidebar.tsx";
 import {useDisclosure} from "@mantine/hooks";
 import packageInfo from "../package.json";
@@ -31,48 +31,50 @@ const Layout: React.FC = () => {
             }}
         >
             <AppShell.Header>
-                <Group justify={"space-between"} p={"md"}>
+                <Box p={"md"}>
                     <Burger
                         opened={opened}
                         onClick={toggle}
                         hiddenFrom="md"
                         size="md"
                     />
-                    <Group visibleFrom={"md"}>
-                        <Link to={"/"}>
-                            <Logo/>
-                        </Link>
+                    <Group visibleFrom={"md"} justify={"space-between"}>
+                        <Group>
+                            <Link to={"/"}>
+                                <Logo/>
+                            </Link>
 
-                        <Code> {packageInfo.version}</Code>
-                        {auth.currentUser?.isAdmin &&
-                            <Switch
-                                className={"hover-pointer"}
-                                checked={isDevMode}
-                                label={"Dev mode"}
-                                onChange={() => setIsDevMode(!isDevMode)}
-                            />}
+                            <Code> {packageInfo.version}</Code>
+
+                            {import.meta.env.VITE_ENVIRONMENT === "dev"
+                                ?
+                                <Alert py={4} icon={<IoAlertCircleOutline size={24}/>}>
+                                    <Group justify={"start"}>
+                                        Kasuta rakenduse versiooni, mis asub aadressil:
+                                        <Link target={"_blank"} to={"http://157.230.76.45"}>http://157.230.76.45 </Link>
+                                    </Group>
+                                </Alert>
+                                :
+                                <Alert py={4} color={"blue"} icon={<IoAlertCircleOutline size={24}/>}>
+                                    Tegemist on arendusjärgus oleva rakendusega.
+                                </Alert>}
+
+                            {auth.currentUser?.isAdmin &&
+                                <Switch
+                                    className={"hover-pointer"}
+                                    checked={isDevMode}
+                                    label={"Dev mode"}
+                                    onChange={() => setIsDevMode(!isDevMode)}
+                                />}
+                        </Group>
+                        <Group justify={"end"}>
+                            {UserIcons.get(auth.currentUser?.role || "guest")}
+                            <Text>
+                                {auth.currentUser?.firstname || auth.currentUser?.username || t("role.guest")}
+                            </Text>
+                        </Group>
                     </Group>
-
-                    <Group>
-                        {import.meta.env.VITE_ENVIRONMENT === "dev"
-                            ?
-                            <Alert py={4} icon={<IoAlertCircleOutline size={24}/>}>
-                                <Group justify={"start"}>
-                                    Kasuta rakenduse versiooni, mis asub aadressil:
-                                    <Link target={"_blank"} to={"http://157.230.76.45"}>http://157.230.76.45 </Link>
-                                </Group>
-                            </Alert>
-                            :
-                            <Alert py={4} color={"blue"} icon={<IoAlertCircleOutline size={24}/>}>
-                                Tegemist on arendusjärgus oleva rakendusega.
-                            </Alert>}
-
-                        {UserIcons.get(auth.currentUser?.role || "guest")}
-                        <Text>
-                            {auth.currentUser?.firstname || auth.currentUser?.username || t("role.guest")}
-                        </Text>
-                    </Group>
-                </Group>
+                </Box>
             </AppShell.Header>
 
             <AppShell.Navbar p={"md"}>
