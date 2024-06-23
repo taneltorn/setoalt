@@ -17,7 +17,7 @@ export const Layout = {
             RADIUS: 8,
             RADIUS_SMALL: 6,
             REPEATING_OFFSET: 7,
-            SPACING: 54,
+            SPACING: 60,
             SHAPE: 0,
             DIMMED_OPACITY: 0.2,
             QUARTER_NOTE_STROKE: 4,
