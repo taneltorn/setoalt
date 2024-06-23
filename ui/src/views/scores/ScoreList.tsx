@@ -63,8 +63,8 @@ const ScoreList: React.FC = () => {
 
     return (
         <Page title={t("view.scores.title")}>
-            <Header text={t("view.scores.title")}/>
-            <Description text={t("view.scores.description")}/>
+            <Header>{t("view.scores.title")}</Header>
+            <Description>{t("view.scores.description")}</Description>
 
             <Group justify={"space-between"}>
                 <SearchInput

@@ -2,16 +2,15 @@ import React, {ReactNode} from 'react';
 import {Grid, Text} from "@mantine/core";
 
 interface Properties {
-    text?: string | ReactNode;
-    span?: number;
+    children?: ReactNode;
 }
 
 const Description: React.FC<Properties> = (props) => {
 
     return (
         <Grid mb={"md"}>
-            <Grid.Col span={props.span || 8}>
-                <Text>{props.text}</Text>
+            <Grid.Col span={{xs: 12, lg: 8}}>
+                <Text>{props.children}</Text>
             </Grid.Col>
         </Grid>
     )

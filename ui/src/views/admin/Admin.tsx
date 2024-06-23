@@ -14,8 +14,8 @@ const Admin: React.FC = () => {
 
     return (
         <Page title={t("view.admin.title")}>
-            <Header text={t("view.admin.title")}/>
-            <Description text={t("view.admin.description")}/>
+            <Header>{t("view.admin.title")}</Header>
+            <Description>{t("view.admin.description")}</Description>
 
             <Tabs defaultValue="users">
                 <Tabs.List>

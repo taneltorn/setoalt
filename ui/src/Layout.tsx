@@ -32,14 +32,14 @@ const Layout: React.FC = () => {
         >
             <AppShell.Header>
                 <Box p={"md"}>
-                    <Burger
-                        opened={opened}
-                        onClick={toggle}
-                        hiddenFrom="md"
-                        size="md"
-                    />
-                    <Group visibleFrom={"md"} justify={"space-between"}>
-                        <Group>
+                    <Group justify={"space-between"}>
+                        <Burger
+                            opened={opened}
+                            onClick={toggle}
+                            hiddenFrom="md"
+                            size="md"
+                        />
+                        <Group visibleFrom={"md"}>
                             <Link to={"/"}>
                                 <Logo/>
                             </Link>
@@ -51,7 +51,8 @@ const Layout: React.FC = () => {
                                 <Alert py={4} icon={<IoAlertCircleOutline size={24}/>}>
                                     <Group justify={"start"}>
                                         Kasuta rakenduse versiooni, mis asub aadressil:
-                                        <Link target={"_blank"} to={"http://157.230.76.45"}>http://157.230.76.45 </Link>
+                                        <Link target={"_blank"}
+                                              to={"http://157.230.76.45"}>http://157.230.76.45 </Link>
                                     </Group>
                                 </Alert>
                                 :

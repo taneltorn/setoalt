@@ -27,7 +27,7 @@ const SearchInput: React.FC<Properties> = (props) => {
 
     return (
         <Input
-            size={"lg"}
+            size={"md"}
             value={search}
             placeholder={props.placeholder || t("placeholder.search")}
             onChange={e => handleChange(e.currentTarget.value)}

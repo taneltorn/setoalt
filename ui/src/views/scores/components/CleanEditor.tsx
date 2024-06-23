@@ -9,7 +9,6 @@ import Header from "../../../components/controls/Header.tsx";
 import Description from "../../../components/controls/Description.tsx";
 import ScorePlaybackPanel from "./playback/ScorePlaybackPanel.tsx";
 import Stave from "./stave/Stave.tsx";
-import {Group} from "@mantine/core";
 import {useAudioContext} from "../../../context/AudioContext.tsx";
 
 const CleanEditor: React.FC = () => {
@@ -25,16 +24,16 @@ const CleanEditor: React.FC = () => {
 
     return (
         <Page title={t("view.editor.title")}>
-            <Group justify={"space-between"}>
-                <Header text={t("view.editor.title")}/>
+            <Header rightSection={
                 <ScoreControls
                     onPrimaryButtonClick={handleClick}
                     primaryButtonRequiresAuth
                     hideSecondaryButton
                 />
-            </Group>
-
-            <Description text={t("view.editor.description")}/>
+            }>
+                {t("view.editor.title")}
+            </Header>
+            <Description>{t("view.editor.description")}</Description>
 
             <ScorePlaybackPanel/>
 

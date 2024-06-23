@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid, Group, Tabs, Text} from "@mantine/core";
+import {Grid, Tabs, Text} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import Page from "../../../Page.tsx";
 import ScoreEditorPanel from "./editor/ScoreEditorPanel.tsx";
@@ -56,13 +56,15 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
 
     return (
         <Page title={score.name}>
-            <Group justify={"space-between"}>
-                <Header text={score.name} leftSection={<BackLink to={`/scores/${score.id}`}/>}/>
-                <ScoreControls
-                    onPrimaryButtonClick={methods.handleSubmit(onSubmit)}
-                    onSecondaryButtonClick={handleCancel}
-                />
-            </Group>
+            <Header
+                leftSection={<BackLink to={`/scores/${score.id}`}/>}
+                rightSection={
+                    <ScoreControls
+                        onPrimaryButtonClick={methods.handleSubmit(onSubmit)}
+                        onSecondaryButtonClick={handleCancel}
+                    />
+                }
+            >{score.name}</Header>
 
             <Tabs defaultValue="editor">
                 <Tabs.List>

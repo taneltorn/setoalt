@@ -33,25 +33,28 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
 
     return (
         <Page title={score.name}>
-            <Group justify={"space-between"}>
-                <Header
-                    text={score.name}
-                    leftSection={<BackLink to={"/scores"}/>}
-                    rightSection={
-                        <Badge py={"sm"}
-                               bg={score?.visibility === "PUBLIC" ? theme.primaryColor : theme.colors.gray[5]}>
-                            {t(`visibility.${score?.visibility?.toLowerCase()}`)}
-                        </Badge>
-                    }/>
-                {auth.currentUser?.isAuthorized &&
-                    <ScoreControls
-                        primaryButtonLabel={t("button.edit")}
-                        primaryButtonVariant={"outline"}
-                        onPrimaryButtonClick={handleClick}
-                        hideSecondaryButton
-                    />}
-            </Group>
-            <Description text={score.description}/>
+            <Header
+                leftSection={<BackLink to={"/scores"}/>}
+                rightSection={<>
+                    {auth.currentUser?.isAuthorized &&
+                        <ScoreControls
+                            primaryButtonLabel={t("button.edit")}
+                            primaryButtonVariant={"outline"}
+                            onPrimaryButtonClick={handleClick}
+                            hideSecondaryButton
+                        />}
+                </>
+                }>
+                <Group>
+                    {score.name}
+                    <Badge py={"sm"}
+                           bg={score?.visibility === "PUBLIC" ? theme.primaryColor : theme.colors.gray[5]}>
+                        {t(`visibility.${score?.visibility?.toLowerCase()}`)}
+                    </Badge>
+                </Group>
+            </Header>
+            <Description>{score.description}</Description>
+
             <ScorePlaybackPanel/>
 
             <VoiceFilter/>

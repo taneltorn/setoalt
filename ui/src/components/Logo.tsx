@@ -6,9 +6,8 @@ const Logo: React.FC = () => {
     return (
         <Box display={"flex"}>
             <Text fz={18} ff={"Roboto"}>Seto</Text>
-            <Text fz={24} fw={"bold"} ff={"Roboto"} ml={-4}>alt.</Text>
+            <Text fz={24} fw={"bold"} ff={"Roboto"}>alt.</Text>
         </Box>
-
     );
 }
 
