@@ -23,7 +23,7 @@ export const calculateBreakCoords = (position: number, context: ScoreContextProp
 }
 
 export const calculateDividerCoords = (divider: Divider, context: ScoreContextProperties): XY => {
-    const offset = getOffset(divider.position, context, 0, true);
+    const offset = getOffset(divider.position, context.score.data.breaks, context.dimensions, 0, true);
 
     const x = Layout.stave.container.PADDING_X_START
         + divider.position * Layout.stave.note.SPACING
@@ -40,7 +40,7 @@ export const calculateDividerCoords = (divider: Divider, context: ScoreContextPr
 }
 
 export const calculateLyricCoords = (lyric: Lyric, context: ScoreContextProperties): XY => {
-    const offset = getOffset(lyric.position, context);
+    const offset = getOffset(lyric.position, context.score.data.breaks, context.dimensions);
 
     const x = Layout.stave.container.PADDING_X_START
         + lyric.position * Layout.stave.note.SPACING
@@ -55,7 +55,7 @@ export const calculateLyricCoords = (lyric: Lyric, context: ScoreContextProperti
 }
 
 export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreContextProperties): XY => {
-    const offset = getOffset(note.position, context);
+    const offset = getOffset(note.position, context.score.data.breaks, context.dimensions);
 
     if (voice.type === VoiceType.KILLO) {
         const positionOccupied = context.score.data.voices
@@ -103,7 +103,7 @@ export const calculateNoteOpacity = (note: Note, voice: Voice, context: ScoreCon
 }
 
 export const calculateCurrentPositionCoords = (context: ScoreContextProperties): XY => {
-    const offset = getOffset(context.activePosition, context);
+    const offset = getOffset(context.activePosition, context.score.data.breaks, context.dimensions);
 
     const x = Layout.stave.container.PADDING_X_START
         + context.activePosition * Layout.stave.note.SPACING
@@ -117,7 +117,7 @@ export const calculateCurrentPositionCoords = (context: ScoreContextProperties):
 }
 
 export const calculateCursorCoords = (context: ScoreContextProperties): XY => {
-    const offset = getOffset(context.cursorPosition, context);
+    const offset = getOffset(context.cursorPosition, context.score.data.breaks, context.dimensions);
 
     const x = Layout.stave.container.PADDING_X_START
         + context.cursorPosition * Layout.stave.note.SPACING
@@ -159,17 +159,15 @@ export const calculateStaveBlockCoords = (index: number, context: ScoreContextPr
     }
 }
 
-export const getOffset = (position: number, context: ScoreContextProperties, indexOffsetY?: number, greedy?: boolean): XY => {
-    const breakpoints = context.score.data.breaks;
-
-    let index = breakpoints.findIndex(b => greedy ? position <= b : position < b);
+export const getOffset = (position: number, breaks: number[], dimensions: StaveDimensions, indexOffsetY?: number, greedy?: boolean): XY => {
+    let index = breaks.findIndex(b => greedy ? position <= b : position < b);
     if (index === -1) {
-        index = breakpoints.length;
+        index = breaks.length;
     }
 
     return {
-        x: index > 0 && breakpoints[index - 1] ? breakpoints[index - 1] * Layout.stave.note.SPACING : 0,
-        y: (index + (indexOffsetY || 0)) * (context.dimensions.y),
+        x: index > 0 && breaks[index - 1] ? breaks[index - 1] * Layout.stave.note.SPACING : 0,
+        y: (index + (indexOffsetY || 0)) * (dimensions.y),
     };
 }
 

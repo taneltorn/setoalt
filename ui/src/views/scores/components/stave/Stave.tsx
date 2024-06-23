@@ -38,7 +38,6 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                 overflowX: "scroll",
                 height: context.dimensions.y * context.dimensions.blocks + 30
             }}>
-
             <svg id={"notation"}
                  ref={svgRef}
                  width={context.dimensions.x}

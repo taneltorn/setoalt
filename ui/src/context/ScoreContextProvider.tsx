@@ -20,7 +20,7 @@ import {DefaultVoices} from "../utils/dictionaries.ts";
 import {DividerType} from "../model/Divider.ts";
 import {StaveDimensions} from "../model/Dimensions.ts";
 import useCursorCoords from "../hooks/useCursorCoords.tsx";
-import {calculateStaveDimensions} from "../utils/calculation.helpers.tsx";
+import {calculateStaveDimensions, getOffset} from "../utils/calculation.helpers.tsx";
 import {Layout, Playback} from "../utils/constants.ts";
 import {HalfPosition} from "../model/HalfPosition.ts";
 import {useHistory} from "./HistoryContext.tsx";
@@ -57,7 +57,28 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
             }
         }
         setActivePosition(position);
+        scrollToPosition(position)
     }
+
+    const scrollToPosition = (position: number) => {
+        if (containerRef?.current) {
+            const offset = getOffset(position, context.score.data.breaks, context.dimensions);
+            const x = position * Layout.stave.note.SPACING - offset.x;
+
+            const y = containerRef.current.offsetTop + offset.y - Layout.stave.container.SYMBOLS_BAR;
+            containerRef.current.scrollTo({
+                left: x,
+                behavior: 'smooth'
+            });
+            if ((window.scrollY + containerRef.current.offsetTop) < y || (window.scrollY + containerRef.current.offsetTop) > (y + dimensions.y)) {
+                console.log(`scrolling to ${y}`)
+                window.scrollTo({
+                    top: y - containerRef.current.offsetTop,
+                    behavior: 'smooth'
+                });
+            }
+        }
+    };
 
     const next = () => {
         // todo take half positions into account (currently they are skipped)
@@ -160,7 +181,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
             const voice = score.data.voices.find(v => v.name === activeVoice);
             if (voice) {
                 voice.notes = voice.notes.filter(n => n.position !== note.position);
-                voice.occupiedPositions =  excludeNotePositionRange(note, voice.occupiedPositions)
+                voice.occupiedPositions = excludeNotePositionRange(note, voice.occupiedPositions)
             }
             refresh();
         }
@@ -178,7 +199,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
                 shiftNotes(note.position, offset);
             }
             note.duration = duration;
-            audioContext.playNotes([note],  score.data.stave);
+            audioContext.playNotes([note], score.data.stave);
         }
     }
 
@@ -438,6 +459,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
         getNote,
         getNotes,
+        scrollToPosition,
 
         shiftLeft,
         shiftRight,

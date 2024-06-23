@@ -84,6 +84,7 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
             sequenceRef.current = new Tone.Part((_, event) => {
                 playNotes(event.notes, context.score.data.stave)
                 context.setActivePosition(event.position);
+                context.scrollToPosition(event.position);
             }, events).start(0);
         }
 

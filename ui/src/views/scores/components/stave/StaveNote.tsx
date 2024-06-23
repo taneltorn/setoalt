@@ -6,6 +6,7 @@ import {Voice} from "../../../../model/Voice.ts";
 import {calculateNoteCoords, calculateNoteOpacity} from "../../../../utils/calculation.helpers.tsx";
 import {Color, Layout} from "../../../../utils/constants.ts";
 import {isHighlighted} from "../../../../utils/helpers.tsx";
+import DetuneIndicator from "./DetuneIndicator.tsx";
 
 interface Properties {
     note: Note;
@@ -27,19 +28,33 @@ const StaveNote: React.FC<Properties> = ({note, voice}) => {
         return calculateNoteOpacity(note, voice, context);
     }, [context.activeVoice, context.duplicateNoteKeys, voicesDependency]);
 
+    const color = isHighlighted(note, context) ? Color.stave.HIGHLIGHT : note.color || voice.color || "black";
+
     return (
-        <circle
-            className={"hover-pointer"}
-            cx={x}
-            cy={y}
-            r={note.type === NoteType.SMALL ? Layout.stave.note.RADIUS_SMALL : Layout.stave.note.RADIUS}
-            fill={isHighlighted(note, context) ? Color.stave.HIGHLIGHT : note.color || voice.color || "black"}
-            opacity={opacity}
-            onClick={() => context.activate(note.position)}
-        >
-            <title>XXX{t(`pitch.${note.pitch.toLowerCase()}`)}</title>
-        </circle>
-    );
+        <>
+            <circle
+                className={"hover-pointer"}
+                cx={x}
+                cy={y}
+                r={note.type === NoteType.SMALL ? Layout.stave.note.RADIUS_SMALL : Layout.stave.note.RADIUS}
+                fill={isHighlighted(note, context) ? Color.stave.HIGHLIGHT : note.color || voice.color || "black"}
+                opacity={opacity}
+                onClick={() => context.activate(note.position)}
+            >
+                <title>{t(`pitch.${note.pitch.toLowerCase()}`)}</title>
+            </circle>
+            {note.detune &&
+                <DetuneIndicator
+                detune={note.detune}
+                x={x}
+                y={y}
+                opacity={opacity}
+                color={color}
+            />}
+        </>
+
+    )
+        ;
 };
 
 export default StaveNote;

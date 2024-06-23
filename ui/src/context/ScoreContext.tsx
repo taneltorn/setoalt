@@ -33,6 +33,7 @@ export interface ScoreContextProperties {
 
     getNote: (position: number, voiceName?: string) => Note | undefined;
     getNotes: (position: number) => Note[];
+    scrollToPosition: (position: number) => void;
 
     insertOrUpdateNote: (pitch: string, position?: number, duration?: string, moveToNext?: boolean) => void;
     removeNote: (position: number, moveToPrevious?: boolean) => void;
