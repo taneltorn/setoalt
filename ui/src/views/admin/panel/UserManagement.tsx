@@ -4,7 +4,7 @@ import {Badge, Button, Group, useMantineTheme} from "@mantine/core";
 import useUserService from "../../../services/UserService.tsx";
 import {DisplayError} from "../../../utils/helpers.tsx";
 import {DialogType, useDialogContext} from "../../../context/DialogContext.tsx";
-import {User} from "../../../models/User.ts";
+import {User} from "../../../model/User.ts";
 import PaginatedTable, {Row} from "../../../components/table/PaginatedTable.tsx";
 import {FaPencil, FaRegTrashCan} from "react-icons/fa6";
 import {Role} from "../../../context/AuthContext.tsx";
@@ -95,7 +95,7 @@ const UserManagement: React.FC = () => {
                             <IconButton
                                 title={t("button.remove")}
                                 icon={<FaRegTrashCan size={20}/>}
-                                onClick={() => open(DialogType.REMOVE_SCORE, {
+                                onClick={() => open(DialogType.REMOVE_USER, {
                                     id: user.id,
                                     username: user.username,
                                     onRemove: fetchData

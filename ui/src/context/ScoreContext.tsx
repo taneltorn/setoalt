@@ -1,9 +1,9 @@
 import React, {RefObject, useContext} from 'react';
-import {Note, NoteType} from "../models/Note";
+import {Note, NoteType} from "../model/Note";
 import {isEmpty} from "../utils/helpers.tsx";
-import {Score} from "../models/Score";
-import {StaveDimensions} from "../models/Dimensions.ts";
-import {HalfPosition} from "../models/HalfPosition.ts";
+import {Score} from "../model/Score";
+import {StaveDimensions} from "../model/Dimensions.ts";
+import {HalfPosition} from "../model/HalfPosition.ts";
 
 export interface ScoreContextProperties {
 

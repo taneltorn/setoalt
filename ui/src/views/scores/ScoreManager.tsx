@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Score} from "../../models/Score.ts";
+import {Score} from "../../model/Score.ts";
 import ScoreContextProvider from "../../context/ScoreContextProvider.tsx";
 import {useParams} from "react-router";
 import useScoreService from "../../services/ScoreService.tsx";

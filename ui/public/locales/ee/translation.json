@@ -63,7 +63,7 @@
         "description": "Kirjeldus",
         "defaultTempo": "Vaikimisi tempo (BPM)",
         "defaultTransposition": "Vaikimisi helikõrgus (pooltoonides)",
-        "lineDetuning": "Noodijoonte mikrotonaalsus (tsentides)",
+        "lineDetune": "Noodijoonte mikrotonaalsus (tsentides)",
         "text": "Laulusõnad",
         "visibility": "Nähtavus"
       }
@@ -181,14 +181,14 @@
     },
     "microTuning": {
       "title": "Mikrotonaalsus",
-      "description": "Muuda noodi {{pitch}} kõrgust tsentides."
+      "description": "Muuda noodi {{pitch}} helikõrgust."
     },
     "staveSelection": {
       "title": "Noodijoonestiku valimine"
     },
     "transpose": {
       "title": "Transponeerimine",
-      "description": "Muuda helikõrgust noodistust pooltoonides."
+      "description": "Muuda taasesituse helikõrgust."
     },
     "changeTempo": {
       "title": "Muuda tempot",
@@ -201,6 +201,11 @@
   },
   "placeholder": {
     "search": "Otsi"
+  },
+  "unit": {
+    "bpm": "BPM",
+    "semitones": "Pooltoonides",
+    "cents": "Tsentides"
   },
   "button": {
     "ok": "OK",
@@ -219,7 +224,8 @@
     "pngExport": "PNG",
     "showAll": "Näita kõiki",
     "showActive": "Näita aktiivset",
-    "removeVoice": "Kustuta hääl"
+    "removeVoice": "Kustuta hääl",
+    "changeInstrument": "Muuda heliväljundit"
   },
   "table": {
     "results": "Kokku: {{count}} | Kuva:",
@@ -324,5 +330,12 @@
     "2n": "2n",
     "4n": "4n",
     "8n": "8n"
+  },
+  "instrument": {
+    "synth": "Süntesaator",
+    "piano": "Klaver",
+    "violin": "Viiul",
+    "flute": "Flööt",
+    "guitar": "Kitarr"
   }
 }

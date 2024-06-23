@@ -9,7 +9,7 @@ import {
 } from "@mantine/core";
 import {Controller, useFormContext} from "react-hook-form";
 import {Layout} from "../../../../../utils/constants.ts";
-import {Score} from "../../../../../models/Score.ts";
+import {Score} from "../../../../../model/Score.ts";
 
 interface Properties {
     onSubmit: (values: Score) => void;

@@ -1,17 +1,17 @@
 import * as Tone from "tone";
 import {Frequency} from "tone";
-import {Note} from "../models/Note";
-import {Voice} from "../models/Voice";
+import {Note} from "../model/Note";
+import {Voice} from "../model/Voice";
 import {Layout} from "./constants";
-import {Score} from "../models/Score";
-import {Line} from "../models/Line";
-import {Coordinates} from "../models/Coordinates";
+import {Score} from "../model/Score";
+import {Line} from "../model/Line";
+import {Coordinates} from "../model/Coordinates";
 import {ScoreContextProperties} from "../context/ScoreContext";
 import {DefaultVoices, NoteRange} from "./dictionaries.ts";
 import {notifications} from "@mantine/notifications";
 import {IoMdAlert} from "react-icons/io";
 import {StavePPT} from "../staves/StavePPT.ts";
-import {Stave} from "../models/Stave.ts";
+import {Stave} from "../model/Stave.ts";
 
 export const isEmpty = (object: any) => {
     return !object || Object.keys(object).length === 0 || object.length === 0;

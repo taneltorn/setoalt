@@ -16,7 +16,7 @@ import Error from "./views/Error.tsx";
 const router = createBrowserRouter([
     {
         path: "/",
-        // errorElement: <Error/>,
+        errorElement: <Error/>,
         element: <Layout/>,
         children: [
             {

@@ -1,12 +1,14 @@
 import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {Note} from "../models/Note";
+import {Note} from "../model/Note";
 import * as Tone from "tone";
 import {Playback} from "../utils/constants";
 import {excludeDuplicates, noteToFrequency, positionToSeconds} from "../utils/helpers.tsx";
 import {AudioContext} from "./AudioContext";
 import {ScoreContextProperties} from "./ScoreContext";
 import useAudioPlayer from "../hooks/useAudioPlayer.tsx";
-import {Stave} from "../models/Stave.ts";
+import {Stave} from "../model/Stave.ts";
+import {Instrument} from "../model/Instrument.ts";
+import {Instruments} from "../utils/dictionaries.ts";
 
 interface Properties {
     children: React.ReactNode;
@@ -25,6 +27,12 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
     const [tempo, setTempo] = useState<number>(Playback.DEFAULT_TEMPO);
     const [transposition, setTransposition] = useState<number>(Playback.DEFAULT_TRANSPOSITION);
+    const [instrument, setInstrument] = useState<Instrument>(Instruments.find(i => i.name === Playback.DEFAULT_INSTRUMENT) || Instruments[0]);
+
+    const changeInstrument = (instrument: Instrument) => {
+        setInstrument(instrument);
+        player.load(instrument);
+    }
 
     const playNotes = (notes: Note[], stave: Stave) => {
         const unique = excludeDuplicates(notes).filter(n => !n.hidden);
@@ -123,9 +131,10 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
         stopPlayback,
         resetPlayback,
 
+        instrument, setInstrument: changeInstrument,
         tempo, setTempo,
         transposition, setTransposition,
-    }), [isPlaying, tempo, transposition]);
+    }), [isPlaying, instrument, tempo, transposition]);
 
     return (
         <AudioContext.Provider value={context}>

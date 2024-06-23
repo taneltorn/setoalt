@@ -3,20 +3,15 @@ import {useScoreContext} from "../context/ScoreContext.tsx";
 import useCursorCoords from "../hooks/useCursorCoords.tsx";
 import {Grid} from "@mantine/core";
 import {useAudioContext} from "../context/AudioContext.tsx";
-// import {useHistory} from "../context/HistoryContext.tsx";
 
 const DevInfo: React.FC = () => {
 
     const context = useScoreContext();
     const audioContext = useAudioContext();
-    // const history = useHistory();
     const {x, y, cx, cy} = useCursorCoords(context.containerRef, context.dimensions);
 
     return (
             <div style={{marginTop: 20, padding: "10px 15px", backgroundColor: "#f9f9f9", borderRadius: "16px"}}>
-                {/*<p>{JSON.stringify(history.undoStates.map(h => h.score.data.voices[0].notes.map(n => n.position)) || [])}</p>*/}
-                {/*<p>{JSON.stringify(history.redoStates.map(h => h.score.data.voices[0].notes.map(n => n.position)) || [])}</p>*/}
-                {/*<p>{JSON.stringify(history.recoverStates.map(h => h.score.data.voices[0].notes.map(n => n.position)) || [])}</p>*/}
                 <code>
                     <Grid>
                         <Grid.Col span={6}>

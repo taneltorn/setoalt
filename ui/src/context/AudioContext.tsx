@@ -1,13 +1,9 @@
 import React, {useContext} from 'react';
-import {Note} from "../models/Note";
+import {Note} from "../model/Note";
 import {isEmpty} from "../utils/helpers.tsx";
 import {ScoreContextProperties} from "./ScoreContext";
-import {Stave} from "../models/Stave.ts";
-
-export interface PlaybackOptions {
-    detune?: number;
-    transpose?: number;
-}
+import {Stave} from "../model/Stave.ts";
+import {Instrument} from "../model/Instrument.ts";
 
 export interface AudioContextProperties {
 
@@ -19,6 +15,9 @@ export interface AudioContextProperties {
     startPlayback: (context: ScoreContextProperties) => void;
     stopPlayback: () => void;
     resetPlayback: (context: ScoreContextProperties) => void;
+
+    instrument: Instrument;
+    setInstrument: (instrument: Instrument) => void;
 
     tempo: number;
     setTempo: (value: number) => void;

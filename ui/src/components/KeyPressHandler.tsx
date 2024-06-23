@@ -4,7 +4,7 @@ import {useAudioContext} from "../context/AudioContext";
 import {ShortKey} from "../utils/keymap";
 import {range} from "../utils/helpers.tsx";
 import {DialogType, useDialogContext} from "../context/DialogContext";
-import {NoteType} from "../models/Note.ts";
+import {NoteType} from "../model/Note.ts";
 import {useHistory} from "../context/HistoryContext.tsx";
 
 const KeyPressHandler: React.FC = () => {

@@ -6,7 +6,7 @@ import {ShortKey} from "../../../../../utils/keymap.ts";
 import {TfiShiftLeft, TfiShiftRight} from "react-icons/tfi";
 import ControlButton from "../../../../../components/controls/ControlButton.tsx";
 import {Group} from "@mantine/core";
-import {DividerType} from "../../../../../models/Divider.ts";
+import {DividerType} from "../../../../../model/Divider.ts";
 
 const LayoutControls: React.FC = () => {
 

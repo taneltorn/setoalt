@@ -8,6 +8,7 @@ import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
 import {Playback} from "../../../../../utils/constants.ts";
 import {IoIosSpeedometer} from "react-icons/io";
+import InstrumentSelection from "./InstrumentSelection.tsx";
 
 const PlaybackControls: React.FC = () => {
 
@@ -20,6 +21,8 @@ const PlaybackControls: React.FC = () => {
 
     return (
         <Group gap={4}>
+            <InstrumentSelection/>
+
             <Button
                 px={0}
                 title={t("tooltip.playPrevious")}

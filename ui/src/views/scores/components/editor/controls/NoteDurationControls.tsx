@@ -6,7 +6,7 @@ import {useTranslation} from "react-i18next";
 import {Group} from "@mantine/core";
 import ControlButton from "../../../../../components/controls/ControlButton.tsx";
 import Icon from "@mdi/react";
-import {Icons} from "../../../../../utils/icons.ts";
+import {NoteIcons} from "../../../../../utils/icons.tsx";
 import {mdiMusicNoteQuarter} from "@mdi/js";
 
 const NoteDurationControls: React.FC = () => {
@@ -21,7 +21,7 @@ const NoteDurationControls: React.FC = () => {
                     key={duration}
                     active={context.activeNote ? context.activeNote.duration === duration : context.activeDuration === duration}
                     disabled={context.activeNote?.duration === "16n"}
-                    label={<Icon path={Icons.get(duration) || mdiMusicNoteQuarter} size={1}/>}
+                    label={<Icon path={NoteIcons.get(duration) || mdiMusicNoteQuarter} size={1}/>}
                     tooltip={t(`tooltip.changeNoteDuration.${duration}`)}
                     shortKey={DurationToShortKey.get(duration)}
                     onClick={() => context.setActiveDuration(duration)}

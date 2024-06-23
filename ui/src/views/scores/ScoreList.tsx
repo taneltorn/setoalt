@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import React, {useEffect, useState} from "react";
 import {Link, useNavigate} from "react-router-dom";
 import useScoreService from "../../services/ScoreService.tsx";
-import {Score} from "../../models/Score.ts";
+import {Score} from "../../model/Score.ts";
 import {DisplayError, DisplaySuccess} from "../../utils/helpers.tsx";
 import {useAuth} from "../../context/AuthContext.tsx";
 import Page from "../../Page.tsx";

@@ -1,8 +1,8 @@
 import React, {useMemo} from 'react';
 import {useTranslation} from "react-i18next";
-import {Note, NoteType} from "../../../../models/Note.ts";
+import {Note, NoteType} from "../../../../model/Note.ts";
 import {useScoreContext} from "../../../../context/ScoreContext.tsx";
-import {Voice} from "../../../../models/Voice.ts";
+import {Voice} from "../../../../model/Voice.ts";
 import {calculateNoteCoords, calculateNoteOpacity} from "../../../../utils/calculation.helpers.tsx";
 import {Color, Layout} from "../../../../utils/constants.ts";
 import {isHighlighted} from "../../../../utils/helpers.tsx";

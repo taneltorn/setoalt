@@ -7,7 +7,7 @@ import {useScoreContext} from '../../../../../context/ScoreContext.tsx';
 import {useForm} from 'react-hook-form';
 import {Layout} from "../../../../../utils/constants.ts";
 import {clone} from "../../../../../utils/helpers.tsx";
-import {Voice, VoiceType} from '../../../../../models/Voice.ts';
+import {Voice, VoiceType} from '../../../../../model/Voice.ts';
 
 interface FormValues {
     name: string;

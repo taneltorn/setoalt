@@ -1,5 +1,5 @@
 import React, {useMemo, useState} from 'react';
-import {Lyric} from "../../../../models/Lyric.ts";
+import {Lyric} from "../../../../model/Lyric.ts";
 import {useAudioContext} from "../../../../context/AudioContext.tsx";
 import {useScoreContext} from "../../../../context/ScoreContext.tsx";
 import {calculateLyricCoords} from "../../../../utils/calculation.helpers.tsx";

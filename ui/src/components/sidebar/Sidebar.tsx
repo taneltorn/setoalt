@@ -6,11 +6,8 @@ import classes from "./Sidebar.module.scss";
 import {GiGClef} from "react-icons/gi";
 import {PiSpeakerSimpleHigh} from "react-icons/pi";
 import {IoHome, IoSettingsOutline} from "react-icons/io5";
-import {Role, useAuth} from "../../context/AuthContext.tsx";
+import {useAuth} from "../../context/AuthContext.tsx";
 import {MdOutlineLogout} from "react-icons/md";
-import {FaUser} from "react-icons/fa";
-import {RiAdminFill} from "react-icons/ri";
-import {CiUser} from "react-icons/ci";
 import {useAudioContext} from "../../context/AudioContext.tsx";
 
 const routes = [
@@ -22,13 +19,6 @@ const routes = [
 const protectedRoutes = [
     {id: 'admin', icon: <IoSettingsOutline className={classes.icon} size={24}/>, link: "/admin"},
 ];
-
-export const UserIcons = new Map([
-    [Role.ADMIN, <RiAdminFill size={24}/>],
-    [Role.EDITOR, <FaUser size={24}/>],
-    [Role.USER, <FaUser size={24}/>],
-    ["guest", <CiUser size={24}/>]
-]);
 
 interface Properties {
     onNavigation: () => void;

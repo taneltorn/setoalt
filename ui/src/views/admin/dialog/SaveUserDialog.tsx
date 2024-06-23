@@ -6,7 +6,7 @@ import {Box, Input, Radio, TextInput} from "@mantine/core";
 import {Controller, useForm} from 'react-hook-form';
 import {Layout} from "../../../utils/constants.ts";
 import {Role} from "../../../context/AuthContext.tsx";
-import {User} from "../../../models/User.ts";
+import {User} from "../../../model/User.ts";
 import useUserService from "../../../services/UserService.tsx";
 import {DisplayError, DisplaySuccess} from "../../../utils/helpers.tsx";
 

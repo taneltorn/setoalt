@@ -1,4 +1,4 @@
-import {Stave} from "../models/Stave";
+import {Stave} from "../model/Stave";
 import {Color, Layout} from "../utils/constants";
 
 export const StaveOldDiatonic: Stave = {

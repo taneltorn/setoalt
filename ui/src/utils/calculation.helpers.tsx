@@ -1,12 +1,12 @@
-import {Voice, VoiceType} from "../models/Voice.ts";
+import {Voice, VoiceType} from "../model/Voice.ts";
 import {ScoreContextProperties} from "../context/ScoreContext.tsx";
 import {Layout} from "./constants.ts";
-import {Note} from "../models/Note.ts";
-import {XY} from "../models/XY.ts";
-import {Divider} from "../models/Divider.ts";
-import {Score} from "../models/Score.ts";
-import {StaveDimensions} from "../models/Dimensions.ts";
-import {Lyric} from "../models/Lyric.ts";
+import {Note} from "../model/Note.ts";
+import {XY} from "../model/XY.ts";
+import {Divider} from "../model/Divider.ts";
+import {Score} from "../model/Score.ts";
+import {StaveDimensions} from "../model/Dimensions.ts";
+import {Lyric} from "../model/Lyric.ts";
 
 // todo: could refactor a lot here
 

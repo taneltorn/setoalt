@@ -1,6 +1,6 @@
 import React, {RefObject, useEffect, useMemo, useState} from 'react';
-import {Note, NoteType} from "../models/Note";
-import {Score} from "../models/Score";
+import {Note, NoteType} from "../model/Note";
+import {Score} from "../model/Score";
 import {
     createNote,
     durationToScalar,
@@ -13,16 +13,16 @@ import {
     includeNotePositionRange, sort,
     wouldProduceOverlap,
 } from "../utils/helpers.tsx";
-import {Voice} from "../models/Voice";
+import {Voice} from "../model/Voice";
 import {ScoreContext} from './ScoreContext';
 import {useAudioContext} from "./AudioContext";
-import {DefaultVoices} from "../utils/dictionaries";
-import {DividerType} from "../models/Divider.ts";
-import {StaveDimensions} from "../models/Dimensions.ts";
+import {DefaultVoices} from "../utils/dictionaries.ts";
+import {DividerType} from "../model/Divider.ts";
+import {StaveDimensions} from "../model/Dimensions.ts";
 import useCursorCoords from "../hooks/useCursorCoords.tsx";
 import {calculateStaveDimensions} from "../utils/calculation.helpers.tsx";
 import {Layout, Playback} from "../utils/constants.ts";
-import {HalfPosition} from "../models/HalfPosition.ts";
+import {HalfPosition} from "../model/HalfPosition.ts";
 import {useHistory} from "./HistoryContext.tsx";
 
 interface Properties {

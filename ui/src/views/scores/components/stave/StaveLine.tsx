@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from "react-i18next";
 import {useScoreContext} from "../../../../context/ScoreContext.tsx";
-import {Line} from "../../../../models/Line.ts";
+import {Line} from "../../../../model/Line.ts";
 import {Layout} from "../../../../utils/constants.ts";
 import {getDetuneLabel} from "../../../../utils/helpers.tsx";
 

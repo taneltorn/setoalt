@@ -1,7 +1,7 @@
 import React from "react";
 import Page from "../../../Page.tsx";
 import {Badge, Group, Text, useMantineTheme} from "@mantine/core";
-import {Score} from "../../../models/Score.ts";
+import {Score} from "../../../model/Score.ts";
 import Header from "../../../components/controls/Header.tsx";
 import {useTranslation} from "react-i18next";
 import Description from "../../../components/controls/Description.tsx";

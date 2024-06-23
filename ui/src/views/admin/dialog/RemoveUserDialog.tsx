@@ -24,7 +24,7 @@ const RemoveUserDialog: React.FC = () => {
 
     return (
         <Dialog
-            type={DialogType.REMOVE_SCORE}
+            type={DialogType.REMOVE_USER}
             size={"sm"}
             title={t("dialog.removeUser.title")}
             primaryButtonLabel={t("button.confirm")}

@@ -6,7 +6,7 @@ import {useScoreContext} from '../../../../../context/ScoreContext.tsx';
 import useScoreService from '../../../../../services/ScoreService.tsx';
 import {FormProvider, useForm} from 'react-hook-form';
 import {Playback} from "../../../../../utils/constants.ts";
-import {Score} from "../../../../../models/Score.ts";
+import {Score} from "../../../../../model/Score.ts";
 import {DisplayError, DisplaySuccess} from "../../../../../utils/helpers.tsx";
 import {useNavigate} from "react-router-dom";
 import ScoreForm from "../form/ScoreForm.tsx";

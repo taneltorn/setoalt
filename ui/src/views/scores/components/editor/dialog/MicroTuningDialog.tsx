@@ -5,7 +5,8 @@ import Dialog from "../../../../../components/dialog/Dialog.tsx";
 import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
 import {Playback} from "../../../../../utils/constants.ts";
 import {useTranslation} from "react-i18next";
-import {rem, Slider, Text} from "@mantine/core";
+import {Text} from "@mantine/core";
+import Slider from "../../../../../components/controls/Slider.tsx";
 
 const MicroTuningDialog: React.FC = () => {
 
@@ -40,11 +41,8 @@ const MicroTuningDialog: React.FC = () => {
             title={t("dialog.microTuning.title")}
             primaryButtonLabel={t("button.save")}
             secondaryButtonLabel={t("button.cancel")}
-            tertiaryButtonLabel={t("button.reset")}
-            showTertiaryButton
             onPrimaryButtonClick={handleSave}
             onSecondaryButtonClick={handleClose}
-            onTertiaryButtonClick={() => setDetune(0)}
             onClose={handleClose}
         >
             <Text mb={"xl"}>
@@ -52,19 +50,15 @@ const MicroTuningDialog: React.FC = () => {
             </Text>
 
             <Slider
-                miw={400}
-                mb={"xl"}
-                thumbChildren={`${detune > 0 ? "+" : ""}${detune}`}
-                color="black"
-                label={null}
                 min={Playback.MIN_DETUNE}
                 max={Playback.MAX_DETUNE}
-                step={Playback.DETUNE_SLIDER_STEP}
-                defaultValue={detune}
+                step={Playback.TRANSPOSE_SLIDER_STEP}
+                defaultValue={Playback.DETUNE_SLIDER_STEP}
+                isRelative
                 value={detune}
-                thumbSize={40}
-                onChange={v => setDetune(+v)}
-                styles={{thumb: {borderWidth: rem(2), padding: rem(11)}}}
+                label={t("unit.cents")}
+                onChange={v => setDetune(v)}
+                onReset={() => setDetune(0)}
             />
         </Dialog>
     )

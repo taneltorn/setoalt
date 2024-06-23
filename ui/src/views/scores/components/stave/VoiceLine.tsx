@@ -1,6 +1,6 @@
 import React from 'react';
 import StaveNote from "./StaveNote.tsx";
-import {Voice} from "../../../../models/Voice.ts";
+import {Voice} from "../../../../model/Voice.ts";
 import {useScoreContext} from "../../../../context/ScoreContext.tsx";
 
 interface Properties {

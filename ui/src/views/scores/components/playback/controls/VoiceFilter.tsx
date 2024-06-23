@@ -4,7 +4,7 @@ import {MdRecordVoiceOver} from "react-icons/md";
 import {useTranslation} from "react-i18next";
 import FilterButton from "../../../../../components/controls/FilterButton.tsx";
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
-import {Voice} from "../../../../../models/Voice.ts";
+import {Voice} from "../../../../../model/Voice.ts";
 import {useAudioContext} from "../../../../../context/AudioContext.tsx";
 
 const VoiceFilter: React.FC = () => {

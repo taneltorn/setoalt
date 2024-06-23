@@ -1,5 +1,5 @@
 import React, {useMemo, useState} from 'react';
-import {Score} from "../models/Score";
+import {Score} from "../model/Score";
 import {ScoreContextProperties} from './ScoreContext';
 import {HistoryContext, State} from "./HistoryContext";
 

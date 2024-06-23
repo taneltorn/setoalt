@@ -1,11 +1,11 @@
 import React, {useMemo} from 'react';
 import {Badge, Group} from "@mantine/core";
 import Icon from "@mdi/react";
-import {Icons} from "../../../../../utils/icons.ts";
+import {NoteIcons} from "../../../../../utils/icons.tsx";
 import {mdiMusicNoteQuarter} from "@mdi/js";
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {excludeDuplicates, getDetuneLabel} from "../../../../../utils/helpers.tsx";
-import {Note} from "../../../../../models/Note.ts";
+import {Note} from "../../../../../model/Note.ts";
 
 const ActiveNotes: React.FC = () => {
 
@@ -24,7 +24,7 @@ const ActiveNotes: React.FC = () => {
             {notesToShow.map((n, i) =>
                 <Badge key={i} py={0} variant={"transparent"} color={"gray.7"}>
                     <Group gap={4}>
-                        <Icon path={Icons.get(n.duration) || mdiMusicNoteQuarter} size={1}/>
+                        <Icon path={NoteIcons.get(n.duration) || mdiMusicNoteQuarter} size={1}/>
                         {n.pitch}{getDetuneLabel(n.detune)}
                     </Group>
                 </Badge>)}

@@ -1,7 +1,7 @@
 import {RefObject, useState, useEffect} from 'react';
 import {Layout} from "../utils/constants.ts";
-import {StaveDimensions} from "../models/Dimensions.ts";
-import {HalfPosition} from "../models/HalfPosition.ts";
+import {StaveDimensions} from "../model/Dimensions.ts";
+import {HalfPosition} from "../model/HalfPosition.ts";
 
 type MousePosition = {
     x: number;

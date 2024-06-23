@@ -6,7 +6,7 @@ import StaveDivider from "./StaveDivider.tsx";
 import StaveBreak from "./StaveBreak.tsx";
 import CursorMarker from "./CursorMarker.tsx";
 import StaveBlock from "./StaveBlock.tsx";
-import {Score} from "../../../../models/Score.ts";
+import {Score} from "../../../../model/Score.ts";
 import {useScoreContext} from "../../../../context/ScoreContext.tsx";
 import {EmptyScore, range} from "../../../../utils/helpers.tsx";
 import {Layout} from "../../../../utils/constants.ts";

@@ -8,7 +8,7 @@ import {useTranslation} from "react-i18next";
 import {FaPlus} from "react-icons/fa";
 import {DefaultVoices} from "../../../../../utils/dictionaries.ts";
 import {FaRegTrashCan} from "react-icons/fa6";
-import {Voice} from "../../../../../models/Voice.ts";
+import {Voice} from "../../../../../model/Voice.ts";
 
 const VoiceControls: React.FC = () => {
 

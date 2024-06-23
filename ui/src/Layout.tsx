@@ -1,14 +1,15 @@
 import React from 'react';
 import {Link, Outlet} from "react-router-dom";
-import {Alert, Anchor, AppShell, Burger, Code, Group, Switch, Text} from "@mantine/core";
-import Sidebar, {UserIcons} from "./components/sidebar/Sidebar.tsx";
+import {Alert, AppShell, Burger, Code, Group, Switch, Text} from "@mantine/core";
+import Sidebar from "./components/sidebar/Sidebar.tsx";
 import {useDisclosure} from "@mantine/hooks";
 import packageInfo from "../package.json";
 import {useAuth} from "./context/AuthContext.tsx";
 import {useTranslation} from "react-i18next";
-import {useDevMode} from "./context/DevModeContext.tsx";
 import {IoAlertCircleOutline} from "react-icons/io5";
 import Logo from "./components/Logo.tsx";
+import {UserIcons} from "./utils/icons.tsx";
+import {useDevMode} from "./context/DevModeContext.tsx";
 
 const Layout: React.FC = () => {
 
@@ -53,9 +54,18 @@ const Layout: React.FC = () => {
                     </Group>
 
                     <Group>
-                        <Alert color={"red"} py={4} icon={<IoAlertCircleOutline size={24}/>}>
-                            Tegemist on arendusjärgus oleva rakendusega.
-                        </Alert>
+                        {import.meta.env.VITE_ENVIRONMENT === "dev"
+                            ?
+                            <Alert py={4} icon={<IoAlertCircleOutline size={24}/>}>
+                                <Group justify={"start"}>
+                                    Kasuta rakenduse versiooni, mis asub aadressil:
+                                    <Link target={"_blank"} to={"http://157.230.76.45"}>http://157.230.76.45 </Link>
+                                </Group>
+                            </Alert>
+                            :
+                            <Alert py={4} icon={<IoAlertCircleOutline size={24}/>}>
+                                Tegemist on arendusjärgus oleva rakendusega.
+                            </Alert>}
 
                         {UserIcons.get(auth.currentUser?.role || "guest")}
                         <Text>
@@ -70,22 +80,6 @@ const Layout: React.FC = () => {
             </AppShell.Navbar>
 
             <AppShell.Main id={"content"}>
-                {import.meta.env.VITE_ENVIRONMENT === "dev" &&
-                    <Alert mb={"md"}>
-                        <Text fw={"bold"}>
-                            See on rakenduse arendusversioon!
-                        </Text>
-                        Kasuta rakenduse versiooni, mis asub aadressil:
-                        <Anchor
-                            fw={"bold"}
-                            ml={6}
-                            fz={"sm"}
-                            target={"_blank"}
-                            href={"http://157.230.76.45"}
-                        >
-                            http://157.230.76.45
-                        </Anchor>
-                    </Alert>}
                 <Outlet/>
             </AppShell.Main>
         </AppShell>

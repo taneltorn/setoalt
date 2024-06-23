@@ -3,7 +3,7 @@ import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import Dialog from "../../../../../components/dialog/Dialog.tsx";
 import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
 import {useTranslation} from "react-i18next";
-import {Stave} from "../../../../../models/Stave.ts";
+import {Stave} from "../../../../../model/Stave.ts";
 import {Button, Card, Group} from "@mantine/core";
 import {StavePPT} from "../../../../../staves/StavePPT.ts";
 import {StaveOldDiatonic} from "../../../../../staves/StaveOldDiatonic.ts";
@@ -46,7 +46,7 @@ const StaveSelectionDialog: React.FC = () => {
         >
             <Group className={"hover-pointer"} wrap={"nowrap"}>
                 {[StavePPT, StaveOldDiatonic, StaveDiatonic].map((s, index) =>
-                    <Card key={`stave-${s}`} onClick={() => setStave(s)} p={"xl"} shadow={"md"}>
+                    <Card key={`stave-${s.name}`} onClick={() => setStave(s)} p={"xl"} shadow={"md"}>
                         <Card.Section opacity={s.name === stave.name ? 1 : 0.3}>
                             <StavePreview
                                 key={index}

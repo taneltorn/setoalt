@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 import {ShortKey} from "../../../../../utils/keymap.ts";
 import {Group} from "@mantine/core";
 import ControlButton from "../../../../../components/controls/ControlButton.tsx";
-import {NoteType} from "../../../../../models/Note.ts";
+import {NoteType} from "../../../../../model/Note.ts";
 import {mdiCodeParentheses} from "@mdi/js";
 import Icon from "@mdi/react";
 import {MdOutlineCallSplit} from "react-icons/md";

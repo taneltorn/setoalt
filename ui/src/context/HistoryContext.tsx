@@ -1,7 +1,7 @@
 import React, {useContext} from 'react';
 import {isEmpty} from "../utils/helpers.tsx";
 import {ScoreContextProperties} from "./ScoreContext";
-import {Score} from "../models/Score";
+import {Score} from "../model/Score";
 
 export interface State {
     score: Score;

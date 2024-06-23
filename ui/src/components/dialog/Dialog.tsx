@@ -1,6 +1,6 @@
 import React from "react";
 import {DialogType, useDialogContext} from "../../context/DialogContext.tsx";
-import {Box, Button, Group, Modal, Title} from "@mantine/core";
+import {Box, Button, Group, Modal} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 
 interface Properties {
@@ -9,13 +9,10 @@ interface Properties {
     type: DialogType;
     hidePrimaryButton?: boolean;
     hideSecondaryButton?: boolean;
-    showTertiaryButton?: boolean;
     primaryButtonLabel?: string;
     secondaryButtonLabel?: string;
-    tertiaryButtonLabel?: string;
     onPrimaryButtonClick?: () => void;
     onSecondaryButtonClick?: () => void;
-    onTertiaryButtonClick?: () => void;
     onClose?: () => void;
     children?: React.ReactNode;
 }
@@ -36,7 +33,14 @@ const Dialog: React.FC<Properties> = (props) => {
             opened={props.type === active}
             closeButtonProps={{size: "xl"}}
             onClose={handleClose}
-            title={<Title order={2} ml={"md"}>{props.title}</Title>}
+            title={props.title}
+            styles={{
+                title: {
+                    marginLeft: "14px",
+                    fontSize: '24px',
+                    fontWeight: 'bold',
+                },
+            }}
         >
             <Box p={"md"}>
                 {props.children}
@@ -50,14 +54,6 @@ const Dialog: React.FC<Properties> = (props) => {
                                 color={"black"}
                                 onClick={() => props.onSecondaryButtonClick && props.onSecondaryButtonClick()}>
                             {props.secondaryButtonLabel || t("button.cancel")}
-                        </Button>}
-
-                    {props.showTertiaryButton &&
-                        <Button size={"md"}
-                                variant={"outline"}
-                                color={"red"}
-                                onClick={() => props.onTertiaryButtonClick && props.onTertiaryButtonClick()}>
-                            {props.tertiaryButtonLabel}
                         </Button>}
 
                     {!props.hidePrimaryButton &&

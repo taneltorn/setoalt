@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import StaveLine from "./StaveLine.tsx";
-import {Line} from "../../../../models/Line.ts";
+import {Line} from "../../../../model/Line.ts";
 import {useScoreContext} from "../../../../context/ScoreContext.tsx";
 import {useDevMode} from "../../../../context/DevModeContext.tsx";
 import {calculateStaveBlockCoords} from "../../../../utils/calculation.helpers.tsx";

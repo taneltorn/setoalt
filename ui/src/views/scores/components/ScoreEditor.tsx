@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 import Page from "../../../Page.tsx";
 import ScoreEditorPanel from "./editor/ScoreEditorPanel.tsx";
 import VoiceControls from "./editor/controls/VoiceControls.tsx";
-import {Score} from "../../../models/Score.ts";
+import {Score} from "../../../model/Score.ts";
 import {FormProvider, useForm} from "react-hook-form";
 import ScoreForm from "./editor/form/ScoreForm.tsx";
 import {DisplayError, DisplaySuccess} from "../../../utils/helpers.tsx";
@@ -99,7 +99,7 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
                     <FormProvider {...methods}>
                         <Grid>
                             <Grid.Col span={{xs: 10, lg: 6}}>
-                                <StaveParameters />
+                                <StaveParameters/>
                             </Grid.Col>
                         </Grid>
                     </FormProvider>

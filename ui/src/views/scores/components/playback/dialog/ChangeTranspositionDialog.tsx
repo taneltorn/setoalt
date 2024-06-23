@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from "react-i18next";
-import {rem, Slider, Text} from "@mantine/core";
+import {Text} from "@mantine/core";
 import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {Playback} from "../../../../../utils/constants.ts";
 import Dialog from "../../../../../components/dialog/Dialog.tsx";
 import {useAudioContext} from "../../../../../context/AudioContext.tsx";
+import Slider from "../../../../../components/controls/Slider.tsx";
 
 const ChangeTranspositionDialog: React.FC = () => {
 
@@ -37,11 +38,8 @@ const ChangeTranspositionDialog: React.FC = () => {
             title={t("dialog.transpose.title")}
             primaryButtonLabel={t("button.save")}
             secondaryButtonLabel={t("button.cancel")}
-            tertiaryButtonLabel={t("button.reset")}
-            showTertiaryButton
             onPrimaryButtonClick={handleSave}
             onSecondaryButtonClick={handleClose}
-            onTertiaryButtonClick={() => setTransposition(0)}
             onClose={handleClose}
         >
             <Text mb={"xl"}>
@@ -49,18 +47,15 @@ const ChangeTranspositionDialog: React.FC = () => {
             </Text>
 
             <Slider
-                mb={"xl"}
-                thumbChildren={`${transposition > 0 ? "+" : ""}${transposition}`}
-                color="black"
-                label={null}
                 min={Playback.MIN_TRANSPOSE}
                 max={Playback.MAX_TRANSPOSE}
                 step={Playback.TRANSPOSE_SLIDER_STEP}
-                defaultValue={Playback.DEFAULT_TRANSPOSITION}
+                defaultValue={scoreContext.score.defaultTransposition || Playback.DEFAULT_TRANSPOSITION}
+                isRelative
                 value={transposition}
-                thumbSize={40}
-                onChange={v => setTransposition(+v)}
-                styles={{thumb: {borderWidth: rem(2), padding: rem(11)}}}
+                label={t("unit.semitones")}
+                onChange={v => setTransposition(v)}
+                onReset={() => setTransposition(scoreContext.score.defaultTransposition || Playback.DEFAULT_TRANSPOSITION)}
             />
         </Dialog>
     )

@@ -1,7 +1,7 @@
 import React, {useMemo, useState} from 'react';
 import {useTranslation} from "react-i18next";
 import {useScoreContext} from "../../../../context/ScoreContext.tsx";
-import {Divider, DividerType} from "../../../../models/Divider.ts";
+import {Divider, DividerType} from "../../../../model/Divider.ts";
 import {useDevMode} from "../../../../context/DevModeContext.tsx";
 import {Color, Layout} from "../../../../utils/constants.ts";
 import {calculateDividerCoords} from "../../../../utils/calculation.helpers.tsx";

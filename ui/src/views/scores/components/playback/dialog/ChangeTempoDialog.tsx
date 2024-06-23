@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from "react-i18next";
-import {rem, Slider, Text} from "@mantine/core";
+import {Text} from "@mantine/core";
 import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
 import {Playback} from "../../../../../utils/constants.ts";
 import Dialog from "../../../../../components/dialog/Dialog.tsx";
 import {useAudioContext} from "../../../../../context/AudioContext.tsx";
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
+import Slider from "../../../../../components/controls/Slider.tsx";
 
 const ChangeTempoDialog: React.FC = () => {
 
@@ -37,11 +38,8 @@ const ChangeTempoDialog: React.FC = () => {
             title={t("dialog.changeTempo.title")}
             primaryButtonLabel={t("button.save")}
             secondaryButtonLabel={t("button.cancel")}
-            tertiaryButtonLabel={t("button.reset")}
-            showTertiaryButton
             onPrimaryButtonClick={handleSave}
             onSecondaryButtonClick={handleClose}
-            onTertiaryButtonClick={() => setTempo(Playback.DEFAULT_TEMPO)}
             onClose={handleClose}
         >
             <Text mb={"xl"}>
@@ -49,18 +47,14 @@ const ChangeTempoDialog: React.FC = () => {
             </Text>
 
             <Slider
-                mb={"xl"}
-                thumbChildren={tempo}
-                color="black"
-                label={null}
                 min={Playback.MIN_TEMPO}
                 max={Playback.MAX_TEMPO}
                 step={Playback.TEMPO_SLIDER_STEP}
-                defaultValue={Playback.DEFAULT_TEMPO}
+                defaultValue={scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO}
                 value={tempo}
-                thumbSize={40}
-                onChange={v => setTempo(+v)}
-                styles={{thumb: {borderWidth: rem(2), padding: rem(11)}}}
+                label={t("unit.bpm")}
+                onChange={v => setTempo(v)}
+                onReset={() => setTempo(scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO)}
             />
         </Dialog>
     )

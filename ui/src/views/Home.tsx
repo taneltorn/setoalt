@@ -7,7 +7,7 @@ import Page from "../Page.tsx";
 import Header from "../components/controls/Header.tsx";
 import Description from "../components/controls/Description.tsx";
 import {FaGitAlt} from "react-icons/fa";
-import { Trans } from 'react-i18next';
+import {Trans} from 'react-i18next';
 
 const Home: React.FC = () => {
 
@@ -24,17 +24,25 @@ const Home: React.FC = () => {
 
     return (
         <Page title={t("view.home.pageTitle")}>
-            <Header text={t("view.home.title")}/>
-            <Description text={<Trans i18nKey="view.home.description" />}/>
+            <Group justify={"space-between"}>
+                <Header text={t("view.home.title")}/>
 
-            <Group gap={4} mt={"md"} mb={"xl"}>
-                <Link to={"/scores/1"}>
-                    <Button variant={"outline"}>{t("view.home.label.example")}</Button>
-                </Link>
-                <Link to={"/editor"}>
-                    <Button variant={"outline"}>{t("view.home.label.experiment")}</Button>
-                </Link>
+                <Group gap={4} justify={"end"}>
+                    <Link to={"/scores/1"}>
+                        <Button size={"md"}>
+                            {t("view.home.label.example")}
+                        </Button>
+                    </Link>
+                    <Link to={"/editor"}>
+                        <Button size={"md"}>
+                            {t("view.home.label.experiment")}
+                        </Button>
+                    </Link>
+                </Group>
+
+
             </Group>
+            <Description text={<Trans i18nKey="view.home.description"/>}/>
 
             <Tabs defaultValue="changelog">
                 <Tabs.List>

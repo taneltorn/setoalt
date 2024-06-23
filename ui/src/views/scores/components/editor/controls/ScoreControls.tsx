@@ -6,12 +6,14 @@ import {useAuth} from "../../../../../context/AuthContext.tsx";
 
 interface Properties {
     onPrimaryButtonClick: () => void;
-    hideSecondaryButton?: boolean;
     onSecondaryButtonClick?: () => void;
     primaryButtonLabel?: string;
-    primaryButtonVariant?: string;
     secondaryButtonLabel?: string;
+    primaryButtonVariant?: string;
+    secondaryButtonVariant?: string;
     primaryButtonRequiresAuth?: boolean;
+    hideSecondaryButton?: boolean;
+    hideExport?: boolean;
 }
 
 const ScoreControls: React.FC<Properties> = (props) => {
@@ -21,10 +23,10 @@ const ScoreControls: React.FC<Properties> = (props) => {
 
     return (
         <Group gap={4} justify={"end"}>
-            <PNGExport/>
+            {!props.hideExport && <PNGExport/>}
             {!props.hideSecondaryButton &&
                 <Button
-                    variant={"subtle"}
+                    variant={props.secondaryButtonVariant || "subtle"}
                     size={"md"}
                     color={"black"}
                     onClick={props.onSecondaryButtonClick}

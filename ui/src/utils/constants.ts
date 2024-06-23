@@ -65,6 +65,7 @@ export const Color = {
 }
 
 export const Playback = {
+    DEFAULT_INSTRUMENT: "synth",
     MIN_TEMPO: 40,
     DEFAULT_TEMPO: 80,
     DEFAULT_TRANSPOSITION: 0,
