@@ -66,13 +66,13 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         if (containerRef?.current) {
             const offset = getOffset(position, context.score.data.breaks, context.dimensions);
             const x = position * Layout.stave.note.SPACING - offset.x;
-
-            const y = containerRef.current.offsetTop + offset.y - Layout.stave.container.SYMBOLS_BAR;
             containerRef.current.scrollTo({
                 left: x,
                 behavior: 'smooth'
             });
-            if ((window.scrollY + containerRef.current.offsetTop) < y || (window.scrollY + containerRef.current.offsetTop) > (y + dimensions.y)) {
+
+            const y = containerRef.current.offsetTop + offset.y + window.scrollY;
+            if (window.innerHeight < y + 100) {
                 const scrollTo = offset.y + containerRef.current.offsetTop - Layout.stave.container.SYMBOLS_BAR - 35;
                 window.scrollTo({
                     top: scrollTo,

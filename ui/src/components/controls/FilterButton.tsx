@@ -8,7 +8,7 @@ interface Properties {
     disabled?: boolean;
     color?: string;
     label: string;
-    onClick: () => void;
+    onClick: (event?: any) => void;
 }
 
 const FilterButton: React.FC<Properties> = ({active, color, disabled, label, onClick}) => {

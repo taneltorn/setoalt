@@ -208,7 +208,9 @@
   "unit": {
     "bpm": "BPM",
     "semitones": "Pooltoonides",
-    "cents": "Tsentides"
+    "semitonesAbbr": "pt",
+    "cents": "Tsentides",
+    "centsAbbr": "c"
   },
   "label": {
     "yes": "Jah",

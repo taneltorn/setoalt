@@ -7,6 +7,7 @@ import {calculateStaveBlockCoords} from "../../../../utils/calculation.helpers.t
 import {Layout} from "../../../../utils/constants.ts";
 import {getDetuneLabel} from "../../../../utils/helpers.tsx";
 import {useAudioContext} from "../../../../context/AudioContext.tsx";
+import {useTranslation} from "react-i18next";
 
 interface Properties {
     lines: Line[];
@@ -15,6 +16,7 @@ interface Properties {
 
 const StaveBlock: React.FC<Properties> = ({index, lines}) => {
 
+    const {t} = useTranslation();
     const context = useScoreContext();
     const {transposition} = useAudioContext();
     const {isDevMode} = useDevMode();
@@ -27,8 +29,8 @@ const StaveBlock: React.FC<Properties> = ({index, lines}) => {
     return (
         <>
             {transposition && <g>
-                <text x={0} y={y + Layout.stave.container.SYMBOLS_BAR - 15} fontSize={10} fill={"black"}>
-                    {getDetuneLabel(transposition, " PT")}
+                <text x={0} y={y + Layout.stave.container.SYMBOLS_BAR - 15} fontSize={14} fill={"black"}>
+                    {getDetuneLabel(transposition,  t("unit.semitonesAbbr"))}
                 </text>
             </g>}
             {isDevMode &&

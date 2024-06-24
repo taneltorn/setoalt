@@ -25,8 +25,8 @@ const StaveLine: React.FC<Properties> = ({line, offsetY}) => {
             </text>
 
             {line.detune &&
-                <text x={20} y={y + 5} fontSize={8} fill={"black"}>
-                    {getDetuneLabel(line.detune)}
+                <text x={20} y={y + 5} fontSize={10} fill={"black"}>
+                    {getDetuneLabel(line.detune, t("unit.centsAbbr"))}
                 </text>}
 
             <line

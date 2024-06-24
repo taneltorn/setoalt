@@ -6,9 +6,11 @@ import {mdiMusicNoteQuarter} from "@mdi/js";
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {excludeDuplicates, getDetuneLabel} from "../../../../../utils/helpers.tsx";
 import {Note} from "../../../../../model/Note.ts";
+import {useTranslation} from "react-i18next";
 
 const ActiveNotes: React.FC = () => {
 
+    const {t} =useTranslation();
     const context = useScoreContext();
 
     const notesToShow: Note[] = useMemo(() => {
@@ -22,10 +24,10 @@ const ActiveNotes: React.FC = () => {
     return (
         <Group gap={0}>
             {notesToShow.map((n, i) =>
-                <Badge key={i} py={0} variant={"transparent"} color={"gray.7"}>
+                <Badge key={i} py={0} variant={"transparent"} color={"gray.7"} style={{textTransform: "capitalize"}}>
                     <Group gap={4}>
                         <Icon path={NoteIcons.get(n.duration) || mdiMusicNoteQuarter} size={1}/>
-                        {n.pitch}{getDetuneLabel(n.detune)}
+                        {n.pitch} {getDetuneLabel(n.detune, t("unit.centsAbbr"))}
                     </Group>
                 </Badge>)}
         </Group>

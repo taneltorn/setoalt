@@ -38,6 +38,22 @@ const VoiceControls: React.FC = () => {
         context.refresh();
     }
 
+    const handleChange = (event: any, name: string) => {
+        if (event.ctrlKey) {
+            const voice = context.score.data.voices.find(v => v.name === name);
+            if (voice && voice.name !== context.activeVoice) {
+                voice.hidden = !voice.hidden;
+                context.refresh();
+            }
+            return;
+        }
+        context.setActiveVoice(name);
+        context.score.data.voices.forEach(v => {
+            v.hidden = v.name !== name;
+        });
+        context.refresh();
+    }
+
     const handleVoiceAdd = (voice: Voice) => {
         changeVoice(voice.name);
         close();
@@ -61,9 +77,10 @@ const VoiceControls: React.FC = () => {
                     {context.score.data.voices.map(voice => (
                         <FilterButton
                             key={voice.name}
-                            active={context.isEditMode ? voice.name === context.activeVoice : !voice.hidden}
+                            active={!voice.hidden}
+                            color={voice.name === context.activeVoice ? "black" : "gray.6"}
                             label={voice.name}
-                            onClick={() => changeVoice(voice.name)}
+                            onClick={(e) => handleChange(e, voice.name)}
                         />))}
 
                     <Button

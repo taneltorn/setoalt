@@ -1,3 +1,8 @@
+#### [0.2.2] -  
+- Redaktor: Lisatud võimalus hääli sisse lülitada (ctrl + hiireklikk)
+- Parandatud sisselogimise tekstiväljade kuvamine mobiilseadmetel
+- Täiustatud automaatset kerimist
+
 #### [0.2.1] -  *24.06.2024*
 - Lisatud valikuline mikrotonaalsuse indikaator
 - Lisatud automaatne kerimine

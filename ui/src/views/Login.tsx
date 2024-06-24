@@ -39,7 +39,7 @@ const Login: React.FC = () => {
             <Title order={1} mb={"xs"}>{t("view.login.title")}</Title>
 
             <Grid mb={"md"}>
-                <Grid.Col span={4}>
+                <Grid.Col span={{xs: 12, sm: 6, lg: 4}}>
                     <form onSubmit={handleSubmit(onSubmit)} noValidate>
                         <Input
                             size={"lg"}
