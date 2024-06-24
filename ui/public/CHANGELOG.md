@@ -1,4 +1,4 @@
-#### [0.2.2] -  
+#### [0.2.2] - *24.06.2024*
 - Lisatud võimalus heli taasesitust korrata (vahemiku valimine: Ctrl + hiireklikk)
 - Lisatud võimalus redaktoris üksikuid hääli sisse/välja lülitada (Ctrl + hiireklikk)
 - Pisiparandused
