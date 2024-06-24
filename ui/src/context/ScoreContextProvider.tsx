@@ -22,10 +22,11 @@ import {DefaultVoices} from "../utils/dictionaries.ts";
 import {DividerType} from "../model/Divider.ts";
 import {StaveDimensions} from "../model/Dimensions.ts";
 import useCursorCoords from "../hooks/useCursorCoords.tsx";
-import {calculateStaveDimensions, getOffset} from "../utils/calculation.helpers.tsx";
+import {calculateStaveDimensions, getOffset, isInsideLoop} from "../utils/calculation.helpers.tsx";
 import {Layout, Playback} from "../utils/constants.ts";
 import {HalfPosition} from "../model/HalfPosition.ts";
 import {useHistory} from "./HistoryContext.tsx";
+import {Range} from "../model/Range.ts";
 
 interface Properties {
     children: React.ReactNode;
@@ -42,9 +43,11 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     const [isExportMode, setIsExportMode] = useState<boolean>(false);
     const [isTypeMode, setIsTypeMode] = useState<boolean>(false);
 
+
     const [containerRef, setContainerRef] = useState<RefObject<HTMLElement> | undefined>();
     const [svgRef, setSvgRef] = useState<RefObject<SVGSVGElement> | undefined>();
 
+    const [loopRange, setLoopRange] = useState<Range | undefined>();
     const [activePosition, setActivePosition] = useState<number>(-1);
     const [activeDuration, setActiveDuration] = useState<string>("8n");
     const [activeVoice, setActiveVoice] = useState<string>(DefaultVoices[0].name);
@@ -59,20 +62,39 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
             }
         }
         setActivePosition(position);
+        if (!isInsideLoop(position, loopRange)) {
+            setLoopRange(undefined);
+        }
         scrollToPosition(position)
+    }
+
+    const updateLoopRange = (start: number, end: number) => {
+        if (end < start) {
+            setLoopRange(undefined);
+            return;
+        }
+        setLoopRange({start: Math.max(start, 0), end: end});
     }
 
     const scrollToPosition = (position: number) => {
         if (containerRef?.current) {
             const offset = getOffset(position, context.score.data.breaks, context.dimensions);
             const x = position * Layout.stave.note.SPACING - offset.x;
-            containerRef.current.scrollTo({
-                left: x,
-                behavior: 'smooth'
-            });
+
+            // todo should be dynamic, but these seem to more or less work for the time being
+            const X_OFFSET = 150;
+            const Y_OFFSET = 100;
+
+            if (containerRef.current.offsetWidth < (x + containerRef.current.scrollLeft + X_OFFSET) ||
+                containerRef.current.scrollLeft > x) {
+                containerRef.current.scrollTo({
+                    left: x,
+                    behavior: 'smooth'
+                });
+            }
 
             const y = containerRef.current.offsetTop + offset.y + window.scrollY;
-            if (window.innerHeight < y + 100) {
+            if (window.innerHeight < y + Y_OFFSET) {
                 const scrollTo = offset.y + containerRef.current.offsetTop - Layout.stave.container.SYMBOLS_BAR - 35;
                 window.scrollTo({
                     top: scrollTo,
@@ -352,6 +374,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         setScore(structuredClone(EmptyScore));
         setActiveVoice(DefaultVoices[0].name);
         setActivePosition(0);
+        setLoopRange(undefined);
         history.setUndoStates([]);
         history.setRedoStates([]);
         history.setRecoverStates([]);
@@ -454,6 +477,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         previous,
 
         activeNote,
+        loopRange, setLoopRange, updateLoopRange,
         activeDuration, setActiveDuration: updateActiveDuration,
         activePosition, setActivePosition,
         activeVoice, setActiveVoice,
@@ -496,7 +520,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         svgRef, setSvgRef,
 
     }), [containerRef, endPosition, isEditMode, isExportMode, isTypeMode, dimensions, score, score.data.lyrics,
-        activeNote, activePosition, activeVoice, activeDuration, cursorPosition]);
+        activeNote, activePosition, activeVoice, activeDuration, cursorPosition, loopRange]);
 
     return (
         <ScoreContext.Provider value={context}>

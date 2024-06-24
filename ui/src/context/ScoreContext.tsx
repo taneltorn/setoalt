@@ -4,6 +4,7 @@ import {isEmpty} from "../utils/helpers.tsx";
 import {Score} from "../model/Score";
 import {StaveDimensions} from "../model/Dimensions.ts";
 import {HalfPosition} from "../model/HalfPosition.ts";
+import {Range} from "../model/Range.ts";
 
 export interface ScoreContextProperties {
 
@@ -16,6 +17,10 @@ export interface ScoreContextProperties {
     setIsExportMode: (value: boolean) => void;
     isTypeMode: boolean;
     setIsTypeMode: (value: boolean) => void;
+
+    loopRange: Range | undefined;
+    setLoopRange: (range: Range | undefined) => void;
+    updateLoopRange: (start: number, end: number) => void;
 
     activate: (position: number) => void;
     next: () => void;

@@ -1,7 +1,7 @@
 #### [0.2.2] -  
-- Redaktor: Lisatud võimalus hääli sisse lülitada (ctrl + hiireklikk)
-- Parandatud sisselogimise tekstiväljade kuvamine mobiilseadmetel
-- Täiustatud automaatset kerimist
+- Lisatud võimalus heli taasesitust korrata (vahemiku valimine: Ctrl + hiireklikk)
+- Lisatud võimalus redaktoris üksikuid hääli sisse/välja lülitada (Ctrl + hiireklikk)
+- Pisiparandused
 
 #### [0.2.1] -  *24.06.2024*
 - Lisatud valikuline mikrotonaalsuse indikaator

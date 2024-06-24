@@ -1,5 +1,4 @@
 import React from 'react';
-import {AiFillPauseCircle, AiFillPlayCircle, AiOutlineBackward, AiOutlineForward, AiOutlineUndo,} from "react-icons/ai";
 import {useTranslation} from "react-i18next";
 import {GiTunePitch} from "react-icons/gi";
 import {Button, Group, useMantineTheme} from "@mantine/core";
@@ -9,66 +8,69 @@ import {DialogType, useDialogContext} from "../../../../../context/DialogContext
 import {Playback} from "../../../../../utils/constants.ts";
 import {IoIosSpeedometer} from "react-icons/io";
 import InstrumentSelection from "./InstrumentSelection.tsx";
+import {PiRepeatFill} from "react-icons/pi";
+import {FaBackward, FaForward, FaPauseCircle, FaPlayCircle} from "react-icons/fa";
 
 const PlaybackControls: React.FC = () => {
 
     const {t} = useTranslation();
     const theme = useMantineTheme();
-    const {isPlaying, startPlayback, stopPlayback, resetPlayback} = useAudioContext();
+    const {isPlaying, startPlayback, stopPlayback} = useAudioContext();
     const context = useScoreContext();
     const {tempo, transposition} = useAudioContext();
     const {open} = useDialogContext();
+
+    const LG = 70;
+    const SM = 40;
 
     return (
         <Group gap={4}>
             <InstrumentSelection/>
 
             <Button
-                px={0}
+                px={"xs"}
+                h={SM}
                 title={t("tooltip.playPrevious")}
                 color={"gray.4"}
                 variant={"transparent"}
                 onClick={() => context.previous()}
             >
-                <AiOutlineBackward size={40}/>
+                <FaBackward size={SM}/>
             </Button>
 
             {isPlaying
-                ? <Button px={0}
-                          h={60}
-                          title={t("tooltip.stopPlayback")}
-                          color={"black"}
-                          variant={"transparent"}
-                          onClick={() => stopPlayback()}>
-                    <AiFillPauseCircle size={60}/>
+                ? <Button
+                    px={0}
+                    h={LG}
+                    title={t("tooltip.stopPlayback")}
+                    color={"black"}
+                    variant={"transparent"}
+                    onClick={() => stopPlayback()}
+                >
+                    <FaPauseCircle size={LG}/>
                 </Button>
-                : <Button px={0}
-                          h={60}
-                          title={t("tooltip.startPlayback")}
-                          color={theme.primaryColor}
-                          variant={"transparent"}
-                          onClick={() => startPlayback(context)}>
-                    <AiFillPlayCircle size={60}/>
+                : <Button
+                    px={0}
+                    h={LG}
+                    title={t(`tooltip.${context.loopRange ? "startPlaybackRepeat" : "startPlayback"}`)}
+                    color={theme.primaryColor}
+                    variant={"transparent"}
+                    onClick={() => startPlayback(context)}
+                >
+                    {context.loopRange
+                        ? <PiRepeatFill size={LG}/>
+                        : <FaPlayCircle size={LG}/>}
                 </Button>}
 
             <Button
-                px={0}
-                title={t("tooltip.resetPlayback")}
-                color={"gray.4"}
-                variant={"transparent"}
-                onClick={() => resetPlayback(context)}
-            >
-                <AiOutlineUndo size={40}/>
-            </Button>
-
-            <Button
-                px={0}
+                px={"xs"}
+                h={SM}
                 title={t("tooltip.playNext")}
                 color={"gray.4"}
                 variant={"transparent"}
                 onClick={() => context.next()}
             >
-                <AiOutlineForward size={40}/>
+                <FaForward size={SM}/>
             </Button>
 
             <Group ml={"md"}>
@@ -79,7 +81,7 @@ const PlaybackControls: React.FC = () => {
                     variant={"transparent"}
                     onClick={() => open(DialogType.TRANSPOSE)}
                 >
-                    <GiTunePitch size={40}/>
+                    <GiTunePitch size={SM}/>
                 </Button>
 
                 <Button
@@ -89,7 +91,7 @@ const PlaybackControls: React.FC = () => {
                     variant={"transparent"}
                     onClick={() => open(DialogType.CHANGE_TEMPO)}
                 >
-                    <IoIosSpeedometer size={40}/>
+                    <IoIosSpeedometer size={SM}/>
                 </Button>
             </Group>
         </Group>

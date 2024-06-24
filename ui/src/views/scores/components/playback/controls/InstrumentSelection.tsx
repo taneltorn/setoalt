@@ -20,7 +20,8 @@ const InstrumentSelection: React.FC = () => {
         <Menu shadow={"md"} position={"bottom-start"}>
             <Menu.Target>
                 <Button
-                    px={4}
+                    p={5}
+                    h={50}
                     variant={"subtle"}
                     color={"gray"}
                     data-active={"true"}
@@ -33,6 +34,7 @@ const InstrumentSelection: React.FC = () => {
                 {Instruments.map(instrument =>
                     <Menu.Item key={instrument.name}
                                onClick={() => handleChange(instrument)}>
+
                         <Group>
                             {InstrumentIcons.get(instrument.name)}
                             <Text size={"xl"}>{t(`instrument.${instrument.name}`)}</Text>

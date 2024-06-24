@@ -35,6 +35,9 @@ export const Layout = {
         cursor: {
             WIDTH: 24
         },
+        range: {
+            WIDTH: 4,
+        },
         lyrics: {
             HEIGHT: 20,
             FONT_SIZE: 16,

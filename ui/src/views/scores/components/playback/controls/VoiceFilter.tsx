@@ -2,7 +2,7 @@ import React from 'react';
 import {Button, Grid, Group} from "@mantine/core";
 import {MdRecordVoiceOver} from "react-icons/md";
 import {useTranslation} from "react-i18next";
-import FilterButton from "../../../../../components/controls/FilterButton.tsx";
+import VoiceFilterButton from "../../../../../components/controls/VoiceFilterButton.tsx";
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {Voice} from "../../../../../model/Voice.ts";
 import {useAudioContext} from "../../../../../context/AudioContext.tsx";
@@ -36,7 +36,7 @@ const VoiceFilter: React.FC = () => {
             <Grid.Col span={10}>
                 <Group gap={4}>
                     {context.score.data.voices.map(voice => (
-                        <FilterButton
+                        <VoiceFilterButton
                             key={voice.name}
                             active={context.isEditMode ? voice.name === context.activeVoice : !voice.hidden}
                             label={voice.name}

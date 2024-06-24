@@ -10,6 +10,7 @@ import {Score} from "../../../../model/Score.ts";
 import {useScoreContext} from "../../../../context/ScoreContext.tsx";
 import {EmptyScore, range} from "../../../../utils/helpers.tsx";
 import {Layout} from "../../../../utils/constants.ts";
+import ActiveRangeMarkers from "./ActiveRangeMarkers.tsx";
 
 interface Properties {
     score?: Score;
@@ -36,7 +37,7 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                 marginTop: 15,
                 maxWidth: Layout.stave.container.MAX_WIDTH,
                 overflowX: "scroll",
-                height: context.dimensions.y * context.dimensions.blocks + 30
+                height: context.dimensions.y * context.dimensions.blocks + 15
             }}>
             <svg id={"notation"}
                  ref={svgRef}
@@ -79,6 +80,8 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                             key={`divider-${divider.position}`}
                             divider={divider}
                         />)}
+
+                {context.loopRange && <ActiveRangeMarkers/>}
 
                 {context.score.data.lyrics.length >= 0 &&
                     range(0, context.endPosition - 1)

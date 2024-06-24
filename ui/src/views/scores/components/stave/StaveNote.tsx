@@ -26,7 +26,7 @@ const StaveNote: React.FC<Properties> = ({note, voice}) => {
 
     const opacity = useMemo(() => {
         return calculateNoteOpacity(note, voice, context);
-    }, [context.activeVoice, context.duplicateNoteKeys, voicesDependency]);
+    }, [context.activeVoice, context.duplicateNoteKeys, voicesDependency, context.loopRange]);
 
     const color = isHighlighted(note, context) ? Color.stave.HIGHLIGHT : note.color || voice.color || "black";
 
@@ -39,7 +39,6 @@ const StaveNote: React.FC<Properties> = ({note, voice}) => {
                 r={note.type === NoteType.SMALL ? Layout.stave.note.RADIUS_SMALL : Layout.stave.note.RADIUS}
                 fill={isHighlighted(note, context) ? Color.stave.HIGHLIGHT : note.color || voice.color || "black"}
                 opacity={opacity}
-                onClick={() => context.activate(note.position)}
             >
                 <title>{t(`pitch.${note.pitch.toLowerCase()}`)}</title>
             </circle>

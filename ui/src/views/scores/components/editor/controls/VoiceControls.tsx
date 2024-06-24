@@ -1,7 +1,7 @@
 import React from 'react';
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {Button, Grid, Group} from "@mantine/core";
-import FilterButton from "../../../../../components/controls/FilterButton.tsx";
+import VoiceFilterButton from "../../../../../components/controls/VoiceFilterButton.tsx";
 import {MdRecordVoiceOver} from "react-icons/md";
 import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
 import {useTranslation} from "react-i18next";
@@ -75,10 +75,10 @@ const VoiceControls: React.FC = () => {
             <Grid.Col span={9}>
                 <Group gap={4}>
                     {context.score.data.voices.map(voice => (
-                        <FilterButton
+                        <VoiceFilterButton
                             key={voice.name}
-                            active={!voice.hidden}
-                            color={voice.name === context.activeVoice ? "black" : "gray.6"}
+                            active={voice.name === context.activeVoice}
+                            halfActive={!voice.hidden}
                             label={voice.name}
                             onClick={(e) => handleChange(e, voice.name)}
                         />))}

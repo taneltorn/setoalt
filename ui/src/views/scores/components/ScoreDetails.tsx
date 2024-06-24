@@ -1,6 +1,6 @@
 import React from "react";
 import Page from "../../../Page.tsx";
-import {Badge, Group, Text, useMantineTheme} from "@mantine/core";
+import {Badge, Box, Group, Title, useMantineTheme} from "@mantine/core";
 import {Score} from "../../../model/Score.ts";
 import Header from "../../../components/controls/Header.tsx";
 import {useTranslation} from "react-i18next";
@@ -60,10 +60,11 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
             <VoiceFilter/>
             <Stave score={score}/>
 
-            {score.text && <>
-                <Text fw={600}>Laulusõnad</Text>
-                <pre style={{whiteSpace: "pre-wrap"}}>{score?.text}</pre>
-            </>}
+            {score.text &&
+                <Box mt={"lg"}>
+                    <Title order={4}>{t("view.scores.details.lyrics")}</Title>
+                    <pre style={{whiteSpace: "pre-wrap"}}>{score?.text}</pre>
+                </Box>}
         </Page>
     );
 }

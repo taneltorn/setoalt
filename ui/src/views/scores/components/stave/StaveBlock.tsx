@@ -29,7 +29,7 @@ const StaveBlock: React.FC<Properties> = ({index, lines}) => {
     return (
         <>
             {transposition && <g>
-                <text x={0} y={y + Layout.stave.container.SYMBOLS_BAR - 15} fontSize={14} fill={"black"}>
+                <text x={0} y={y + Layout.stave.container.SYMBOLS_BAR - 30} fontSize={14} fontWeight={"bold"} fill={"black"}>
                     {getDetuneLabel(transposition,  t("unit.semitonesAbbr"))}
                 </text>
             </g>}

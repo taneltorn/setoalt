@@ -7,6 +7,7 @@ import {Divider} from "../model/Divider.ts";
 import {Score} from "../model/Score.ts";
 import {StaveDimensions} from "../model/Dimensions.ts";
 import {Lyric} from "../model/Lyric.ts";
+import {Range} from "../model/Range.ts";
 
 // todo: could refactor a lot here
 
@@ -37,6 +38,34 @@ export const calculateDividerCoords = (divider: Divider, context: ScoreContextPr
         - Layout.stave.divider.SEPARATOR_HEIGHT / 2;
 
     return {x: x, y: y};
+}
+
+export const calculateLoopRangeCoords = (context: ScoreContextProperties): XY[] => {
+    if (!context.loopRange) {
+        return [{x: 0, y: 0}, {x: 0, y: 0}];
+    }
+    const startOffset = getOffset(context.loopRange.start, context.score.data.breaks, context.dimensions, 0, true);
+    const endOffset = getOffset(context.loopRange.end, context.score.data.breaks, context.dimensions, 0, true);
+
+    const startX = Layout.stave.container.PADDING_X_START
+        + context.loopRange.start * Layout.stave.note.SPACING
+        - Layout.stave.note.RADIUS * 3
+        - startOffset.x;
+
+    const startY = Layout.stave.container.SYMBOLS_BAR
+        + startOffset.y
+        - Layout.stave.divider.SEPARATOR_HEIGHT / 2;
+
+    const endX = Layout.stave.container.PADDING_X_START
+        + context.loopRange.end * Layout.stave.note.SPACING
+        + Layout.stave.note.RADIUS * 1.5
+        - endOffset.x;
+
+    const endY = Layout.stave.container.SYMBOLS_BAR
+        + endOffset.y
+        - Layout.stave.divider.SEPARATOR_HEIGHT / 2;
+
+    return [{x: startX, y: startY}, {x: endX, y: endY}];
 }
 
 export const calculateLyricCoords = (lyric: Lyric, context: ScoreContextProperties): XY => {
@@ -83,7 +112,18 @@ export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreCont
     return {x: x, y: y};
 }
 
+export const isInsideLoop = (position: number, loopRange?: Range): boolean | undefined => {
+    if (!loopRange) {
+        return undefined;
+    }
+    return position >= loopRange.start && position <= loopRange.end;
+}
+
 export const calculateNoteOpacity = (note: Note, voice: Voice, context: ScoreContextProperties): number => {
+    if (context.loopRange) {
+        return isInsideLoop(note.position, context.loopRange) ? 1 : 0.1;
+    }
+
     if (voice.name === context.activeVoice) {
         return 1;
     }

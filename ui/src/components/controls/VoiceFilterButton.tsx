@@ -5,29 +5,31 @@ import {useTranslation} from "react-i18next";
 
 interface Properties {
     active: boolean;
+    halfActive?: boolean;
     disabled?: boolean;
+    c?: string;
     color?: string;
     label: string;
     onClick: (event?: any) => void;
 }
 
-const FilterButton: React.FC<Properties> = ({active, color, disabled, label, onClick}) => {
+const VoiceFilterButton: React.FC<Properties> = ({active, halfActive, disabled, label, onClick}) => {
 
     const {t} = useTranslation();
     const ICON_SIZE = 20;
 
     return (
         <Button
-            c={active ? "white" : "gray.5"}
-            color={active ? (color || "black") : "gray.1"}
+            c={active ? "white" : halfActive ? "black" : "gray.5"}
+            color={active ? "black" : "gray.1"}
             title={t(`tooltip.${active ? "hideVoice" : "showVoice"}`)}
             className={`me-2`}
             size={"xs"}
             disabled={disabled}
-            leftSection={active
+            leftSection={active || halfActive
                 ? <MdRecordVoiceOver
                     size={ICON_SIZE}
-                    style={{color: "white"}}
+                    style={{color: active ? "white" : "black"}}
                 />
                 : <MdVoiceOverOff
                     size={ICON_SIZE}
@@ -40,4 +42,4 @@ const FilterButton: React.FC<Properties> = ({active, color, disabled, label, onC
     );
 };
 
-export default FilterButton;
+export default VoiceFilterButton;

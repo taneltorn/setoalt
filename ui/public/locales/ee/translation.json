@@ -34,7 +34,8 @@
       "description": "Siin saad kuulata loodud noodistusi.",
       "details": {
         "noData": "Antud noodistust ei leitud.",
-        "back": "Vaata kõiki noodistusi"
+        "back": "Vaata kõiki noodistusi",
+        "lyrics": "Laulusõnad"
       },
       "notFound": {
         "text": "Noodistust ei leitud.",
@@ -137,6 +138,7 @@
     "playNext": "Järgmine",
     "playPrevious": "Eelmine",
     "startPlayback": "Esita",
+    "startPlaybackRepeat": "Esita kordamisega",
     "stopPlayback": "Peata",
     "resetPlayback": "Algusesse",
     "changeTempo": "Muuda tempot",

@@ -3,6 +3,7 @@ import {useScoreContext} from "../../../../context/ScoreContext.tsx";
 import {useDevMode} from "../../../../context/DevModeContext.tsx";
 import {calculateCursorNoteCoords} from "../../../../utils/calculation.helpers.tsx";
 import {Layout} from "../../../../utils/constants.ts";
+import {useAudioContext} from "../../../../context/AudioContext.tsx";
 
 interface Properties {
     pitch: string;
@@ -13,12 +14,22 @@ interface Properties {
 const PreviewNote: React.FC<Properties> = ({pitch, ...props}) => {
 
     const context = useScoreContext();
+    const {stopPlayback} = useAudioContext();
     const {isDevMode} = useDevMode();
     const [opacity, setOpacity] = useState<number>(isDevMode ? 0.2 : 0);
 
     const {x, y} = useMemo(() => {
         return calculateCursorNoteCoords(pitch, props.x, props.y, context);
     }, [pitch, props.x, props.y]);
+
+    const handleClick = (event: any) => {
+        if (event.ctrlKey) {
+            context.updateLoopRange(context.loopRange?.start || context.activePosition, context.cursorPosition);
+            stopPlayback();
+            return;
+        }
+        context.insertOrUpdateNote(pitch, context.cursorPosition);
+    }
 
     return (<>
         {context.cursorPosition >= 0 && <>
@@ -42,7 +53,7 @@ const PreviewNote: React.FC<Properties> = ({pitch, ...props}) => {
                 height={40}
                 fill={"red"}
                 width={100}
-                onClick={() => context.insertOrUpdateNote(pitch, context.cursorPosition)}
+                onClick={event => handleClick(event)}
             />
         </>}
     </>);

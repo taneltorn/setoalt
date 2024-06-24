@@ -23,10 +23,10 @@ export const UserIcons = new Map([
 );
 
 export const InstrumentIcons = new Map([
-        ["synth", <BiSolidPiano size={32}/>],
-        ["piano", <MdOutlinePiano size={32}/>],
-        ["violin", <GiViolin size={32}/>],
-        ["flute", <GiFlute size={32}/>],
-        ["guitar", <GiGuitarHead size={32}/>],
+        ["synth", <BiSolidPiano size={40}/>],
+        ["piano", <MdOutlinePiano size={40}/>],
+        ["violin", <GiViolin size={40}/>],
+        ["flute", <GiFlute size={40}/>],
+        ["guitar", <GiGuitarHead size={40}/>],
     ]
 );

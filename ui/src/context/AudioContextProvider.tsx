@@ -2,7 +2,7 @@ import React, {useEffect, useMemo, useRef, useState} from 'react';
 import {Note} from "../model/Note";
 import * as Tone from "tone";
 import {Playback} from "../utils/constants";
-import {excludeDuplicates, noteToFrequency, positionToSeconds} from "../utils/helpers.tsx";
+import {durationToScalar, excludeDuplicates, noteToFrequency, positionToSeconds} from "../utils/helpers.tsx";
 import {AudioContext} from "./AudioContext";
 import {ScoreContextProperties} from "./ScoreContext";
 import useAudioPlayer from "../hooks/useAudioPlayer.tsx";
@@ -42,6 +42,7 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
 
         player.playNotes(frequencies, durations);
     }
+
     const startPlayback = (context: ScoreContextProperties) => {
         stopPlayback();
         setIsPlaying(true);
@@ -50,7 +51,9 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
             Tone.context.resume();
         }
 
-        const startPosition = context.activePosition >= context.endPosition ? 0 : Math.max(0, context.activePosition);
+        const isLooping = context.loopRange?.start !== undefined && context.loopRange?.end !== undefined;
+        const startPosition = context.loopRange?.start !== undefined ? context.loopRange.start : context.activePosition >= context.endPosition ? 0 : Math.max(0, context.activePosition);
+        const endPosition = context.loopRange?.end !== undefined ? context.loopRange.end :  context.endPosition;
 
         const endTimes: number[] = [];
         const events: Array<[number, { position: number, notes: Note[] }]> = [];
@@ -87,14 +90,25 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
                 context.scrollToPosition(event.position);
             }, events).start(0);
         }
+        const endNote = context.getNote(endPosition);
+        const add = endNote?.duration ? durationToScalar(endNote.duration) : 0;
 
         const longestDuration = Math.max(...endTimes, 0);
-        Tone.Transport.scheduleOnce(() => {
-            resetPlayback(context);
-        }, `+${longestDuration}`);
+        const loopDuration = positionToSeconds(endPosition + add - startPosition);
 
-        sequenceRef.current.loop = false;
-        sequenceRef.current.loopEnd = longestDuration;
+        if (isLooping) {
+            sequenceRef.current.loop = true;
+            sequenceRef.current.loopEnd = loopDuration;
+        } else {
+            sequenceRef.current.loop = false;
+            sequenceRef.current.loopEnd = longestDuration;
+        }
+
+        Tone.Transport.scheduleOnce(() => {
+            if (!isLooping) {
+                resetPlayback(context);
+            }
+        }, `+${longestDuration}`);
 
         Tone.Transport.start();
     };
@@ -115,7 +129,7 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
 
     const resetPlayback = (context: ScoreContextProperties) => {
         stopPlayback();
-        context.setActivePosition(0);
+        context.activate(-1);
         context.refresh();
     };
 
