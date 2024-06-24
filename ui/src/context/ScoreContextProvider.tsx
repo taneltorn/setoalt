@@ -7,13 +7,15 @@ import {
     EmptyScore,
     excludeNotePositionRange,
     getDurationOffset,
-    getNextPitch, getPositionRange,
+    getNextPitch,
+    getPositionRange,
     getPositions,
     getPreviousPitch,
-    includeNotePositionRange, sort,
+    includeNotePositionRange,
+    sort,
     wouldProduceOverlap,
 } from "../utils/helpers.tsx";
-import {Voice} from "../model/Voice";
+import {Voice, VoiceType} from "../model/Voice";
 import {ScoreContext} from './ScoreContext';
 import {useAudioContext} from "./AudioContext";
 import {DefaultVoices} from "../utils/dictionaries.ts";
@@ -71,9 +73,9 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
                 behavior: 'smooth'
             });
             if ((window.scrollY + containerRef.current.offsetTop) < y || (window.scrollY + containerRef.current.offsetTop) > (y + dimensions.y)) {
-                console.log(`scrolling to ${y}`)
+                const scrollTo = offset.y + containerRef.current.offsetTop - Layout.stave.container.SYMBOLS_BAR - 35;
                 window.scrollTo({
-                    top: y - containerRef.current.offsetTop,
+                    top: scrollTo,
                     behavior: 'smooth'
                 });
             }
@@ -401,7 +403,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
             .filter(v => isEditMode || !v.hidden)
             .forEach(v => {
                 v.notes.forEach(n => {
-                    const key = `${n.position}-${n.pitch}-${v.type}`;
+                    const key = `${n.position}-${n.pitch}-${v.type === VoiceType.BOTTOM_TORRO ? VoiceType.TORRO : v.type}`;
                     if (seen.has(key)) {
                         duplicates.add(`${key}-${v.name}`);
                     } else {

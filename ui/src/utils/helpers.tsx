@@ -209,9 +209,9 @@ export const clone = (object: any): any => {
     return JSON.parse(JSON.stringify(object));
 }
 
-export const getDetuneLabel = (detune: number | undefined): string => {
+export const getDetuneLabel = (detune: number | undefined, suffix?: string): string => {
     if (!detune) {
         return "";
     }
-    return ` (${detune > 0 ? "+" : ""}${detune})`
+    return ` (${detune > 0 ? "+" : ""}${detune}${suffix ? suffix : ""})`
 }

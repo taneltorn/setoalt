@@ -171,7 +171,8 @@
       "type": {
         "label": "Hääletüüp",
         "0": "Torrõ",
-        "1": "Killõ"
+        "1": "Killõ",
+        "2": "Alumine torrõ"
       },
       "color": "Värv",
       "copyFrom": "Kopeeri noodid olemasolevalt häälelt?"
@@ -182,7 +183,8 @@
     },
     "microTuning": {
       "title": "Mikrotonaalsus",
-      "description": "Muuda noodi {{pitch}} helikõrgust."
+      "description": "Muuda noodi {{pitch}} helikõrgust.",
+      "showDetuneIndicator": "Kuva indikaator"
     },
     "staveSelection": {
       "title": "Noodijoonestiku valimine"
@@ -207,6 +209,10 @@
     "bpm": "BPM",
     "semitones": "Pooltoonides",
     "cents": "Tsentides"
+  },
+  "label": {
+    "yes": "Jah",
+    "no": "Ei"
   },
   "button": {
     "ok": "OK",

@@ -11,7 +11,7 @@ class ScoreService {
 
     public async findScores(user: any): Promise<any> {
         try {
-            this.logger.info(`Querying scores`);
+            this.logger.info(`Fetching scores`);
 
             let query = `SELECT *
                          FROM setoalt.scores
@@ -24,7 +24,7 @@ class ScoreService {
 
             const result = await pool.query(query);
 
-            this.logger.info(`Found ${result.rows.length} row(s)`);
+            this.logger.info(`Found ${result.rows.length} ${result.rows.length === 1 ? "row" : "rows"}`);
             return {success: true, data: Mapper.mapFields(result.rows)};
         } catch (err) {
             this.logger.error(err);
@@ -34,7 +34,7 @@ class ScoreService {
 
     public async findScoreById(id: number, user: any): Promise<any> {
         try {
-            this.logger.info(`Querying score with id = ${id}`);
+            this.logger.info(`Fetching score with id = ${id}`);
 
             let query = "SELECT * FROM setoalt.scores WHERE id = $1 AND deleted_at IS NULL";
             if (user?.role !== 'ADMIN') {
@@ -43,7 +43,7 @@ class ScoreService {
 
             const result = await pool.query(query, [id]);
 
-            this.logger.info(`Found ${result.rows.length} row(s)`);
+            this.logger.info(`Found ${result.rows.length} ${result.rows.length === 1 ? "row" : "rows"}`);
             if (result.rows.length === 0) {
                 return {success: false, error: "Not found"};
             }
@@ -74,7 +74,7 @@ class ScoreService {
                 user.username,
                 null,
             ]);
-            this.logger.info(`Inserted ${result.rowCount} row(s)`);
+            this.logger.info(`Inserted ${result.rowCount} ${result.rowCount === 1 ? "row" : "rows"} `);
             return {success: true, data: result.rows[0]};
         } catch (err) {
             this.logger.error(err);
@@ -111,7 +111,7 @@ class ScoreService {
                 user.username,
                 id,
             ]);
-            this.logger.info(`Updated ${result.rowCount} row(s)`);
+            this.logger.info(`Updated ${result.rowCount} ${result.rowCount ? "row" : "rows"}`);
             if (result.rows.length === 0) {
                 return {success: false, error: "Not found"};
             }
@@ -132,6 +132,7 @@ class ScoreService {
             if (result.rows.length === 0) {
                 return {success: false, error: "Not found"};
             }
+            this.logger.info(`Deleted ${result.rows.length} ${result.rows.length === 1 ? "row" : "rows"}`);
             return {success: true, data: result.rows[0]};
         } catch (err) {
             this.logger.error(err);

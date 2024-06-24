@@ -35,6 +35,7 @@ const ChangeTranspositionDialog: React.FC = () => {
     return (
         <Dialog
             type={DialogType.TRANSPOSE}
+            size={"lg"}
             title={t("dialog.transpose.title")}
             primaryButtonLabel={t("button.save")}
             secondaryButtonLabel={t("button.cancel")}

@@ -145,16 +145,20 @@ const SaveUserDialog: React.FC = () => {
                                     onChange={field.onChange}
                                 >
                                     <Radio
-                                        mb={"sm"}
+                                        size={"md"}
+                                        mb={"md"}
                                         value={Role.USER}
                                         label={t("role.user")}
                                     />
                                     <Radio
-                                        mb={"sm"}
+                                        size={"md"}
+                                        mb={"md"}
                                         value={Role.EDITOR}
                                         label={t("role.editor")}
                                     />
                                     <Radio
+                                        size={"md"}
+                                        mb={"md"}
                                         value={Role.ADMIN}
                                         label={t("role.admin")}
                                     />

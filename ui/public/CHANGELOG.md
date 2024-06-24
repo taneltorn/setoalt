@@ -1,6 +1,7 @@
 #### [0.2.1] - 
 - Nootidele lisatud mikrotonaalsuse indikaator
 - Lisatud automaatne kerimine
+- Parandatud laulusõnade kuvamist - pikad silbid kuvatakse nüüd veidi väiksemalt  
 
 #### [0.2.0] - *23.06.2024*
 - Redaktor: Lisatud võimalus kaheksandiknooti poolitada

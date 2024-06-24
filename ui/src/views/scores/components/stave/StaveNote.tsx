@@ -43,18 +43,16 @@ const StaveNote: React.FC<Properties> = ({note, voice}) => {
             >
                 <title>{t(`pitch.${note.pitch.toLowerCase()}`)}</title>
             </circle>
-            {note.detune &&
+            {note.detune && note.showDetuneIndicator &&
                 <DetuneIndicator
-                detune={note.detune}
-                x={x}
-                y={y}
-                opacity={opacity}
-                color={color}
-            />}
+                    detune={note.detune}
+                    x={x}
+                    y={y}
+                    opacity={opacity}
+                    color={color}
+                />}
         </>
-
-    )
-        ;
+    );
 };
 
 export default StaveNote;

@@ -2,7 +2,8 @@ import {Note} from "./Note";
 
 export enum VoiceType {
     TORRO,
-    KILLO
+    KILLO,
+    BOTTOM_TORRO
 }
 export interface Voice {
     name: string;

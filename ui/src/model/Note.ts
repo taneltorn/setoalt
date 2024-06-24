@@ -10,6 +10,8 @@ export interface Note {
 
     type?: NoteType;
     detune?: number;
+    showDetuneIndicator?: boolean;
+
     color?: string;
     hidden?: boolean;
 }

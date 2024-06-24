@@ -33,13 +33,12 @@ const NotePitchControls: React.FC = () => {
                     onClick={() => handleClick(pitch)}
                 />)}
 
-
             <ControlButton
                 disabled={!context.activeNote}
                 tooltip={t("tooltip.microTuning")}
                 label={<RiIncreaseDecreaseFill size={24}/>}
                 shortKey={ShortKey.MICRO_TUNING}
-                active={!!context.activeNote?.detune || !!context.score.data.stave.lines.find(l => l.pitch === context.activeNote?.pitch)?.detune}
+                active={!!context.activeNote?.detune}
                 onClick={() => dialogContext.open(DialogType.MICRO_TUNING)}
             />
         </Group>

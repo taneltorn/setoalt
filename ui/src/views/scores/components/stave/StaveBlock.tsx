@@ -5,6 +5,8 @@ import {useScoreContext} from "../../../../context/ScoreContext.tsx";
 import {useDevMode} from "../../../../context/DevModeContext.tsx";
 import {calculateStaveBlockCoords} from "../../../../utils/calculation.helpers.tsx";
 import {Layout} from "../../../../utils/constants.ts";
+import {getDetuneLabel} from "../../../../utils/helpers.tsx";
+import {useAudioContext} from "../../../../context/AudioContext.tsx";
 
 interface Properties {
     lines: Line[];
@@ -14,6 +16,7 @@ interface Properties {
 const StaveBlock: React.FC<Properties> = ({index, lines}) => {
 
     const context = useScoreContext();
+    const {transposition} = useAudioContext();
     const {isDevMode} = useDevMode();
     const breaksDependency = JSON.stringify(context.score.data.breaks);
 
@@ -23,6 +26,11 @@ const StaveBlock: React.FC<Properties> = ({index, lines}) => {
 
     return (
         <>
+            {transposition && <g>
+                <text x={0} y={y + Layout.stave.container.SYMBOLS_BAR - 15} fontSize={10} fill={"black"}>
+                    {getDetuneLabel(transposition, " PT")}
+                </text>
+            </g>}
             {isDevMode &&
                 <rect
                     height={Layout.stave.container.SYMBOLS_BAR}

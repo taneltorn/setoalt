@@ -70,7 +70,7 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
                     className="hover-pointer"
                     fill={lyric.position === scoreContext.activePosition && !scoreContext.isExportMode ? Color.stave.HIGHLIGHT : Color.stave.LYRICS}
                     fontWeight={Layout.stave.lyrics.FONT_WEIGHT}
-                    fontSize={Layout.stave.lyrics.FONT_SIZE}
+                    fontSize={lyric.text.length > 5 ? Layout.stave.lyrics.DECREASED_FONT_SIZE : Layout.stave.lyrics.FONT_SIZE}
                     x={x}
                     y={y}
                     onClick={handleClick}

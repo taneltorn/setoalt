@@ -11,7 +11,7 @@ class UserService {
 
     public async findAll() {
         try {
-            this.logger.info(`Querying users`);
+            this.logger.info(`Fetching users`);
             const query = `
                 SELECT *
                 FROM setoalt.users
@@ -20,7 +20,7 @@ class UserService {
             `;
             const result = await pool.query(query);
 
-            this.logger.info(`Found ${result.rows.length} row(s)`);
+            this.logger.info(`Found ${result.rows.length} ${result.rows.length === 1 ? "row" : "rows"}`);
             return {success: true, data: Mapper.mapFields(result.rows)};
         } catch (err) {
             this.logger.error(err);
@@ -30,12 +30,12 @@ class UserService {
 
     public async findByUsername(username: string): Promise<any> {
         try {
-            this.logger.info(`Querying user with username = ${username}`);
+            this.logger.info(`Fetching user with username = ${username}`);
 
             const query = "SELECT * FROM setoalt.users WHERE username = $1 AND deleted_at IS NULL";
             const result = await pool.query(query, [username]);
 
-            this.logger.info(`Found ${result.rows.length} row(s)`);
+            this.logger.info(`Found ${result.rows.length} ${result.rows.length === 1 ? "row" : "rows"}`);
             if (result.rows.length === 0) {
                 return {success: false, error: "Not found"};
             }
@@ -65,7 +65,7 @@ class UserService {
                 null,
             ]);
 
-            this.logger.info(`Inserted ${result.rowCount} row(s)`);
+            this.logger.info(`Inserted ${result.rowCount} ${result.rowCount === 1 ? "row" : "rows"}`);
             return {success: true, data: result.rows[0]};
         } catch (err) {
             if (err.code === '23505') {
@@ -99,7 +99,7 @@ class UserService {
                 id
             ]);
 
-            this.logger.info(`Updated ${result.rowCount} row(s)`);
+            this.logger.info(`Updated ${result.rowCount} ${result.rowCount === 1 ? "row" : "rows"}`);
             return {success: true, data: result.rows[0]};
         } catch (err) {
             if (err.code === '23505') {
@@ -119,10 +119,10 @@ class UserService {
             const query = "DELETE FROM setoalt.users WHERE id = $1 RETURNING id";
             const result = await pool.query(query, [id]);
 
-            this.logger.info(`Deleted ${result.rows} row(s)`);
             if (result.rows.length === 0) {
                 return {success: false, error: "Not found"};
             }
+            this.logger.info(`Deleted ${result.rows.length} ${result.rows.length === 1 ? "row" : "rows"}`);
             return {success: true, data: result.rows[0]};
         } catch (err) {
             this.logger.error(err);

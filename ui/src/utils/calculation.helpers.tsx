@@ -88,7 +88,7 @@ export const calculateNoteOpacity = (note: Note, voice: Voice, context: ScoreCon
         return 1;
     }
 
-    const key = `${note.position}-${note.pitch}-${voice.type}-${voice.name}`;
+    const key = `${note.position}-${note.pitch}-${voice.type === VoiceType.BOTTOM_TORRO ? VoiceType.TORRO : voice.type}-${voice.name}`;
     if (context.duplicateNoteKeys.includes(key)) {
         return 0;
     }
