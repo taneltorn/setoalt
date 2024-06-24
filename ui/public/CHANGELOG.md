@@ -1,6 +1,7 @@
-#### [0.2.1] - 
-- Nootidele lisatud mikrotonaalsuse indikaator
+#### [0.2.1] -  *24.06.2024*
+- Lisatud valikuline mikrotonaalsuse indikaator
 - Lisatud automaatne kerimine
+- Lisatud hääletüüp "alumine torrõ" ja häälte automaatne sorteerimine
 - Parandatud laulusõnade kuvamist - pikad silbid kuvatakse nüüd veidi väiksemalt  
 
 #### [0.2.0] - *23.06.2024*
