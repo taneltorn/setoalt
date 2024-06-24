@@ -23,6 +23,20 @@ docker-compose build
 docker-compose up -d
 ```
 
+
+#### Rollback
+Change the branch parameter in *.env* to specific tag version. For example:
+```yaml
+BRANCH=1.0.0
+```
+Then follow regular release process.
+```shell
+docker-compose down
+docker-compose build
+docker-compose up -d
+```
+
+
 ### Local development
 Local development requires database setup. The easiest way is to follow the instructions listed above (*Runing app on server*). Alternatively, you can set up the database yourself and run the scripts in *database/scripts*.
 
