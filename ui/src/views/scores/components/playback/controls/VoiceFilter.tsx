@@ -6,6 +6,7 @@ import VoiceFilterButton from "../../../../../components/controls/VoiceFilterBut
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {Voice} from "../../../../../model/Voice.ts";
 import {useAudioContext} from "../../../../../context/AudioContext.tsx";
+import {Size} from "../../../../../utils/constants.ts";
 
 const VoiceFilter: React.FC = () => {
 

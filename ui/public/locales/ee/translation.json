@@ -183,12 +183,8 @@
       "description": "Kustuta hääl {{name}}?"
     },
     "embedScore": {
-      "title": "Embed noodistus",
-      "description": "Sisesta maksimaalsed ekraanimõõdud ja kopeeri kood enda lehele.",
-      "form": {
-        "width": "Laius",
-        "height": "Kõrgus"
-      }
+      "title": "Kuva noodistus välisel lehel",
+      "description": "Sisesta maksimaalsed ekraanimõõdud ja kopeeri kood enda lehele."
     },
     "microTuning": {
       "title": "Mikrotonaalsus",

@@ -33,7 +33,9 @@ const RemoveUserDialog: React.FC = () => {
             onSecondaryButtonClick={close}
             onClose={close}
         >
-            <Text>{t("dialog.removeUser.description", {username: context.username})}</Text>
+            <Text size={"xl"} mb={"xl"}>
+                {t("dialog.removeUser.description", {username: context.username})}
+            </Text>
         </Dialog>
     )
 };

@@ -26,7 +26,9 @@ const ResetScoreDialog: React.FC = () => {
             onSecondaryButtonClick={close}
             onClose={close}
         >
-            <Text>{t("dialog.resetScore.description")}</Text>
+            <Text size={"xl"} mb={"xl"}>
+                {t("dialog.resetScore.description")}
+            </Text>
         </Dialog>
     )
 };

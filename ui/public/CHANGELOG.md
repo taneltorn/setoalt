@@ -1,3 +1,9 @@
+#### [0.2.3] -
+- UX ja disaini täiendused
+- Lisatud võimalus kopeerida kood noodistuse kuvamiseks välisel lehel
+- Avalehe ümberkujundamine
+- Pisiparandused ja -muudatused 
+
 #### [0.2.2] - *24.06.2024*
 - Lisatud võimalus heli taasesitust korrata (vahemiku valimine: Ctrl + hiireklikk)
 - Lisatud võimalus redaktoris üksikuid hääli sisse/välja lülitada (Ctrl + hiireklikk)

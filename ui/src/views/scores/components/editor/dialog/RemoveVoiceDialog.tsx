@@ -20,7 +20,9 @@ const RemoveVoiceDialog: React.FC = () => {
             onSecondaryButtonClick={close}
             onClose={close}
         >
-            <Text>{t("dialog.removeVoice.description", {name: context.name})}</Text>
+            <Text size={"xl"} mb={"xl"}>
+                {t("dialog.removeVoice.description", {name: context.name})}
+            </Text>
         </Dialog>
     )
 };

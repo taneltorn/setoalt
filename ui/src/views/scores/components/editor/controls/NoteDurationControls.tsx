@@ -39,7 +39,7 @@ const NoteDurationControls: React.FC = () => {
     }
 
     return (
-        <Group gap={4}>
+        <Group gap={2}>
             {Durations.map(duration =>
                 <ControlButton
                     key={duration}

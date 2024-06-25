@@ -17,7 +17,7 @@ const LayoutControls: React.FC = () => {
     const context = useScoreContext();
 
     return (
-        <Group gap={4}>
+        <Group gap={2}>
             <ControlButton
                 tooltip={t("tooltip.insertBreak")}
                 shortKey={ShortKey.BREAK}

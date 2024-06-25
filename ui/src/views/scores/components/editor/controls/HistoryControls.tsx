@@ -18,7 +18,7 @@ const HistoryControls: React.FC = () => {
     const {undo, redo, undoStates, recoverStates} = useHistory();
 
     return (
-        <Group gap={4}>
+        <Group gap={2}>
             <ControlButton
                 className={"ms-4 me-1"}
                 tooltip={t("tooltip.undo")}

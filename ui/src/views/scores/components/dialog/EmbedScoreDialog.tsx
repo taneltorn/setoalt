@@ -36,9 +36,10 @@ const EmbedScoreDialog: React.FC = () => {
             hidePrimaryButton
             onClose={close}
         >
-            <Text size={"xl"}>
+            <Text size={"xl"} mb={"xl"}>
                 {t("dialog.embedScore.description")}
             </Text>
+
             <Grid>
                 <Grid.Col span={6}>
                     <Input.Wrapper size={"xl"}>
@@ -66,7 +67,6 @@ const EmbedScoreDialog: React.FC = () => {
             </Grid>
 
             <Group mt={"md"}>
-
                 <Code block style={{whiteSpace: "pre-wrap"}}>
                     <Text fz={"xl"}>
                         {code}

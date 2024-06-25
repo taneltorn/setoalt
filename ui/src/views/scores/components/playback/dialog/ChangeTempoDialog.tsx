@@ -40,7 +40,7 @@ const ChangeTempoDialog: React.FC = () => {
             onSecondaryButtonClick={handleClose}
             onClose={handleClose}
         >
-            <Text mb={"xl"}>
+            <Text size={"xl"} mb={"xl"}>
                 {t("dialog.changeTempo.description")}
             </Text>
 
