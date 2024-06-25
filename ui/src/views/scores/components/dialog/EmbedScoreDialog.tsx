@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import Dialog from "../../../../components/dialog/Dialog.tsx";
 import {useTranslation} from "react-i18next";
-import {Button, Code, CopyButton, Group, Input, Text, TextInput} from "@mantine/core";
+import {Button, Code, CopyButton, Grid, Group, Input, Text, TextInput} from "@mantine/core";
 import {DialogType, useDialogContext} from "../../../../context/DialogContext.tsx";
 import {useScoreContext} from "../../../../context/ScoreContext.tsx";
 import {Layout, Size} from "../../../../utils/constants.ts";
@@ -29,6 +29,7 @@ const EmbedScoreDialog: React.FC = () => {
 
     return (
         <Dialog
+            size={"lg"}
             type={DialogType.EMBED_SCORE}
             title={t("dialog.embedScore.title")}
             hideSecondaryButton
@@ -39,26 +40,31 @@ const EmbedScoreDialog: React.FC = () => {
                 {t("dialog.embedScore.description")}
             </Text>
 
-            <Group>
-                <Input.Wrapper size={"xl"}>
-                    <TextInput
-                        leftSection={<TbArrowAutofitWidth size={Size.icon.MD}/>}
-                        size={"xl"}
-                        placeholder={t("view.editor.form.name")}
-                        value={width}
-                        onChange={e => setWidth(+e.currentTarget.value)}
-                    />
-                </Input.Wrapper>
-                <Input.Wrapper size={"xl"}>
-                    <TextInput
-                        leftSection={<TbArrowAutofitHeight size={Size.icon.MD}/>}
-                        size={"xl"}
-                        placeholder={t("view.editor.form.name")}
-                        value={height}
-                        onChange={e => setHeight(+e.currentTarget.value)}
-                    />
-                </Input.Wrapper>
-            </Group>
+            <Grid>
+                <Grid.Col span={{xs: 12, sm: 6}}>
+                    <Input.Wrapper size={"xl"}>
+                        <TextInput
+                            leftSection={<TbArrowAutofitWidth size={Size.icon.MD}/>}
+                            size={"xl"}
+                            placeholder={t("view.editor.form.name")}
+                            value={width}
+                            onChange={e => setWidth(+e.currentTarget.value)}
+                        />
+                    </Input.Wrapper>
+                </Grid.Col>
+                <Grid.Col span={{xs: 12, sm: 6}}>
+
+                    <Input.Wrapper size={"xl"}>
+                        <TextInput
+                            leftSection={<TbArrowAutofitHeight size={Size.icon.MD}/>}
+                            size={"xl"}
+                            placeholder={t("view.editor.form.name")}
+                            value={height}
+                            onChange={e => setHeight(+e.currentTarget.value)}
+                        />
+                    </Input.Wrapper>
+                </Grid.Col>
+            </Grid>
 
             <Group mt={"md"}>
                 <Code block style={{whiteSpace: "pre-wrap"}}>

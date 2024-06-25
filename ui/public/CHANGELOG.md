@@ -1,3 +1,6 @@
+#### [0.2.4] - 
+- Pisiparandused
+
 #### [0.2.3] - *26.06.2024*
 - UX ja disaini täiendused
 - Lisatud võimalus kopeerida kood noodistuse kuvamiseks välisel lehel

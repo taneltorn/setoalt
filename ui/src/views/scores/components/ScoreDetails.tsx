@@ -16,6 +16,8 @@ import {useAudioContext} from "../../../context/AudioContext.tsx";
 import ExportControls from "./export/ExportControls.tsx";
 import {MdLyrics} from "react-icons/md";
 import {Size} from "../../../utils/constants.ts";
+import {DisplayError, DisplaySuccess} from "../../../utils/helpers.tsx";
+import useScoreService from "../../../services/ScoreService.tsx";
 
 interface Properties {
     score: Score;
@@ -26,12 +28,28 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
     const [t] = useTranslation();
     const theme = useMantineTheme();
     const {stopPlayback} = useAudioContext();
+    const scoreService = useScoreService();
     const auth = useAuth();
     const navigate = useNavigate();
 
     const handleClick = () => {
         stopPlayback();
         navigate("edit");
+    }
+
+    const cloneScore = () => {
+        const clone = {...score};
+        clone.name = t("view.scores.clonedScore", {name: clone.name});
+
+        scoreService.createScore(clone)
+            .then((response) => {
+                DisplaySuccess(t("toast.success.saveScore"));
+                if (response) {
+                    navigate(`/scores/${response.id}`)
+                    window.location.reload();
+                }
+            })
+            .catch(() => DisplayError(t("toast.error.saveScore")));
     }
 
     return (
@@ -42,9 +60,11 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
                     {auth.currentUser?.isAuthorized &&
                         <ScoreControls
                             primaryButtonLabel={t("button.edit")}
+                            secondaryButtonLabel={t("button.clone")}
                             primaryButtonVariant={"outline"}
+                            secondaryButtonVariant={"outline"}
                             onPrimaryButtonClick={handleClick}
-                            hideSecondaryButton
+                            onSecondaryButtonClick={cloneScore}
                         />}
                 </>
                 }>

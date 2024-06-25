@@ -43,7 +43,6 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     const [isExportMode, setIsExportMode] = useState<boolean>(false);
     const [isTypeMode, setIsTypeMode] = useState<boolean>(false);
 
-
     const [containerRef, setContainerRef] = useState<RefObject<HTMLElement> | undefined>();
     const [svgRef, setSvgRef] = useState<RefObject<SVGSVGElement> | undefined>();
 
@@ -388,7 +387,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
             return undefined;
         }
         return getNote(activePosition, activeVoice);
-    }, [activePosition, activeVoice]);
+    }, [score, activePosition, activeVoice]);
 
     const endPosition: number = useMemo<number>(() => {
         const notes = score.data.voices.flatMap(v => v.notes).sort((a, b) => a.position - b.position);

@@ -40,16 +40,17 @@ const Home: React.FC = () => {
                     </Description>
 
                     {example && <>
-                        <Title order={3}>Näide</Title>
-                        <Text size={"xl"} mb={"md"}>
-                            {example.name}
+                        <Text size={"xl"}>
+                            Näide
                         </Text>
+                        <Title order={3}  mb={"md"}>{example.name}</Title>
+
 
                         <ScorePlaybackPanel/>
                         <Stave score={example}/>
                     </>}
 
-                    <Group gap={"xs"}>
+                    <Group gap={4}>
                         <Link to={"/editor"}>
                             <Button size={"md"} color={"red"}>
                                 {t("view.home.link.editor")}
