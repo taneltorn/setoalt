@@ -241,7 +241,8 @@
     "showActive": "Näita aktiivset",
     "removeVoice": "Kustuta hääl",
     "changeInstrument": "Muuda heliväljundit",
-    "backToTop": "Tagasi üles"
+    "backToTop": "Tagasi üles",
+    "changelog": "Muutelugu"
   },
   "table": {
     "itemsPerPage": " Kuva",

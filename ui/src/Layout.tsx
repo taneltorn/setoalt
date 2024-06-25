@@ -63,8 +63,8 @@ const Layout: React.FC = () => {
                     <Text size={"md"}>Tegemist on arendusjärgus oleva rakendusega!</Text>
 
                     <Link to={"/changelog"}>
-                        <Button color={"blue"} variant={"outline"} leftSection={<FaGitAlt size={Size.icon.SM}/>}>
-                            Muutelugu
+                        <Button onClick={close} color={"blue"} variant={"outline"} leftSection={<FaGitAlt size={Size.icon.SM}/>}>
+                            {t("button.changelog")}
                         </Button>
                     </Link>
 
@@ -87,7 +87,7 @@ const Layout: React.FC = () => {
                 />
                 <Outlet/>
 
-                <Affix position={{ bottom: 20, right: 20 }}>
+                {!opened && <Affix position={{ bottom: 20, right: 20 }}>
                     <Transition transition="slide-up" mounted={scroll.y > 0}>
                         {(transitionStyles) => (
                             <Button
@@ -100,7 +100,7 @@ const Layout: React.FC = () => {
                             </Button>
                         )}
                     </Transition>
-                </Affix>
+                </Affix>}
             </AppShell.Main>
         </AppShell>
     );
