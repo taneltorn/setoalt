@@ -217,7 +217,6 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     const changeNoteDuration = (duration: string, position?: number, skipShifting?: boolean) => {
         const note = position ? getNote(position, activeVoice) : activeNote;
         if (note) {
-            console.log(note)
             if (!skipShifting) {
                 const offset = getDurationOffset(duration, note.duration)
                 shiftNotes(note.position, offset);
@@ -282,7 +281,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         takeSnapshot();
 
         if (activePosition < 0) return;
-        shiftNotes(activePosition - 1, 1);
+        shiftNotes(activePosition - 0.5, 1);
         setActivePosition(activePosition + 1);
         refresh();
     }

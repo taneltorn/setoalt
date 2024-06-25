@@ -44,14 +44,16 @@ export const Layout = {
             DECREASED_FONT_SIZE: 14,
             FONT_WEIGHT: 600
         }
-    },
-    form: {
-        LABEL_SIZE: "xl",
-        LABEL_PROPS: {
-            fw: 600, mb: "xs"
-        },
-        WRAPPER_BOTTOM_MARGIN: "xl",
-        SLIDER_SIZE: "lg"
+    }
+}
+
+export const Size = {
+    icon: {
+        XS: 20,
+        SM: 24,
+        MD: 32,
+        LG: 48,
+        XL: 64,
     }
 }
 
@@ -75,10 +77,11 @@ export const Color = {
 
 export const Playback = {
     DEFAULT_INSTRUMENT: "synth",
-    MIN_TEMPO: 40,
+    ALLOWED_TEMPO_CHANGE: 1,
+    MIN_TEMPO: 20,
+    MAX_TEMPO: 240,
     DEFAULT_TEMPO: 80,
     DEFAULT_TRANSPOSITION: 0,
-    MAX_TEMPO: 120,
     TEMPO_SLIDER_STEP: 1,
     MIN_DETUNE: -100,
     MAX_DETUNE: 100,

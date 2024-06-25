@@ -1,12 +1,15 @@
 import React from 'react';
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {useTranslation} from "react-i18next";
-import {FaBackspace} from "react-icons/fa";
 import {ShortKey} from "../../../../../utils/keymap.ts";
-import {TfiShiftLeft, TfiShiftRight} from "react-icons/tfi";
 import ControlButton from "../../../../../components/controls/ControlButton.tsx";
 import {Group} from "@mantine/core";
 import {DividerType} from "../../../../../model/Divider.ts";
+import {Size} from "../../../../../utils/constants.ts";
+import {FaDeleteLeft} from "react-icons/fa6";
+import {RxDividerVertical} from "react-icons/rx";
+import {GrReturn} from "react-icons/gr";
+import {GoArrowLeft, GoArrowRight} from "react-icons/go";
 
 const LayoutControls: React.FC = () => {
 
@@ -19,36 +22,41 @@ const LayoutControls: React.FC = () => {
                 tooltip={t("tooltip.insertBreak")}
                 shortKey={ShortKey.BREAK}
                 active={context.score.data.breaks.findIndex(p => p === context.activePosition) >= 0}
-                label={"↵"}
                 onClick={() => context.toggleBreak()}
-            />
+            >
+                <GrReturn size={Size.icon.XS}/>
+            </ControlButton>
             <ControlButton
                 tooltip={t("tooltip.insertDivider")}
                 shortKey={ShortKey.DIVIDER}
                 active={context.score.data.dividers.findIndex(d => [DividerType.BAR, DividerType.SEPARATOR].includes(d.type)
                     && d.position === (context.activePosition)) >= 0}
-                label={"|"}
                 onClick={context.toggleDivider}
-            />
+            >
+                <RxDividerVertical size={Size.icon.XS}/>
+            </ControlButton>
             <ControlButton
                 tooltip={t("tooltip.shiftLeft")}
                 shortKey={ShortKey.SHIFT_LEFT}
-                label={<TfiShiftLeft/>}
                 onClick={context.shiftLeft}
-            />
+            >
+                <GoArrowLeft size={Size.icon.XS}/>
+            </ControlButton>
             <ControlButton
                 tooltip={t("tooltip.shiftRight")}
                 shortKey={ShortKey.SHIFT_RIGHT}
-                label={<TfiShiftRight/>}
                 onClick={context.shiftRight}
-            />
+            >
+                <GoArrowRight size={Size.icon.XS}/>
+            </ControlButton>
             <ControlButton
                 tooltip={t("tooltip.removeNote")}
                 shortKey={ShortKey.REMOVE_NOTE}
                 disabled={!context.activeNote}
-                label={<FaBackspace size={20}/>}
                 onClick={() => context.removeNote(context.activePosition, true)}
-            />
+            >
+                <FaDeleteLeft size={Size.icon.XS}/>
+            </ControlButton>
         </Group>
     )
 };

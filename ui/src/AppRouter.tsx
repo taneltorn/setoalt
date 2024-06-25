@@ -4,24 +4,28 @@ import {
     RouterProvider,
 } from "react-router-dom";
 import Layout from "./Layout.tsx";
-import Home from "./views/Home.tsx";
 import Scores from "./views/scores/ScoreList.tsx";
 import Login from "./views/Login.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Admin from "./views/admin/Admin.tsx";
 import {Role} from "./context/AuthContext.tsx";
 import ScoreManager from "./views/scores/ScoreManager.tsx";
-import Error from "./views/Error.tsx";
+import Home from "./views/Home.tsx";
+import ChangeLog from "./views/ChangeLog.tsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        errorElement: <Error/>,
+        // errorElement: <Error/>,
         element: <Layout/>,
         children: [
             {
                 path: "/",
                 element: <Home/>,
+            },
+            {
+                path: "/changelog",
+                element: <ChangeLog/>,
             },
             {
                 path: "/login",
@@ -57,6 +61,11 @@ const router = createBrowserRouter([
             }
         ]
     },
+    {
+        path: "/embed/:id",
+        element: <ScoreManager mode={"embed"}/>,
+        errorElement: <>Error</>
+    }
 ]);
 
 const AppRouter = () => {

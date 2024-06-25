@@ -1,63 +1,72 @@
 import React, {useEffect, useState} from "react";
-import {Button, Tabs, Text} from "@mantine/core";
+import {Button, Group, Text, Title} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import {Link} from "react-router-dom";
-import Markdown from "react-markdown";
 import Page from "../Page.tsx";
 import Header from "../components/controls/Header.tsx";
 import Description from "../components/controls/Description.tsx";
-import {FaGitAlt} from "react-icons/fa";
 import {Trans} from 'react-i18next';
+import {Score} from "../model/Score.ts";
+import Stave from "./scores/components/stave/Stave.tsx";
+import ScoreContextProvider from "../context/ScoreContextProvider.tsx";
+import HistoryContextProvider from "../context/HistoryContextProvider.tsx";
+import KeyPressHandler from "../components/KeyPressHandler.tsx";
+import ScoreDialogs from "./scores/components/dialog/ScoreDialogs.tsx";
+import ScorePlaybackPanel from "./scores/components/playback/ScorePlaybackPanel.tsx";
 
 const Home: React.FC = () => {
 
     const {t} = useTranslation();
-    const [changelog, setChangelog] = useState<string>("");
+    const [example, setExample] = useState<Score>();
 
     useEffect(() => {
-        fetch("/CHANGELOG.md")
-            .then(response => response.text())
-            .then(text => {
-                setChangelog(text);
+        fetch("/examples/Score.example.json")
+            .then(response => response.json())
+            .then(score => {
+                setExample(score);
             });
     }, []);
 
     return (
-        <Page title={t("view.home.pageTitle")}>
-            <Header rightSection={
-                <>
-                    <Link to={"/scores/1"}>
-                        <Button size={"md"}>
-                            {t("view.home.label.example")}
-                        </Button>
-                    </Link>
-                    <Link to={"/editor"}>
-                        <Button size={"md"}>
-                            {t("view.home.label.experiment")}
-                        </Button>
-                    </Link>
-                </>
-            }>
-                {t("view.home.title")}
-            </Header>
-            <Description>
-                <Trans i18nKey="view.home.description"/>
-            </Description>
+        <HistoryContextProvider>
+            <ScoreContextProvider>
+                <Page title={t("view.home.pageTitle")}>
+                    <Header>
+                        {t("view.home.title")}
+                    </Header>
 
-            <Tabs defaultValue="changelog">
-                <Tabs.List>
-                    <Tabs.Tab value="changelog" leftSection={<FaGitAlt size={24}/>}>
-                        <Text size={"lg"}>
-                            {t("view.home.tab.changes")}
+                    <Description span={12}>
+                        <Trans i18nKey="view.home.description"/>
+                    </Description>
+
+                    {example && <>
+                        <Title order={3}>Näide</Title>
+                        <Text size={"xl"} mb={"md"}>
+                            {example.name}
                         </Text>
-                    </Tabs.Tab>
-                </Tabs.List>
 
-                <Tabs.Panel value="changelog">
-                    <Markdown>{changelog}</Markdown>
-                </Tabs.Panel>
-            </Tabs>
-        </Page>
+                        <ScorePlaybackPanel/>
+                        <Stave score={example}/>
+                    </>}
+
+                    <Group gap={"xs"}>
+                        <Link to={"/editor"}>
+                            <Button size={"md"} color={"red"}>
+                                {t("view.home.link.editor")}
+                            </Button>
+                        </Link>
+                        <Link to={"/scores"}>
+                            <Button size={"md"} color={"red"}>
+                                {t("view.home.link.scores")}
+                            </Button>
+                        </Link>
+                    </Group>
+                </Page>
+
+                <KeyPressHandler/>
+                <ScoreDialogs/>
+            </ScoreContextProvider>
+        </HistoryContextProvider>
     );
 }
 

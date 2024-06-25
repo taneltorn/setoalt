@@ -9,6 +9,12 @@ a {
   }
 }
 
+.text-link {
+  &:hover {
+    color: var(--mantine-primary-color-7) !important;
+  }
+}
+
 .errorContainer {
   text-align: center;
   position: absolute;
@@ -34,7 +40,7 @@ a {
   }
 }
 
-.lyric-input  {
+.lyric-input {
   width: 50px;
   overflow: visible;
   text-align: center;
@@ -46,4 +52,19 @@ a {
   &:hover {
     background: var(--mantine-color-gray-1);
   }
+}
+
+//.mantine-TextInput-wrapper	Root element of the Input
+//input	.mantine-TextInput-input	Input element
+//section	.mantine-TextInput-section	Left and right sections
+//root	.mantine-TextInput-root	Root element
+//label	.mantine-TextInput-label	Label element
+//required	.mantine-TextInput-required	Required asterisk element, rendered inside label
+//description	.mantine-TextInput-description	Description element
+//error	.mantine-TextInput-error
+
+
+.mantine-InputWrapper-label {
+  font-weight: 600;
+  padding-bottom: 8px;
 }

@@ -237,9 +237,6 @@ export const calculateStaveDimensions = (score: Score): StaveDimensions => {
     })
     const x = Math.max(...distances) * Layout.stave.note.SPACING + Layout.stave.container.PADDING_X_START + Layout.stave.container.PADDING_X_END;
 
-    // const x = Math.max(getMaxPosition(score.data.voices.flatMap(v => v.notes).map(n => n.position), score.data.breaks), 0)
-
-    // const x = Layout.stave.container.WIDTH;
     const blocks = score.data.breaks.length + 1;
 
     return {

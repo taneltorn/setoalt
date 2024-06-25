@@ -54,16 +54,20 @@ const PaginatedTable: React.FC<Properties> = ({isLoading, columns, rows, ...prop
                 ?
                 <Group justify={"space-between"}>
                     <Group gap={4}>
-                        <Text size={"sm"} c={"gray.8"} mr={4}>
-                            {t("table.results", {count: rows.length})}
+                        <Text size={"sm"} c={"gray.8"} mr={"sm"}>
+                            {t("table.itemsPerPage")}
                         </Text>
                         {itemsPerPageOptions.map(it => (
                             <Button key={it}
                                     size={"xs"}
-                                    color={it === itemsPerPage ? theme.primaryColor : "gray.7"}
-                                    variant={it === itemsPerPage ? "filled" : "outline"}
+                                    color={theme.primaryColor}
+                                    variant={it === itemsPerPage ? "filled" : "default"}
                                     onClick={() => setItemsPerPage(it)}>{it}
                             </Button>))}
+                        <Text size={"sm"} c={"gray.8"} ml={"md"}>
+                            {t("table.results", {count: rows.length})}
+                        </Text>
+
                     </Group>
                     <Pagination
                         mt={"md"}

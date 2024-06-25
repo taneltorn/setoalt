@@ -1,13 +1,21 @@
 import React, {useState} from "react";
-import {Button, Loader} from "@mantine/core";
+import {ActionIcon, Group, Loader} from "@mantine/core";
 import {useTranslation} from "react-i18next";
-import {RiDownloadCloudFill} from "react-icons/ri";
 import {useScoreContext} from "../../../../context/ScoreContext.tsx";
+import {BsCodeSlash, BsFiletypePng} from "react-icons/bs";
+import {Size} from "../../../../utils/constants.ts";
+import {DialogType, useDialogContext} from "../../../../context/DialogContext.tsx";
 
-const PNGExport: React.FC = () => {
+interface Properties {
+    hideEmbeddingExport?: boolean;
+    hidePNGExport?: boolean;
+}
+
+const ExportControls: React.FC<Properties> = (props) => {
 
     const {t} = useTranslation();
     const context = useScoreContext();
+    const {open} = useDialogContext();
     const [isLoading, setIsLoading] = useState<boolean>(false);
 
     const exportToPng = () => {
@@ -60,20 +68,33 @@ const PNGExport: React.FC = () => {
     }
 
     return (
-        <Button
-            title={t(`tooltip.exportToPng`)}
-            variant={"subtle"}
-            size={"md"}
-            color={"black"}
-            onClick={exportToPng}
-            disabled={isLoading}
-            leftSection={isLoading
-                ? <Loader size={20}/>
-                : <RiDownloadCloudFill size={24}/>}
-        >
-            {t("button.pngExport")}
-        </Button>
+        <Group gap={"xs"}>
+            {!props.hideEmbeddingExport &&
+                <ActionIcon
+                    size={"xl"}
+                    variant={"subtle"}
+                    color={"black"}
+                    onClick={() => open(DialogType.EMBED_SCORE)}
+                >
+                    <BsCodeSlash size={Size.icon.MD}/>
+                </ActionIcon>}
+
+            {!props.hidePNGExport &&
+                <ActionIcon
+                    title={t(`tooltip.exportToPng`)}
+                    variant={"subtle"}
+                    size={"xl"}
+                    color={"black"}
+                    onClick={exportToPng}
+                    disabled={isLoading}
+                >
+                    {isLoading
+                        ? <Loader size={Size.icon.MD}/>
+                        : <BsFiletypePng size={Size.icon.MD}/>}
+                </ActionIcon>}
+        </Group>
+
     );
 };
 
-export default PNGExport;
+export default ExportControls;

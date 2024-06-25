@@ -7,6 +7,7 @@ import {FaUser} from "react-icons/fa";
 import {IoMdSettings} from "react-icons/io";
 import Header from "../../components/controls/Header.tsx";
 import Description from "../../components/controls/Description.tsx";
+import {Size} from "../../utils/constants.ts";
 
 const Admin: React.FC = () => {
 
@@ -19,13 +20,13 @@ const Admin: React.FC = () => {
 
             <Tabs defaultValue="users">
                 <Tabs.List>
-                    <Tabs.Tab value="users" leftSection={<FaUser size={24}/>}>
+                    <Tabs.Tab value="users" leftSection={<FaUser size={Size.icon.SM}/>}>
                         <Text size={"lg"}>
                             {t("view.admin.tab.users")}
                         </Text>
                     </Tabs.Tab>
 
-                    <Tabs.Tab value="settings" leftSection={<IoMdSettings size={24}/>}>
+                    <Tabs.Tab value="settings" leftSection={<IoMdSettings size={Size.icon.SM}/>}>
                         <Text size={"lg"}>
                             {t("view.admin.tab.settings")}
                         </Text>

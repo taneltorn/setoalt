@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {Group, Title} from "@mantine/core";
+import {Divider, Group, Title} from "@mantine/core";
 
 interface Properties {
     leftSection?: ReactNode;
@@ -10,17 +10,20 @@ interface Properties {
 const Header: React.FC<Properties> = (props) => {
 
     return (
-        <Group justify={"space-between"} mb={"md"}>
-            <Group>
-                {props.leftSection}
-                <Title order={1}>
-                    {props.children}
-                </Title>
+        <>
+            <Group justify={"space-between"}>
+                <Group>
+                    {props.leftSection}
+                    <Title order={1}>
+                        {props.children}
+                    </Title>
+                </Group>
+                <Group gap={4}>
+                    {props.rightSection}
+                </Group>
             </Group>
-            <Group gap={4}>
-                {props.rightSection}
-            </Group>
-        </Group>
+            <Divider my={"md"}/>
+        </>
     )
 };
 

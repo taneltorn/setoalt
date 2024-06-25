@@ -3,28 +3,29 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {Box, Button, Divider, Group, NavLink} from "@mantine/core";
 import classes from "./Sidebar.module.scss";
-import {GiGClef} from "react-icons/gi";
 import {PiSpeakerSimpleHigh} from "react-icons/pi";
 import {IoHome, IoSettingsOutline} from "react-icons/io5";
 import {useAuth} from "../../context/AuthContext.tsx";
 import {MdOutlineLogout} from "react-icons/md";
 import {useAudioContext} from "../../context/AudioContext.tsx";
+import {BsMusicNoteList} from "react-icons/bs";
+import {Size} from "../../utils/constants.ts";
 
 const routes = [
-    {id: 'home', icon: <IoHome className={classes.icon} size={24}/>, link: "/"},
-    {id: 'scores', icon: <PiSpeakerSimpleHigh className={classes.icon} size={24}/>, link: "/scores"},
-    {id: 'editor', icon: <GiGClef className={classes.icon} size={24}/>, link: "/editor"},
+    {id: 'home', icon: <IoHome className={classes.icon} size={Size.icon.SM}/>, link: "/"},
+    {id: 'scores', icon: <PiSpeakerSimpleHigh className={classes.icon} size={Size.icon.SM}/>, link: "/scores"},
+    {id: 'editor', icon: <BsMusicNoteList className={classes.icon} size={Size.icon.SM}/>, link: "/editor"},
 ];
 
 const protectedRoutes = [
-    {id: 'admin', icon: <IoSettingsOutline className={classes.icon} size={24}/>, link: "/admin"},
+    {id: 'admin', icon: <IoSettingsOutline className={classes.icon} size={Size.icon.SM}/>, link: "/admin"},
 ];
 
 interface Properties {
-    onNavigation: () => void;
+    onNavigate: () => void;
 }
 
-const Sidebar: React.FC<Properties> = (props) => {
+const Navigation: React.FC<Properties> = (props) => {
 
     const [t] = useTranslation();
     const location = useLocation();
@@ -34,13 +35,13 @@ const Sidebar: React.FC<Properties> = (props) => {
 
     const handleNavigate = (link: string) => {
         navigate(link);
-        props.onNavigation();
+        props.onNavigate();
         stopPlayback();
     }
 
     const handleLogout = () => {
         auth.logout().then(() => navigate("/"));
-        props.onNavigation();
+        props.onNavigate();
     }
 
     return (
@@ -58,7 +59,7 @@ const Sidebar: React.FC<Properties> = (props) => {
             ))}
 
             {auth.currentUser?.isAdmin && <>
-                <Divider my={"lg"}/>
+                <Divider my={"xs"}/>
 
                 {protectedRoutes.map((item, index) => (
                     <NavLink
@@ -73,10 +74,10 @@ const Sidebar: React.FC<Properties> = (props) => {
                 ))}
             </>}
 
-            <Divider mt={"lg"}/>
+            <Divider mt={"xs"}/>
 
             {!auth.currentUser && <Group mt={"lg"} justify={"center"}>
-                <Link to={"/login"} onClick={props.onNavigation}>
+                <Link to={"/login"} onClick={props.onNavigate}>
                     <Button size={"sm"} variant={"outline"}>
                         {t("sidebar.login")}
                     </Button>
@@ -86,7 +87,7 @@ const Sidebar: React.FC<Properties> = (props) => {
             {auth.currentUser &&
                 <Group mt={"lg"} justify={"center"}>
                     <Button variant={"subtle"} onClick={handleLogout}>
-                        <MdOutlineLogout size={24}/>
+                        <MdOutlineLogout size={Size.icon.SM}/>
                         <Box ml={"xs"}>
                             {t("sidebar.logout")}
                         </Box>
@@ -96,4 +97,4 @@ const Sidebar: React.FC<Properties> = (props) => {
     );
 }
 
-export default Sidebar;
+export default Navigation;

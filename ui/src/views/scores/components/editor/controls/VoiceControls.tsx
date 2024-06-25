@@ -1,6 +1,6 @@
 import React from 'react';
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
-import {Button, Grid, Group} from "@mantine/core";
+import {Button, Group} from "@mantine/core";
 import VoiceFilterButton from "../../../../../components/controls/VoiceFilterButton.tsx";
 import {MdRecordVoiceOver} from "react-icons/md";
 import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
@@ -9,6 +9,7 @@ import {FaPlus} from "react-icons/fa";
 import {DefaultVoices} from "../../../../../utils/dictionaries.ts";
 import {FaRegTrashCan} from "react-icons/fa6";
 import {Voice} from "../../../../../model/Voice.ts";
+import {Size} from "../../../../../utils/constants.ts";
 
 const VoiceControls: React.FC = () => {
 
@@ -71,72 +72,67 @@ const VoiceControls: React.FC = () => {
     }
 
     return (
-        <Grid mt={"md"}>
-            <Grid.Col span={9}>
-                <Group gap={4}>
-                    {context.score.data.voices.map(voice => (
-                        <VoiceFilterButton
-                            key={voice.name}
-                            active={voice.name === context.activeVoice}
-                            halfActive={!voice.hidden}
-                            label={voice.name}
-                            onClick={(e) => handleChange(e, voice.name)}
-                        />))}
+        <Group justify={"space-between"} my={"md"}>
+            <Group gap={4}>
+                {context.score.data.voices.map(voice => (
+                    <VoiceFilterButton
+                        key={voice.name}
+                        active={voice.name === context.activeVoice}
+                        halfActive={!voice.hidden}
+                        label={voice.name}
+                        onClick={(e) => handleChange(e, voice.name)}
+                    />))}
 
+                <Button
+                    size={"xs"}
+                    color={"blue"}
+                    leftSection={<FaPlus/>}
+                    variant={"subtle"}
+                    onClick={() => open(DialogType.ADD_VOICE, {
+                        voices: context.score.data.voices,
+                        onConfirm: handleVoiceAdd
+                    })}>
+                    {t("button.addNew")}
+                </Button>
+            </Group>
+            <Group gap={4}>
+                {context.score.data.voices.some(v => v.hidden)
+                    ?
                     <Button
                         size={"xs"}
                         color={"blue"}
-                        leftSection={<FaPlus/>}
+                        leftSection={<MdRecordVoiceOver size={Size.icon.XS}/>}
                         variant={"subtle"}
-                        onClick={() => open(DialogType.ADD_VOICE, {
-                            voices: context.score.data.voices,
-                            onConfirm: handleVoiceAdd
-                        })}>
-                        {t("button.addNew")}
+                        onClick={showAllVoices}
+                    >
+                        {t("button.showAll")}
                     </Button>
-                </Group>
-            </Grid.Col>
-            <Grid.Col span={3}>
-                <Group gap={4} justify={"end"}>
+                    :
+                    <Button
+                        size={"xs"}
+                        color={"blue"}
+                        leftSection={<MdRecordVoiceOver size={Size.icon.XS}/>}
+                        variant={"subtle"}
+                        onClick={showActiveVoice}
+                    >
+                        {t("button.showActive")}
+                    </Button>}
 
-                    {context.score.data.voices.some(v => v.hidden)
-                        ?
-                        <Button
-                            size={"xs"}
-                            color={"blue"}
-                            leftSection={<MdRecordVoiceOver size={20}/>}
-                            variant={"subtle"}
-                            onClick={showAllVoices}
-                        >
-                            {t("button.showAll")}
-                        </Button>
-                        :
-                        <Button
-                            size={"xs"}
-                            color={"blue"}
-                            leftSection={<MdRecordVoiceOver size={20}/>}
-                            variant={"subtle"}
-                            onClick={showActiveVoice}
-                        >
-                            {t("button.showActive")}
-                        </Button>}
-
-                    {!DefaultVoices.map(v => v.name).includes(context.activeVoice) &&
-                        <Button
-                            size={"xs"}
-                            color={"red"}
-                            leftSection={<FaRegTrashCan size={20}/>}
-                            variant={"subtle"}
-                            onClick={() => open(DialogType.REMOVE_VOICE, {
-                                name: context.activeVoice,
-                                onRemove: () => handleVoiceRemove(context.activeVoice)
-                            })}
-                        >
-                            {t("button.removeVoice")}
-                        </Button>}
-                </Group>
-            </Grid.Col>
-        </Grid>
+                {!DefaultVoices.map(v => v.name).includes(context.activeVoice) &&
+                    <Button
+                        size={"xs"}
+                        color={"red"}
+                        leftSection={<FaRegTrashCan size={Size.icon.XS}/>}
+                        variant={"subtle"}
+                        onClick={() => open(DialogType.REMOVE_VOICE, {
+                            name: context.activeVoice,
+                            onRemove: () => handleVoiceRemove(context.activeVoice)
+                        })}
+                    >
+                        {t("button.removeVoice")}
+                    </Button>}
+            </Group>
+        </Group>
 
     );
 };

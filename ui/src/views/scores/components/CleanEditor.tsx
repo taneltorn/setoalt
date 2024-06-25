@@ -10,6 +10,8 @@ import Description from "../../../components/controls/Description.tsx";
 import ScorePlaybackPanel from "./playback/ScorePlaybackPanel.tsx";
 import Stave from "./stave/Stave.tsx";
 import {useAudioContext} from "../../../context/AudioContext.tsx";
+import {Group} from "@mantine/core";
+import ExportControls from "./export/ExportControls.tsx";
 
 const CleanEditor: React.FC = () => {
 
@@ -27,6 +29,7 @@ const CleanEditor: React.FC = () => {
             <Header rightSection={
                 <ScoreControls
                     onPrimaryButtonClick={handleClick}
+                    primaryButtonVariant={"outline"}
                     primaryButtonRequiresAuth
                     hideSecondaryButton
                 />
@@ -35,7 +38,10 @@ const CleanEditor: React.FC = () => {
             </Header>
             <Description>{t("view.editor.description")}</Description>
 
-            <ScorePlaybackPanel/>
+            <Group justify={"space-between"}>
+                <ScorePlaybackPanel/>
+                <ExportControls hideEmbeddingExport/>
+            </Group>
 
             <VoiceControls/>
             <ScoreEditorPanel/>

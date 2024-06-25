@@ -1,6 +1,6 @@
 import React from "react";
 import {DialogType, useDialogContext} from "../../context/DialogContext.tsx";
-import {Box, Button, Group, Modal} from "@mantine/core";
+import {Box, Button, Group, Modal, ScrollArea} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 
 interface Properties {
@@ -34,6 +34,7 @@ const Dialog: React.FC<Properties> = (props) => {
             closeButtonProps={{size: "xl"}}
             onClose={handleClose}
             title={props.title}
+            scrollAreaComponent={ScrollArea.Autosize}
             styles={{
                 title: {
                     marginLeft: "14px",

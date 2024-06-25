@@ -13,6 +13,7 @@ import SearchInput from "../../../components/controls/SearchInput.tsx";
 import SaveUserDialog from "../dialog/SaveUserDialog.tsx";
 import RemoveUserDialog from "../dialog/RemoveUserDialog.tsx";
 import IconButton from "../../../components/controls/IconButton.tsx";
+import {Size} from "../../../utils/constants.ts";
 
 const UserManagement: React.FC = () => {
 
@@ -54,7 +55,7 @@ const UserManagement: React.FC = () => {
                 />
                 <Button size={"md"}
                         variant={"outline"}
-                        leftSection={<BiPlus size={24}/>}
+                        leftSection={<BiPlus size={Size.icon.SM}/>}
                         onClick={() => open(DialogType.SAVE_USER, {onSave: () => fetchData()})}>
                     {t("button.addNew")}
                 </Button>
@@ -81,7 +82,7 @@ const UserManagement: React.FC = () => {
                         <Group justify={"end"} gap={4}>
                             <IconButton
                                 title={t("button.edit")}
-                                icon={<FaPencil size={20}/>}
+                                icon={<FaPencil size={Size.icon.XS}/>}
                                 onClick={() => open(DialogType.SAVE_USER, {
                                     id: user.id,
                                     user: user,
@@ -91,7 +92,7 @@ const UserManagement: React.FC = () => {
 
                             <IconButton
                                 title={t("button.remove")}
-                                icon={<FaRegTrashCan size={20}/>}
+                                icon={<FaRegTrashCan size={Size.icon.XS}/>}
                                 onClick={() => open(DialogType.REMOVE_USER, {
                                     id: user.id,
                                     username: user.username,

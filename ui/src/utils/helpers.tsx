@@ -2,7 +2,7 @@ import * as Tone from "tone";
 import {Frequency} from "tone";
 import {Note} from "../model/Note";
 import {Voice} from "../model/Voice";
-import {Layout} from "./constants";
+import {Layout, Size} from "./constants";
 import {Score} from "../model/Score";
 import {Line} from "../model/Line";
 import {Coordinates} from "../model/Coordinates";
@@ -27,6 +27,18 @@ export const EmptyScore: Score = {
         lyrics: [],
         voices: [...DefaultVoices]
     }
+}
+
+export const normalize = (score: Score): Score => {
+    score.data.voices.forEach(v => {
+        v.hidden = undefined;
+        v.occupiedPositions = undefined;
+    });
+    const positions = getPositions(score.data.voices);
+
+    score.data.lyrics = score.data.lyrics.filter(l => positions.includes(l.position));
+
+    return score;
 }
 
 export const durationToScalar = (duration: string): number => {
@@ -191,7 +203,7 @@ export const DisplayError = (message: string) => {
         message: message,
         p: "md",
         withBorder: true,
-        icon: <RiErrorWarningFill size={32}/>,
+        icon: <RiErrorWarningFill size={Size.icon.MD}/>,
     });
 }
 
@@ -201,7 +213,7 @@ export const DisplaySuccess = (message: string) => {
         message: message,
         p: "md",
         withBorder: true,
-        icon: <FaRegCheckCircle color={"green"} size={32}/>,
+        icon: <FaRegCheckCircle color={"green"} size={Size.icon.MD}/>,
     });
 }
 
@@ -214,4 +226,13 @@ export const getDetuneLabel = (detune: number | undefined, unit?: string): strin
         return "";
     }
     return `${detune > 0 ? "+" : ""}${detune}${unit ? unit : ""}`
+}
+
+
+export const getTempoLabel = (current: number, original: number = 80): string => {
+    if (current === original) {
+        return "";
+    }
+    const delta = Math.round(current / original * 100 - 100);
+    return `${delta > 0 ? "+" : ""}${delta}%`
 }

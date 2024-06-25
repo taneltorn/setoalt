@@ -42,20 +42,21 @@ const Login: React.FC = () => {
                 <Grid.Col span={{xs: 12, sm: 6, lg: 4}}>
                     <form onSubmit={handleSubmit(onSubmit)} noValidate>
                         <Input
-                            size={"lg"}
                             placeholder={t("view.login.form.username")}
+                            size={"xl"}
+                            mb={"md"}
                             {...register("username", {required: t("field.required")})}
                         />
 
                         <Input
-                            size={"lg"}
                             placeholder={t("view.login.form.password")}
-                            mt={"xs"}
+                            size={"xl"}
+                            mb={"xl"}
                             type={"password"}
                             {...register("password", {required: t("field.required")})}
                         />
 
-                        <Button mt={"md"} size={"lg"} type={"submit"}>
+                        <Button size={"lg"} type={"submit"}>
                             {t("button.submit")}
                         </Button>
                     </form>

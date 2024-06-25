@@ -1,5 +1,5 @@
 import React from "react";
-import {Grid, Tabs, Text} from "@mantine/core";
+import {Grid, Group, Tabs, Text} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import Page from "../../../Page.tsx";
 import ScoreEditorPanel from "./editor/ScoreEditorPanel.tsx";
@@ -17,10 +17,12 @@ import ScorePlaybackPanel from "./playback/ScorePlaybackPanel.tsx";
 import Stave from "./stave/Stave.tsx";
 import BackLink from "../../../components/controls/BackLink.tsx";
 import {FaClipboardList} from "react-icons/fa";
-import {IoMusicalNotes} from "react-icons/io5";
 import StaveParameters from "./editor/form/StaveParameters.tsx";
 import {GiFClef} from "react-icons/gi";
 import {useAudioContext} from "../../../context/AudioContext.tsx";
+import ExportControls from "./export/ExportControls.tsx";
+import {Size} from "../../../utils/constants.ts";
+import {BsMusicNoteList} from "react-icons/bs";
 
 interface Properties {
     score: Score;
@@ -68,19 +70,19 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
 
             <Tabs defaultValue="editor">
                 <Tabs.List>
-                    <Tabs.Tab value="editor" leftSection={<IoMusicalNotes size={24}/>}>
+                    <Tabs.Tab value="editor" leftSection={<BsMusicNoteList size={Size.icon.MD}/>}>
                         <Text size={"lg"}>
                             {t("view.editor.tab.editor")}
                         </Text>
                     </Tabs.Tab>
 
-                    <Tabs.Tab value="data" leftSection={<FaClipboardList size={24}/>}>
+                    <Tabs.Tab value="data" leftSection={<FaClipboardList size={Size.icon.MD}/>}>
                         <Text size={"lg"}>
                             {t("view.editor.tab.data")}
                         </Text>
                     </Tabs.Tab>
 
-                    <Tabs.Tab value="stave" leftSection={<GiFClef size={24}/>}>
+                    <Tabs.Tab value="stave" leftSection={<GiFClef size={Size.icon.MD}/>}>
                         <Text size={"lg"}>
                             {t("view.editor.tab.stave")}
                         </Text>
@@ -88,7 +90,10 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
                 </Tabs.List>
 
                 <Tabs.Panel value="editor" pt={"xl"}>
-                    <ScorePlaybackPanel/>
+                    <Group justify={"space-between"}>
+                        <ScorePlaybackPanel/>
+                        <ExportControls hideEmbeddingExport/>
+                    </Group>
                     <VoiceControls/>
                     <ScoreEditorPanel/>
                     <Stave score={score} isEditMode/>

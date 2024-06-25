@@ -8,7 +8,7 @@ import {
     Text,
 } from "@mantine/core";
 import {Controller, useFieldArray, useFormContext} from "react-hook-form";
-import {Layout, Playback} from "../../../../../utils/constants.ts";
+import {Playback, Size} from "../../../../../utils/constants.ts";
 import {Score} from "../../../../../model/Score.ts";
 import {RxReset} from "react-icons/rx";
 
@@ -27,10 +27,9 @@ const StaveParameters: React.FC = () => {
 
             <Input.Wrapper
                 label={t("view.editor.form.defaultTransposition")}
-                size={Layout.form.LABEL_SIZE}
-                labelProps={Layout.form.LABEL_PROPS}
+                size={"xl"}
+                mb={60}
                 error={errors.defaultTransposition?.message}
-                mb={Layout.form.WRAPPER_BOTTOM_MARGIN}
             >
                 <Controller
                     name="defaultTransposition"
@@ -40,7 +39,7 @@ const StaveParameters: React.FC = () => {
                             <Group justify={"end"}>
                                 {field.value && field.value !== Playback.DEFAULT_TRANSPOSITION &&
                                     <RxReset
-                                        size={24}
+                                        size={Size.icon.SM}
                                         title={t("button.reset")}
                                         onClick={() => field.onChange(Playback.DEFAULT_TRANSPOSITION)}
                                         style={{cursor: "pointer"}}
@@ -50,7 +49,7 @@ const StaveParameters: React.FC = () => {
                                 </Text>
                             </Group>
                             <Slider
-                                size={Layout.form.SLIDER_SIZE}
+                                size={"lg"}
                                 color="gray"
                                 label={null}
                                 min={Playback.MIN_TRANSPOSE}
@@ -66,10 +65,9 @@ const StaveParameters: React.FC = () => {
 
             <Input.Wrapper
                 label={t("view.editor.form.lineDetune")}
-                size={Layout.form.LABEL_SIZE}
-                labelProps={Layout.form.LABEL_PROPS}
+                size={"xl"}
+                mb={60}
                 error={errors.defaultTempo?.message}
-                mb={Layout.form.WRAPPER_BOTTOM_MARGIN}
             >
                 {fields.map((line, index) =>
                     <Controller
@@ -86,7 +84,7 @@ const StaveParameters: React.FC = () => {
                                         {field.value &&
                                             <RxReset
                                                 title={t("button.reset")}
-                                                size={24}
+                                                size={Size.icon.SM}
                                                 onClick={() => field.onChange(0)}
                                                 style={{cursor: "pointer"}}
                                             />}
@@ -97,7 +95,7 @@ const StaveParameters: React.FC = () => {
                                 </Group>
                                 <Slider
                                     display={"flex"}
-                                    size={Layout.form.SLIDER_SIZE}
+                                    size={"lg"}
                                     color="gray"
                                     label={null}
                                     min={Playback.MIN_DETUNE}
@@ -114,10 +112,8 @@ const StaveParameters: React.FC = () => {
 
             <Input.Wrapper
                 label={t("view.editor.form.defaultTempo")}
-                size={Layout.form.LABEL_SIZE}
-                labelProps={Layout.form.LABEL_PROPS}
+                size={"xl"}
                 error={errors.defaultTempo?.message}
-                mb={Layout.form.WRAPPER_BOTTOM_MARGIN}
             >
                 <Controller
                     name="defaultTempo"
@@ -127,7 +123,7 @@ const StaveParameters: React.FC = () => {
                             <Group justify={"end"}>
                                 {field.value !== Playback.DEFAULT_TEMPO &&
                                     <RxReset
-                                        size={24}
+                                        size={Size.icon.SM}
                                         title={t("button.reset")}
                                         onClick={() => field.onChange(Playback.DEFAULT_TEMPO)}
                                         style={{cursor: "pointer"}}
@@ -137,7 +133,7 @@ const StaveParameters: React.FC = () => {
                                 </Text>
                             </Group>
                             <Slider
-                                size={Layout.form.SLIDER_SIZE}
+                                size={"lg"}
                                 color="gray"
                                 label={null}
                                 min={Playback.MIN_TEMPO}

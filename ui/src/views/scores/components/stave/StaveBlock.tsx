@@ -5,9 +5,6 @@ import {useScoreContext} from "../../../../context/ScoreContext.tsx";
 import {useDevMode} from "../../../../context/DevModeContext.tsx";
 import {calculateStaveBlockCoords} from "../../../../utils/calculation.helpers.tsx";
 import {Layout} from "../../../../utils/constants.ts";
-import {getDetuneLabel} from "../../../../utils/helpers.tsx";
-import {useAudioContext} from "../../../../context/AudioContext.tsx";
-import {useTranslation} from "react-i18next";
 
 interface Properties {
     lines: Line[];
@@ -16,9 +13,7 @@ interface Properties {
 
 const StaveBlock: React.FC<Properties> = ({index, lines}) => {
 
-    const {t} = useTranslation();
     const context = useScoreContext();
-    const {transposition} = useAudioContext();
     const {isDevMode} = useDevMode();
     const breaksDependency = JSON.stringify(context.score.data.breaks);
 
@@ -28,11 +23,6 @@ const StaveBlock: React.FC<Properties> = ({index, lines}) => {
 
     return (
         <>
-            {transposition && <g>
-                <text x={0} y={y + Layout.stave.container.SYMBOLS_BAR - 30} fontSize={14} fontWeight={"bold"} fill={"black"}>
-                    {getDetuneLabel(transposition,  t("unit.semitonesAbbr"))}
-                </text>
-            </g>}
             {isDevMode &&
                 <rect
                     height={Layout.stave.container.SYMBOLS_BAR}

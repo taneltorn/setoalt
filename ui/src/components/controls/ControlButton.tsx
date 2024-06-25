@@ -1,5 +1,5 @@
-import React from 'react';
-import {Button} from "@mantine/core";
+import React, {ReactNode} from 'react';
+import {ActionIcon} from "@mantine/core";
 
 interface Properties {
     className?: string;
@@ -7,9 +7,8 @@ interface Properties {
     shortKey?: string;
     active?: boolean;
     disabled?: boolean;
-    label?: string | React.ReactElement;
-    icon?: React.ReactElement;
     onClick: () => void;
+    children?: ReactNode;
 }
 
 const ControlButton: React.FC<Properties> = (props) => {
@@ -17,18 +16,19 @@ const ControlButton: React.FC<Properties> = (props) => {
     const title = props.tooltip + (props.shortKey ? ` (${props.shortKey})` : "");
 
     return (
-        <Button
+        <ActionIcon
             title={title}
+            size={40}
+            w={55}
             color={"black"}
             data-active={props.active}
             className={"control-button"}
             variant={props.active ? "filled" : "transparent"}
             disabled={props.disabled}
-            leftSection={props.icon}
             onClick={props.onClick}
         >
-            {props.label}
-        </Button>
+            {props.children}
+        </ActionIcon>
     )
 };
 

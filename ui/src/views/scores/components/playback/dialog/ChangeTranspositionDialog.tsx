@@ -27,15 +27,13 @@ const ChangeTranspositionDialog: React.FC = () => {
     }
 
     useEffect(() => {
-        if (scoreContext.score.defaultTransposition) {
-            setTransposition(scoreContext.score.defaultTransposition)
-        }
+        setTransposition(scoreContext.score.defaultTransposition || Playback.DEFAULT_TRANSPOSITION);
     }, [scoreContext.score.defaultTransposition]);
 
     return (
         <Dialog
             type={DialogType.TRANSPOSE}
-            size={"lg"}
+            size={"sm"}
             title={t("dialog.transpose.title")}
             primaryButtonLabel={t("button.save")}
             secondaryButtonLabel={t("button.cancel")}

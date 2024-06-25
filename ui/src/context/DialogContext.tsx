@@ -14,6 +14,7 @@ export enum DialogType {
     STAVE_SELECTION,
     JSON,
     ADD_VOICE,
+    EMBED_SCORE,
 }
 
 export interface Properties {

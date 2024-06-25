@@ -17,6 +17,7 @@ import RemoveScoreDialog from "./components/dialog/RemoveScoreDialog.tsx";
 import Header from "../../components/controls/Header.tsx";
 import Description from "../../components/controls/Description.tsx";
 import {FaRegCopy} from "react-icons/fa";
+import {Size} from "../../utils/constants.ts";
 
 const ScoreList: React.FC = () => {
 
@@ -64,7 +65,9 @@ const ScoreList: React.FC = () => {
     return (
         <Page title={t("view.scores.title")}>
             <Header>{t("view.scores.title")}</Header>
-            <Description>{t("view.scores.description")}</Description>
+            <Description>
+                {t("view.scores.description", {count: scores.length})}
+            </Description>
 
             <Group justify={"space-between"}>
                 <SearchInput
@@ -74,7 +77,7 @@ const ScoreList: React.FC = () => {
                 {auth.currentUser?.isAuthorized &&
                     <Button size={"md"}
                             variant={"outline"}
-                            leftSection={<BiPlus size={24}/>}
+                            leftSection={<BiPlus size={Size.icon.SM}/>}
                             onClick={() => navigate("/editor")}>
                         {t("button.addNew")}
                     </Button>}
@@ -93,7 +96,7 @@ const ScoreList: React.FC = () => {
                     name: score.name,
                     data: [
                         <Link to={`/scores/${score.id}`}>
-                            <Text fz={"md"} c={theme.primaryColor} fw={"bold"}>
+                            <Text fz={"md"} c={theme.primaryColor} fw={"bold"} className={"text-link"}>
                                 {score.name}
                             </Text>
                         </Link>,
@@ -113,19 +116,19 @@ const ScoreList: React.FC = () => {
                         <Group justify={"end"} wrap={"nowrap"} gap={4}>
                             <IconButton
                                 title={t("button.clone")}
-                                icon={<FaRegCopy size={20}/>}
+                                icon={<FaRegCopy size={Size.icon.XS}/>}
                                 onClick={() => cloneScore(score)}
                             />
 
                             <IconButton
                                 title={t("button.edit")}
-                                icon={<FaPencil size={20}/>}
+                                icon={<FaPencil size={Size.icon.XS}/>}
                                 onClick={() => navigate(`/scores/${score.id}/edit`)}
                             />
 
                             <IconButton
                                 title={t("button.remove")}
-                                icon={<FaRegTrashCan size={20}/>}
+                                icon={<FaRegTrashCan size={Size.icon.XS}/>}
                                 onClick={() => open(DialogType.REMOVE_SCORE, {
                                     id: score.id,
                                     name: score.name,

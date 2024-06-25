@@ -5,7 +5,7 @@ import {useTranslation} from "react-i18next";
 import {ColorPicker, InputWrapper, NativeSelect, Radio, TextInput} from "@mantine/core";
 import {useScoreContext} from '../../../../../context/ScoreContext.tsx';
 import {useForm} from 'react-hook-form';
-import {Color, Layout} from "../../../../../utils/constants.ts";
+import {Color} from "../../../../../utils/constants.ts";
 import {clone} from "../../../../../utils/helpers.tsx";
 import {Voice, VoiceType} from '../../../../../model/Voice.ts';
 
@@ -76,8 +76,8 @@ const AddVoiceDialog: React.FC = () => {
         >
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
                 <InputWrapper
-                    size={"lg"}
-                    labelProps={Layout.form.LABEL_PROPS}
+                    size={"xl"}
+                    mb={"xl"}
                     label={t("dialog.addVoice.name")}
                 >
                     <TextInput
@@ -90,10 +90,9 @@ const AddVoiceDialog: React.FC = () => {
                 </InputWrapper>
 
                 <InputWrapper
-                    mt={"lg"}
-                    size={"lg"}
-                    labelProps={Layout.form.LABEL_PROPS}
                     label={t("dialog.addVoice.type.label")}
+                    size={"xl"}
+                    mb={"xl"}
                 >
                     {[VoiceType.TORRO, VoiceType.KILLO, VoiceType.BOTTOM_TORRO].map(type => (
                         <Radio
@@ -108,9 +107,8 @@ const AddVoiceDialog: React.FC = () => {
                 </InputWrapper>
 
                 <InputWrapper
+                    size={"xl"}
                     mt={"lg"}
-                    size={"lg"}
-                    labelProps={Layout.form.LABEL_PROPS}
                     label={t("dialog.addVoice.color")}
                 >
                     <ColorPicker
@@ -123,9 +121,8 @@ const AddVoiceDialog: React.FC = () => {
                 </InputWrapper>
 
                 <InputWrapper
+                    size={"xl"}
                     mt={"lg"}
-                    size={"lg"}
-                    labelProps={Layout.form.LABEL_PROPS}
                     label={t("dialog.addVoice.copyFrom")}
                 >
                     <NativeSelect

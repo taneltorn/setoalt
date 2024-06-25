@@ -1,6 +1,6 @@
 import React from "react";
 import Page from "../../../Page.tsx";
-import {Badge, Box, Group, Title, useMantineTheme} from "@mantine/core";
+import {Badge, Box, Group, Tabs, Text, useMantineTheme} from "@mantine/core";
 import {Score} from "../../../model/Score.ts";
 import Header from "../../../components/controls/Header.tsx";
 import {useTranslation} from "react-i18next";
@@ -13,6 +13,9 @@ import Stave from "./stave/Stave.tsx";
 import ScorePlaybackPanel from "./playback/ScorePlaybackPanel.tsx";
 import BackLink from "../../../components/controls/BackLink.tsx";
 import {useAudioContext} from "../../../context/AudioContext.tsx";
+import ExportControls from "./export/ExportControls.tsx";
+import {MdLyrics} from "react-icons/md";
+import {Size} from "../../../utils/constants.ts";
 
 interface Properties {
     score: Score;
@@ -55,16 +58,30 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
             </Header>
             <Description>{score.description}</Description>
 
-            <ScorePlaybackPanel/>
+            <Group justify={"space-between"}>
+                <ScorePlaybackPanel/>
+                <ExportControls/>
+            </Group>
 
             <VoiceFilter/>
             <Stave score={score}/>
 
             {score.text &&
-                <Box mt={"lg"}>
-                    <Title order={4}>{t("view.scores.details.lyrics")}</Title>
-                    <pre style={{whiteSpace: "pre-wrap"}}>{score?.text}</pre>
-                </Box>}
+                <Tabs defaultValue="lyrics">
+                    <Tabs.List>
+                        <Tabs.Tab value="lyrics" leftSection={<MdLyrics size={Size.icon.MD}/>}>
+                            <Text size={"lg"}>
+                                {t("view.scores.details.lyrics")}
+                            </Text>
+                        </Tabs.Tab>
+                    </Tabs.List>
+
+                    <Tabs.Panel value="lyrics">
+                        <Box>
+                            <pre style={{whiteSpace: "pre-wrap"}}>{score?.text}</pre>
+                        </Box>
+                    </Tabs.Panel>
+                </Tabs>}
         </Page>
     );
 }

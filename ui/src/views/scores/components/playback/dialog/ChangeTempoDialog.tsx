@@ -14,7 +14,7 @@ const ChangeTempoDialog: React.FC = () => {
     const {close} = useDialogContext();
     const audioContext = useAudioContext();
     const scoreContext = useScoreContext();
-    const [tempo, setTempo] = useState<number>(audioContext.tempo);
+    const [tempo, setTempo] = useState<number>(scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO);
 
     const handleSave = () => {
         audioContext.setTempo(tempo);
@@ -27,9 +27,7 @@ const ChangeTempoDialog: React.FC = () => {
     }
 
     useEffect(() => {
-        if (scoreContext.score.defaultTempo) {
-            setTempo(scoreContext.score.defaultTempo)
-        }
+        setTempo(scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO);
     }, [scoreContext.score.defaultTempo]);
 
     return (
@@ -47,8 +45,8 @@ const ChangeTempoDialog: React.FC = () => {
             </Text>
 
             <Slider
-                min={Playback.MIN_TEMPO}
-                max={Playback.MAX_TEMPO}
+                min={Math.max(Playback.MIN_TEMPO, (scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO) * (1 - Playback.ALLOWED_TEMPO_CHANGE))}
+                max={Math.min(Playback.MAX_TEMPO, (scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO) * (Playback.ALLOWED_TEMPO_CHANGE + 1))}
                 step={Playback.TEMPO_SLIDER_STEP}
                 defaultValue={scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO}
                 value={tempo}

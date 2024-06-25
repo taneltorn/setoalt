@@ -2,9 +2,8 @@ import React, {useEffect} from 'react';
 import Dialog from "../../../components/dialog/Dialog.tsx";
 import {DialogType, useDialogContext} from "../../../context/DialogContext.tsx";
 import {useTranslation} from "react-i18next";
-import {Box, Input, Radio, TextInput} from "@mantine/core";
+import {Input, Radio, TextInput} from "@mantine/core";
 import {Controller, useForm} from 'react-hook-form';
-import {Layout} from "../../../utils/constants.ts";
 import {Role} from "../../../context/AuthContext.tsx";
 import {User} from "../../../model/User.ts";
 import useUserService from "../../../services/UserService.tsx";
@@ -37,8 +36,8 @@ const SaveUserDialog: React.FC = () => {
         saveUser()
             .then(() => {
                 DisplaySuccess(t("toast.success.saveUser"))
-                handleClose();
                 context.onSave && context.onSave();
+                handleClose();
             })
             .catch(() => DisplayError(t("toast.error.saveUser")));
     }
@@ -61,113 +60,107 @@ const SaveUserDialog: React.FC = () => {
     return (
         <Dialog
             type={DialogType.SAVE_USER}
+            size={"lg"}
             title={t("dialog.saveUser.title")}
             onPrimaryButtonClick={handleSubmit(onSubmit)}
             onSecondaryButtonClick={handleClose}
             onClose={handleClose}
         >
-            <Box style={{width: 400}}>
-                <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                    {!context.id && <>
-                        <Input.Wrapper
-                            label={t("view.admin.users.form.username")}
-                            size={"lg"}
-                            labelProps={Layout.form.LABEL_PROPS}
-                            error={errors.username?.message}
-                            mb={"lg"}
-                        >
-                            <TextInput
-                                size={"xl"}
-                                placeholder={t("view.admin.users.form.username")}
-                                {...register("username", {required: t("field.required")})}
-                                autoComplete={"new-password"}
-                            />
-                        </Input.Wrapper>
-
-                        <Input.Wrapper
-                            label={t("view.admin.users.form.password")}
-                            size={"lg"}
-                            labelProps={Layout.form.LABEL_PROPS}
-                            error={errors.password?.message}
-                            mb={"lg"}
-                        >
-                            <TextInput
-                                size={"xl"}
-                                placeholder={t("view.admin.users.form.password")}
-                                {...register("password", {required: t("field.required")})}
-                                autoComplete={"new-password"}
-                            />
-                        </Input.Wrapper>
-                    </>}
-
+            <form onSubmit={handleSubmit(onSubmit)} noValidate>
+                {!context.id && <>
                     <Input.Wrapper
-                        label={t("view.admin.users.form.firstname")}
-                        size={"lg"}
-                        labelProps={Layout.form.LABEL_PROPS}
-                        error={errors.firstname?.message}
-                        mb={"lg"}
+                        label={t("view.admin.users.form.username")}
+                        size={"xl"}
+                        mb={"xl"}
+                        error={errors.username?.message}
                     >
                         <TextInput
                             size={"xl"}
-                            placeholder={t("view.admin.users.form.firstname")}
-                            {...register("firstname", {required: t("field.required")})}
+                            placeholder={t("view.admin.users.form.username")}
+                            {...register("username", {required: t("field.required")})}
+                            autoComplete={"new-password"}
                         />
                     </Input.Wrapper>
 
                     <Input.Wrapper
-                        label={t("view.admin.users.form.lastname")}
-                        size={"lg"}
-                        labelProps={Layout.form.LABEL_PROPS}
-                        error={errors.lastname?.message}
-                        mb={"lg"}
+                        label={t("view.admin.users.form.password")}
+                        size={"xl"}
+                        mb={"xl"}
+                        error={errors.password?.message}
                     >
                         <TextInput
                             size={"xl"}
-                            placeholder={t("view.admin.users.form.lastname")}
-                            {...register("lastname", {required: t("field.required")})}
+                            placeholder={t("view.admin.users.form.password")}
+                            {...register("password", {required: t("field.required")})}
+                            autoComplete={"new-password"}
                         />
                     </Input.Wrapper>
+                </>}
 
-                    <Input.Wrapper
-                        label={t("view.admin.users.form.role")}
-                        size={"lg"}
-                        labelProps={Layout.form.LABEL_PROPS}
-                        error={errors.role?.message}
-                        mb={"lg"}
-                    >
-                        <Controller
-                            name="role"
-                            control={control}
-                            render={({field}) => (
-                                <Radio.Group
-                                    {...field}
-                                    value={field.value}
-                                    onChange={field.onChange}
-                                >
-                                    <Radio
-                                        size={"md"}
-                                        mb={"md"}
-                                        value={Role.USER}
-                                        label={t("role.user")}
-                                    />
-                                    <Radio
-                                        size={"md"}
-                                        mb={"md"}
-                                        value={Role.EDITOR}
-                                        label={t("role.editor")}
-                                    />
-                                    <Radio
-                                        size={"md"}
-                                        mb={"md"}
-                                        value={Role.ADMIN}
-                                        label={t("role.admin")}
-                                    />
-                                </Radio.Group>
-                            )}
-                        />
-                    </Input.Wrapper>
-                </form>
-            </Box>
+                <Input.Wrapper
+                    label={t("view.admin.users.form.firstname")}
+                    size={"xl"}
+                    mb={"xl"}
+                    error={errors.firstname?.message}
+                >
+                    <TextInput
+                        size={"xl"}
+                        placeholder={t("view.admin.users.form.firstname")}
+                        {...register("firstname", {required: t("field.required")})}
+                    />
+                </Input.Wrapper>
+
+                <Input.Wrapper
+                    label={t("view.admin.users.form.lastname")}
+                    size={"xl"}
+                    mb={"xl"}
+                    error={errors.lastname?.message}
+                >
+                    <TextInput
+                        size={"xl"}
+                        placeholder={t("view.admin.users.form.lastname")}
+                        {...register("lastname", {required: t("field.required")})}
+                    />
+                </Input.Wrapper>
+
+                <Input.Wrapper
+                    label={t("view.admin.users.form.role")}
+                    size={"xl"}
+                    mb={"xl"}
+                    error={errors.role?.message}
+                >
+                    <Controller
+                        name="role"
+                        control={control}
+                        render={({field}) => (
+                            <Radio.Group
+                                {...field}
+                                value={field.value}
+                                onChange={field.onChange}
+                            >
+                                <Radio
+                                    size={"md"}
+                                    mb={"md"}
+                                    value={Role.USER}
+                                    label={t("role.user")}
+                                />
+                                <Radio
+                                    size={"md"}
+                                    mb={"md"}
+                                    value={Role.EDITOR}
+                                    label={t("role.editor")}
+                                />
+                                <Radio
+                                    size={"md"}
+                                    mb={"md"}
+                                    value={Role.ADMIN}
+                                    label={t("role.admin")}
+                                />
+                            </Radio.Group>
+                        )}
+                    />
+                </Input.Wrapper>
+            </form>
         </Dialog>
     )
 };

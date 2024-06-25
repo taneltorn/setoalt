@@ -6,8 +6,8 @@ import {
     Slider as Component,
     Text,
 } from "@mantine/core";
-import {Layout} from "../../utils/constants.ts";
 import {RxReset} from "react-icons/rx";
+import {Size} from "../../utils/constants.ts";
 
 interface Properties {
     label?: string;
@@ -35,7 +35,7 @@ const Slider: React.FC<Properties> = (props) => {
                 <Group justify={"space-between"}>
                     {props.value !== props.defaultValue &&
                         <RxReset
-                            size={24}
+                            size={Size.icon.SM}
                             title={t("button.reset")}
                             onClick={props.onReset}
                             style={{cursor: "pointer"}}
@@ -47,7 +47,7 @@ const Slider: React.FC<Properties> = (props) => {
             </Group>
             <Component
                 display={"flex"}
-                size={Layout.form.SLIDER_SIZE}
+                size={"lg"}
                 color="gray"
                 label={null}
                 min={props.min}

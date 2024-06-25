@@ -12,14 +12,14 @@
     "home": {
       "pageTitle": "Avaleht",
       "title": "Seto laulu alternatiivne noodikiri",
-      "description": "Antud veebirakendus on osa Kirjandusmuuseumi loovuurimuslikust projektist <strong>\"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\"</strong>.",
-      "label": {
-        "example": "Kuula näidet",
-        "experiment": "Katseta"
-      },
-      "tab": {
-        "changes": "Muudatused"
+      "description": "Antud veebirakendus on osa Kirjandusmuuseumi loovuurimuslikust projektist <strong>\"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\"</strong>.<br/>Rakendus võimaldab luua ja kuulata seto laulu noodistusi.",
+      "link": {
+        "scores": "Noodistused",
+        "editor": "Katseta"
       }
+    },
+    "changelog": {
+      "title": "Muudatused"
     },
     "error": {
       "title": "Viga!",
@@ -30,10 +30,9 @@
       "title": ""
     },
     "scores": {
-      "title": "Kuula",
-      "description": "Siin saad kuulata loodud noodistusi.",
+      "title": "Noodistused",
+      "description": "Noodistusi kokku: {{count}}",
       "details": {
-        "noData": "Antud noodistust ei leitud.",
         "back": "Vaata kõiki noodistusi",
         "lyrics": "Laulusõnad"
       },
@@ -183,6 +182,14 @@
       "title": "Oled sa kindel?",
       "description": "Kustuta hääl {{name}}?"
     },
+    "embedScore": {
+      "title": "Embed noodistus",
+      "description": "Sisesta maksimaalsed ekraanimõõdud ja kopeeri kood enda lehele.",
+      "form": {
+        "width": "Laius",
+        "height": "Kõrgus"
+      }
+    },
     "microTuning": {
       "title": "Mikrotonaalsus",
       "description": "Muuda noodi {{pitch}} helikõrgust.",
@@ -221,13 +228,14 @@
   "button": {
     "ok": "OK",
     "copy": "Kopeeri",
+    "copied": "Kopeeritud!",
     "clone": "Tee koopia",
     "remove": "Kustuta",
     "save": "Salvesta",
     "confirm": "Kinnita",
     "cancel": "Tühista",
     "edit": "Muuda",
-    "close": "Sulge redaktor",
+    "close": "Sulge",
     "reset": "Lähtesta",
     "submit": "Saada",
     "add": "Lisa",
@@ -236,10 +244,12 @@
     "showAll": "Näita kõiki",
     "showActive": "Näita aktiivset",
     "removeVoice": "Kustuta hääl",
-    "changeInstrument": "Muuda heliväljundit"
+    "changeInstrument": "Muuda heliväljundit",
+    "backToTop": "Tagasi üles"
   },
   "table": {
-    "results": "Kokku: {{count}} | Kuva:",
+    "itemsPerPage": " Kuva",
+    "results": "Leitud {{count}} tulemust",
     "noData": "Andmeid ei leitud."
   },
   "visibility": {

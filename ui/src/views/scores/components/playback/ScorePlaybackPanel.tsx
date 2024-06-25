@@ -6,7 +6,7 @@ import ActiveNotes from "./controls/ActiveNotes.tsx";
 const ScorePlaybackPanel: React.FC = () => {
 
     return (
-        <Group gap={"xl"}>
+        <Group gap={"md"}>
             <PlaybackControls/>
             <ActiveNotes/>
         </Group>

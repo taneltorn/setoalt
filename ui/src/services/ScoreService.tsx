@@ -1,6 +1,7 @@
 import {useState} from "react";
 import {Score} from "../model/Score.ts";
 import axios from 'axios';
+import {normalize} from "../utils/helpers.tsx";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -47,7 +48,7 @@ const useScoreService = () => {
 
     const createScore = async (score: Score): Promise<Score> => {
         setIsLoading(true);
-        return axios.post(`${API_URL}/api/scores`, score, {
+        return axios.post(`${API_URL}/api/scores`, normalize(score), {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -65,7 +66,7 @@ const useScoreService = () => {
 
     const updateScore = async (id: number, score: Score): Promise<Score> => {
         setIsLoading(true);
-        return axios.put(`${API_URL}/api/scores/${id}`, score, {
+        return axios.put(`${API_URL}/api/scores/${id}`, normalize(score), {
             headers: {
                 'Content-Type': 'application/json',
             },

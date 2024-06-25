@@ -7,6 +7,7 @@ import ResetScoreDialog from "../editor/dialog/ResetScoreDialog.tsx";
 import SaveScoreDialog from "../editor/dialog/SaveScoreDialog.tsx";
 import ChangeTranspositionDialog from "../playback/dialog/ChangeTranspositionDialog.tsx";
 import ChangeTempoDialog from "../playback/dialog/ChangeTempoDialog.tsx";
+import EmbedScoreDialog from "./EmbedScoreDialog.tsx";
 
 const ScoreDialogs: React.FC = () => {
 
@@ -20,6 +21,7 @@ const ScoreDialogs: React.FC = () => {
             <ChangeTranspositionDialog/>
             <ChangeTempoDialog/>
             <AddVoiceDialog/>
+            <EmbedScoreDialog/>
         </>
     );
 }

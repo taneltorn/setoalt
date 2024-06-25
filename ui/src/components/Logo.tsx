@@ -1,12 +1,17 @@
 import React from 'react';
 import {Box, Text} from "@mantine/core";
+import {Size} from "../utils/constants.ts";
 
-const Logo: React.FC = () => {
+interface Properties {
+    onClick?: () => void;
+}
+
+const Logo: React.FC<Properties> = (props) => {
 
     return (
-        <Box display={"flex"}>
-            <Text fz={18} ff={"Roboto"}>Seto</Text>
-            <Text fz={24} fw={"bold"} ff={"Roboto"}>alt.</Text>
+        <Box display={"flex"} onClick={props.onClick}>
+            <Text c={"red"} fw={"bold"} fz={18} ff={"Roboto"}>Seto</Text>
+            <Text c={"black"} fz={Size.icon.SM} fw={"bold"} ff={"Roboto"}>alt.</Text>
         </Box>
     );
 }

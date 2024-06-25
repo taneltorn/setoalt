@@ -6,8 +6,9 @@ import ControlButton from "../../../../../components/controls/ControlButton.tsx"
 import {Group} from "@mantine/core";
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {useHistory} from "../../../../../context/HistoryContext.tsx";
-import {IoIosRedo, IoIosUndo} from "react-icons/io";
+import {IoMdRedo, IoMdUndo} from "react-icons/io";
 import {ShortKey} from "../../../../../utils/keymap.ts";
+import {Size} from "../../../../../utils/constants.ts";
 
 const HistoryControls: React.FC = () => {
 
@@ -24,9 +25,10 @@ const HistoryControls: React.FC = () => {
                 shortKey={`Ctrl + ${ShortKey.UNDO}`}
                 active={false}
                 disabled={!undoStates.length}
-                label={<IoIosUndo/>}
                 onClick={() => undo(context)}
-            />
+            >
+                <IoMdUndo size={Size.icon.XS}/>
+            </ControlButton>
 
             <ControlButton
                 className={"ms-4 me-1"}
@@ -34,17 +36,19 @@ const HistoryControls: React.FC = () => {
                 shortKey={`Ctrl + ${ShortKey.REDO}`}
                 active={false}
                 disabled={!recoverStates.length}
-                label={<IoIosRedo/>}
                 onClick={() => redo(context)}
-            />
+            >
+                <IoMdRedo size={Size.icon.XS}/>
+            </ControlButton>
 
             <ControlButton
                 className={"ms-4 me-1"}
                 tooltip={t("tooltip.resetScore")}
                 active={false}
-                label={<FaRegTrashAlt/>}
                 onClick={() => open(DialogType.CLEAR_SCORE)}
-            />
+            >
+                <FaRegTrashAlt size={Size.icon.XS}/>
+            </ControlButton>
         </Group>
     )
 };

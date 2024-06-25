@@ -2,6 +2,7 @@ import React, {useState} from "react";
 import {CloseButton, Input,} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import {CiSearch} from "react-icons/ci";
+import {Size} from "../../utils/constants.ts";
 
 interface Properties {
     isLoading?: boolean;
@@ -31,7 +32,7 @@ const SearchInput: React.FC<Properties> = (props) => {
             value={search}
             placeholder={props.placeholder || t("placeholder.search")}
             onChange={e => handleChange(e.currentTarget.value)}
-            leftSection={<CiSearch size={24}/>}
+            leftSection={<CiSearch size={Size.icon.SM}/>}
             rightSectionPointerEvents="all"
             rightSection={
                 <CloseButton

@@ -8,8 +8,8 @@ import {
     TextInput
 } from "@mantine/core";
 import {Controller, useFormContext} from "react-hook-form";
-import {Layout} from "../../../../../utils/constants.ts";
 import {Score} from "../../../../../model/Score.ts";
+import {Size} from "../../../../../utils/constants.ts";
 
 interface Properties {
     onSubmit: (values: Score) => void;
@@ -30,33 +30,30 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
         <form onSubmit={handleSubmit(onSubmit)} noValidate>
             <Input.Wrapper
                 label={t("view.editor.form.name")}
-                size={Layout.form.LABEL_SIZE}
-                labelProps={Layout.form.LABEL_PROPS}
+                size={"xl"}
+                mb={"xl"}
                 error={errors.name?.message}
-                mb={Layout.form.WRAPPER_BOTTOM_MARGIN}
             >
                 <TextInput
                     size={"xl"}
                     placeholder={t("view.editor.form.name")}
                     {...register("name", {required: t("field.required")})}
                     {...handleFocus}
-
                 />
             </Input.Wrapper>
 
             <Input.Wrapper
                 label={t("view.editor.form.visibility")}
-                size={Layout.form.LABEL_SIZE}
-                labelProps={Layout.form.LABEL_PROPS}
+                size={"xl"}
+                mb={"xl"}
                 error={errors.visibility?.message}
-                mb={Layout.form.WRAPPER_BOTTOM_MARGIN}
             >
                 <Controller
                     name="visibility"
                     control={control}
                     render={({field}) => (
                         <Switch
-                            size={"lg"}
+                            size={"xl"}
                             {...field}
                             disabled={false}
                             label={t(`visibility.${field.value?.toLowerCase()}`)}
@@ -69,16 +66,15 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
 
             <Input.Wrapper
                 label={t("view.editor.form.description")}
-                size={Layout.form.LABEL_SIZE}
-                labelProps={Layout.form.LABEL_PROPS}
+                size={"xl"}
+                mb={"xl"}
                 error={errors.description?.message}
-                mb={Layout.form.WRAPPER_BOTTOM_MARGIN}
             >
                 <Textarea
                     size={"xl"}
                     autosize
-                    minRows={2}
-                    maxRows={8}
+                    minRows={4}
+                    maxRows={12}
                     placeholder={t("view.editor.form.description")}
                     {...register("description")}
                     {...handleFocus}
@@ -87,16 +83,14 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
 
             <Input.Wrapper
                 label={t("view.editor.form.text")}
-                size={Layout.form.LABEL_SIZE}
-                labelProps={Layout.form.LABEL_PROPS}
+                size={"xl"}
                 error={errors.text?.message}
-                mb={Layout.form.WRAPPER_BOTTOM_MARGIN}
             >
                 <Textarea
                     size={"xl"}
                     autosize
-                    minRows={6}
-                    maxRows={20}
+                    minRows={4}
+                    maxRows={Size.icon.SM}
                     placeholder={t("view.editor.form.text")}
                     {...register("text")}
                     {...handleFocus}

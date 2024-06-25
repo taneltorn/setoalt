@@ -50,7 +50,7 @@ const VoiceFilter: React.FC = () => {
                         <Button
                             size={"xs"}
                             color={"blue"}
-                            leftSection={<MdRecordVoiceOver size={20}/>}
+                            leftSection={<MdRecordVoiceOver size={Size.icon.XS}/>}
                             variant={"subtle"}
                             onClick={showAllVoices}
                         >

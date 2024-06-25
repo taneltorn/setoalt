@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {useScoreContext} from "../../../../context/ScoreContext.tsx";
-import {Layout} from "../../../../utils/constants.ts";
+import {Layout, Size} from "../../../../utils/constants.ts";
 import {calculateLoopRangeCoords} from "../../../../utils/calculation.helpers.tsx";
 import {RxReset} from "react-icons/rx";
 import {useTranslation} from "react-i18next";
@@ -30,7 +30,7 @@ const ActiveRangeMarkers: React.FC = () => {
         <>
             <foreignObject x={end.x - 10} y={end.y - Layout.stave.container.SYMBOLS_BAR + 15} width={200} height={22}>
                 <RxReset
-                    size={24}
+                    size={Size.icon.SM}
                     title={t("button.reset")}
                     onClick={handleReset}
                     style={{cursor: "pointer"}}

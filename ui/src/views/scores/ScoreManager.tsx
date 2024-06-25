@@ -15,9 +15,10 @@ import ScoreDialogs from "./components/dialog/ScoreDialogs.tsx";
 import ScoreEditor from "./components/ScoreEditor.tsx";
 import CleanEditor from "./components/CleanEditor.tsx";
 import HistoryContextProvider from "../../context/HistoryContextProvider.tsx";
+import ScoreEmbedding from "./components/ScoreEmbedding.tsx";
 
 interface Properties {
-    mode: "details" | "edit" | "new";
+    mode: "details" | "edit" | "new" | "embed";
 }
 
 const ScoreManager: React.FC<Properties> = ({mode}) => {
@@ -50,11 +51,12 @@ const ScoreManager: React.FC<Properties> = ({mode}) => {
         <HistoryContextProvider>
             <ScoreContextProvider>
                 <LoadingOverlay isLoading={scoreService.isLoading}>
-                    {noData && <ScoreNotFound/>}
+                    {mode !== "embed" && noData && <ScoreNotFound/>}
 
                     {mode === "details" && score && <ScoreDetails score={score}/>}
                     {mode === "edit" && score && <ScoreEditor score={score}/>}
                     {mode === "new" && <CleanEditor/>}
+                    {mode === "embed" && score && <ScoreEmbedding score={score}/>}
 
                     {isDevMode && <DevInfo/>}
                 </LoadingOverlay>

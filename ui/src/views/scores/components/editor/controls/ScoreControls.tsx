@@ -1,7 +1,6 @@
 import React from 'react';
 import {useTranslation} from "react-i18next";
 import {Button, Group} from "@mantine/core";
-import PNGExport from "../../export/PNGExport.tsx";
 import {useAuth} from "../../../../../context/AuthContext.tsx";
 
 interface Properties {
@@ -13,7 +12,6 @@ interface Properties {
     secondaryButtonVariant?: string;
     primaryButtonRequiresAuth?: boolean;
     hideSecondaryButton?: boolean;
-    hideExport?: boolean;
 }
 
 const ScoreControls: React.FC<Properties> = (props) => {
@@ -23,7 +21,6 @@ const ScoreControls: React.FC<Properties> = (props) => {
 
     return (
         <Group gap={4} justify={"end"}>
-            {!props.hideExport && <PNGExport/>}
             {!props.hideSecondaryButton &&
                 <Button
                     variant={props.secondaryButtonVariant || "subtle"}
