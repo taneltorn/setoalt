@@ -50,7 +50,7 @@ const Home: React.FC = () => {
                         <Stave score={example}/>
                     </>}
 
-                    <Group gap={4}>
+                    <Group gap={4} mt={"md"}>
                         <Link to={"/editor"}>
                             <Button size={"md"} color={"red"}>
                                 {t("view.home.link.editor")}

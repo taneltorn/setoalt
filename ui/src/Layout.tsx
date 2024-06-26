@@ -1,106 +1,98 @@
-import React from 'react';
+import React, {useMemo} from 'react';
 import {Link, Outlet} from "react-router-dom";
 import {
     Affix,
-    AppShell,
+    AppShell, Box,
     Burger,
     Button,
-    Code,
     Divider,
     Group,
-    Switch,
-    Text,
-    Transition,
-    useMantineTheme
+    Transition
 } from "@mantine/core";
 import Navigation from "./components/sidebar/Navigation.tsx";
 import {useDisclosure, useWindowScroll} from "@mantine/hooks";
-import packageInfo from "../package.json";
 import Logo from "./components/Logo.tsx";
-import {FaGitAlt, FaInfoCircle} from "react-icons/fa";
 import {Size} from "./utils/constants.ts";
-import {useAuth} from "./context/AuthContext.tsx";
-import {useDevMode} from "./context/DevModeContext.tsx";
 import {IoMdArrowUp} from "react-icons/io";
 import {useTranslation} from "react-i18next";
 import {Notifications} from "@mantine/notifications";
+import {useDialogContext} from "./context/DialogContext.tsx";
+import ProfileLink from "./components/ProfileLink.tsx";
+import DevNotice from "./components/DevNotice.tsx";
 
 const Layout: React.FC = () => {
 
     const {t} = useTranslation();
-    const theme = useMantineTheme();
     const [opened, {toggle, close}] = useDisclosure();
-    const auth = useAuth();
-    const {isDevMode, setIsDevMode} = useDevMode();
     const [scroll, scrollTo] = useWindowScroll();
+    const {active} = useDialogContext();
+
+    const isAtBottom = useMemo(() => {
+        const scrolledTo = window.scrollY + window.innerHeight;
+        const threshold = 50;
+        return document.body.scrollHeight - threshold <= scrolledTo;
+    }, [window.scrollY]);
 
     return (
         <AppShell
             py={"md"}
-            px={"xl"}
+            px={{base: "sm", md: "lg"}}
             layout={"default"}
+            header={{height: {base: 48, md: 1}}}
             navbar={{
                 width: {base: 240},
                 breakpoint: 'md',
                 collapsed: {mobile: !opened},
             }}
         >
-            <Notifications position="top-right" />
+            <Notifications position="top-right"/>
+
+            <AppShell.Header px={"md"} py={{base: 4, md: 0}}>
+                <Group justify={"space-between"}>
+                    <Burger
+                        opened={opened}
+                        onClick={toggle}
+                        hiddenFrom="md"
+                        size="md"
+                    />
+                    <ProfileLink/>
+                </Group>
+            </AppShell.Header>
 
             <AppShell.Navbar p={"md"}>
-                <Group justify={"space-between"} mb={"lg"}>
-                    <Link to={"/"} onClick={close}>
-                        <Logo/>
-                    </Link>
-                    <Code>{packageInfo.version}</Code>
-                </Group>
+                <Box visibleFrom={"md"}>
+                    <Group justify={"space-between"}>
+                        <Link to={"/"} onClick={close}>
+                            <Logo/>
+                        </Link>
+                        <ProfileLink/>
+                    </Group>
+                    <Divider my={"md"}/>
+                </Box>
 
                 <Navigation onNavigate={close}/>
                 <Divider mt={"xl"}/>
-
-                <Group p={"md"}>
-                    <FaInfoCircle color={theme.colors.blue[9]} size={Size.icon.MD}/>
-                    <Text size={"md"}>Tegemist on arendusjärgus oleva rakendusega!</Text>
-
-                    <Link to={"/changelog"}>
-                        <Button onClick={close} color={"blue"} variant={"outline"} leftSection={<FaGitAlt size={Size.icon.SM}/>}>
-                            {t("button.changelog")}
-                        </Button>
-                    </Link>
-
-                    {auth.currentUser?.isAdmin &&
-                        <Switch
-                            mt={"sm"}
-                            checked={isDevMode}
-                            label={"Dev mode"}
-                            onChange={() => setIsDevMode(!isDevMode)}
-                        />}
-                </Group>
+                <DevNotice onNavigate={close}/>
             </AppShell.Navbar>
 
-            <AppShell.Main id={"content"} pb={"xl"}>
-                <Burger
-                    opened={opened}
-                    onClick={toggle}
-                    hiddenFrom="md"
-                    size="md"
-                />
+            <AppShell.Main id={"content"} pb={50}>
                 <Outlet/>
 
-                {!opened && <Affix position={{ bottom: 20, right: 20 }}>
-                    <Transition transition="slide-up" mounted={scroll.y > 0}>
-                        {(transitionStyles) => (
-                            <Button
-                                size={"xs"}
-                                leftSection={<IoMdArrowUp size={Size.icon.XS}/>}
-                                style={transitionStyles}
-                                onClick={() => scrollTo({ y: 0 })}
-                            >
-                                {t("button.backToTop")}
-                            </Button>
-                        )}
-                    </Transition>
-                </Affix>}
+                {!opened && isAtBottom && !active &&
+                    <Affix position={{bottom: 20, right: 20}}>
+                        <Transition transition="slide-up" mounted={scroll.y > 0}>
+                            {(transitionStyles) => (
+                                <Button
+                                    size={"xs"}
+                                    leftSection={<IoMdArrowUp size={Size.icon.XS}/>}
+                                    style={transitionStyles}
+                                    onClick={() => scrollTo({y: 0})}
+                                >
+                                    {t("button.backToTop")}
+                                </Button>
+                            )}
+                        </Transition>
+                    </Affix>}
             </AppShell.Main>
         </AppShell>
     );

@@ -197,10 +197,10 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     }
 
     const removeNote = (position: number, moveToPrevious?: boolean) => {
-        takeSnapshot();
-
         const note = getNote(position, activeVoice);
         if (note && activeVoice) {
+            takeSnapshot();
+
             const voice = score.data.voices.find(v => v.name === activeVoice);
             if (voice) {
                 voice.notes = voice.notes.filter(n => n.position !== note.position);

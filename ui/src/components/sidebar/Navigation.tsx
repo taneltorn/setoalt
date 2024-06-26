@@ -10,6 +10,7 @@ import {MdOutlineLogout} from "react-icons/md";
 import {useAudioContext} from "../../context/AudioContext.tsx";
 import {BsMusicNoteList} from "react-icons/bs";
 import {Size} from "../../utils/constants.ts";
+import Logo from "../Logo.tsx";
 
 const routes = [
     {id: 'home', icon: <IoHome className={classes.icon} size={Size.icon.SM}/>, link: "/"},
@@ -46,6 +47,12 @@ const Navigation: React.FC<Properties> = (props) => {
 
     return (
         <>
+            <Group hiddenFrom={"md"} mb={"md"}>
+                <Link to={"/"} onClick={props.onNavigate}>
+                    <Logo/>
+                </Link>
+            </Group>
+
             {routes.map((item, index) => (
                 <NavLink
                     mb={4}
@@ -59,7 +66,7 @@ const Navigation: React.FC<Properties> = (props) => {
             ))}
 
             {auth.currentUser?.isAdmin && <>
-                <Divider my={"xs"}/>
+                <Divider my={"xs"} color={"white"}/>
 
                 {protectedRoutes.map((item, index) => (
                     <NavLink

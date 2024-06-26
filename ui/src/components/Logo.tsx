@@ -1,6 +1,6 @@
 import React from 'react';
-import {Box, Text} from "@mantine/core";
-import {Size} from "../utils/constants.ts";
+import {Box, Code, Group, Text} from "@mantine/core";
+import packageInfo from "../../package.json";
 
 interface Properties {
     onClick?: () => void;
@@ -9,11 +9,14 @@ interface Properties {
 const Logo: React.FC<Properties> = (props) => {
 
     return (
-        <Box display={"flex"} onClick={props.onClick}>
-            <Text c={"red"} fw={"bold"} fz={18} ff={"Roboto"}>Seto</Text>
-            <Text c={"black"} fz={Size.icon.SM} fw={"bold"} ff={"Roboto"}>alt.</Text>
-        </Box>
-    );
+        <Box onClick={props.onClick}>
+            <Text c={"red"} fz={24} ff={"Roboto"}>
+                Seto<strong style={{color: "black"}}>alt</strong>
+            </Text>
+            <Group mt={-10}>
+                <Code color={"transparent"}>{packageInfo.version}</Code>
+            </Group>
+        </Box>);
 }
 
 export default Logo;

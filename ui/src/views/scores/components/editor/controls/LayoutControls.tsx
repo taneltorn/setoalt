@@ -52,7 +52,6 @@ const LayoutControls: React.FC = () => {
             <ControlButton
                 tooltip={t("tooltip.removeNote")}
                 shortKey={ShortKey.REMOVE_NOTE}
-                disabled={!context.activeNote}
                 onClick={() => context.removeNote(context.activePosition, true)}
             >
                 <FaDeleteLeft size={Size.icon.XS}/>

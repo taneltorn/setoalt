@@ -1,3 +1,6 @@
+#### [0.2.5] - 
+- Pisiparandused ja -täiustused
+
 #### [0.2.4] - *26.06.2024*
 - Pisiparandused
 
