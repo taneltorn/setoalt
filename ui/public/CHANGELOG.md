@@ -1,4 +1,4 @@
-#### [0.2.5] - - *26.06.2024*
+#### [0.2.5] - *26.06.2024*
 - Peamise värvi muutmine (tumedamaks)
 - Avalehele lisatud ka teine näide
 - Pisiparandused ja -täiustused
