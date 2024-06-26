@@ -26,26 +26,28 @@ const DevNotice: React.FC<Properties> = ({onNavigate}) => {
 
 
     return (
-        <Group p={"md"}>
-            <FaInfoCircle color={theme.colors.blue[9]} size={Size.icon.MD}/>
-            <Text size={"md"}>Tegemist on arendusjärgus oleva rakendusega!</Text>
+        <>
+            <Group p={"md"}>
+                <FaInfoCircle color={theme.colors.blue[9]} size={Size.icon.MD}/>
+                <Text size={"md"}>Tegemist on arendusjärgus oleva rakendusega!</Text>
 
-            <Link to={"/changelog"}>
-                <Button onClick={onNavigate} color={"blue"} variant={"outline"}
-                        leftSection={<FaGitAlt size={Size.icon.SM}/>}>
-                    {t("button.changelog")}
-                </Button>
-            </Link>
-
+                <Link to={"/changelog"}>
+                    <Button onClick={onNavigate} color={"blue"} variant={"outline"}
+                            leftSection={<FaGitAlt size={Size.icon.SM}/>}>
+                        {t("button.changelog")}
+                    </Button>
+                </Link>
+            </Group>
             {auth.currentUser?.isAdmin &&
-                <Switch
-                    mt={"sm"}
-                    checked={isDevMode}
-                    label={"Dev mode"}
-                    onChange={() => setIsDevMode(!isDevMode)}
-                />}
-        </Group>
-    );
+                <Group px={"md"}>
+                    <Switch
+                        mt={"sm"}
+                        checked={isDevMode}
+                        label={"Dev mode"}
+                        onChange={() => setIsDevMode(!isDevMode)}
+                    />
+                </Group>}
+        </>);
 }
 
 export default DevNotice;

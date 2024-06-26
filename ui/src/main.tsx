@@ -16,6 +16,10 @@ const theme = createTheme({
     defaultRadius: 'xl',
     primaryColor: 'red',
     primaryShade: 9,
+    colors: {
+        'red':['#970000', '#970000', '#970000', '#970000', '#E70000', '#D70000', '#C70000', '#B70000', '#A70000', '#970000'],
+
+    },
     breakpoints: {
         xs: '30em',
         sm: '48em',

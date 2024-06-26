@@ -24,7 +24,7 @@ export const Layout = {
             HALF_NOTE_STROKE: 2,
         },
         divider: {
-            SEPARATOR_HEIGHT: 30,
+            SEPARATOR_HEIGHT: 45,
             WIDTH: 2,
             CONTAINER_WIDTH: 15,
         },
@@ -63,7 +63,7 @@ export const Color = {
         SECONDARY: "#ccc"
     },
     stave: {
-        HIGHLIGHT: "#CB3333",
+        HIGHLIGHT: "#A70000",
         PRIMARY_LINE: "#000",
         SECONDARY_LINE: "#eee",
         LYRICS: "#000"
