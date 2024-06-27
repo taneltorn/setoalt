@@ -13,7 +13,6 @@ const Example: React.FC<Properties> = ({score}) => {
     const context = useScoreContext();
 
     useEffect(() => {
-        console.log("setting it to " + score?.name || "not")
         if (score) {
             context.setScore(score);
         }

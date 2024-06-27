@@ -18,7 +18,7 @@ interface Properties {
     max: number;
     step: number;
     onReset: () => void;
-    onChange: (value: any) => void;
+    onChange: (value: number) => void;
 }
 
 const Slider: React.FC<Properties> = (props) => {

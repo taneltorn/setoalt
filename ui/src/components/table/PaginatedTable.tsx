@@ -31,10 +31,15 @@ const PaginatedTable: React.FC<Properties> = ({isLoading, columns, rows, ...prop
 
     return (
         <LoadingOverlay isLoading={!!isLoading}>
-            <Table highlightOnHover verticalSpacing={"sm"}>
+            <Table highlightOnHover verticalSpacing={"sm"} variant={""}>
                 <Table.Thead>
                     <Table.Tr>
-                        {columns.map((column, index) => <Table.Th key={index}>{column}</Table.Th>)}
+                        {columns.map((column, index) =>
+                            <Table.Th key={index}>
+                                <Text fw={"bold"}>
+                                    {column}
+                                </Text>
+                            </Table.Th>)}
                     </Table.Tr>
                 </Table.Thead>
                 <Table.Tbody>

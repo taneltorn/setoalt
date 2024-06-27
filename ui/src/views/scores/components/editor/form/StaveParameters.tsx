@@ -52,9 +52,9 @@ const StaveParameters: React.FC = () => {
                                 size={"lg"}
                                 color="gray"
                                 label={null}
-                                min={Playback.MIN_TRANSPOSE}
-                                max={Playback.MAX_TRANSPOSE}
-                                step={Playback.TRANSPOSE_SLIDER_STEP}
+                                min={Playback.MIN_TRANSPOSITION}
+                                max={Playback.MAX_TRANSPOSITION}
+                                step={Playback.TRANSPOSITION_STEP}
                                 value={field.value || 0}
                                 onChange={field.onChange}
                             />
@@ -100,7 +100,7 @@ const StaveParameters: React.FC = () => {
                                     label={null}
                                     min={Playback.MIN_DETUNE}
                                     max={Playback.MAX_DETUNE}
-                                    step={Playback.DETUNE_SLIDER_STEP}
+                                    step={Playback.DETUNE_STEP}
                                     value={field.value || 0}
                                     onChange={field.onChange}
                                 />
@@ -138,7 +138,7 @@ const StaveParameters: React.FC = () => {
                                 label={null}
                                 min={Playback.MIN_TEMPO}
                                 max={Playback.MAX_TEMPO}
-                                step={Playback.TEMPO_SLIDER_STEP}
+                                step={Playback.TEMPO_STEP}
                                 value={field.value || 0}
                                 onChange={field.onChange}
                             />

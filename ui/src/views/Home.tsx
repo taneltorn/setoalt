@@ -49,14 +49,14 @@ const Home: React.FC = () => {
                         <Tabs.List>
                             {exampleA &&
                                 <Tabs.Tab value="example1" onClick={() => setActive(exampleA)}>
-                                    <Text size={"xl"}>
+                                    <Text size={"lg"}>
                                         {exampleA?.name}
                                     </Text>
                                 </Tabs.Tab>}
 
                             {exampleB &&
                                 <Tabs.Tab value="example2" onClick={() => setActive(exampleB)}>
-                                    <Text size={"xl"}>
+                                    <Text size={"lg"}>
                                         {exampleB?.name}
                                     </Text>
                                 </Tabs.Tab>}

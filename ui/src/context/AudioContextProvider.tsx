@@ -25,13 +25,14 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
     const sequenceRef = useRef<Tone.Part | null>(null);
 
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    const [volume, setVolume] = useState<number>(Playback.DEFAULT_VOLUME);
     const [tempo, setTempo] = useState<number>(Playback.DEFAULT_TEMPO);
     const [transposition, setTransposition] = useState<number>(Playback.DEFAULT_TRANSPOSITION);
     const [instrument, setInstrument] = useState<Instrument>(Instruments.find(i => i.name === Playback.DEFAULT_INSTRUMENT) || Instruments[0]);
 
     const changeInstrument = (instrument: Instrument) => {
         setInstrument(instrument);
-        player.load(instrument);
+        player.use(instrument);
     }
 
     const playNotes = (notes: Note[], stave: Stave) => {
@@ -134,6 +135,10 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
     };
 
     useEffect(() => {
+        player.setVolume(volume);
+    }, [volume]);
+
+    useEffect(() => {
         Tone.Transport.bpm.value = tempo;
     }, [tempo]);
 
@@ -147,9 +152,10 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
         resetPlayback,
 
         instrument, setInstrument: changeInstrument,
+        volume, setVolume,
         tempo, setTempo,
         transposition, setTransposition,
-    }), [isPlaying, instrument, tempo, transposition]);
+    }), [isPlaying, instrument, tempo, transposition, volume]);
 
     return (
         <AudioContext.Provider value={context}>

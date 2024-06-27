@@ -38,7 +38,16 @@ const ScoreList: React.FC = () => {
     }
 
     const handleSearch = (value: string) => {
-        setFilteredScores(scores.filter(r => r.name?.toLowerCase().includes(value?.toLowerCase())));
+        const str = value?.toLowerCase();
+        setFilteredScores(scores.filter(r => r.name?.toLowerCase().includes(str)
+            || r.description?.toLowerCase().includes(str)
+            || r.text?.toLowerCase().includes(str)
+            || r.createdBy?.toLowerCase().includes(str)
+            || r.data.stave.name?.toLowerCase().includes(str)
+            || r.data.voices.find(v => v.name.toLowerCase().includes(str))
+            // || r.data.voices.map(v => v.name.toLowerCase())?.includes(str)
+            || r.description?.toLowerCase().includes(str)
+        ));
     }
 
     const cloneScore = (score: Score) => {

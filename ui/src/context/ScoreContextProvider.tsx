@@ -32,6 +32,8 @@ interface Properties {
     children: React.ReactNode;
 }
 
+// todo: could refactor a lot here
+
 const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
     const audioContext = useAudioContext();

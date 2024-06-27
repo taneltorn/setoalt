@@ -61,8 +61,8 @@ const MicroTuningDialog: React.FC = () => {
             <Slider
                 min={Playback.MIN_DETUNE}
                 max={Playback.MAX_DETUNE}
-                step={Playback.TRANSPOSE_SLIDER_STEP}
-                defaultValue={Playback.DETUNE_SLIDER_STEP}
+                step={Playback.TRANSPOSITION_STEP}
+                defaultValue={Playback.DETUNE_STEP}
                 isRelative
                 value={detune}
                 label={t("unit.cents")}

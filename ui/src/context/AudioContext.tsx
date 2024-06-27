@@ -19,6 +19,9 @@ export interface AudioContextProperties {
     instrument: Instrument;
     setInstrument: (instrument: Instrument) => void;
 
+    volume: number;
+    setVolume: (value: number) => void;
+
     tempo: number;
     setTempo: (value: number) => void;
 

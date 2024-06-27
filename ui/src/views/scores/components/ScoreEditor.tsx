@@ -18,11 +18,11 @@ import Stave from "./stave/Stave.tsx";
 import BackLink from "../../../components/controls/BackLink.tsx";
 import {FaClipboardList} from "react-icons/fa";
 import StaveParameters from "./editor/form/StaveParameters.tsx";
-import {GiFClef} from "react-icons/gi";
 import {useAudioContext} from "../../../context/AudioContext.tsx";
 import ExportControls from "./export/ExportControls.tsx";
 import {Size} from "../../../utils/constants.ts";
 import {BsMusicNoteList} from "react-icons/bs";
+import {PiSliders} from "react-icons/pi";
 
 interface Properties {
     score: Score;
@@ -82,7 +82,7 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
                         </Text>
                     </Tabs.Tab>
 
-                    <Tabs.Tab value="stave" leftSection={<GiFClef size={Size.icon.MD}/>}>
+                    <Tabs.Tab value="stave" leftSection={<PiSliders size={Size.icon.MD}/>}>
                         <Text size={"lg"}>
                             {t("view.editor.tab.stave")}
                         </Text>

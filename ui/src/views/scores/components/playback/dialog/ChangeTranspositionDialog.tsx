@@ -45,9 +45,9 @@ const ChangeTranspositionDialog: React.FC = () => {
             </Text>
 
             <Slider
-                min={Playback.MIN_TRANSPOSE}
-                max={Playback.MAX_TRANSPOSE}
-                step={Playback.TRANSPOSE_SLIDER_STEP}
+                min={Playback.MIN_TRANSPOSITION}
+                max={Playback.MAX_TRANSPOSITION}
+                step={Playback.TRANSPOSITION_STEP}
                 defaultValue={scoreContext.score.defaultTransposition || Playback.DEFAULT_TRANSPOSITION}
                 isRelative
                 value={transposition}

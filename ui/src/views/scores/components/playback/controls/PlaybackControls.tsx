@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from "react-i18next";
 import {GiTunePitch} from "react-icons/gi";
-import {ActionIcon, Group} from "@mantine/core";
+import {ActionIcon, Group, Slider} from "@mantine/core";
 import {useAudioContext} from "../../../../../context/AudioContext.tsx";
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
@@ -18,55 +18,56 @@ const PlaybackControls: React.FC = () => {
     const {t} = useTranslation();
     const {isPlaying, startPlayback, stopPlayback} = useAudioContext();
     const context = useScoreContext();
-    const {tempo, transposition} = useAudioContext();
+    const {tempo, transposition, volume, setVolume} = useAudioContext();
     const {open} = useDialogContext();
 
     return (
-        <Group gap={"xs"}>
-            <InstrumentSelection/>
+        <Group gap={"xl"}>
+            <Group gap={"xs"}>
+                <InstrumentSelection/>
 
-            <ActionIcon
-                size={"xl"}
-                title={t("tooltip.playPrevious")}
-                color={"black"}
-                variant={"subtle"}
-                onClick={() => context.previous()}
-            >
-                <FaBackward size={Size.icon.MD}/>
-            </ActionIcon>
-
-            {isPlaying
-                ? <ActionIcon
-                    size={Size.icon.XL}
-                    title={t("tooltip.stopPlayback")}
+                <ActionIcon
+                    size={"xl"}
+                    title={t("tooltip.playPrevious")}
                     color={"black"}
                     variant={"subtle"}
-                    onClick={() => stopPlayback()}
+                    onClick={() => context.previous()}
                 >
-                    <FaPauseCircle size={Size.icon.XL}/>
+                    <FaBackward size={Size.icon.MD}/>
                 </ActionIcon>
-                : <ActionIcon
-                    size={Size.icon.XL}
-                    title={t(`tooltip.${context.loopRange ? "startPlaybackRepeat" : "startPlayback"}`)}
+
+                {isPlaying
+                    ? <ActionIcon
+                        size={Size.icon.XL}
+                        title={t("tooltip.stopPlayback")}
+                        color={"black"}
+                        variant={"subtle"}
+                        onClick={() => stopPlayback()}
+                    >
+                        <FaPauseCircle size={Size.icon.XL}/>
+                    </ActionIcon>
+                    : <ActionIcon
+                        size={Size.icon.XL}
+                        title={t(`tooltip.${context.loopRange ? "startPlaybackRepeat" : "startPlayback"}`)}
+                        variant={"subtle"}
+                        onClick={() => startPlayback(context)}
+                    >
+                        {context.loopRange
+                            ? <PiRepeatFill size={Size.icon.XL}/>
+                            : <FaPlayCircle size={Size.icon.XL}/>}
+                    </ActionIcon>}
+
+                <ActionIcon
+                    size={"xl"}
+                    title={t("tooltip.playNext")}
+                    color={"black"}
                     variant={"subtle"}
-                    onClick={() => startPlayback(context)}
+                    onClick={() => context.next()}
                 >
-                    {context.loopRange
-                        ? <PiRepeatFill size={Size.icon.XL}/>
-                        : <FaPlayCircle size={Size.icon.XL}/>}
-                </ActionIcon>}
-
-            <ActionIcon
-                size={"xl"}
-                title={t("tooltip.playNext")}
-                color={"black"}
-                variant={"subtle"}
-                onClick={() => context.next()}
-            >
-                <FaForward size={Size.icon.MD}/>
-            </ActionIcon>
-
-            <Group ml={"md"}>
+                    <FaForward size={Size.icon.MD}/>
+                </ActionIcon>
+            </Group>
+            <Group gap={"xs"}>
                 <Group>
                     <ActionIcon
                         size={"xl"}
@@ -81,21 +82,32 @@ const PlaybackControls: React.FC = () => {
                             label={getDetuneLabel(transposition, t("unit.semitonesAbbr"))}
                         />
                     </ActionIcon>
-                </Group>
 
-                <ActionIcon
-                    size={"xl"}
-                    title={t("tooltip.changeTempo")}
-                    color={tempo !== (context.score.defaultTempo || Playback.DEFAULT_TEMPO) ? "black" : "gray.4"}
-                    variant={"subtle"}
-                    onClick={() => open(DialogType.CHANGE_TEMPO)}
-                >
-                    <IoIosSpeedometer size={Size.icon.XL}/>
-                    <ValueIndicator
-                        visible={tempo !== context.score.defaultTempo}
-                        label={getTempoLabel(tempo, context.score.defaultTempo)}
-                    />
-                </ActionIcon>
+                    <ActionIcon
+                        size={"xl"}
+                        mr={"sm"}
+                        title={t("tooltip.changeTempo")}
+                        color={tempo !== (context.score.defaultTempo || Playback.DEFAULT_TEMPO) ? "black" : "gray.4"}
+                        variant={"subtle"}
+                        onClick={() => open(DialogType.CHANGE_TEMPO)}
+                    >
+                        <IoIosSpeedometer size={Size.icon.XL}/>
+                        <ValueIndicator
+                            visible={tempo !== context.score.defaultTempo}
+                            label={getTempoLabel(tempo, context.score.defaultTempo)}
+                        />
+                    </ActionIcon>
+                </Group>
+                <Slider
+                    w={200}
+                    size={"md"}
+                    min={Playback.MIN_VOLUME}
+                    max={Playback.MAX_VOLUME}
+                    step={Playback.VOLUME_STEP}
+                    label={t(`tooltip.changeVolume`)}
+                    value={volume}
+                    onChange={v => setVolume(v)}
+                />
             </Group>
         </Group>
     );

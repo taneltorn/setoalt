@@ -47,7 +47,7 @@ const ChangeTempoDialog: React.FC = () => {
             <Slider
                 min={Math.max(Playback.MIN_TEMPO, (scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO) * (1 - Playback.ALLOWED_TEMPO_CHANGE))}
                 max={Math.min(Playback.MAX_TEMPO, (scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO) * (Playback.ALLOWED_TEMPO_CHANGE + 1))}
-                step={Playback.TEMPO_SLIDER_STEP}
+                step={Playback.TEMPO_STEP}
                 defaultValue={scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO}
                 value={tempo}
                 label={t("unit.bpm")}

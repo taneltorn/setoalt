@@ -2,11 +2,12 @@ import React, {useMemo} from 'react';
 import {Link, Outlet} from "react-router-dom";
 import {
     Affix,
-    AppShell, Box,
+    AppShell,
+    Box,
     Burger,
     Button,
     Divider,
-    Group,
+    Group, ScrollArea,
     Transition
 } from "@mantine/core";
 import Navigation from "./components/sidebar/Navigation.tsx";
@@ -60,19 +61,21 @@ const Layout: React.FC = () => {
             </AppShell.Header>
 
             <AppShell.Navbar p={"md"}>
-                <Box visibleFrom={"md"}>
-                    <Group justify={"space-between"}>
-                        <Link to={"/"} onClick={close}>
-                            <Logo/>
-                        </Link>
-                        <ProfileLink/>
-                    </Group>
-                    <Divider my={"md"}/>
-                </Box>
+                <ScrollArea>
+                    <Box visibleFrom={"md"}>
+                        <Group justify={"space-between"}>
+                            <Link to={"/"} onClick={close}>
+                                <Logo/>
+                            </Link>
+                            <ProfileLink/>
+                        </Group>
+                        <Divider my={"md"}/>
+                    </Box>
 
-                <Navigation onNavigate={close}/>
-                <Divider mt={"xl"}/>
-                <DevNotice onNavigate={close}/>
+                    <Navigation onNavigate={close}/>
+                    <Divider mt={"xl"}/>
+                    <DevNotice onNavigate={close}/>
+                </ScrollArea>
             </AppShell.Navbar>
 
             <AppShell.Main id={"content"} pb={50}>

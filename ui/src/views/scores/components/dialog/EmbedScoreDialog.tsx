@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import Dialog from "../../../../components/dialog/Dialog.tsx";
 import {useTranslation} from "react-i18next";
-import {Button, Code, CopyButton, Grid, Group, Input, Text, TextInput} from "@mantine/core";
+import {Button, Code, Grid, Group, Input, Text, TextInput} from "@mantine/core";
 import {DialogType, useDialogContext} from "../../../../context/DialogContext.tsx";
 import {useScoreContext} from "../../../../context/ScoreContext.tsx";
 import {Layout, Size} from "../../../../utils/constants.ts";
@@ -14,12 +14,20 @@ const EmbedScoreDialog: React.FC = () => {
     const {close} = useDialogContext();
     const context = useScoreContext();
 
+    const [copied, setCopied] = useState<boolean>(false);
     const [width, setWidth] = useState<number>(Layout.stave.container.MAX_WIDTH);
     const [height, setHeight] = useState<number>(context.dimensions.containerY);
 
     const code = useMemo(() => {
         return `<iframe src="${window.location.origin}/embed/${context.score.id}" width="${width}" height="${height}" title="${context.score.name}"></iframe>`;
     }, [width, height, context.score]);
+
+    // Implementing manually, Mantine's CopyButton doesn't seem to work in certain cases
+    const handleCopy = () => {
+        setCopied(true);
+        navigator.clipboard.writeText(code);
+        setTimeout(() => setCopied(false), 1000);
+    }
 
     useEffect(() => {
         setWidth(context.dimensions.x);
@@ -83,17 +91,13 @@ const EmbedScoreDialog: React.FC = () => {
                     {t("button.close")}
                 </Button>
 
-                <CopyButton value={code}>
-                    {({copied, copy}) => (
-                        <Button
-                            color={copied ? 'teal' : 'red'}
-                            size={"md"}
-                            leftSection={!copied && <MdOutlineContentCopy size={Size.icon.SM}/>}
-                            onClick={copy}>
-                            {t(`button.${copied ? "copied" : "copy"}`)}
-                        </Button>
-                    )}
-                </CopyButton>
+                <Button
+                    color={copied ? 'teal' : 'red'}
+                    size={"md"}
+                    leftSection={!copied && <MdOutlineContentCopy size={Size.icon.SM}/>}
+                    onClick={handleCopy}>
+                    {t(`button.${copied ? "copied" : "copy"}`)}
+                </Button>
             </Group>
         </Dialog>
     )
