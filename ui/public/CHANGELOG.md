@@ -1,6 +1,5 @@
 #### [0.2.6] - *27.06.2024*
 - Lisatud helitugevuse muutmine
-- Koodi kopeerimise veaparandus
 - Pisiparandused
 
 #### [0.2.5] - *26.06.2024*
