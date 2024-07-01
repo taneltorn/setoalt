@@ -5,6 +5,7 @@ export enum VoiceType {
     KILLO,
     BOTTOM_TORRO
 }
+
 export interface Voice {
     name: string;
     type: VoiceType;

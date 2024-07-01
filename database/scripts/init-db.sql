@@ -32,3 +32,12 @@ CREATE TABLE IF NOT EXISTS setoalt.scores
     deleted_by VARCHAR(255),
     deleted_at TIMESTAMP WITH TIME ZONE DEFAULT CURRENT_TIMESTAMP
 );
+
+CREATE TABLE IF NOT EXISTS setoalt.notifications
+(
+    id SERIAL PRIMARY KEY,
+    title VARCHAR(255),
+    message TEXT,
+    valid_from TIMESTAMP WITH TIME ZONE,
+    valid_to TIMESTAMP WITH TIME ZONE
+);

@@ -9,8 +9,8 @@ import {FormProvider, useForm} from "react-hook-form";
 import ScoreForm from "./editor/form/ScoreForm.tsx";
 import {DisplayError, DisplaySuccess} from "../../../utils/helpers.tsx";
 import {useScoreContext} from "../../../context/ScoreContext.tsx";
-import useScoreService from "../../../services/ScoreService.tsx";
-import {useNavigate} from "react-router-dom";
+import useScoreService from "../../../hooks/useScoreService.tsx";
+import {useLocation, useNavigate} from "react-router-dom";
 import ScoreControls from "./editor/controls/ScoreControls.tsx";
 import Header from "../../../components/controls/Header.tsx";
 import ScorePlaybackPanel from "./playback/ScorePlaybackPanel.tsx";
@@ -19,10 +19,10 @@ import BackLink from "../../../components/controls/BackLink.tsx";
 import {FaClipboardList} from "react-icons/fa";
 import StaveParameters from "./editor/form/StaveParameters.tsx";
 import {useAudioContext} from "../../../context/AudioContext.tsx";
-import ExportControls from "./export/ExportControls.tsx";
 import {Size} from "../../../utils/constants.ts";
 import {BsMusicNoteList} from "react-icons/bs";
 import {PiSliders} from "react-icons/pi";
+import ScoreSettings, {Setting} from "./ScoreSettings.tsx";
 
 interface Properties {
     score: Score;
@@ -35,6 +35,7 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
     const {stopPlayback} = useAudioContext();
     const scoreService = useScoreService();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const methods = useForm<Score>({defaultValues: {...score}});
 
@@ -53,13 +54,13 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
 
     const handleCancel = () => {
         stopPlayback();
-        navigate(`/scores/${score?.id}`);
+        navigate(`/scores/${score?.id}`, {state: location.state});
     }
 
     return (
         <Page title={score.name}>
             <Header
-                leftSection={<BackLink to={`/scores/${score.id}`}/>}
+                leftSection={<BackLink to={location?.state?.to || `/scores/${score.id}`} state={location.state}/>}
                 rightSection={
                     <ScoreControls
                         onPrimaryButtonClick={methods.handleSubmit(onSubmit)}
@@ -68,23 +69,23 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
                 }
             >{score.name}</Header>
 
-            <Tabs defaultValue="editor">
+            <Tabs defaultValue="editor" radius={"xs"}>
                 <Tabs.List>
                     <Tabs.Tab value="editor" leftSection={<BsMusicNoteList size={Size.icon.MD}/>}>
                         <Text size={"lg"}>
-                            {t("view.editor.tab.editor")}
+                            {t("view.editor.form.editor")}
                         </Text>
                     </Tabs.Tab>
 
                     <Tabs.Tab value="data" leftSection={<FaClipboardList size={Size.icon.MD}/>}>
                         <Text size={"lg"}>
-                            {t("view.editor.tab.data")}
+                            {t("view.editor.form.data")}
                         </Text>
                     </Tabs.Tab>
 
                     <Tabs.Tab value="stave" leftSection={<PiSliders size={Size.icon.MD}/>}>
                         <Text size={"lg"}>
-                            {t("view.editor.tab.stave")}
+                            {t("view.editor.form.stave")}
                         </Text>
                     </Tabs.Tab>
                 </Tabs.List>
@@ -92,8 +93,9 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
                 <Tabs.Panel value="editor" pt={"xl"}>
                     <Group justify={"space-between"}>
                         <ScorePlaybackPanel/>
-                        <ExportControls hideEmbeddingExport/>
+                        <ScoreSettings settings={[Setting.CHANGE_MODE, Setting.EMBED_CODE, Setting.EXPORT_PNG]}/>
                     </Group>
+
                     <VoiceControls/>
                     <ScoreEditorPanel/>
                     <Stave score={score} isEditMode/>

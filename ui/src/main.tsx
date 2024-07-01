@@ -4,6 +4,7 @@ import App from './App.tsx'
 import '@mantine/core/styles.css';
 import './index.scss'
 import '@mantine/notifications/styles.css';
+import '@mantine/dates/styles.css';
 
 import {MantineProvider, createTheme} from '@mantine/core';
 import DialogContextProvider from "./context/DialogContextProvider.tsx";

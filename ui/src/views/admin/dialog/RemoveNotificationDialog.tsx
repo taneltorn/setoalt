@@ -4,32 +4,32 @@ import {DialogType, useDialogContext} from "../../../context/DialogContext.tsx";
 import {Trans, useTranslation} from "react-i18next";
 import {Text} from "@mantine/core";
 import {DisplayError, DisplaySuccess} from "../../../utils/helpers.tsx";
-import useUserService from "../../../hooks/useUserService.tsx";
+import useNotificationService from "../../../hooks/useNotificationService.tsx";
 
-const RemoveUserDialog: React.FC = () => {
+const RemoveNotificationDialog: React.FC = () => {
 
     const [t] = useTranslation();
     const {close, context} = useDialogContext();
-    const userService = useUserService();
+    const notificationService = useNotificationService();
 
     const confirm = async () => {
-        if (!context.user?.id) {
+        if (!context.notification?.id) {
             return;
         }
-        userService.removeUser(context.user.id)
+        notificationService.removeNotification(context.notification.id)
             .then(() => {
-                DisplaySuccess(t("toast.success.removeUser"))
+                DisplaySuccess(t("toast.success.removeNotification"))
                 close();
                 context.onRemove && context.onRemove();
             })
-            .catch(() => DisplayError(t("toast.error.removeUser")));
+            .catch(() => DisplayError(t("toast.error.removeNotification")));
     }
 
     return (
         <Dialog
-            type={DialogType.REMOVE_USER}
+            type={DialogType.REMOVE_NOTIFICATION}
             size={"sm"}
-            title={t("dialog.removeUser.title")}
+            title={t("dialog.removeNotification.title")}
             primaryButtonLabel={t("button.confirm")}
             secondaryButtonLabel={t("button.cancel")}
             onPrimaryButtonClick={confirm}
@@ -38,12 +38,12 @@ const RemoveUserDialog: React.FC = () => {
         >
             <Text size={"xl"}>
                 <Trans
-                    i18nKey="dialog.removeUser.description"
-                    values={{username: context.user?.username}}
+                    i18nKey="dialog.removeNotification.description"
+                    values={{title: context.notification?.title}}
                 />
             </Text>
         </Dialog>
     )
 };
 
-export default RemoveUserDialog;
+export default RemoveNotificationDialog;

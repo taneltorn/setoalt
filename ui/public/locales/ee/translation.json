@@ -2,62 +2,64 @@
   "page": {
     "title": "Seto laulu alternatiivne noodikiri",
     "loading": "Laen andmeid...",
-    "noData": "Andmeid ei leitud.",
-    "goBack": "Tagasi"
-  },
-  "brand": {
-    "title": "Seto alt."
+    "help": "Näita juhendit",
+    "search": "Otsi",
+    "sidebar": {
+      "navigation": {
+        "home": "Avaleht",
+        "scores": "Kuula",
+        "editor": "Redaktor",
+        "admin": "Seaded",
+        "login": "Logi sisse",
+        "logout": "Logi välja"
+      },
+      "notice": {
+        "message": "Tegemist on arendusjärgus oleva rakendusega!",
+        "changelog": "Muutelugu"
+      }
+    },
+    "table": {
+      "itemsPerPage": " Kuva",
+      "results": "Leitud {{count}} tulemust",
+      "noData": "Andmeid ei leitud."
+    }
   },
   "view": {
     "home": {
-      "pageTitle": "Avaleht",
-      "title": "Seto laulu alternatiivne noodikiri",
+      "title": "Avaleht",
+      "header": "Seto laulu alternatiivne noodikiri",
       "description": "Antud veebirakendus on osa Kirjandusmuuseumi loovuurimuslikust projektist <strong>\"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\"</strong>.<br/>Rakendus võimaldab luua ja kuulata seto laulu noodistusi.",
       "link": {
         "scores": "Noodistused",
         "editor": "Katseta"
       }
     },
-    "changelog": {
-      "title": "Muudatused"
-    },
-    "error": {
-      "title": "Viga!",
-      "description": "Midagi läks valesti!",
-      "returnToHome": "Tagasi avalehel"
-    },
-    "user": {
-      "title": ""
-    },
-    "scores": {
-      "title": "Noodistused",
-      "description": "Noodistusi kokku: {{count}}",
-      "details": {
-        "back": "Vaata kõiki noodistusi",
-        "lyrics": "Laulusõnad"
-      },
-      "notFound": {
-        "text": "Noodistust ei leitud.",
-        "goBack": "Vaata kõiki noodistusi"
-      },
+    "scoreList": {
+      "title": "Kuula",
+      "header": "Noodistused",
       "table": {
         "name": "Nimi",
         "stave": "Noodijoonestik",
         "voices": "Hääled",
         "visibility": "Nähtavus",
         "createdBy": "Looja"
-      },
-      "search": "Otsi noodistust",
-      "clonedScore": "{{name}} koopia"
+      }
+    },
+    "scoreDetails": {
+      "lyrics": "Laulusõnad",
+      "notFound": "Noodistust ei leitud.",
+      "showAll": "Vaata kõiki noodistusi",
+      "clonedScore": "{{name}} koopia",
+      "settings": {
+        "selectSimplifiedMode": "Kuva lihtsustatud vaade",
+        "selectDetailMode": "Kuva detailne vaade",
+        "exportPng": "Ekspordi PNG",
+        "embedScore": "Manustamiskood"
+      }
     },
     "editor": {
       "title": "Redaktor",
-      "description": "Redaktor võimaldab katsetada uute noodistuste loomisega.",
-      "tab": {
-        "editor": "Noodistus",
-        "data": "Andmed",
-        "stave": "Sätted"
-      },
+      "header": "Redaktor",
       "form": {
         "title": "Pealkiri",
         "name": "Nimi",
@@ -66,15 +68,28 @@
         "defaultTransposition": "Vaikimisi helikõrgus (pooltoonides)",
         "lineDetune": "Noodijoonte mikrotonaalsus (tsentides)",
         "text": "Laulusõnad",
-        "visibility": "Nähtavus"
+        "visibility": "Nähtavus",
+        "editor": "Noodistus",
+        "data": "Andmed",
+        "stave": "Sätted"
       }
     },
     "admin": {
       "title": "Adminpaneel",
-      "description": "Siin saad hallata kasutajaid ja muid seadeid.",
       "tab": {
         "users": "Kasutajad",
-        "settings": "Seaded"
+        "notifications": "Teavitused"
+      },
+      "notifications": {
+        "id": "ID",
+        "title": "Pealkiri",
+        "message": "Tekst",
+        "validFrom": "Aktiivne alates",
+        "validTo": "Aktiivne kuni",
+        "status": "Staatus",
+        "active": "Aktiivne",
+        "inactive": "Mitteaktiivne",
+        "date": "Kuupäev"
       },
       "users": {
         "table": {
@@ -101,17 +116,39 @@
         "password": "Parool",
         "submit": "Logi sisse"
       }
+    },
+    "changelog": {
+      "title": "Muutelugu",
+      "header": "Muudatused"
+    },
+    "error": {
+      "title": "Viga!",
+      "description": "Midagi läks valesti!",
+      "returnToHome": "Tagasi avalehele"
     }
   },
-  "sidebar": {
-    "navigation": {
-      "home": "Avaleht",
-      "scores": "Kuula",
-      "editor": "Redaktor",
-      "admin": "Seaded"
-    },
-    "login": "Logi sisse",
-    "logout": "Logi välja"
+  "button": {
+    "ok": "OK",
+    "copy": "Kopeeri",
+    "copied": "Kopeeritud!",
+    "clone": "Tee koopia",
+    "remove": "Kustuta",
+    "save": "Salvesta",
+    "confirm": "Kinnita",
+    "cancel": "Tühista",
+    "edit": "Muuda",
+    "close": "Sulge",
+    "reset": "Lähtesta",
+    "submit": "Saada",
+    "add": "Lisa",
+    "addNew": "Lisa uus",
+    "pngExport": "PNG",
+    "showAll": "Näita kõiki",
+    "showActive": "Näita aktiivset",
+    "removeVoice": "Kustuta hääl",
+    "changeInstrument": "Muuda heliväljundit",
+    "backToTop": "Tagasi üles",
+    "settings": "Seaded ja tööriistad"
   },
   "tooltip": {
     "changeNoteDuration": {
@@ -124,13 +161,14 @@
     "insertPitch": "Lisa {{pitch}} noot",
     "changePitch": "Muuda {{pitch}} noodiks",
     "shiftLeft": "Nihuta vasakule",
+    "shiftLyricsLeft": "Nihuta laulusõnu vasakule",
     "shiftRight": "Nihuta paremale",
+    "shiftLyricsRight": "Nihuta laulusõnu paremale",
     "insertBreak": "Lisa reavahe",
     "removeBreak": "Eemalda reavahe",
     "insertDivider": "Lisa eraldaja",
     "removeDivider": "Eemalda eraldaja",
     "microTuning": "Mikrotonaalsus",
-    "staveSelection": "Vaheta noodijoonestikku",
     "removeNote": "Eemalda noot",
     "resetScore": "Lähtesta",
     "saveScore": "Salvesta",
@@ -146,26 +184,15 @@
     "transpose": "Muuda helikõrgust",
     "changeType": "Muuda suurust",
     "splitNote": "Poolita noot",
-    "exportToPng": "Salvesta PNG",
     "undo": "Võta tagasi",
     "redo": "Tee uuesti",
-    "changeVolume": "Muuda helitugevust"
+    "changeVolume": "Muuda helitugevust",
+    "staveSelection": "Vaheta noodijoonestikku"
   },
   "dialog": {
     "saveScore": {
       "title": "Salvesta noodistus",
       "description": "Salvesta tehtud noodistus."
-    },
-    "removeScore": {
-      "title": "Oled sa kindel?",
-      "description": "Kustuta noodistus <b>{{name}}</b>?"
-    },
-    "saveUser": {
-      "title": "Salvesta kasutaja"
-    },
-    "removeUser": {
-      "title": "Oled sa kindel?",
-      "description": "Kustuta kasutaja {{username}}?"
     },
     "addVoice": {
       "title": "Lisa hääl",
@@ -179,9 +206,20 @@
       "color": "Värv",
       "copyFrom": "Kopeeri noodid olemasolevalt häälelt?"
     },
-    "removeVoice": {
+    "saveUser": {
+      "title": "Salvesta kasutaja"
+    },
+    "removeScore": {
       "title": "Oled sa kindel?",
-      "description": "Kustuta hääl {{name}}?"
+      "description": "Kustuta noodistus <strong>{{name}}</strong>?"
+    },
+    "removeUser": {
+      "title": "Oled sa kindel?",
+      "description": "Kustuta kasutaja <strong>{{username}}</strong>?"
+    },
+    "removeNotification": {
+      "title": "Oled sa kindel?",
+      "description": "Kustuta teavitus <strong>{{title}}</strong>?"
     },
     "embedScore": {
       "title": "Kuva noodistus välisel lehel",
@@ -206,10 +244,10 @@
     "resetScore": {
       "title": "Lähtesta andmed?",
       "description": "Oled sa kindel, et soovid sisestatud andmed lähtestada?"
+    },
+    "saveNotification": {
+      "title": "Salvesta teavitus"
     }
-  },
-  "placeholder": {
-    "search": "Otsi"
   },
   "unit": {
     "bpm": "BPM",
@@ -217,38 +255,6 @@
     "semitonesAbbr": "pt",
     "cents": "Tsentides",
     "centsAbbr": "c"
-  },
-  "label": {
-    "yes": "Jah",
-    "no": "Ei"
-  },
-  "button": {
-    "ok": "OK",
-    "copy": "Kopeeri",
-    "copied": "Kopeeritud!",
-    "clone": "Tee koopia",
-    "remove": "Kustuta",
-    "save": "Salvesta",
-    "confirm": "Kinnita",
-    "cancel": "Tühista",
-    "edit": "Muuda",
-    "close": "Sulge",
-    "reset": "Lähtesta",
-    "submit": "Saada",
-    "add": "Lisa",
-    "addNew": "Lisa uus",
-    "pngExport": "PNG",
-    "showAll": "Näita kõiki",
-    "showActive": "Näita aktiivset",
-    "removeVoice": "Kustuta hääl",
-    "changeInstrument": "Muuda heliväljundit",
-    "backToTop": "Tagasi üles",
-    "changelog": "Muutelugu"
-  },
-  "table": {
-    "itemsPerPage": " Kuva",
-    "results": "Leitud {{count}} tulemust",
-    "noData": "Andmeid ei leitud."
   },
   "visibility": {
     "public": "Avalik",
@@ -258,7 +264,7 @@
     "admin": "Administraator",
     "editor": "Toimetaja",
     "user": "Kasutaja",
-    "guest": "Külaline"
+    "guest": "külaline"
   },
   "field": {
     "required": "Väli on kohustuslik"
@@ -267,8 +273,10 @@
     "success": {
       "saveScore": "Noodistus salvestatud.",
       "saveUser": "Kasutaja salvestatud.",
+      "saveNotification": "Teavitus salvestatud.",
       "removeScore": "Noodistus kustutatud.",
-      "removeUser": "Kasutaja kustutatud."
+      "removeUser": "Kasutaja kustutatud.",
+      "removeNotification": "Teavitus kustutatud."
     },
     "error": {
       "message": "Midagi läks valesti.",
@@ -280,7 +288,9 @@
       "saveScore": "Noodistuse salvestamine ebaõnnestus.",
       "updateScore": "Noodistuse muutmine ebaõnnestus.",
       "saveUser": "Kasutaja salvestamine ebaõnnestus.",
-      "removeUser": "Kasutaja kustutamine ebaõnnestus."
+      "removeUser": "Kasutaja kustutamine ebaõnnestus.",
+      "saveNotification": "Teavituse salvestamine ebaõnnestus.",
+      "removeNotification": "Teavituse kustutamine ebaõnnestus."
     }
   },
   "stave": {

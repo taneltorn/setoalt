@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Badge, Button, Group, useMantineTheme} from "@mantine/core";
-import useUserService from "../../../services/UserService.tsx";
+import useUserService from "../../../hooks/useUserService.tsx";
 import {DisplayError} from "../../../utils/helpers.tsx";
 import {DialogType, useDialogContext} from "../../../context/DialogContext.tsx";
 import {User} from "../../../model/User.ts";
@@ -14,8 +14,9 @@ import SaveUserDialog from "../dialog/SaveUserDialog.tsx";
 import RemoveUserDialog from "../dialog/RemoveUserDialog.tsx";
 import IconButton from "../../../components/controls/IconButton.tsx";
 import {Size} from "../../../utils/constants.ts";
+import usePagination from "../../../hooks/usePagination.tsx";
 
-const UserManagement: React.FC = () => {
+const UserList: React.FC = () => {
 
     const {t} = useTranslation();
     const userService = useUserService();
@@ -23,6 +24,7 @@ const UserManagement: React.FC = () => {
     const [users, setUsers] = useState<User[]>([]);
     const [filteredUsers, setFilteredUsers] = useState<User[]>(users);
     const theme = useMantineTheme();
+    const {pagination, setPagination} = usePagination();
 
     const fetchData = () => {
         userService.fetchUsers()
@@ -31,9 +33,10 @@ const UserManagement: React.FC = () => {
     }
 
     const handleSearch = (value: string) => {
-        setFilteredUsers(users.filter(r => r.username?.toLowerCase().includes(value.toLowerCase())
-            || r.firstname?.toLowerCase().includes(value.toLowerCase())
-            || r.lastname?.toLowerCase().includes(value.toLowerCase())));
+        const query = value?.toLowerCase();
+        setFilteredUsers(users.filter(r => r.username?.toLowerCase().includes(query)
+            || r.firstname?.toLowerCase().includes(query)
+            || r.lastname?.toLowerCase().includes(query)));
     }
 
     useEffect(() => {
@@ -41,17 +44,17 @@ const UserManagement: React.FC = () => {
         return () => userService.cancelSource.cancel();
     }, []);
 
-
     useEffect(() => {
-        setFilteredUsers(users);
+        handleSearch(pagination.query);
     }, [users]);
 
     return (
         <>
-            <Group justify={"space-between"}>
+            <Group justify={"space-between"} mb={"md"}>
                 <SearchInput
-                    onChange={handleSearch}
-                    onClear={() => setFilteredUsers(users)}
+                    value={pagination.query}
+                    onChange={v => setPagination({...pagination, query: v, page: 1})}
+                    onClear={() => setPagination({...pagination, query: "", page: 1})}
                 />
                 <Button size={"md"}
                         variant={"outline"}
@@ -63,6 +66,9 @@ const UserManagement: React.FC = () => {
 
             <PaginatedTable
                 isLoading={userService.isLoading}
+                onChange={handleSearch}
+                pagination={pagination}
+                setPagination={setPagination}
                 columns={[
                     t("view.admin.users.table.id"),
                     t("view.admin.users.table.name"),
@@ -84,7 +90,6 @@ const UserManagement: React.FC = () => {
                                 title={t("button.edit")}
                                 icon={<FaPencil size={Size.icon.XS}/>}
                                 onClick={() => open(DialogType.SAVE_USER, {
-                                    id: user.id,
                                     user: user,
                                     onSave: fetchData
                                 })}
@@ -94,8 +99,7 @@ const UserManagement: React.FC = () => {
                                 title={t("button.remove")}
                                 icon={<FaRegTrashCan size={Size.icon.XS}/>}
                                 onClick={() => open(DialogType.REMOVE_USER, {
-                                    id: user.id,
-                                    username: user.username,
+                                    user: user,
                                     onRemove: fetchData
                                 })}
                             />
@@ -110,4 +114,4 @@ const UserManagement: React.FC = () => {
     );
 }
 
-export default UserManagement;
+export default UserList;

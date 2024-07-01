@@ -57,7 +57,7 @@ const Login: React.FC = () => {
                         />
 
                         <Button size={"lg"} type={"submit"}>
-                            {t("button.submit")}
+                            {t("view.login.form.submit")}
                         </Button>
                     </form>
                 </Grid.Col>

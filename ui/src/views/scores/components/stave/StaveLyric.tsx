@@ -1,4 +1,4 @@
-import React, {useMemo, useState} from 'react';
+import React, {useEffect, useMemo, useState} from 'react';
 import {Lyric} from "../../../../model/Lyric.ts";
 import {useAudioContext} from "../../../../context/AudioContext.tsx";
 import {useScoreContext} from "../../../../context/ScoreContext.tsx";
@@ -31,7 +31,13 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
         setValue(value);
     }
 
+    const handleFocus = () => {
+        scoreContext.setIsTypeMode(true);
+        scoreContext.activate(lyric.position);
+    }
+
     const save = () => {
+        console.log("saving")
         const l = scoreContext.score.data.lyrics.find(l => l.position === lyric.position);
         if (l) {
             if (value) {
@@ -51,16 +57,25 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
         scoreContext.setIsTypeMode(false);
     }
 
+    useEffect(() => {
+        setValue(lyric.text)
+    }, [lyric.text]);
+
     return (<>
             {scoreContext.isEditMode && !scoreContext.isExportMode &&
                 <foreignObject key={`lyric-${lyric.position}`} x={x - 20} y={y} width={Layout.stave.note.SPACING} height="40">
                     <input
-                        onFocus={() => scoreContext.setIsTypeMode(true)}
+                        onFocus={handleFocus}
                         onBlur={() => save()}
                         className={`lyric-input`}
                         disabled={!scoreContext.isEditMode}
                         value={value}
-                        style={{width: Layout.stave.note.SPACING, fontWeight: Layout.stave.lyrics.FONT_WEIGHT, fontSize: Layout.stave.lyrics.FONT_SIZE}}
+                        style={{
+                            width: Layout.stave.note.SPACING,
+                            color: lyric.position === scoreContext.activePosition && !scoreContext.isExportMode ? Color.stave.HIGHLIGHT : Color.stave.LYRICS,
+                            fontWeight: Layout.stave.lyrics.FONT_WEIGHT,
+                            fontSize: Layout.stave.lyrics.FONT_SIZE
+                    }}
                         onChange={e => handleChange(e.target.value)}
                     />
                 </foreignObject>}

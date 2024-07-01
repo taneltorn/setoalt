@@ -16,9 +16,7 @@ a {
 }
 
 .mantine-Tabs-tab {
-  &[data-active="true"] p {
-      font-weight: bold;
-  }
+  border-bottom-width: 3px;
 }
 
 .errorContainer {
@@ -59,16 +57,6 @@ a {
     background: var(--mantine-color-gray-1);
   }
 }
-
-//.mantine-TextInput-wrapper	Root element of the Input
-//input	.mantine-TextInput-input	Input element
-//section	.mantine-TextInput-section	Left and right sections
-//root	.mantine-TextInput-root	Root element
-//label	.mantine-TextInput-label	Label element
-//required	.mantine-TextInput-required	Required asterisk element, rendered inside label
-//description	.mantine-TextInput-description	Description element
-//error	.mantine-TextInput-error
-
 
 .mantine-InputWrapper-label {
   font-weight: 600;

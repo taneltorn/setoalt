@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from "react-i18next";
 import {GiTunePitch} from "react-icons/gi";
-import {ActionIcon, Group, Slider} from "@mantine/core";
+import {ActionIcon, Box, Group, Slider} from "@mantine/core";
 import {useAudioContext} from "../../../../../context/AudioContext.tsx";
 import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
@@ -69,34 +69,36 @@ const PlaybackControls: React.FC = () => {
             </Group>
             <Group gap={"xs"}>
                 <Group>
-                    <ActionIcon
-                        size={"xl"}
-                        title={t("tooltip.transpose")}
-                        color={transposition !== Playback.DEFAULT_TRANSPOSITION ? "black" : "gray.4"}
-                        variant={"subtle"}
-                        onClick={() => open(DialogType.TRANSPOSE)}
-                    >
-                        <GiTunePitch size={Size.icon.XL}/>
-                        <ValueIndicator
-                            visible={transposition !== Playback.DEFAULT_TRANSPOSITION}
-                            label={getDetuneLabel(transposition, t("unit.semitonesAbbr"))}
-                        />
-                    </ActionIcon>
+                    <Box style={{position: "relative", top: 10}} size={75} ml={-24}>
+                        <Group justify={"center"}>
+                            <ActionIcon
+                                size={"xl"}
+                                title={t("tooltip.transpose")}
+                                color={transposition !== Playback.DEFAULT_TRANSPOSITION ? "black" : "gray.4"}
+                                variant={"subtle"}
+                                onClick={() => open(DialogType.TRANSPOSE)}
+                            >
+                                <GiTunePitch size={Size.icon.XL}/>
+                            </ActionIcon>
+                        </Group>
+                        <ValueIndicator label={getDetuneLabel(transposition, t("unit.semitonesAbbr"))}/>
+                    </Box>
 
-                    <ActionIcon
-                        size={"xl"}
-                        mr={"sm"}
-                        title={t("tooltip.changeTempo")}
-                        color={tempo !== (context.score.defaultTempo || Playback.DEFAULT_TEMPO) ? "black" : "gray.4"}
-                        variant={"subtle"}
-                        onClick={() => open(DialogType.CHANGE_TEMPO)}
-                    >
-                        <IoIosSpeedometer size={Size.icon.XL}/>
-                        <ValueIndicator
-                            visible={tempo !== context.score.defaultTempo}
-                            label={getTempoLabel(tempo, context.score.defaultTempo)}
-                        />
-                    </ActionIcon>
+                    <Box style={{position: "relative", top: 10}} size={75} ml={-32}>
+                        <Group justify={"center"}>
+                            <ActionIcon
+                                size={"xl"}
+                                title={t("tooltip.changeTempo")}
+                                color={tempo !== (context.score.defaultTempo || Playback.DEFAULT_TEMPO) ? "black" : "gray.4"}
+                                variant={"subtle"}
+                                onClick={() => open(DialogType.CHANGE_TEMPO)}
+                            >
+                                <IoIosSpeedometer size={Size.icon.XL}/>
+                            </ActionIcon>
+                        </Group>
+                        <ValueIndicator label={getTempoLabel(tempo, context.score.defaultTempo)}/>
+                    </Box>
+
                 </Group>
                 <Slider
                     w={200}

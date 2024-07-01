@@ -3,7 +3,8 @@ import {useTranslation} from "react-i18next";
 import {useScoreContext} from "../../../../context/ScoreContext.tsx";
 import {Line} from "../../../../model/Line.ts";
 import {Layout} from "../../../../utils/constants.ts";
-import {getDetuneLabel} from "../../../../utils/helpers.tsx";
+// import {getDetuneLabel} from "../../../../utils/helpers.tsx";
+import DetuneIndicator from "./DetuneIndicator.tsx";
 
 interface Properties {
     line: Line;
@@ -20,23 +21,34 @@ const StaveLine: React.FC<Properties> = ({line, offsetY}) => {
         + offsetY;
 
     return (<g>
-            <text x={0} y={y + 5} fontSize={14} fill={"black"}>
-                {t(`pitch.${line.pitch.toLowerCase()}`)}
-            </text>
 
-            {line.detune &&
-                <text x={20} y={y + 5} fontSize={10} fill={"black"}>
-                    {getDetuneLabel(line.detune, t("unit.centsAbbr"))}
-                </text>}
+            {!context.isSimplifiedMode && <>
+                <text x={0} y={y + 5} fontSize={14} fill={"black"}>
+                    {t(`pitch.${line.pitch.toLowerCase()}`)}
+                </text>
 
+                {line.detune &&
+                    <DetuneIndicator
+                        detune={line.detune}
+                        x={8}
+                        y={y + 8}
+                        opacity={1}
+                        color={"black"}
+                    />}
+
+                {/*{line.detune &&*/}
+                {/*    <text x={20} y={y + 5} fontSize={10} fill={"black"}>*/}
+                {/*        {getDetuneLabel(line.detune, t("unit.centsAbbr"))}*/}
+                {/*    </text>}*/}
+            </>}
             <line
                 key={line.pitch}
                 className={`hover-pointer`}
-                x1={Layout.stave.container.PADDING_X_START - Layout.stave.note.SPACING / 1.2} y1={y}
+                x1={(!context.isSimplifiedMode ? Layout.stave.container.PADDING_X_START : 0) - Layout.stave.note.SPACING / 1.5}
+                y1={y}
                 x2={context.dimensions.x} y2={y}
                 stroke={line.color}
                 strokeWidth={line.strokeWidth}
-                style={{zIndex: 5}}
             />
         </g>
     )

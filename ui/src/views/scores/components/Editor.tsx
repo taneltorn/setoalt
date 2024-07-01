@@ -6,14 +6,13 @@ import ScoreEditorPanel from "./editor/ScoreEditorPanel.tsx";
 import VoiceControls from "./editor/controls/VoiceControls.tsx";
 import ScoreControls from "./editor/controls/ScoreControls.tsx";
 import Header from "../../../components/controls/Header.tsx";
-import Description from "../../../components/controls/Description.tsx";
 import ScorePlaybackPanel from "./playback/ScorePlaybackPanel.tsx";
 import Stave from "./stave/Stave.tsx";
 import {useAudioContext} from "../../../context/AudioContext.tsx";
 import {Group} from "@mantine/core";
-import ExportControls from "./export/ExportControls.tsx";
+import ScoreSettings, {Setting} from "./ScoreSettings.tsx";
 
-const CleanEditor: React.FC = () => {
+const Editor: React.FC = () => {
 
     const {t} = useTranslation();
     const {open} = useDialogContext();
@@ -36,11 +35,10 @@ const CleanEditor: React.FC = () => {
             }>
                 {t("view.editor.title")}
             </Header>
-            <Description>{t("view.editor.description")}</Description>
 
             <Group justify={"space-between"}>
                 <ScorePlaybackPanel/>
-                <ExportControls hideEmbeddingExport/>
+                <ScoreSettings settings={[Setting.CHANGE_MODE, Setting.EXPORT_PNG]}/>
             </Group>
 
             <VoiceControls/>
@@ -52,4 +50,4 @@ const CleanEditor: React.FC = () => {
         ;
 }
 
-export default CleanEditor;
+export default Editor;

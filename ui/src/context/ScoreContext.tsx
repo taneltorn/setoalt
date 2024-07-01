@@ -5,6 +5,8 @@ import {Score} from "../model/Score";
 import {StaveDimensions} from "../model/Dimensions.ts";
 import {HalfPosition} from "../model/HalfPosition.ts";
 import {Range} from "../model/Range.ts";
+import {Lyric} from "../model/Lyric.ts";
+import {ShiftMode} from "../utils/enums.ts";
 
 export interface ScoreContextProperties {
 
@@ -13,10 +15,16 @@ export interface ScoreContextProperties {
 
     isEditMode: boolean;
     setIsEditMode: (value: boolean) => void;
+
+    isSimplifiedMode: boolean;
+    setIsSimplifiedMode: (value: boolean) => void;
     isExportMode: boolean;
     setIsExportMode: (value: boolean) => void;
     isTypeMode: boolean;
     setIsTypeMode: (value: boolean) => void;
+
+    isCtrlKeyActive: boolean;
+    setIsCtrlKeyActive: (value: boolean) => void;
 
     loopRange: Range | undefined;
     setLoopRange: (range: Range | undefined) => void;
@@ -27,6 +35,7 @@ export interface ScoreContextProperties {
     previous: () => void;
 
     activeNote: Note | undefined;
+    activeLyric: Lyric | undefined;
     activePosition: number;
     setActivePosition: (position: number) => void;
     activeDuration: string;
@@ -54,8 +63,8 @@ export interface ScoreContextProperties {
     increaseNotePitch: (position?: number) => void;
     decreaseNotePitch: (position?: number) => void;
 
-    shiftLeft: () => void;
-    shiftRight: () => void;
+    shiftLeft: (mode: ShiftMode) => void;
+    shiftRight: (mode: ShiftMode) => void;
 
     refresh: () => void;
     reset: () => void;

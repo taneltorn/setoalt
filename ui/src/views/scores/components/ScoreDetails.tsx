@@ -7,17 +7,17 @@ import {useTranslation} from "react-i18next";
 import Description from "../../../components/controls/Description.tsx";
 import ScoreControls from "./editor/controls/ScoreControls.tsx";
 import {useAuth} from "../../../context/AuthContext.tsx";
-import {useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import VoiceFilter from "./playback/controls/VoiceFilter.tsx";
 import Stave from "./stave/Stave.tsx";
 import ScorePlaybackPanel from "./playback/ScorePlaybackPanel.tsx";
 import BackLink from "../../../components/controls/BackLink.tsx";
 import {useAudioContext} from "../../../context/AudioContext.tsx";
-import ExportControls from "./export/ExportControls.tsx";
 import {MdLyrics} from "react-icons/md";
 import {Size} from "../../../utils/constants.ts";
 import {DisplayError, DisplaySuccess} from "../../../utils/helpers.tsx";
-import useScoreService from "../../../services/ScoreService.tsx";
+import useScoreService from "../../../hooks/useScoreService.tsx";
+import ScoreSettings, {Setting} from "./ScoreSettings.tsx";
 
 interface Properties {
     score: Score;
@@ -31,6 +31,7 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
     const scoreService = useScoreService();
     const auth = useAuth();
     const navigate = useNavigate();
+    const location = useLocation();
 
     const handleClick = () => {
         stopPlayback();
@@ -39,7 +40,7 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
 
     const cloneScore = () => {
         const clone = {...score};
-        clone.name = t("view.scores.clonedScore", {name: clone.name});
+        clone.name = t("view.scoreDetails.clonedScore", {name: clone.name});
 
         scoreService.createScore(clone)
             .then((response) => {
@@ -55,7 +56,7 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
     return (
         <Page title={score.name}>
             <Header
-                leftSection={<BackLink to={"/scores"}/>}
+                leftSection={<BackLink to={"/scores"} state={location.state}/>}
                 rightSection={<>
                     {auth.currentUser?.isAuthorized &&
                         <ScoreControls
@@ -80,18 +81,18 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
 
             <Group justify={"space-between"}>
                 <ScorePlaybackPanel/>
-                <ExportControls/>
+                <ScoreSettings settings={[Setting.CHANGE_MODE, Setting.EMBED_CODE, Setting.EXPORT_PNG]}/>
             </Group>
 
             <VoiceFilter/>
             <Stave score={score}/>
 
             {score.text &&
-                <Tabs defaultValue="lyrics">
+                <Tabs defaultValue="lyrics" radius={"xs"}>
                     <Tabs.List>
                         <Tabs.Tab value="lyrics" leftSection={<MdLyrics size={Size.icon.MD}/>}>
                             <Text size={"lg"}>
-                                {t("view.scores.details.lyrics")}
+                                {t("view.scoreDetails.lyrics")}
                             </Text>
                         </Tabs.Tab>
                     </Tabs.List>

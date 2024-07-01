@@ -2,7 +2,7 @@ export enum ShortKey {
     MICRO_TUNING = "M",
     CHANGE_TYPE = "T",
     SHIFT_LEFT = "B",
-    SHIFT_RIGHT = "N",
+    SHIFT_RIGHT = "P",
     DELETE_NOTE = "DELETE",
     REMOVE_NOTE = "BACKSPACE",
     DIVIDER = "D",

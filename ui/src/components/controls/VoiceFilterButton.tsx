@@ -2,6 +2,7 @@ import React from 'react';
 import {MdRecordVoiceOver, MdVoiceOverOff} from "react-icons/md";
 import {Button} from "@mantine/core";
 import {useTranslation} from "react-i18next";
+import {Size} from "../../utils/constants.ts";
 
 interface Properties {
     active: boolean;
@@ -16,7 +17,6 @@ interface Properties {
 const VoiceFilterButton: React.FC<Properties> = ({active, halfActive, disabled, label, onClick}) => {
 
     const {t} = useTranslation();
-    const ICON_SIZE = 20;
 
     return (
         <Button
@@ -28,11 +28,11 @@ const VoiceFilterButton: React.FC<Properties> = ({active, halfActive, disabled, 
             disabled={disabled}
             leftSection={active || halfActive
                 ? <MdRecordVoiceOver
-                    size={ICON_SIZE}
+                    size={Size.icon.XS}
                     style={{color: active ? "white" : "black"}}
                 />
                 : <MdVoiceOverOff
-                    size={ICON_SIZE}
+                    size={Size.icon.XS}
                     style={{color: "#ccc"}}
                 />}
             onClick={onClick}

@@ -45,7 +45,6 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                  height={context.dimensions.y * context.dimensions.blocks}
                  style={{padding: "0 5px"}}
             >
-
                 {range(context.score.data.breaks.length + 1)
                     .map((_, index) => (
                         <StaveBlock
@@ -84,7 +83,7 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                 {context.loopRange && <ActiveRangeMarkers/>}
 
                 {context.score.data.lyrics.length >= 0 &&
-                    range(0, context.endPosition - 1)
+                    range(0, context.endPosition)
                         .map((n, i) =>
                             <StaveLyric
                                 key={i}

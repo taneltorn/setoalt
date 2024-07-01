@@ -12,11 +12,12 @@ import {Role} from "./context/AuthContext.tsx";
 import ScoreManager from "./views/scores/ScoreManager.tsx";
 import Home from "./views/Home.tsx";
 import ChangeLog from "./views/ChangeLog.tsx";
+import Error from "./views/Error.tsx";
 
 const router = createBrowserRouter([
     {
         path: "/",
-        // errorElement: <Error/>,
+        errorElement: <Error/>,
         element: <Layout/>,
         children: [
             {

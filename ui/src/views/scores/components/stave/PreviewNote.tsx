@@ -32,7 +32,7 @@ const PreviewNote: React.FC<Properties> = ({pitch, ...props}) => {
     }
 
     return (<>
-        {context.cursorPosition >= 0 && <>
+        {context.cursorPosition >= 0 && !context.isCtrlKeyActive && <>
             <circle
                 className={"hover-pointer"}
                 cx={x}

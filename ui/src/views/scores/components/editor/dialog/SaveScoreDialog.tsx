@@ -3,7 +3,7 @@ import Dialog from "../../../../../components/dialog/Dialog.tsx";
 import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
 import {useTranslation} from "react-i18next";
 import {useScoreContext} from '../../../../../context/ScoreContext.tsx';
-import useScoreService from '../../../../../services/ScoreService.tsx';
+import useScoreService from '../../../../../hooks/useScoreService.tsx';
 import {FormProvider, useForm} from 'react-hook-form';
 import {Playback} from "../../../../../utils/constants.ts";
 import {Score} from "../../../../../model/Score.ts";

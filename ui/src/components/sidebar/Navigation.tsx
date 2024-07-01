@@ -59,7 +59,7 @@ const Navigation: React.FC<Properties> = (props) => {
                     key={index}
                     active={item.link === "/" && location.pathname === "/" || item.link !== "/" && location.pathname.startsWith(item.link)}
                     className={classes.link}
-                    label={t(`sidebar.navigation.${item.id}`)}
+                    label={t(`page.sidebar.navigation.${item.id}`)}
                     leftSection={item.icon}
                     onClick={() => handleNavigate(item.link)}
                 />
@@ -74,7 +74,7 @@ const Navigation: React.FC<Properties> = (props) => {
                         key={index}
                         active={item.link === "/" && location.pathname === "/" || item.link !== "/" && location.pathname.startsWith(item.link)}
                         className={classes.link}
-                        label={t(`sidebar.navigation.${item.id}`)}
+                        label={t(`page.sidebar.navigation.${item.id}`)}
                         leftSection={item.icon}
                         onClick={() => handleNavigate(item.link)}
                     />
@@ -86,7 +86,7 @@ const Navigation: React.FC<Properties> = (props) => {
             {!auth.currentUser && <Group mt={"lg"} justify={"center"}>
                 <Link to={"/login"} onClick={props.onNavigate}>
                     <Button size={"sm"} variant={"outline"}>
-                        {t("sidebar.login")}
+                        {t("page.sidebar.navigation.login")}
                     </Button>
                 </Link>
             </Group>}
@@ -96,7 +96,7 @@ const Navigation: React.FC<Properties> = (props) => {
                     <Button variant={"subtle"} onClick={handleLogout}>
                         <MdOutlineLogout size={Size.icon.SM}/>
                         <Box ml={"xs"}>
-                            {t("sidebar.logout")}
+                            {t("page.sidebar.navigation.logout")}
                         </Box>
                     </Button>
                 </Group>}

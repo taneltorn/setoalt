@@ -2,12 +2,12 @@ import React from "react";
 import {useTranslation} from "react-i18next";
 import {Tabs, Text} from "@mantine/core";
 import Page from "../../Page.tsx";
-import UserManagement from "./panel/UserManagement.tsx";
+import UserList from "./panel/UserList.tsx";
 import {FaUser} from "react-icons/fa";
 import {IoMdSettings} from "react-icons/io";
 import Header from "../../components/controls/Header.tsx";
-import Description from "../../components/controls/Description.tsx";
 import {Size} from "../../utils/constants.ts";
+import NotificationList from "./panel/NotificationList.tsx";
 
 const Admin: React.FC = () => {
 
@@ -16,9 +16,8 @@ const Admin: React.FC = () => {
     return (
         <Page title={t("view.admin.title")}>
             <Header>{t("view.admin.title")}</Header>
-            <Description>{t("view.admin.description")}</Description>
 
-            <Tabs defaultValue="users">
+            <Tabs defaultValue="users" radius={"xs"}>
                 <Tabs.List>
                     <Tabs.Tab value="users" leftSection={<FaUser size={Size.icon.SM}/>}>
                         <Text size={"lg"}>
@@ -26,20 +25,18 @@ const Admin: React.FC = () => {
                         </Text>
                     </Tabs.Tab>
 
-                    <Tabs.Tab value="settings" leftSection={<IoMdSettings size={Size.icon.SM}/>}>
+                    <Tabs.Tab value="notifications" leftSection={<IoMdSettings size={Size.icon.SM}/>}>
                         <Text size={"lg"}>
-                            {t("view.admin.tab.settings")}
+                            {t("view.admin.tab.notifications")}
                         </Text>
                     </Tabs.Tab>
                 </Tabs.List>
 
-                <Tabs.Panel value="users" pt={"xl"}>
-                    <UserManagement/>
+                <Tabs.Panel value="users" pt={"lg"}>
+                    <UserList/>
                 </Tabs.Panel>
-                <Tabs.Panel value={"settings"} pt={"xl"}>
-                    <Text>
-                        Muud sätted
-                    </Text>
+                <Tabs.Panel value={"notifications"} pt={"lg"}>
+                    <NotificationList/>
                 </Tabs.Panel>
             </Tabs>
         </Page>

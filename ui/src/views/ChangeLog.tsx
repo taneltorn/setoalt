@@ -18,9 +18,9 @@ const ChangeLog: React.FC = () => {
     }, []);
 
     return (
-        <Page title={t("view.changelog.pageTitle")}>
+        <Page title={t("view.changelog.title")}>
             <Header>
-                {t("view.changelog.title")}
+                {t("view.changelog.header")}
             </Header>
 
             <Markdown>{changelog}</Markdown>

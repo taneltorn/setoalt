@@ -6,7 +6,7 @@ import {Input, Radio, TextInput} from "@mantine/core";
 import {Controller, useForm} from 'react-hook-form';
 import {Role} from "../../../context/AuthContext.tsx";
 import {User} from "../../../model/User.ts";
-import useUserService from "../../../services/UserService.tsx";
+import useUserService from "../../../hooks/useUserService.tsx";
 import {DisplayError, DisplaySuccess} from "../../../utils/helpers.tsx";
 
 const DEFAULT_VALUES = {
@@ -32,7 +32,10 @@ const SaveUserDialog: React.FC = () => {
     } = useForm<User>({defaultValues: DEFAULT_VALUES});
 
     const onSubmit = async (values: User) => {
-        const saveUser = () => context.id ? userService.updateUser(context.id, values) : userService.createUser(values);
+        const saveUser = () => context.user?.id
+            ? userService.updateUser(context.user.id, values)
+            : userService.createUser(values);
+
         saveUser()
             .then(() => {
                 DisplaySuccess(t("toast.success.saveUser"))
@@ -48,7 +51,7 @@ const SaveUserDialog: React.FC = () => {
     }
 
     useEffect(() => {
-        if (context.id) {
+        if (context.user) {
             setValue("firstname", context.user?.firstname || "");
             setValue("lastname", context.user?.lastname || "");
             setValue("role", context.user?.role || "");
@@ -67,7 +70,7 @@ const SaveUserDialog: React.FC = () => {
             onClose={handleClose}
         >
             <form onSubmit={handleSubmit(onSubmit)} noValidate>
-                {!context.id && <>
+                {!context.user?.id && <>
                     <Input.Wrapper
                         label={t("view.admin.users.form.username")}
                         size={"xl"}

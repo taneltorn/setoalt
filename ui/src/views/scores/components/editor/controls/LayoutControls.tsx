@@ -3,18 +3,27 @@ import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
 import {useTranslation} from "react-i18next";
 import {ShortKey} from "../../../../../utils/keymap.ts";
 import ControlButton from "../../../../../components/controls/ControlButton.tsx";
-import {Group} from "@mantine/core";
+import {Group, Text} from "@mantine/core";
 import {DividerType} from "../../../../../model/Divider.ts";
 import {Size} from "../../../../../utils/constants.ts";
 import {FaDeleteLeft} from "react-icons/fa6";
 import {RxDividerVertical} from "react-icons/rx";
 import {GrReturn} from "react-icons/gr";
 import {GoArrowLeft, GoArrowRight} from "react-icons/go";
+import {ShiftMode} from "../../../../../utils/enums.ts";
 
 const LayoutControls: React.FC = () => {
 
     const [t] = useTranslation();
     const context = useScoreContext();
+
+    const handleShiftLeft = (e: any) => {
+        return context.shiftLeft(e.ctrlKey ? ShiftMode.LYRICS : ShiftMode.NOTES);
+    }
+
+    const handleShiftRight = (e: any) => {
+        return context.shiftRight(e.ctrlKey ? ShiftMode.LYRICS : ShiftMode.NOTES);
+    }
 
     return (
         <Group gap={2}>
@@ -36,17 +45,20 @@ const LayoutControls: React.FC = () => {
                 <RxDividerVertical size={Size.icon.XS}/>
             </ControlButton>
             <ControlButton
-                tooltip={t("tooltip.shiftLeft")}
+                tooltip={t(`tooltip.${context.isCtrlKeyActive ? "shiftLyricsLeft" : "shiftLeft"}`)}
                 shortKey={ShortKey.SHIFT_LEFT}
-                onClick={context.shiftLeft}
+                onClick={handleShiftLeft}
             >
+
                 <GoArrowLeft size={Size.icon.XS}/>
+                {context.isCtrlKeyActive && <Text>ᵃᵇ</Text>}
             </ControlButton>
             <ControlButton
-                tooltip={t("tooltip.shiftRight")}
+                tooltip={t(`tooltip.${context.isCtrlKeyActive ? "shiftLyricsRight" : "shiftRight"}`)}
                 shortKey={ShortKey.SHIFT_RIGHT}
-                onClick={context.shiftRight}
+                onClick={handleShiftRight}
             >
+                {context.isCtrlKeyActive && <Text>ᵃᵇ</Text>}
                 <GoArrowRight size={Size.icon.XS}/>
             </ControlButton>
             <ControlButton

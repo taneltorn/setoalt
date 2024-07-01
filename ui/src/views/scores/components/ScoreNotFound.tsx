@@ -21,13 +21,13 @@ const ScoreNotFound: React.FC = () => {
             </Group>
             <Group justify={"center"}>
                 <Text c={"gray.3"}>
-                    {t("view.scores.notFound.text")}
+                    {t("view.scoreDetails.notFound")}
                 </Text>
             </Group>
             <Group justify={"center"} mt={"xl"}>
                 <Link to={"/scores"}>
                     <Button variant={"outline"} color={"gray"}>
-                        {t("view.scores.notFound.goBack")}
+                        {t("view.scoreDetails.showAll")}
                     </Button>
                 </Link>
             </Group>

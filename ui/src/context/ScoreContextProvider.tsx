@@ -27,6 +27,7 @@ import {Layout, Playback} from "../utils/constants.ts";
 import {HalfPosition} from "../model/HalfPosition.ts";
 import {useHistory} from "./HistoryContext.tsx";
 import {Range} from "../model/Range.ts";
+import {ShiftMode} from "../utils/enums.ts";
 
 interface Properties {
     children: React.ReactNode;
@@ -42,8 +43,11 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     const [score, setScore] = useState<Score>(structuredClone(EmptyScore));
 
     const [isEditMode, setIsEditMode] = useState<boolean>(false);
+    const [isSimplifiedMode, setIsSimplifiedMode] = useState<boolean>(false);
     const [isExportMode, setIsExportMode] = useState<boolean>(false);
     const [isTypeMode, setIsTypeMode] = useState<boolean>(false);
+
+    const [isCtrlKeyActive, setIsCtrlKeyActive] = useState<boolean>(false);
 
     const [containerRef, setContainerRef] = useState<RefObject<HTMLElement> | undefined>();
     const [svgRef, setSvgRef] = useState<RefObject<SVGSVGElement> | undefined>();
@@ -71,7 +75,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
     const updateLoopRange = (start: number, end: number) => {
         if (end < start) {
-            setLoopRange(undefined);
+            setLoopRange({start: Math.max(end, 0), end: start});
             return;
         }
         setLoopRange({start: Math.max(start, 0), end: end});
@@ -261,28 +265,56 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         }
     }
 
-    const shiftLeft = () => {
-        takeSnapshot();
 
-        if (activePosition <= 0 || !!getNote(activePosition - 1, activeVoice)) {
+    const shiftLyrics = (position: number, offset: number) => {
+        const newPosition = position + offset;
+        if (offset < 0 && (newPosition < 0 || score.data.lyrics.find(l => l.position === newPosition))) {
             return;
         }
-        const voice = score.data.voices.find(v => v.name === activeVoice);
-        if (voice) {
-            const newPosition = activePosition - 1;
-            if (!voice.occupiedPositions?.includes(newPosition)) {
-                shiftNotes(newPosition, -1);
-                activate(newPosition);
-                refresh();
+        score.data.lyrics
+            .filter(l => l.position >= position)
+            .forEach(l => {
+                l.position += offset;
+            });
+        activate(newPosition);
+        refresh();
+    }
+
+    const shiftLeft = (mode: ShiftMode) => {
+        takeSnapshot();
+
+        if (activePosition <= 0) return;
+
+        if (mode === ShiftMode.LYRICS) {
+            shiftLyrics(activePosition, -1);
+        } else {
+            if (!!getNote(activePosition - 1, activeVoice)) {
+                return;
+            }
+            const voice = score.data.voices.find(v => v.name === activeVoice);
+            if (voice) {
+                const newPosition = activePosition - 1;
+                if (!voice.occupiedPositions?.includes(newPosition)) {
+                    shiftNotes(newPosition, -1);
+                    activate(newPosition);
+                    refresh();
+                }
             }
         }
     }
 
-    const shiftRight = () => {
+    const shiftRight = (mode: ShiftMode) => {
         takeSnapshot();
 
         if (activePosition < 0) return;
-        shiftNotes(activePosition - 0.5, 1);
+
+        if (mode === ShiftMode.LYRICS) {
+            shiftLyrics(activePosition, 1);
+
+        } else {
+            shiftNotes(activePosition - 0.5, 1);
+        }
+
         setActivePosition(activePosition + 1);
         refresh();
     }
@@ -391,6 +423,10 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         return getNote(activePosition, activeVoice);
     }, [score, activePosition, activeVoice]);
 
+    const activeLyric = useMemo(() => {
+        return score.data.lyrics.find(l => l.position === activePosition);
+    }, [score, activePosition]);
+
     const endPosition: number = useMemo<number>(() => {
         const notes = score.data.voices.flatMap(v => v.notes).sort((a, b) => a.position - b.position);
         const lyrics = score.data.lyrics.sort((a, b) => a.position - b.position);
@@ -469,14 +505,18 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         score, setScore,
 
         isEditMode, setIsEditMode,
+        isSimplifiedMode, setIsSimplifiedMode,
         isExportMode, setIsExportMode,
         isTypeMode, setIsTypeMode,
+
+        isCtrlKeyActive, setIsCtrlKeyActive,
 
         activate,
         next,
         previous,
 
         activeNote,
+        activeLyric,
         loopRange, setLoopRange, updateLoopRange,
         activeDuration, setActiveDuration: updateActiveDuration,
         activePosition, setActivePosition,
@@ -487,6 +527,7 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         getNotes,
         scrollToPosition,
 
+        shiftLyrics,
         shiftLeft,
         shiftRight,
 
@@ -517,10 +558,10 @@ const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         takeSnapshot,
 
         containerRef, setContainerRef,
-        svgRef, setSvgRef,
+        svgRef, setSvgRef
 
-    }), [containerRef, endPosition, isEditMode, isExportMode, isTypeMode, dimensions, score, score.data.lyrics,
-        activeNote, activePosition, activeVoice, activeDuration, cursorPosition, loopRange]);
+    }), [isCtrlKeyActive, containerRef, endPosition, isEditMode, isExportMode, isTypeMode, dimensions, score, score.data.lyrics,
+        activeNote, activeLyric, activePosition, activeVoice, activeDuration, endPosition, cursorPosition, loopRange, isSimplifiedMode]);
 
     return (
         <ScoreContext.Provider value={context}>

@@ -36,7 +36,6 @@ const StaveSelectionDialog: React.FC = () => {
     return (
         <Dialog
             type={DialogType.STAVE_SELECTION}
-            size={"xl"}
             title={t("dialog.staveSelection.title")}
             primaryButtonLabel={t("button.save")}
             secondaryButtonLabel={t("button.cancel")}
@@ -44,7 +43,7 @@ const StaveSelectionDialog: React.FC = () => {
             onSecondaryButtonClick={handleClose}
             onClose={handleClose}
         >
-            <Group className={"hover-pointer"} wrap={"nowrap"}>
+            <Group className={"hover-pointer"}>
                 {[StavePPT, StaveOldDiatonic, StaveDiatonic].map((s, index) =>
                     <Card key={`stave-${s.name}`} onClick={() => setStave(s)} p={"xl"} shadow={"md"}>
                         <Card.Section opacity={s.name === stave.name ? 1 : 0.3}>

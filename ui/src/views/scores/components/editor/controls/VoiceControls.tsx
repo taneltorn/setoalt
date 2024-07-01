@@ -61,6 +61,8 @@ const VoiceControls: React.FC = () => {
     }
 
     const handleVoiceRemove = (name: string) => {
+        context.takeSnapshot();
+
         context.score.data.voices = context.score.data.voices
             .filter(v => v.name !== name);
 
@@ -124,10 +126,7 @@ const VoiceControls: React.FC = () => {
                         color={"red"}
                         leftSection={<FaRegTrashCan size={Size.icon.XS}/>}
                         variant={"subtle"}
-                        onClick={() => open(DialogType.REMOVE_VOICE, {
-                            name: context.activeVoice,
-                            onRemove: () => handleVoiceRemove(context.activeVoice)
-                        })}
+                        onClick={() => handleVoiceRemove(context.activeVoice)}
                     >
                         {t("button.removeVoice")}
                     </Button>}

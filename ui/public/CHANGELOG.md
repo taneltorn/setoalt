@@ -1,3 +1,11 @@
+#### [0.2.7] - *01.07.2024*
+- Lisatud võimalus nihutada laulusõnu (Ctrl nuppu all hoides)
+- Lisatud teavituste haldamine
+- Lisatud juhendid (? nupp külgmenüüs)
+- Otsingusõna ja valitud lehekülg jäetakse meelde
+- Noodistusi ei kustutata andmebaasis enam jäädavalt (soft delete)
+- Pisiparandused
+
 #### [0.2.6] - *27.06.2024*
 - Lisatud helitugevuse muutmine
 - Pisiparandused

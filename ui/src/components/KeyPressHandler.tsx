@@ -6,6 +6,7 @@ import {range} from "../utils/helpers.tsx";
 import {DialogType, useDialogContext} from "../context/DialogContext";
 import {NoteType} from "../model/Note.ts";
 import {useHistory} from "../context/HistoryContext.tsx";
+import {ShiftMode} from "../utils/enums.ts";
 
 const KeyPressHandler: React.FC = () => {
 
@@ -14,9 +15,19 @@ const KeyPressHandler: React.FC = () => {
     const history = useHistory();
     const dialogContext = useDialogContext();
 
-    const handleKeyPress = (event: KeyboardEvent) => {
+    const handleKeyUp = (event: KeyboardEvent) => {
+        if (event.key === "Control") {
+            scoreContext.setIsCtrlKeyActive(false);
+        }
+    }
+
+    const handleKeyDown = (event: KeyboardEvent) => {
         if (scoreContext.isTypeMode || dialogContext.active !== undefined) {
             return;
+        }
+
+        if (event.ctrlKey) {
+            scoreContext.setIsCtrlKeyActive(true);
         }
 
         if (!range(9).includes(+event.key) && !Object.values(ShortKey).some(v => v === event.key.toUpperCase())) {
@@ -58,11 +69,10 @@ const KeyPressHandler: React.FC = () => {
                     }
                     break;
                 case ShortKey.SHIFT_LEFT:
-                    scoreContext.shiftLeft();
-                    scoreContext.refresh();
+                    scoreContext.shiftLeft(event.ctrlKey ? ShiftMode.LYRICS : ShiftMode.NOTES);
                     break;
                 case ShortKey.SHIFT_RIGHT:
-                    scoreContext.shiftRight();
+                    scoreContext.shiftRight(event.ctrlKey ? ShiftMode.LYRICS : ShiftMode.NOTES);
                     break;
                 case ShortKey.REMOVE_NOTE:
                 case ShortKey.DELETE_NOTE:
@@ -117,11 +127,18 @@ const KeyPressHandler: React.FC = () => {
     };
 
     useEffect(() => {
-        window.addEventListener('keydown', handleKeyPress);
+        window.addEventListener('keydown', handleKeyDown);
         return () => {
-            window.removeEventListener('keydown', handleKeyPress);
+            window.removeEventListener('keydown', handleKeyDown);
         };
-    }, [handleKeyPress]);
+    }, [handleKeyDown]);
+
+    useEffect(() => {
+        window.addEventListener('keyup', handleKeyUp);
+        return () => {
+            window.removeEventListener('keyup', handleKeyUp);
+        };
+    }, [handleKeyUp]);
 
     return null;
 };

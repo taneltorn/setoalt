@@ -13,6 +13,8 @@ import {StavePPT} from "../staves/StavePPT.ts";
 import {Stave} from "../model/Stave.ts";
 import {FaRegCheckCircle} from "react-icons/fa";
 import {RiErrorWarningFill} from "react-icons/ri";
+import {DateValue} from "@mantine/dates";
+import {Notification} from "../model/Notification.ts";
 
 export const isEmpty = (object: any) => {
     return !object || Object.keys(object).length === 0 || object.length === 0;
@@ -34,9 +36,6 @@ export const normalize = (score: Score): Score => {
         v.hidden = undefined;
         v.occupiedPositions = undefined;
     });
-    const positions = getPositions(score.data.voices);
-
-    score.data.lyrics = score.data.lyrics.filter(l => positions.includes(l.position));
 
     return score;
 }
@@ -202,6 +201,7 @@ export const DisplayError = (message: string) => {
         color: 'red',
         message: message,
         p: "md",
+        radius: "sm",
         withBorder: true,
         icon: <RiErrorWarningFill size={Size.icon.MD}/>,
     });
@@ -212,6 +212,7 @@ export const DisplaySuccess = (message: string) => {
         color: 'white',
         message: message,
         p: "md",
+        radius: "sm",
         withBorder: true,
         icon: <FaRegCheckCircle color={"green"} size={Size.icon.MD}/>,
     });
@@ -236,3 +237,36 @@ export const getTempoLabel = (current: number, original: number = 80): string =>
     const delta = Math.round(current / original * 100 - 100);
     return `${delta > 0 ? "+" : ""}${delta}%`
 }
+
+export const dayStart = (value: DateValue): DateValue | null => {
+    if (!value) {
+        return null;
+    }
+
+    value.setHours(0);
+    value.setMinutes(0);
+    value.setSeconds(0);
+
+    return value;
+}
+
+export const dayEnd = (value: DateValue): DateValue | null => {
+    if (!value) {
+        return null;
+    }
+
+    value.setHours(23);
+    value.setMinutes(59);
+    value.setSeconds(59);
+
+    return value;
+}
+
+export const isActive = (notification: Notification): boolean => {
+    const currentTime = new Date();
+
+    return (!notification.validFrom || new Date(notification.validFrom) <= currentTime)
+        && (!notification.validTo || new Date(notification.validTo) >= currentTime)
+}
+
+export const DateFormatter = new Intl.DateTimeFormat('et-EE', {dateStyle: 'long'});

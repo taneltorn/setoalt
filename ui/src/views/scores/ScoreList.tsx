@@ -1,8 +1,8 @@
 import {Badge, Button, Group, Text, useMantineTheme} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import React, {useEffect, useState} from "react";
-import {Link, useNavigate} from "react-router-dom";
-import useScoreService from "../../services/ScoreService.tsx";
+import {Link, useLocation, useNavigate} from "react-router-dom";
+import useScoreService from "../../hooks/useScoreService.tsx";
 import {Score} from "../../model/Score.ts";
 import {DisplayError, DisplaySuccess} from "../../utils/helpers.tsx";
 import {useAuth} from "../../context/AuthContext.tsx";
@@ -15,9 +15,9 @@ import {BiPlus} from "react-icons/bi";
 import IconButton from "../../components/controls/IconButton.tsx";
 import RemoveScoreDialog from "./components/dialog/RemoveScoreDialog.tsx";
 import Header from "../../components/controls/Header.tsx";
-import Description from "../../components/controls/Description.tsx";
 import {FaRegCopy} from "react-icons/fa";
 import {Size} from "../../utils/constants.ts";
+import usePagination from "../../hooks/usePagination.tsx";
 
 const ScoreList: React.FC = () => {
 
@@ -26,7 +26,10 @@ const ScoreList: React.FC = () => {
     const [scores, setScores] = useState<Score[]>([]);
     const [filteredScores, setFilteredScores] = useState<Score[]>(scores);
 
+    const {pagination, setPagination} = usePagination();
     const navigate = useNavigate();
+    const location = useLocation();
+
     const auth = useAuth();
     const {open} = useDialogContext();
     const theme = useMantineTheme();
@@ -38,21 +41,20 @@ const ScoreList: React.FC = () => {
     }
 
     const handleSearch = (value: string) => {
-        const str = value?.toLowerCase();
-        setFilteredScores(scores.filter(r => r.name?.toLowerCase().includes(str)
-            || r.description?.toLowerCase().includes(str)
-            || r.text?.toLowerCase().includes(str)
-            || r.createdBy?.toLowerCase().includes(str)
-            || r.data.stave.name?.toLowerCase().includes(str)
-            || r.data.voices.find(v => v.name.toLowerCase().includes(str))
-            // || r.data.voices.map(v => v.name.toLowerCase())?.includes(str)
-            || r.description?.toLowerCase().includes(str)
+        const query = value?.toLowerCase();
+        setFilteredScores(scores.filter(r => r.name?.toLowerCase().includes(query)
+            || r.description?.toLowerCase().includes(query)
+            || r.text?.toLowerCase().includes(query)
+            || r.createdBy?.toLowerCase().includes(query)
+            || r.data.stave.name?.toLowerCase().includes(query)
+            || r.data.voices.find(v => v.name.toLowerCase().includes(query))
+            || r.description?.toLowerCase().includes(query)
         ));
     }
 
     const cloneScore = (score: Score) => {
         const clone = {...score};
-        clone.name = t("view.scores.clonedScore", {name: clone.name});
+        clone.name = t("view.scoreDetails.clonedScore", {name: clone.name});
 
         scoreService.createScore(clone)
             .then(() => {
@@ -68,20 +70,24 @@ const ScoreList: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        setFilteredScores(scores);
+        handleSearch(pagination.query);
     }, [scores]);
 
-    return (
-        <Page title={t("view.scores.title")}>
-            <Header>{t("view.scores.title")}</Header>
-            <Description>
-                {t("view.scores.description", {count: scores.length})}
-            </Description>
+    useEffect(() => {
+        if (location.state?.pagination) {
+            setPagination(location.state.pagination);
+        }
+    }, [location]);
 
-            <Group justify={"space-between"}>
+    return (
+        <Page title={t("view.scoreList.title")}>
+            <Header>{t("view.scoreList.header")}</Header>
+
+            <Group justify={"space-between"} mt={"lg"} mb={"md"}>
                 <SearchInput
-                    onChange={handleSearch}
-                    onClear={() => setFilteredScores(scores)}
+                    value={pagination.query}
+                    onChange={v => setPagination({...pagination, query: v, page: 1})}
+                    onClear={() => setPagination({...pagination, query: "", page: 1})}
                 />
                 {auth.currentUser?.isAuthorized &&
                     <Button size={"md"}
@@ -94,17 +100,20 @@ const ScoreList: React.FC = () => {
 
             <PaginatedTable
                 isLoading={scoreService.isLoading}
+                onChange={handleSearch}
+                pagination={pagination}
+                setPagination={setPagination}
                 columns={[
-                    t("view.scores.table.name"),
-                    t("view.scores.table.stave"),
-                    t("view.scores.table.voices"),
-                    t("view.scores.table.createdBy"),
-                    t("view.scores.table.visibility"),
+                    t("view.scoreList.table.name"),
+                    t("view.scoreList.table.stave"),
+                    t("view.scoreList.table.voices"),
+                    t("view.scoreList.table.createdBy"),
+                    t("view.scoreList.table.visibility"),
                 ]}
                 rows={filteredScores.map(score => ({
                     name: score.name,
                     data: [
-                        <Link to={`/scores/${score.id}`}>
+                        <Link to={`/scores/${score.id}`} state={{pagination: pagination}}>
                             <Text fz={"md"} c={theme.primaryColor} fw={"bold"} className={"text-link"}>
                                 {score.name}
                             </Text>
@@ -132,7 +141,7 @@ const ScoreList: React.FC = () => {
                             <IconButton
                                 title={t("button.edit")}
                                 icon={<FaPencil size={Size.icon.XS}/>}
-                                onClick={() => navigate(`/scores/${score.id}/edit`)}
+                                onClick={() => navigate(`/scores/${score.id}/edit`, {state: {pagination: pagination}})}
                             />
 
                             <IconButton

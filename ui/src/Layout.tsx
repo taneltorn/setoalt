@@ -48,15 +48,17 @@ const Layout: React.FC = () => {
         >
             <Notifications position="top-right"/>
 
-            <AppShell.Header px={"md"} py={{base: 4, md: 0}}>
-                <Group justify={"space-between"}>
+            <AppShell.Header withBorder={false} py={{base: 4, md: 0}}>
+                <Group justify={"space-between"} px={"xs"}>
                     <Burger
                         opened={opened}
                         onClick={toggle}
                         hiddenFrom="md"
                         size="md"
                     />
-                    <ProfileLink/>
+                    <Group hiddenFrom={"md"}>
+                        <ProfileLink/>
+                    </Group>
                 </Group>
             </AppShell.Header>
 
@@ -73,7 +75,6 @@ const Layout: React.FC = () => {
                     </Box>
 
                     <Navigation onNavigate={close}/>
-                    <Divider mt={"xl"}/>
                     <DevNotice onNavigate={close}/>
                 </ScrollArea>
             </AppShell.Navbar>

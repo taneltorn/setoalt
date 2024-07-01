@@ -30,7 +30,7 @@ const useAudioPlayer = () => {
     }
 
     const setVolume = (value: number) => {
-        player.volume.value = value;
+        player.volume.value = value <= Playback.MIN_VOLUME ? -100 : value;
     };
 
     return {

@@ -7,7 +7,7 @@ interface Properties {
     shortKey?: string;
     active?: boolean;
     disabled?: boolean;
-    onClick: () => void;
+    onClick: (e?: any) => void;
     children?: ReactNode;
 }
 

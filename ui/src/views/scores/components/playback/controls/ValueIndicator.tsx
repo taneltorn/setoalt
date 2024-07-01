@@ -1,25 +1,20 @@
 import React from 'react';
-import {Text} from "@mantine/core";
+import {Badge} from "@mantine/core";
 
 interface Properties {
-    visible?: boolean;
     label: string;
 }
 
 const ValueIndicator: React.FC<Properties> = (props) => {
 
-
     return (
-        <>
-            {props.visible &&
-                <Text
-                    w={40}
-                    size={"xs"}
-                    style={{position: "absolute", top: 40, left: 5}}
-                >
-                    {props.label}
-                </Text>}
-        </>
+        <Badge
+            color={props.label ? "black" : "transparent"}
+            variant={"transparent"}
+            w={75}
+            style={{position: "relative", top: -10 , textTransform: "lowercase"}}>
+            {props.label || "-"}
+        </Badge>
     )
 }
 

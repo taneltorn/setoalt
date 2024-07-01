@@ -16,6 +16,9 @@ class Mapper {
         if (Array.isArray(input)) {
             return input.map(element => Mapper.mapFields(element));
         } else if (input !== null && typeof input === 'object') {
+            if (input instanceof Date) {
+                return new Date(input.toISOString());
+            }
             const newObj: any = {};
             Object.keys(input).forEach((key) => {
                 const camelKey = key.replace(/([-_][a-z])/ig, ($1) => {

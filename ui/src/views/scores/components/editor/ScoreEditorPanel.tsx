@@ -11,7 +11,8 @@ import StaveControls from "./controls/StaveControls.tsx";
 const ScoreEditorPanel: React.FC = () => {
 
     return (
-        <Group gap={"xl"} my={"sm"} py={"xs"} px={"xs"} bg={"gray.1"} style={{maxWidth: Layout.stave.container.MAX_WIDTH}}>
+        <Group gap={"xl"} my={"sm"} py={"xs"} px={"xs"} bg={"gray.1"}
+               style={{maxWidth: Layout.stave.container.MAX_WIDTH}}>
             <StaveControls/>
             <NotePitchControls/>
             <NoteDurationControls/>

@@ -1,7 +1,7 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import Dialog from "../../../../components/dialog/Dialog.tsx";
 import {useTranslation} from "react-i18next";
-import {Button, Code, CopyButton, Grid, Group, Input, Text, TextInput} from "@mantine/core";
+import {Button, Code, CopyButton, Grid, Group, Input, Switch, Text, TextInput} from "@mantine/core";
 import {DialogType, useDialogContext} from "../../../../context/DialogContext.tsx";
 import {useScoreContext} from "../../../../context/ScoreContext.tsx";
 import {Layout, Size} from "../../../../utils/constants.ts";
@@ -14,12 +14,13 @@ const EmbedScoreDialog: React.FC = () => {
     const {close} = useDialogContext();
     const context = useScoreContext();
 
+    const [simplified, setSimplified] = useState<boolean>(false);
     const [width, setWidth] = useState<number>(Layout.stave.container.MAX_WIDTH);
     const [height, setHeight] = useState<number>(context.dimensions.containerY);
 
     const code = useMemo(() => {
-        return `<iframe src="${window.location.origin}/embed/${context.score.id}" width="${width}" height="${height}" title="${context.score.name}"></iframe>`;
-    }, [width, height, context.score]);
+        return `<iframe src="${window.location.origin}/embed/${context.score.id}?simplified=${simplified}" width="${width}" height="${height}" title="${context.score.name}"></iframe>`;
+    }, [width, height, simplified, context.score]);
 
     useEffect(() => {
         setWidth(context.dimensions.x);
@@ -65,6 +66,16 @@ const EmbedScoreDialog: React.FC = () => {
                     </Input.Wrapper>
                 </Grid.Col>
             </Grid>
+
+            <Group mt={"md"}>
+                <Switch
+                    size={"xl"}
+                    className={"hover-pointer"}
+                    checked={simplified}
+                    label={t(`view.scoreDetails.settings.selectSimplifiedMode`)}
+                    onChange={() => setSimplified(!simplified)}
+                />
+            </Group>
 
             <Group mt={"md"}>
                 <Code block style={{whiteSpace: "pre-wrap"}}>

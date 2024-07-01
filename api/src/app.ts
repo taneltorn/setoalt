@@ -10,6 +10,7 @@ import * as path from 'path';
 import AuthController from './controller/AuthController';
 import UserController from "./controller/UserController";
 import ScoreController from "./controller/ScoreController";
+import NotificationController from "./controller/NotificationController";
 import log4js from "log4js";
 import * as process from "process";
 
@@ -37,6 +38,7 @@ app.use(cookieParser());
 app.use('/api/auth', AuthController);
 app.use('/api/scores', ScoreController);
 app.use('/api/users', UserController);
+app.use('/api/notifications', NotificationController);
 
 app.get('/api/status', async (req: Request, res: Response): Promise<void> => {
     logger.info("GET /api/status");

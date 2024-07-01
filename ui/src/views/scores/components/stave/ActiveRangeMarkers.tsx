@@ -28,7 +28,7 @@ const ActiveRangeMarkers: React.FC = () => {
     }
     return (
         <>
-            <foreignObject x={end.x - 10} y={end.y - Layout.stave.container.SYMBOLS_BAR + 15} width={200} height={22}>
+            <foreignObject x={end.x - 10} y={end.y - Layout.stave.container.SYMBOLS_BAR + 20} width={200} height={22}>
                 <RxReset
                     size={Size.icon.SM}
                     title={t("button.reset")}

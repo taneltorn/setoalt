@@ -1,14 +1,15 @@
 import express, {Request, Response} from "express";
 import log4js from "log4js";
 import {verifyToken} from "../utils/verifyToken";
-import scoreService from "../service/ScoreService";
 import {checkUser} from "../utils/checkUser";
 import {Score} from "../model/Score";
+import notificationService from "../service/NotificationService";
+import {Notification} from "../model/Notification";
 
-class ScoreController {
+class NotificationController {
 
     router = express.Router();
-    logger = log4js.getLogger("ScoreController");
+    logger = log4js.getLogger("NotificationController");
 
     constructor() {
         this.logger.level = process.env.LOG_LEVEL;
@@ -16,37 +17,18 @@ class ScoreController {
     }
 
     initializeRoutes() {
-        this.router.get("/", checkUser, this.getScores.bind(this));
-        this.router.get("/:id", checkUser, this.getScore.bind(this));
-        this.router.post("/", verifyToken, this.createScore.bind(this));
-        this.router.put("/:id", verifyToken, this.updateScore.bind(this));
-        this.router.delete("/:id", verifyToken, this.deleteScore.bind(this));
+        this.router.get("/", checkUser, this.getNotifications.bind(this));
+        this.router.get("/active", checkUser, this.getActiveNotifications.bind(this));
+        this.router.get("/:id", checkUser, this.getNotification.bind(this));
+        this.router.post("/", verifyToken, this.createNotification.bind(this));
+        this.router.put("/:id", verifyToken, this.updateNotification.bind(this));
+        this.router.delete("/:id", verifyToken, this.deleteNotification.bind(this));
     }
 
-    async getScores(req: Request, res: Response): Promise<Score[]> {
-        try {
-            this.logger.info("GET /api/scores");
-
-            // @ts-ignore todo use custom type
-            const user = req.user;
-
-            const result = await scoreService.find(user?.role !== 'ADMIN' ? user?.username : undefined);
-
-            if (!result.success) {
-                res.status(500).json({error: result.error});
-                return;
-            }
-            res.status(200).json(result.data);
-        } catch (err) {
-            this.logger.error(err);
-            res.status(500).json({error: "An unexpected error occurred."});
-        }
-    }
-
-    async getScore(req: Request, res: Response): Promise<Score> {
+    async getNotification(req: Request, res: Response): Promise<Notification> {
         try {
             const id = parseInt(req.params.id);
-            this.logger.info(`GET /api/scores/${id}`);
+            this.logger.info(`GET /api/notifications/${id}`);
 
             // @ts-ignore todo use custom type
             const user = req.user;
@@ -57,10 +39,10 @@ class ScoreController {
                 return;
             }
 
-            const result = await scoreService.findById(id, user?.role !== 'ADMIN' ? user?.username : undefined);
+            const result = await notificationService.findById(id);
             if (!result.success) {
                 if (result.error === "Not found") {
-                    res.status(404).json({error: `Score ${id} not found`});
+                    res.status(404).json({error: `Notification ${id} not found`});
                     return;
                 }
                 res.status(500).json({error: result.error});
@@ -73,22 +55,28 @@ class ScoreController {
         }
     }
 
-    async createScore(req: Request, res: Response): Promise<Score> {
+    async getNotifications(req: Request, res: Response): Promise<Notification[]> {
         try {
-            // @ts-ignore todo use custom type
-            const user = req.user;
-            const data = req.body;
+            this.logger.info("GET /api/notifications");
 
-            this.logger.info(`POST /api/scores as ${user.username}:`)
-            this.logger.info(req.body);
-
-            if (!data) {
-                this.logger.info(`Request body is null`);
-                res.status(400).json({error: "Missing score information"});
+            const result = await notificationService.find();
+            if (!result.success) {
+                res.status(500).json({error: result.error});
                 return;
             }
 
-            const result = await scoreService.insert(data, user);
+            res.status(200).json(result.data);
+        } catch (err) {
+            this.logger.error(err);
+            res.status(500).json({error: "An unexpected error occurred."});
+        }
+    }
+
+    async getActiveNotifications(req: Request, res: Response): Promise<Notification[]> {
+        try {
+            this.logger.info("GET /api/notifications/active");
+
+            const result = await notificationService.find(true);
             if (!result.success) {
                 res.status(500).json({error: result.error});
                 return;
@@ -100,29 +88,22 @@ class ScoreController {
         }
     }
 
-    async updateScore(req: Request, res: Response): Promise<Score> {
+    async createNotification(req: Request, res: Response): Promise<Notification> {
         try {
             // @ts-ignore todo use custom type
             const user = req.user;
             const data = req.body;
 
-            const id = parseInt(req.params.id);
-            this.logger.info(`PUT /scores/${id} as ${user.username}:`);
+            this.logger.info(`POST /api/notifications as ${user.username}:`)
             this.logger.info(req.body);
-
-            if (isNaN(id)) {
-                this.logger.info(`Invalid ID: ${id}`);
-                res.status(400).json({error: "Invalid ID"});
-                return;
-            }
 
             if (!data) {
                 this.logger.info(`Request body is null`);
-                res.status(400).json({error: "Missing score information"});
+                res.status(400).json({error: "Missing notification information"});
                 return;
             }
 
-            const result = await scoreService.update(id, data, user);
+            const result = await notificationService.insert(data);
             if (!result.success) {
                 res.status(500).json({error: result.error});
                 return;
@@ -134,13 +115,15 @@ class ScoreController {
         }
     }
 
-    async deleteScore(req: Request, res: Response): Promise<void> {
+    async updateNotification(req: Request, res: Response): Promise<Notification> {
         try {
             // @ts-ignore todo use custom type
             const user = req.user;
+            const data = req.body;
 
             const id = parseInt(req.params.id);
-            this.logger.info(`DELETE /api/scores/${id} as ${user.username}`);
+            this.logger.info(`PUT /notifications/${id} as ${user.username}:`);
+            this.logger.info(req.body);
 
             if (isNaN(id)) {
                 this.logger.info(`Invalid ID: ${id}`);
@@ -148,7 +131,39 @@ class ScoreController {
                 return;
             }
 
-            const result = await scoreService.delete(id, user);
+            if (!data) {
+                this.logger.info(`Request body is null`);
+                res.status(400).json({error: "Missing notification information"});
+                return;
+            }
+
+            const result = await notificationService.update(id, data);
+            if (!result.success) {
+                res.status(500).json({error: result.error});
+                return;
+            }
+            res.status(200).json(result.data);
+        } catch (err) {
+            this.logger.error(err);
+            res.status(500).json({error: "An unexpected error occurred."});
+        }
+    }
+
+    async deleteNotification(req: Request, res: Response): Promise<number> {
+        try {
+            // @ts-ignore todo use custom type
+            const user = req.user;
+
+            const id = parseInt(req.params.id);
+            this.logger.info(`DELETE /api/notifications/${id} as ${user.username}`);
+
+            if (isNaN(id)) {
+                this.logger.info(`Invalid ID: ${id}`);
+                res.status(400).json({error: "Invalid ID"});
+                return;
+            }
+
+            const result = await notificationService.delete(id);
             if (!result.success) {
                 res.status(500).json({error: result.error});
                 return;
@@ -161,4 +176,4 @@ class ScoreController {
     }
 }
 
-export default new ScoreController().router;
+export default new NotificationController().router;

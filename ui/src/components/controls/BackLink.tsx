@@ -7,6 +7,7 @@ import {Size} from "../../utils/constants.ts";
 
 interface Properties {
     to?: string;
+    state?: any;
 }
 
 const BackLink: React.FC<Properties> = (props) => {
@@ -17,7 +18,7 @@ const BackLink: React.FC<Properties> = (props) => {
     const goBack = () => {
         stopPlayback();
         if (props.to) {
-            navigate(props.to);
+            navigate(props.to, {state: props.state});
             return;
         }
         navigate(-1)

@@ -12,6 +12,7 @@ import HistoryContextProvider from "../context/HistoryContextProvider.tsx";
 import KeyPressHandler from "../components/KeyPressHandler.tsx";
 import ScoreDialogs from "./scores/components/dialog/ScoreDialogs.tsx";
 import Example from "./Example.tsx";
+import NotificationPanel from "../NotificationPanel.tsx";
 
 const Home: React.FC = () => {
 
@@ -36,16 +37,18 @@ const Home: React.FC = () => {
     return (
         <HistoryContextProvider>
             <ScoreContextProvider>
-                <Page title={t("view.home.pageTitle")}>
+                <Page title={t("view.home.title")}>
+                    <NotificationPanel/>
+
                     <Header>
-                        {t("view.home.title")}
+                        {t("view.home.header")}
                     </Header>
 
                     <Description span={12}>
                         <Trans i18nKey="view.home.description"/>
                     </Description>
 
-                    <Tabs defaultValue="example1">
+                    <Tabs defaultValue="example1" radius={"xs"}>
                         <Tabs.List>
                             {exampleA &&
                                 <Tabs.Tab value="example1" onClick={() => setActive(exampleA)}>
