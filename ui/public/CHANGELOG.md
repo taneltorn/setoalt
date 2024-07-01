@@ -1,4 +1,4 @@
-#### [0.2.7] - *01.07.2024*
+#### [0.2.7] - *02.07.2024*
 - Lisatud võimalus nihutada laulusõnu (Ctrl nuppu all hoides)
 - Lisatud teavituste haldamine
 - Lisatud juhendid (? nupp külgmenüüs)
