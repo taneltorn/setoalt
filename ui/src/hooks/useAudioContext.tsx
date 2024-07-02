@@ -1,25 +1,21 @@
-import React, {useEffect, useMemo, useRef, useState} from 'react';
-import {Note} from "../model/Note";
-import * as Tone from "tone";
-import {Playback} from "../utils/constants";
-import {durationToScalar, excludeDuplicates, noteToFrequency, positionToSeconds} from "../utils/helpers.tsx";
-import {AudioContext} from "./AudioContext";
-import {ScoreContextProperties} from "./ScoreContext";
-import useAudioPlayer from "../hooks/useAudioPlayer.tsx";
+import React, {useContext, useEffect, useMemo, useRef, useState} from 'react';
+import {Note} from "../model/Note.ts";
+import {durationToScalar, excludeDuplicates, isEmpty, noteToFrequency, positionToSeconds} from "../utils/helpers.tsx";
 import {Stave} from "../model/Stave.ts";
 import {Instrument} from "../model/Instrument.ts";
+import useAudioPlayer from "./useAudioPlayer.tsx";
+import * as Tone from "tone";
+import {Playback} from "../utils/constants.ts";
 import {Instruments} from "../utils/dictionaries.ts";
+import {AudioContext} from "../context/AudioContext.tsx";
+import {GroupedNote} from "../model/GroupedNote.ts";
+import {ScoreContextProperties} from "../context/ScoreContext.tsx";
 
 interface Properties {
     children: React.ReactNode;
 }
 
-interface GroupedNote {
-    position: number;
-    notes: Note[];
-}
-
-const AudioContextProvider: React.FC<Properties> = ({children}) => {
+export const AudioContextProvider: React.FC<Properties> = ({children}) => {
 
     const player = useAudioPlayer();
     const sequenceRef = useRef<Tone.Part | null>(null);
@@ -163,4 +159,11 @@ const AudioContextProvider: React.FC<Properties> = ({children}) => {
         </AudioContext.Provider>);
 }
 
-export default AudioContextProvider;
+export const useAudioContext = () => {
+    const context = useContext(AudioContext);
+    if (isEmpty(context)) {
+        throw new Error('useAudioContext must be used within a AudioContextProvider')
+    }
+
+    return context;
+};

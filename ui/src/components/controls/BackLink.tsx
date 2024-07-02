@@ -2,7 +2,7 @@ import React from 'react';
 import {useNavigate} from "react-router-dom";
 import IconButton from "./IconButton.tsx";
 import {IoIosArrowBack} from "react-icons/io";
-import {useAudioContext} from "../../context/AudioContext.tsx";
+import {useAudioContext} from "../../hooks/useAudioContext.tsx";
 import {Size} from "../../utils/constants.ts";
 
 interface Properties {

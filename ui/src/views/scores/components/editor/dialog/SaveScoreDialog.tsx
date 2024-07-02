@@ -1,8 +1,8 @@
 import React from 'react';
 import Dialog from "../../../../../components/dialog/Dialog.tsx";
-import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
+import { useDialogContext} from "../../../../../hooks/useDialogContext.tsx";
 import {useTranslation} from "react-i18next";
-import {useScoreContext} from '../../../../../context/ScoreContext.tsx';
+import {useScoreContext} from '../../../../../hooks/useScoreContext.tsx';
 import useScoreService from '../../../../../hooks/useScoreService.tsx';
 import {FormProvider, useForm} from 'react-hook-form';
 import {Playback} from "../../../../../utils/constants.ts";
@@ -10,6 +10,7 @@ import {Score} from "../../../../../model/Score.ts";
 import {DisplayError, DisplaySuccess} from "../../../../../utils/helpers.tsx";
 import {useNavigate} from "react-router-dom";
 import ScoreForm from "../form/ScoreForm.tsx";
+import {DialogType} from "../../../../../utils/enums.ts";
 
 const DEFAULT_VALUES = {
     name: "",

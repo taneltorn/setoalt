@@ -1,8 +1,9 @@
 import React, {useMemo, useState} from 'react';
 import {useTranslation} from "react-i18next";
 import {useMantineTheme} from "@mantine/core";
-import {useScoreContext} from "../../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../../hooks/useScoreContext.tsx";
 import {calculateBreakCoords} from "../../../../utils/calculation.helpers.tsx";
+import {useLayoutControls} from "../../../../hooks/useLayoutControls.tsx";
 
 interface Properties {
     position: number;
@@ -13,6 +14,7 @@ const StaveBreak: React.FC<Properties> = ({position}) => {
     const [t] = useTranslation();
     const theme = useMantineTheme();
     const context = useScoreContext();
+    const {removeBreak} = useLayoutControls();
 
     const breaksDependency = JSON.stringify(context.score.data.breaks);
 
@@ -29,7 +31,7 @@ const StaveBreak: React.FC<Properties> = ({position}) => {
                 x={x}
                 y={y}
                 fill={isHovering ? theme.colors.red[9] : theme.black}
-                onClick={() => context.removeBreak(position)}
+                onClick={() => removeBreak(position)}
                 onMouseOver={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
             >

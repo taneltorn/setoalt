@@ -1,7 +1,10 @@
-import React, {useState, ReactNode, useEffect, useMemo} from 'react';
-import {AuthContext, Role, UserDetails} from './AuthContext';
-import {DisplayError} from "../utils/helpers.tsx";
+import React, {ReactNode, useContext, useEffect, useMemo, useState} from 'react';
+import {UserDetails} from "../model/UserDetails.ts";
 import {useTranslation} from "react-i18next";
+import {Role} from "../utils/enums.ts";
+import {DisplayError} from "../utils/helpers.tsx";
+import {AuthContext} from "../context/AuthContext.tsx";
+
 
 const API_URL = import.meta.env.VITE_API_URL;
 
@@ -101,4 +104,11 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
                 </AuthContext.Provider>}
         </>
     )
+};
+export const useAuth = () => {
+    const context = useContext(AuthContext);
+    if (context === undefined) {
+        throw new Error('useAuth must be used within an AuthContextProvider');
+    }
+    return context;
 };

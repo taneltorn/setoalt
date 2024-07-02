@@ -2,9 +2,10 @@ import React from 'react';
 import ControlButton from "../../../../../components/controls/ControlButton.tsx";
 import {GiFClef} from "react-icons/gi";
 import {useTranslation} from "react-i18next";
-import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
+import {useDialogContext} from "../../../../../hooks/useDialogContext.tsx";
 import {Size} from "../../../../../utils/constants.ts";
-import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
+import {DialogType} from "../../../../../utils/enums.ts";
 
 const StaveControls: React.FC = () => {
 

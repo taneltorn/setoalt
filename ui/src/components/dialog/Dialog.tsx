@@ -1,7 +1,8 @@
 import React from "react";
-import {DialogType, useDialogContext} from "../../context/DialogContext.tsx";
+import {useDialogContext} from "../../hooks/useDialogContext.tsx";
 import {Box, Button, Group, Modal, ScrollArea} from "@mantine/core";
 import {useTranslation} from "react-i18next";
+import {DialogType} from "../../utils/enums.ts";
 
 interface Properties {
     title?: string;

@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Badge, Button, Group} from "@mantine/core";
 import {DateFormatter, DisplayError, isActive} from "../../../utils/helpers.tsx";
-import {DialogType, useDialogContext} from "../../../context/DialogContext.tsx";
+import {useDialogContext} from "../../../hooks/useDialogContext.tsx";
 import PaginatedTable, {Row} from "../../../components/table/PaginatedTable.tsx";
 import {FaPencil, FaRegTrashCan} from "react-icons/fa6";
 import {BiPlus} from "react-icons/bi";
@@ -14,6 +14,7 @@ import SearchInput from "../../../components/controls/SearchInput.tsx";
 import SaveNotificationDialog from "../dialog/SaveNotificationDialog.tsx";
 import RemoveNotificationDialog from "../dialog/RemoveNotificationDialog.tsx";
 import useNotificationService from "../../../hooks/useNotificationService.tsx";
+import {DialogType} from "../../../utils/enums.ts";
 
 const NotificationList: React.FC = () => {
 

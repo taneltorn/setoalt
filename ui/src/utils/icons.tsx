@@ -1,8 +1,15 @@
 import {mdiMusicNoteEighth, mdiMusicNoteHalf, mdiMusicNoteQuarter, mdiMusicNoteSixteenth} from "@mdi/js";
 import {GiFlute, GiGuitarHead, GiViolin} from "react-icons/gi";
-import {MdOutlinePiano} from "react-icons/md";
+import {
+    MdOutlineFormatTextdirectionLToR,
+    MdOutlineFormatTextdirectionRToL,
+    MdOutlinePiano
+} from "react-icons/md";
 import {BiSolidPiano} from "react-icons/bi";
 import {Size} from "./constants.ts";
+import {GoArrowLeft, GoArrowRight} from "react-icons/go";
+import {ShiftMode} from "./enums.ts";
+import {TfiShiftLeft, TfiShiftRight} from "react-icons/tfi";
 
 export const NoteIcons = new Map([
     ["2n", mdiMusicNoteHalf],
@@ -19,3 +26,19 @@ export const InstrumentIcons = new Map([
         ["guitar", <GiGuitarHead size={Size.icon.MD}/>],
     ]
 );
+
+
+export const ShiftLeftIcons = new Map([
+        [ShiftMode.NOTES, <GoArrowLeft size={Size.icon.SM}/>],
+        [ShiftMode.LYRICS, <MdOutlineFormatTextdirectionRToL size={Size.icon.SM}/>],
+        [ShiftMode.VOICES, <TfiShiftLeft size={Size.icon.SM}/>],
+    ]
+);
+
+export const ShiftRightIcons = new Map([
+        [ShiftMode.NOTES, <GoArrowRight size={Size.icon.SM}/>],
+        [ShiftMode.LYRICS, <MdOutlineFormatTextdirectionLToR size={Size.icon.SM}/>],
+        [ShiftMode.VOICES, <TfiShiftRight size={Size.icon.SM}/>],
+    ]
+);
+

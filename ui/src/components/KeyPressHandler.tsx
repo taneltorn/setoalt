@@ -1,23 +1,43 @@
 import React, {useEffect} from 'react';
-import {useScoreContext} from "../context/ScoreContext";
-import {useAudioContext} from "../context/AudioContext";
+import {useScoreContext} from "../hooks/useScoreContext.tsx";
+import {useAudioContext} from "../hooks/useAudioContext.tsx";
 import {ShortKey} from "../utils/keymap";
 import {range} from "../utils/helpers.tsx";
-import {DialogType, useDialogContext} from "../context/DialogContext";
+import {useDialogContext} from "../hooks/useDialogContext.tsx";
 import {NoteType} from "../model/Note.ts";
-import {useHistory} from "../context/HistoryContext.tsx";
-import {ShiftMode} from "../utils/enums.ts";
+import {DialogType, ShiftMode} from "../utils/enums.ts";
+import {useNoteControls} from "../hooks/useNoteControls.tsx";
+import {NoteFactory} from "../utils/factories.ts";
+import {useLayoutControls} from "../hooks/useLayoutControls.tsx";
+import {useActiveKeys} from "../hooks/useActiveKeys.tsx";
+import {useHistory} from "../hooks/useHistory.tsx";
 
 const KeyPressHandler: React.FC = () => {
 
     const audioContext = useAudioContext();
+    const {playNotes} = useAudioContext();
     const scoreContext = useScoreContext();
+    const {setIsCtrlKeyActive, setIsShiftKeyActive} = useActiveKeys();
+    const {activeNote, activePosition, activeDuration,} = useScoreContext();
+    const {
+        changeDuration,
+        changePitch,
+        changeType,
+        decreasePitch,
+        increasePitch,
+        insertNote,
+        removeNote
+    } = useNoteControls();
+    const {shiftLeft, shiftRight, toggleBreak, toggleDivider} = useLayoutControls();
     const history = useHistory();
     const dialogContext = useDialogContext();
 
     const handleKeyUp = (event: KeyboardEvent) => {
         if (event.key === "Control") {
-            scoreContext.setIsCtrlKeyActive(false);
+            setIsCtrlKeyActive(false);
+        }
+        if (event.key === "Shift") {
+            setIsShiftKeyActive(false);
         }
     }
 
@@ -27,7 +47,11 @@ const KeyPressHandler: React.FC = () => {
         }
 
         if (event.ctrlKey) {
-            scoreContext.setIsCtrlKeyActive(true);
+            setIsCtrlKeyActive(true);
+        }
+
+        if (event.shiftKey) {
+            setIsShiftKeyActive(true);
         }
 
         if (!range(9).includes(+event.key) && !Object.values(ShortKey).some(v => v === event.key.toUpperCase())) {
@@ -40,7 +64,13 @@ const KeyPressHandler: React.FC = () => {
             if (range(9).includes(+event.key)) {
                 const pitch = scoreContext.score.data.stave.lines.map(l => l.pitch).reverse()[+event.key - 1];
                 if (pitch) {
-                    scoreContext.insertOrUpdateNote(pitch, scoreContext.activePosition, scoreContext.activeDuration, true);
+                    if (activeNote) {
+                        changePitch(activeNote, pitch);
+                        return;
+                    }
+                    const note = NoteFactory.create(pitch, activePosition, activeDuration);
+                    insertNote(note, true);
+                    playNotes([note], scoreContext.score.data.stave);
                 }
                 return;
             }
@@ -69,40 +99,52 @@ const KeyPressHandler: React.FC = () => {
                     }
                     break;
                 case ShortKey.SHIFT_LEFT:
-                    scoreContext.shiftLeft(event.ctrlKey ? ShiftMode.LYRICS : ShiftMode.NOTES);
+                    return shiftLeft(event.shiftKey
+                        ? ShiftMode.VOICES
+                        : (event.ctrlKey ? ShiftMode.LYRICS : ShiftMode.NOTES));
                     break;
                 case ShortKey.SHIFT_RIGHT:
-                    scoreContext.shiftRight(event.ctrlKey ? ShiftMode.LYRICS : ShiftMode.NOTES);
+                    return shiftRight(event.shiftKey
+                        ? ShiftMode.VOICES
+                        : (event.ctrlKey ? ShiftMode.LYRICS : ShiftMode.NOTES));
                     break;
                 case ShortKey.REMOVE_NOTE:
                 case ShortKey.DELETE_NOTE:
-                    scoreContext.removeNote(scoreContext.activePosition, true);
+                    removeNote(scoreContext.activePosition, true);
                     break;
+
                 case ShortKey.HALF_NOTE:
-                    scoreContext.setActiveDuration("2n");
+                    changeDuration("2n", activeNote, true);
                     break;
                 case ShortKey.QUARTER_NOTE:
-                    scoreContext.setActiveDuration("4n");
+                    changeDuration("4n", activeNote, true);
                     break;
                 case ShortKey.EIGHT_NOTE:
-                    scoreContext.setActiveDuration("8n");
+                    changeDuration("8n", activeNote, true);
                     break;
+
                 case ShortKey.INCREASE_PITCH:
-                    scoreContext.increaseNotePitch();
+                    if (activeNote) {
+                        increasePitch(activeNote);
+                    }
                     break;
                 case ShortKey.DECREASE_PITCH:
-                    scoreContext.decreaseNotePitch();
+                    if (activeNote) {
+                        decreasePitch(activeNote);
+                    }
                     break;
                 case ShortKey.CHANGE_TYPE:
-                    scoreContext.changeType(scoreContext.activeNote, scoreContext.activeNote?.type === NoteType.SMALL
-                        ? undefined
-                        : NoteType.SMALL);
+                    if (activeNote) {
+                        changeType(activeNote, scoreContext.activeNote?.type === NoteType.SMALL
+                            ? NoteType.REGULAR
+                            : NoteType.SMALL);
+                    }
                     break;
                 case ShortKey.BREAK:
-                    scoreContext.toggleBreak();
+                    toggleBreak();
                     break;
                 case ShortKey.DIVIDER:
-                    scoreContext.toggleDivider();
+                    toggleDivider();
                     break;
             }
         }

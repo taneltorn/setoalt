@@ -1,6 +1,6 @@
 import React, {useEffect} from 'react';
 import Dialog from "../../../components/dialog/Dialog.tsx";
-import {DialogType, useDialogContext} from "../../../context/DialogContext.tsx";
+import {useDialogContext} from "../../../hooks/useDialogContext.tsx";
 import {useTranslation} from "react-i18next";
 import {Input, Textarea, TextInput} from "@mantine/core";
 import {Controller, useForm} from 'react-hook-form';
@@ -8,7 +8,8 @@ import {dayEnd, dayStart, DisplayError, DisplaySuccess} from "../../../utils/hel
 import useNotificationService from "../../../hooks/useNotificationService.tsx";
 import {Notification} from "../../../model/Notification.ts";
 import {DatePickerInput} from "@mantine/dates";
-import 'dayjs/locale/et.js';
+import {DialogType} from "../../../utils/enums.ts";
+import "dayjs/locale/et.js";
 
 const DEFAULT_VALUES = {
     message: "",

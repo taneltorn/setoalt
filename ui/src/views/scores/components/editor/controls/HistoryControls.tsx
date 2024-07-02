@@ -1,14 +1,15 @@
 import React from 'react';
 import {useTranslation} from "react-i18next";
 import {FaRegTrashAlt} from "react-icons/fa";
-import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
+import {useDialogContext} from "../../../../../hooks/useDialogContext.tsx";
 import ControlButton from "../../../../../components/controls/ControlButton.tsx";
 import {Group} from "@mantine/core";
-import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
-import {useHistory} from "../../../../../context/HistoryContext.tsx";
+import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {IoMdRedo, IoMdUndo} from "react-icons/io";
 import {ShortKey} from "../../../../../utils/keymap.ts";
 import {Size} from "../../../../../utils/constants.ts";
+import {useHistory} from "../../../../../hooks/useHistory.tsx";
+import {DialogType} from "../../../../../utils/enums.ts";
 
 const HistoryControls: React.FC = () => {
 

@@ -1,7 +1,7 @@
 import React from 'react';
 import StaveNote from "./StaveNote.tsx";
 import {Voice} from "../../../../model/Voice.ts";
-import {useScoreContext} from "../../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../../hooks/useScoreContext.tsx";
 
 interface Properties {
     voice: Voice;

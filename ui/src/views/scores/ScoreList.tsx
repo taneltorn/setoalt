@@ -5,11 +5,11 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import useScoreService from "../../hooks/useScoreService.tsx";
 import {Score} from "../../model/Score.ts";
 import {DisplayError, DisplaySuccess} from "../../utils/helpers.tsx";
-import {useAuth} from "../../context/AuthContext.tsx";
+import {useAuth} from "../../hooks/useAuth.tsx";
 import Page from "../../Page.tsx";
 import PaginatedTable, {Row} from "../../components/table/PaginatedTable.tsx";
 import {FaPencil, FaRegTrashCan} from "react-icons/fa6";
-import {DialogType, useDialogContext} from "../../context/DialogContext.tsx";
+import {useDialogContext} from "../../hooks/useDialogContext.tsx";
 import SearchInput from "../../components/controls/SearchInput.tsx";
 import {BiPlus} from "react-icons/bi";
 import IconButton from "../../components/controls/IconButton.tsx";
@@ -18,10 +18,11 @@ import Header from "../../components/controls/Header.tsx";
 import {FaRegCopy} from "react-icons/fa";
 import {Size} from "../../utils/constants.ts";
 import usePagination from "../../hooks/usePagination.tsx";
+import {DialogType} from "../../utils/enums.ts";
 
 const ScoreList: React.FC = () => {
 
-    const {t} = useTranslation();
+    const {t} = useTranslation();2
     const scoreService = useScoreService();
     const [scores, setScores] = useState<Score[]>([]);
     const [filteredScores, setFilteredScores] = useState<Score[]>(scores);

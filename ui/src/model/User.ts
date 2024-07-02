@@ -1,4 +1,4 @@
-import {Role} from "../context/AuthContext.tsx";
+import {Role} from "../utils/enums.ts";
 
 export interface User {
     id?: number;

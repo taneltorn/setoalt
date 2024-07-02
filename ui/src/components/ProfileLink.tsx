@@ -1,6 +1,6 @@
 import React from 'react';
 import {Group} from "@mantine/core";
-import {useAuth} from "../context/AuthContext.tsx";
+import {useAuth} from "../hooks/useAuth.tsx";
 import {FaUser} from "react-icons/fa";
 import {CiUser} from "react-icons/ci";
 import {Size} from "../utils/constants.ts";

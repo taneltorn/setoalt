@@ -1,6 +1,6 @@
 import React, {useMemo} from 'react';
 import {useMantineTheme} from "@mantine/core";
-import {useScoreContext} from "../../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../../hooks/useScoreContext.tsx";
 import {calculateCurrentPositionCoords} from "../../../../utils/calculation.helpers.tsx";
 import {Layout} from "../../../../utils/constants.ts";
 
@@ -21,18 +21,10 @@ const CurrentPositionMarker: React.FC = () => {
                 y={y}
                 width={Layout.stave.cursor.WIDTH}
                 height={context.dimensions.y}
-                fill={theme.colors.gray[2]}
-                opacity={0.5}
+                fill={theme.colors.gray[9]}
+                opacity={0.05}
                 style={{zIndex: 1}}
             />}
-            {/*<rect*/}
-            {/*    x={x}*/}
-            {/*    y={y}*/}
-            {/*    width={Layout.stave.position.WIDTH}*/}
-            {/*    height={Layout.stave.position.HEIGHT}*/}
-            {/*    fill={theme.colors.red[9]}*/}
-            {/*    opacity={1}*/}
-            {/*/>*/}
         </>
     )
 };

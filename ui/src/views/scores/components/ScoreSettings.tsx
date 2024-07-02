@@ -1,12 +1,13 @@
 import React, {useState} from "react";
 import {ActionIcon, Group, Loader, Menu, Text} from "@mantine/core";
 import {useTranslation} from "react-i18next";
-import {useScoreContext} from "../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../hooks/useScoreContext.tsx";
 import {BsCodeSlash, BsFiletypePng} from "react-icons/bs";
 import {Size} from "../../../utils/constants.ts";
-import {DialogType, useDialogContext} from "../../../context/DialogContext.tsx";
+import {useDialogContext} from "../../../hooks/useDialogContext.tsx";
 import {IoSettingsOutline} from "react-icons/io5";
 import {FaItunesNote} from "react-icons/fa";
+import {DialogType} from "../../../utils/enums.ts";
 
 export enum Setting {
     CHANGE_MODE,

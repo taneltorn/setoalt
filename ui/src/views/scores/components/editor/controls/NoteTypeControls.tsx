@@ -1,5 +1,5 @@
 import React from 'react';
-import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {useTranslation} from "react-i18next";
 import {ShortKey} from "../../../../../utils/keymap.ts";
 import {Group} from "@mantine/core";
@@ -7,30 +7,32 @@ import ControlButton from "../../../../../components/controls/ControlButton.tsx"
 import {NoteType} from "../../../../../model/Note.ts";
 import {Size} from "../../../../../utils/constants.ts";
 import {RiParenthesesLine} from "react-icons/ri";
+import {useNoteControls} from "../../../../../hooks/useNoteControls.tsx";
 
 const NoteTypeControls: React.FC = () => {
 
     const [t] = useTranslation();
-    const context = useScoreContext();
+    const {activeNote} = useScoreContext();
+    const {changeType} = useNoteControls();
 
     const handleTypeChange = () => {
-        if (!context.activeNote) {
+        if (!activeNote) {
             return;
         }
-        if (context.activeNote.type === NoteType.SMALL) {
-            context.changeType(context.activeNote, undefined);
+        if (activeNote.type === NoteType.SMALL) {
+            changeType(activeNote, NoteType.REGULAR);
             return;
         }
-        context.changeType(context.activeNote, NoteType.SMALL);
+        changeType(activeNote, NoteType.SMALL);
     }
 
     return (
-        <Group gap={2}>
+        <Group gap={4}>
             <ControlButton
-                disabled={!context.activeNote}
+                disabled={!activeNote}
                 tooltip={t("tooltip.changeType")}
                 shortKey={ShortKey.CHANGE_TYPE}
-                active={context.activeNote?.type === NoteType.SMALL}
+                active={activeNote?.type === NoteType.SMALL}
                 onClick={handleTypeChange}
             >
                 <RiParenthesesLine size={Size.icon.XS} />

@@ -4,7 +4,7 @@ import ScorePlaybackPanel from "./playback/ScorePlaybackPanel.tsx";
 import VoiceFilter from "./playback/controls/VoiceFilter.tsx";
 import Stave from "./stave/Stave.tsx";
 import {useSearchParams} from "react-router-dom";
-import {useScoreContext} from "../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../hooks/useScoreContext.tsx";
 import {Layout} from "../../../utils/constants.ts";
 import {Group} from "@mantine/core";
 import ScoreSettings, {Setting} from "./ScoreSettings.tsx";

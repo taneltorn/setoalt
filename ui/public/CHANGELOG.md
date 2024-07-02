@@ -1,41 +1,51 @@
 #### [0.2.7] - *02.07.2024*
+
 - Lisatud võimalus nihutada laulusõnu (Ctrl nuppu all hoides)
+- Lisatud võimalus korraga nihutada kõiki noote ja eraldajaid (Shift nuppu all hoides)
 - Lisatud teavituste haldamine
 - Lisatud juhendid (? nupp külgmenüüs)
 - Otsingusõna ja valitud lehekülg jäetakse meelde
 - Noodistusi ei kustutata andmebaasis enam jäädavalt (soft delete)
 - Pisiparandused
+- Refaktooring, refaktooring, refaktooring
 
 #### [0.2.6] - *27.06.2024*
+
 - Lisatud helitugevuse muutmine
 - Pisiparandused
 
 #### [0.2.5] - *26.06.2024*
+
 - Peamise värvi muutmine (tumedamaks)
 - Avalehele lisatud ka teine näide
 - Pisiparandused ja -täiustused
 
 #### [0.2.4] - *26.06.2024*
+
 - Pisiparandused
 
 #### [0.2.3] - *26.06.2024*
+
 - UX ja disaini täiendused
 - Lisatud võimalus kopeerida kood noodistuse kuvamiseks välisel lehel
 - Avalehe ümberkujundamine
-- Pisiparandused ja -muudatused 
+- Pisiparandused ja -muudatused
 
 #### [0.2.2] - *24.06.2024*
+
 - Lisatud võimalus heli taasesitust korrata (vahemiku valimine: Ctrl + hiireklikk)
 - Lisatud võimalus redaktoris üksikuid hääli sisse/välja lülitada (Ctrl + hiireklikk)
 - Pisiparandused
 
 #### [0.2.1] -  *24.06.2024*
+
 - Lisatud valikuline mikrotonaalsuse indikaator
 - Lisatud automaatne kerimine
 - Lisatud hääletüüp "alumine torrõ" ja häälte automaatne sorteerimine
-- Parandatud laulusõnade kuvamist - pikad silbid kuvatakse nüüd veidi väiksemalt  
+- Parandatud laulusõnade kuvamist - pikad silbid kuvatakse nüüd veidi väiksemalt
 
 #### [0.2.0] - *23.06.2024*
+
 - Redaktor: Lisatud võimalus kaheksandiknooti poolitada
 - Redaktor: Lisatud undo/redo
 - Redaktor: Lisatud noodijoonte mikrotonaalne muutmine
@@ -59,11 +69,13 @@
 - Üldine: Refaktooring, refaktooring, refaktooring
 
 #### [0.1.33] - *09.04.2024*
+
 - Noodinimed koguaeg nähtaval
 - Lisatud pagineerimine
 - Pisiparandused
 
 #### [0.1.32] - *14.03.2024*
+
 - PNG-ekspordil jäävad noodijooned noodinimedega tähistatuks
 - Nihutamine toimub nüüd klahvidega B ja N (varem oli X ja Z) - muudatus seoses tulevase undo/redoga
 - Parandatud viga, kus pärast lähtestamist ei olnud võimalik osadele positsioonidele hiirega nooti lisada
@@ -71,6 +83,7 @@
 - Pisiparandused
 
 #### [0.1.31] - *13.03.2024*
+
 - Eraldaja ja reavahe lisatakse aktiivsest positsioonist paremale (varem lisati vasakule)
 - Eelmise punktiga seoses ei liigutata hiirega nooti lisades enam kursorit edasi (loogiliselt vajalik, et vältida tühje
   positsioone, mis tekiksid, kui reavahe lisatakse kohe pärast uue noodi lisamist)
@@ -80,20 +93,24 @@
   tulevikus vaja korralikult implementeerida)
 
 #### [0.1.30] - *23.02.2024*
+
 - Lisatud hääle lisamise võimalus
 - Pisiparandused
 
 #### [0.1.29] - *22.02.2024*
+
 - Lisatud horisontaalne kerimine (scroll)
 - Suurendatud lehe maksimaalset laiust
 - Lisatud lehtede pealkirjad (lehitseja sakil)
 
 #### [0.1.28] - *21.02.2024*
+
 - Lisatud PDF eksport
 - Lisatud noodi väiksemaks muutmine - vajuta "()" nuppu või T klahvi.
 - Parandatud viga, kus hiirega ei olnud võimalik eraldajat eemaldada
 
 #### [0.1.27] - *17.02.2024*
+
 - Lisatud sisselogimise funktsionaalsus
 - Lisatud noodistuste salvestamine
 - Lisatud noodistuste muutmine

@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from "react-i18next";
-import {useScoreContext} from "../../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../../hooks/useScoreContext.tsx";
 import {Stave} from "../../../../model/Stave.ts";
 import {getLineCoords} from "../../../../utils/helpers.tsx";
 import {Layout} from "../../../../utils/constants.ts";

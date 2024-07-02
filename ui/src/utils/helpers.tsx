@@ -5,8 +5,6 @@ import {Voice} from "../model/Voice";
 import {Layout, Size} from "./constants";
 import {Score} from "../model/Score";
 import {Line} from "../model/Line";
-import {Coordinates} from "../model/Coordinates";
-import {ScoreContextProperties} from "../context/ScoreContext";
 import {DefaultVoices, NoteRange} from "./dictionaries.ts";
 import {notifications} from "@mantine/notifications";
 import {StavePPT} from "../staves/StavePPT.ts";
@@ -15,6 +13,8 @@ import {FaRegCheckCircle} from "react-icons/fa";
 import {RiErrorWarningFill} from "react-icons/ri";
 import {DateValue} from "@mantine/dates";
 import {Notification} from "../model/Notification.ts";
+import {ScoreContextProperties} from "../context/ScoreContext.tsx";
+import {XY} from "../model/XY.ts";
 
 export const isEmpty = (object: any) => {
     return !object || Object.keys(object).length === 0 || object.length === 0;
@@ -105,38 +105,16 @@ export const noteToFrequency = (note: Note, stave: Stave, transposition?: number
         : frequency;
 };
 
-export const createNote = (pitch: string, position: number, duration: string): Note => {
-    return {
-        pitch: pitch,
-        position: position > 0 ? position : 0,
-        duration: duration,
-    }
-}
-
 export const getPositions = (voices: Voice[]) => {
     return sort(Array.from(new Set(voices.flatMap(v => v.notes).map(n => n.position))));
 }
 
-export const getNextPitch = (pitches: string[], currentPitch: string): string => {
-    const currentIndex = pitches.findIndex(p => p === currentPitch);
-    return pitches[Math.max(currentIndex - 1, 0)];
-}
-
-export const getPreviousPitch = (pitches: string[], currentPitch: string): string => {
-    const currentIndex = pitches.findIndex(p => p === currentPitch);
-    return pitches[Math.min(currentIndex + 1, pitches.length - 1)];
-}
-
-export const getLineCoords = (line: Line, startingY: number, context: ScoreContextProperties): Coordinates => {
+export const getLineCoords = (line: Line, startingY: number, context: ScoreContextProperties): XY => {
     const y = startingY
         + line.y * Layout.stave.line.SPACING
         + Layout.stave.container.SYMBOLS_BAR;
 
     return {x: context.dimensions.x, y: y};
-}
-
-export const getDurationOffset = (a: string, b: string) => {
-    return durationToScalar(a) - durationToScalar(b);
 }
 
 export const isHighlighted = (note: Note, context: ScoreContextProperties) => {

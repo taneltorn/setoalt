@@ -17,7 +17,7 @@ import {Size} from "./utils/constants.ts";
 import {IoMdArrowUp} from "react-icons/io";
 import {useTranslation} from "react-i18next";
 import {Notifications} from "@mantine/notifications";
-import {useDialogContext} from "./context/DialogContext.tsx";
+import {useDialogContext} from "./hooks/useDialogContext.tsx";
 import ProfileLink from "./components/ProfileLink.tsx";
 import DevNotice from "./components/DevNotice.tsx";
 

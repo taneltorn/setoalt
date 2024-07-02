@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from "react-i18next";
 import {ActionIcon, Group, Menu, Text} from "@mantine/core";
-import {useAudioContext} from "../../../../../context/AudioContext.tsx";
+import {useAudioContext} from "../../../../../hooks/useAudioContext.tsx";
 import {Instruments} from "../../../../../utils/dictionaries.ts";
 import {InstrumentIcons} from "../../../../../utils/icons.tsx";
 import {Instrument} from "../../../../../model/Instrument.ts";

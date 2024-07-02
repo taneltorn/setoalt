@@ -1,9 +1,12 @@
 import React, {useMemo, useState} from 'react';
-import {useScoreContext} from "../../../../context/ScoreContext.tsx";
-import {useDevMode} from "../../../../context/DevModeContext.tsx";
+import {useScoreContext} from "../../../../hooks/useScoreContext.tsx";
+import {useDevMode} from "../../../../hooks/useDevContext.tsx";
 import {calculateCursorNoteCoords} from "../../../../utils/calculation.helpers.tsx";
 import {Layout} from "../../../../utils/constants.ts";
-import {useAudioContext} from "../../../../context/AudioContext.tsx";
+import {useAudioContext} from "../../../../hooks/useAudioContext.tsx";
+import {NoteFactory} from "../../../../utils/factories.ts";
+import {useNoteControls} from "../../../../hooks/useNoteControls.tsx";
+import {useActiveKeys} from "../../../../hooks/useActiveKeys.tsx";
 
 interface Properties {
     pitch: string;
@@ -13,7 +16,10 @@ interface Properties {
 
 const PreviewNote: React.FC<Properties> = ({pitch, ...props}) => {
 
+
     const context = useScoreContext();
+    const {isCtrlKeyActive} = useActiveKeys();
+    const {changePitch, insertNote} = useNoteControls();
     const {stopPlayback} = useAudioContext();
     const {isDevMode} = useDevMode();
     const [opacity, setOpacity] = useState<number>(isDevMode ? 0.2 : 0);
@@ -28,20 +34,25 @@ const PreviewNote: React.FC<Properties> = ({pitch, ...props}) => {
             stopPlayback();
             return;
         }
-        context.insertOrUpdateNote(pitch, context.cursorPosition);
+
+        const existingNote = context.getNote(context.cursorPosition, context.activeVoice);
+        if (existingNote) {
+            changePitch(existingNote, pitch);
+        } else {
+            const note = NoteFactory.create(pitch, context.cursorPosition, context.activeDuration);
+            insertNote(note);
+        }
+        context.activate(context.cursorPosition)
     }
 
     return (<>
-        {context.cursorPosition >= 0 && !context.isCtrlKeyActive && <>
+        {context.cursorPosition >= 0 && !isCtrlKeyActive && <>
             <circle
-                className={"hover-pointer"}
                 cx={x}
                 cy={y}
                 opacity={isDevMode ? Math.max(opacity, 0.2) : opacity}
                 r={Layout.stave.note.RADIUS}
-            >
-                <title>{pitch}</title>
-            </circle>
+            />
             <rect
                 className={"hover-pointer"}
                 x={x - 50}
@@ -54,7 +65,9 @@ const PreviewNote: React.FC<Properties> = ({pitch, ...props}) => {
                 fill={"red"}
                 width={100}
                 onClick={event => handleClick(event)}
-            />
+            >
+                <title>{pitch.toUpperCase()}</title>
+            </rect>
         </>}
     </>);
 };

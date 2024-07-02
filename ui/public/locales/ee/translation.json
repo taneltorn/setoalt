@@ -151,7 +151,8 @@
     "settings": "Seaded ja tööriistad"
   },
   "tooltip": {
-    "changeNoteDuration": {
+    "activatePosition": "Positsioon {{position}}",
+    "changeDuration": {
       "2n": "Poolnoot",
       "4n": "Veerandnoot",
       "8n": "Kaheksandiknoot"
@@ -161,8 +162,10 @@
     "insertPitch": "Lisa {{pitch}} noot",
     "changePitch": "Muuda {{pitch}} noodiks",
     "shiftLeft": "Nihuta vasakule",
+    "shiftVoicesLeft": "Nihuta kõiki noote ja eraldajaid vasakule",
     "shiftLyricsLeft": "Nihuta laulusõnu vasakule",
     "shiftRight": "Nihuta paremale",
+    "shiftVoicesRight": "Nihuta kõiki noote ja eraldajaid paremale",
     "shiftLyricsRight": "Nihuta laulusõnu paremale",
     "insertBreak": "Lisa reavahe",
     "removeBreak": "Eemalda reavahe",
@@ -242,8 +245,8 @@
       "description": "Muuda taasesitust kiiremaks või aeglasemaks."
     },
     "resetScore": {
-      "title": "Lähtesta andmed?",
-      "description": "Oled sa kindel, et soovid sisestatud andmed lähtestada?"
+      "title": "Oled sa kindel?",
+      "description": "Kustuta antud noodistus ja alusta uuesti?"
     },
     "saveNotification": {
       "title": "Salvesta teavitus"

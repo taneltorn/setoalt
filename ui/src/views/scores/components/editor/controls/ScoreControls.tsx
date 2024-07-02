@@ -1,7 +1,7 @@
 import React from 'react';
 import {useTranslation} from "react-i18next";
 import {Button, Group} from "@mantine/core";
-import {useAuth} from "../../../../../context/AuthContext.tsx";
+import {useAuth} from "../../../../../hooks/useAuth.tsx";
 
 interface Properties {
     onPrimaryButtonClick: () => void;

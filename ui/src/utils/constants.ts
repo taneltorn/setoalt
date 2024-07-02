@@ -58,15 +58,9 @@ export const Size = {
 }
 
 export const Color = {
-    accent: {
-        PRIMARY: "#870000",
-        SECONDARY: "#ccc"
-    },
     stave: {
-        HIGHLIGHT: "#A70000",
         PRIMARY_LINE: "#000",
         SECONDARY_LINE: "#eee",
-        LYRICS: "#000"
     },
     voice: {
         TORRO: "#000000",

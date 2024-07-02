@@ -7,10 +7,10 @@ import '@mantine/notifications/styles.css';
 import '@mantine/dates/styles.css';
 
 import {MantineProvider, createTheme} from '@mantine/core';
-import DialogContextProvider from "./context/DialogContextProvider.tsx";
-import AudioContextProvider from "./context/AudioContextProvider.tsx";
-import {AuthContextProvider} from "./context/AuthContextProvider.tsx";
-import DevModeContextProvider from "./context/DevModeContextProvider.tsx";
+import {AuthContextProvider} from "./hooks/useAuth.tsx";
+import {AudioContextProvider} from "./hooks/useAudioContext.tsx";
+import {DevContextProvider} from "./hooks/useDevContext.tsx";
+import { DialogContextProvider } from './hooks/useDialogContext.tsx';
 
 const theme = createTheme({
     fontFamily: 'Verdana, Montserrat, sans-serif',
@@ -33,7 +33,7 @@ const theme = createTheme({
 ReactDOM.createRoot(document.getElementById('root')!).render(
     // <React.StrictMode>
     <MantineProvider theme={theme}>
-        <DevModeContextProvider>
+        <DevContextProvider>
             <AuthContextProvider>
                 <DialogContextProvider>
                     <AudioContextProvider>
@@ -41,7 +41,7 @@ ReactDOM.createRoot(document.getElementById('root')!).render(
                     </AudioContextProvider>
                 </DialogContextProvider>
             </AuthContextProvider>
-        </DevModeContextProvider>
+        </DevContextProvider>
     </MantineProvider>
     // </React.StrictMode>,
 )

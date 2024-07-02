@@ -1,9 +1,11 @@
 import React, {useEffect, useMemo, useState} from 'react';
 import {Lyric} from "../../../../model/Lyric.ts";
-import {useAudioContext} from "../../../../context/AudioContext.tsx";
-import {useScoreContext} from "../../../../context/ScoreContext.tsx";
+import {useAudioContext} from "../../../../hooks/useAudioContext.tsx";
+import {useScoreContext} from "../../../../hooks/useScoreContext.tsx";
 import {calculateLyricCoords} from "../../../../utils/calculation.helpers.tsx";
-import {Color, Layout} from "../../../../utils/constants.ts";
+import {Layout} from "../../../../utils/constants.ts";
+import {useHistory} from "../../../../hooks/useHistory.tsx";
+import {useMantineTheme} from "@mantine/core";
 
 interface Properties {
     lyric: Lyric;
@@ -11,20 +13,22 @@ interface Properties {
 
 const StaveLyric: React.FC<Properties> = ({lyric}) => {
 
-    const audioContext = useAudioContext();
-    const scoreContext = useScoreContext();
+    const theme = useMantineTheme();
+    const context = useScoreContext();
+    const history = useHistory();
+    const {stopPlayback} = useAudioContext();
 
     const [value, setValue] = useState<string>(lyric.text);
-    const breaksDependency = JSON.stringify(scoreContext.score.data.breaks);
+    const breaksDependency = JSON.stringify(context.score.data.breaks);
 
     const {x, y} = useMemo(() => {
-        return calculateLyricCoords(lyric, scoreContext);
-    }, [lyric.position, scoreContext.score.data.stave, breaksDependency]);
+        return calculateLyricCoords(lyric, context);
+    }, [lyric.position, context.score.data.stave, breaksDependency]);
 
 
     const handleClick = () => {
-        audioContext.stopPlayback();
-        scoreContext.activate(lyric.position)
+        stopPlayback();
+        context.activate(lyric.position)
     }
 
     const handleChange = (value: string) => {
@@ -32,29 +36,30 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
     }
 
     const handleFocus = () => {
-        scoreContext.setIsTypeMode(true);
-        scoreContext.activate(lyric.position);
+        context.setIsTypeMode(true);
+        context.activate(lyric.position);
     }
 
     const save = () => {
-        console.log("saving")
-        const l = scoreContext.score.data.lyrics.find(l => l.position === lyric.position);
+        history.snapshot(context);
+
+        const l = context.score.data.lyrics.find(l => l.position === lyric.position);
         if (l) {
             if (value) {
                 l.text = value;
             } else {
-                scoreContext.score.data.lyrics = scoreContext.score.data.lyrics.filter(l => l.position !== lyric.position);
+                context.score.data.lyrics = context.score.data.lyrics.filter(l => l.position !== lyric.position);
             }
         } else {
             if (value) {
-                scoreContext.score.data.lyrics.push({
+                context.score.data.lyrics.push({
                     text: value,
                     position: lyric.position
                 });
             }
         }
-        scoreContext.refresh();
-        scoreContext.setIsTypeMode(false);
+        context.refresh();
+        context.setIsTypeMode(false);
     }
 
     useEffect(() => {
@@ -62,28 +67,35 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
     }, [lyric.text]);
 
     return (<>
-            {scoreContext.isEditMode && !scoreContext.isExportMode &&
-                <foreignObject key={`lyric-${lyric.position}`} x={x - 20} y={y} width={Layout.stave.note.SPACING} height="40">
+            {context.isEditMode && !context.isExportMode &&
+                <foreignObject key={`lyric-${lyric.position}`} x={x - 20} y={y} width={Layout.stave.note.SPACING}
+                               height="40">
                     <input
                         onFocus={handleFocus}
                         onBlur={() => save()}
                         className={`lyric-input`}
-                        disabled={!scoreContext.isEditMode}
+                        disabled={!context.isEditMode}
                         value={value}
                         style={{
                             width: Layout.stave.note.SPACING,
-                            color: lyric.position === scoreContext.activePosition && !scoreContext.isExportMode ? Color.stave.HIGHLIGHT : Color.stave.LYRICS,
+                            borderRadius: 12,
+                            color: lyric.position === context.activePosition && !context.isExportMode
+                                ? theme.colors.red[9]
+                                : "black",
                             fontWeight: Layout.stave.lyrics.FONT_WEIGHT,
                             fontSize: Layout.stave.lyrics.FONT_SIZE
-                    }}
+                        }}
                         onChange={e => handleChange(e.target.value)}
                     />
+
                 </foreignObject>}
 
-            {(!scoreContext.isEditMode || scoreContext.isExportMode) &&
+            {(!context.isEditMode || context.isExportMode) &&
                 <text
                     className="hover-pointer"
-                    fill={lyric.position === scoreContext.activePosition && !scoreContext.isExportMode ? Color.stave.HIGHLIGHT : Color.stave.LYRICS}
+                    fill={lyric.position === context.activePosition && !context.isExportMode
+                        ? theme.colors.red[9]
+                        : "black"}
                     fontWeight={Layout.stave.lyrics.FONT_WEIGHT}
                     fontSize={lyric.text.length > 5 ? Layout.stave.lyrics.DECREASED_FONT_SIZE : Layout.stave.lyrics.FONT_SIZE}
                     x={x}

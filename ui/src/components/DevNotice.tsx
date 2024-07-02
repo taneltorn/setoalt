@@ -8,8 +8,8 @@ import {
 } from "@mantine/core";
 import {FaGitAlt} from "react-icons/fa";
 import {Size} from "../utils/constants.ts";
-import {useAuth} from "../context/AuthContext.tsx";
-import {useDevMode} from "../context/DevModeContext.tsx";
+import {useAuth} from "../hooks/useAuth.tsx";
+import {useDevMode} from "../hooks/useDevContext.tsx";
 import {useTranslation} from "react-i18next";
 import Help from "./Help.tsx";
 

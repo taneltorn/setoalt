@@ -1,10 +1,10 @@
 import React, {useEffect} from 'react';
 import Dialog from "../../../components/dialog/Dialog.tsx";
-import {DialogType, useDialogContext} from "../../../context/DialogContext.tsx";
+import {useDialogContext} from "../../../hooks/useDialogContext.tsx";
 import {useTranslation} from "react-i18next";
 import {Input, Radio, TextInput} from "@mantine/core";
 import {Controller, useForm} from 'react-hook-form';
-import {Role} from "../../../context/AuthContext.tsx";
+import {DialogType, Role} from "../../../utils/enums.ts";
 import {User} from "../../../model/User.ts";
 import useUserService from "../../../hooks/useUserService.tsx";
 import {DisplayError, DisplaySuccess} from "../../../utils/helpers.tsx";

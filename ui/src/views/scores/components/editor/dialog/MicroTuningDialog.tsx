@@ -1,17 +1,20 @@
 import React, {useEffect, useState} from 'react';
-import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
-import {useAudioContext} from "../../../../../context/AudioContext.tsx";
+import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
+import {useAudioContext} from "../../../../../hooks/useAudioContext.tsx";
 import Dialog from "../../../../../components/dialog/Dialog.tsx";
-import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
+import {useDialogContext} from "../../../../../hooks/useDialogContext.tsx";
 import {Playback} from "../../../../../utils/constants.ts";
 import {useTranslation} from "react-i18next";
 import {Switch, Text} from "@mantine/core";
 import Slider from "../../../../../components/controls/Slider.tsx";
+import {useHistory} from "../../../../../hooks/useHistory.tsx";
+import {DialogType} from "../../../../../utils/enums.ts";
 
 const MicroTuningDialog: React.FC = () => {
 
     const [t] = useTranslation();
     const context = useScoreContext();
+    const history = useHistory();
     const {close} = useDialogContext();
     const {playNotes} = useAudioContext();
     const [detune, setDetune] = useState<number>(context.activeNote?.detune || 0);
@@ -19,7 +22,7 @@ const MicroTuningDialog: React.FC = () => {
 
     const handleSave = () => {
         if (context.activeNote) {
-            context.takeSnapshot();
+            history.snapshot(context);
             context.activeNote.detune = detune;
             context.activeNote.showDetuneIndicator = showDetuneIndicator;
             playNotes([context.activeNote], context.score.data.stave);

@@ -3,9 +3,9 @@ import {Button, Grid, Group} from "@mantine/core";
 import {MdRecordVoiceOver} from "react-icons/md";
 import {useTranslation} from "react-i18next";
 import VoiceFilterButton from "../../../../../components/controls/VoiceFilterButton.tsx";
-import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {Voice} from "../../../../../model/Voice.ts";
-import {useAudioContext} from "../../../../../context/AudioContext.tsx";
+import {useAudioContext} from "../../../../../hooks/useAudioContext.tsx";
 import {Size} from "../../../../../utils/constants.ts";
 
 const VoiceFilter: React.FC = () => {

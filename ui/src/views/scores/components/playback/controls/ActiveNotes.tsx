@@ -3,7 +3,7 @@ import {Badge, Group} from "@mantine/core";
 import Icon from "@mdi/react";
 import {NoteIcons} from "../../../../../utils/icons.tsx";
 import {mdiMusicNoteQuarter} from "@mdi/js";
-import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {excludeDuplicates, getDetuneLabel} from "../../../../../utils/helpers.tsx";
 import {Note} from "../../../../../model/Note.ts";
 import {useTranslation} from "react-i18next";

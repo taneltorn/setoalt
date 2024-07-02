@@ -1,7 +1,6 @@
-import React, {useContext} from 'react';
-import {isEmpty} from "../utils/helpers.tsx";
-import {ScoreContextProperties} from "./ScoreContext";
+import React from 'react';
 import {Score} from "../model/Score";
+import {ScoreContextProperties} from "./ScoreContext.tsx";
 
 export interface State {
     score: Score;
@@ -20,15 +19,7 @@ export interface HistoryContextProperties {
     push: (score: Score, activePosition: number, activeDuration: string, activeVoice: string) => void;
     undo: (context: ScoreContextProperties) => void;
     redo: (context: ScoreContextProperties) => void;
+    snapshot: (context: ScoreContextProperties) => void;
 }
 
 export const HistoryContext = React.createContext<HistoryContextProperties>({} as HistoryContextProperties);
-
-export const useHistory = () => {
-    const context = useContext(HistoryContext);
-    if (isEmpty(context)) {
-        throw new Error('useHistoryContext must be used within a HistoryContextProvider')
-    }
-
-    return context;
-};

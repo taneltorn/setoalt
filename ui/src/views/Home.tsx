@@ -7,12 +7,11 @@ import Header from "../components/controls/Header.tsx";
 import Description from "../components/controls/Description.tsx";
 import {Trans} from 'react-i18next';
 import {Score} from "../model/Score.ts";
-import ScoreContextProvider from "../context/ScoreContextProvider.tsx";
-import HistoryContextProvider from "../context/HistoryContextProvider.tsx";
 import KeyPressHandler from "../components/KeyPressHandler.tsx";
 import ScoreDialogs from "./scores/components/dialog/ScoreDialogs.tsx";
 import Example from "./Example.tsx";
 import NotificationPanel from "../NotificationPanel.tsx";
+import ContextProviders from "../ContextProviders.tsx";
 
 const Home: React.FC = () => {
 
@@ -35,59 +34,57 @@ const Home: React.FC = () => {
     }, []);
 
     return (
-        <HistoryContextProvider>
-            <ScoreContextProvider>
-                <Page title={t("view.home.title")}>
-                    <NotificationPanel/>
+        <ContextProviders>
+            <Page title={t("view.home.title")}>
+                <NotificationPanel/>
 
-                    <Header>
-                        {t("view.home.header")}
-                    </Header>
+                <Header>
+                    {t("view.home.header")}
+                </Header>
 
-                    <Description span={12}>
-                        <Trans i18nKey="view.home.description"/>
-                    </Description>
+                <Description span={12}>
+                    <Trans i18nKey="view.home.description"/>
+                </Description>
 
-                    <Tabs defaultValue="example1" radius={"xs"}>
-                        <Tabs.List>
-                            {exampleA &&
-                                <Tabs.Tab value="example1" onClick={() => setActive(exampleA)}>
-                                    <Text size={"lg"}>
-                                        {exampleA?.name}
-                                    </Text>
-                                </Tabs.Tab>}
+                <Tabs defaultValue="example1" radius={"xs"}>
+                    <Tabs.List>
+                        {exampleA &&
+                            <Tabs.Tab value="example1" onClick={() => setActive(exampleA)}>
+                                <Text size={"lg"}>
+                                    {exampleA?.name}
+                                </Text>
+                            </Tabs.Tab>}
 
-                            {exampleB &&
-                                <Tabs.Tab value="example2" onClick={() => setActive(exampleB)}>
-                                    <Text size={"lg"}>
-                                        {exampleB?.name}
-                                    </Text>
-                                </Tabs.Tab>}
-                        </Tabs.List>
+                        {exampleB &&
+                            <Tabs.Tab value="example2" onClick={() => setActive(exampleB)}>
+                                <Text size={"lg"}>
+                                    {exampleB?.name}
+                                </Text>
+                            </Tabs.Tab>}
+                    </Tabs.List>
 
-                        <Box mt={"lg"}>
-                            <Example score={active}/>
-                        </Box>
-                    </Tabs>
+                    <Box mt={"lg"}>
+                        <Example score={active}/>
+                    </Box>
+                </Tabs>
 
-                    <Group gap={4} mt={"md"}>
-                        <Link to={"/editor"}>
-                            <Button size={"md"} color={"red"}>
-                                {t("view.home.link.editor")}
-                            </Button>
-                        </Link>
-                        <Link to={"/scores"}>
-                            <Button size={"md"} color={"red"}>
-                                {t("view.home.link.scores")}
-                            </Button>
-                        </Link>
-                    </Group>
-                </Page>
+                <Group gap={4} mt={"md"}>
+                    <Link to={"/editor"}>
+                        <Button size={"md"} color={"red"}>
+                            {t("view.home.link.editor")}
+                        </Button>
+                    </Link>
+                    <Link to={"/scores"}>
+                        <Button size={"md"} color={"red"}>
+                            {t("view.home.link.scores")}
+                        </Button>
+                    </Link>
+                </Group>
+            </Page>
 
-                <KeyPressHandler/>
-                <ScoreDialogs/>
-            </ScoreContextProvider>
-        </HistoryContextProvider>
+            <KeyPressHandler/>
+            <ScoreDialogs/>
+        </ContextProviders>
     );
 }
 

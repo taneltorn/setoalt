@@ -1,12 +1,9 @@
-import React, {RefObject, useContext} from 'react';
-import {Note, NoteType} from "../model/Note";
-import {isEmpty} from "../utils/helpers.tsx";
+import React, {RefObject} from 'react';
+import {Note} from "../model/Note";
 import {Score} from "../model/Score";
 import {StaveDimensions} from "../model/Dimensions.ts";
 import {HalfPosition} from "../model/HalfPosition.ts";
 import {Range} from "../model/Range.ts";
-import {Lyric} from "../model/Lyric.ts";
-import {ShiftMode} from "../utils/enums.ts";
 
 export interface ScoreContextProperties {
 
@@ -23,9 +20,6 @@ export interface ScoreContextProperties {
     isTypeMode: boolean;
     setIsTypeMode: (value: boolean) => void;
 
-    isCtrlKeyActive: boolean;
-    setIsCtrlKeyActive: (value: boolean) => void;
-
     loopRange: Range | undefined;
     setLoopRange: (range: Range | undefined) => void;
     updateLoopRange: (start: number, end: number) => void;
@@ -35,7 +29,6 @@ export interface ScoreContextProperties {
     previous: () => void;
 
     activeNote: Note | undefined;
-    activeLyric: Lyric | undefined;
     activePosition: number;
     setActivePosition: (position: number) => void;
     activeDuration: string;
@@ -49,32 +42,13 @@ export interface ScoreContextProperties {
     getNotes: (position: number) => Note[];
     scrollToPosition: (position: number) => void;
 
-    insertOrUpdateNote: (pitch: string, position?: number, duration?: string, moveToNext?: boolean) => void;
-    removeNote: (position: number, moveToPrevious?: boolean) => void;
-    insertLyric: (text: string) => void;
-
-    toggleBreak: () => void;
-    removeBreak: (position: number) => void;
-    toggleDivider: () => void;
-    removeDivider: (position: number) => void;
-
-    changeType: (note: Note | undefined, type: NoteType | undefined) => void;
-    changeNoteDuration: (duration: string, position?: number, skipShifting?: boolean) => void;
-    increaseNotePitch: (position?: number) => void;
-    decreaseNotePitch: (position?: number) => void;
-
-    shiftLeft: (mode: ShiftMode) => void;
-    shiftRight: (mode: ShiftMode) => void;
-
     refresh: () => void;
-    reset: () => void;
 
     duplicateNoteKeys: string[];
 
     halfPositions: HalfPosition[];
     dimensions: StaveDimensions;
     endPosition: number;
-    takeSnapshot: () => void;
 
     containerRef: RefObject<HTMLElement> | undefined;
     setContainerRef: (ref: RefObject<HTMLElement>) => void;
@@ -83,11 +57,3 @@ export interface ScoreContextProperties {
 }
 
 export const ScoreContext = React.createContext<ScoreContextProperties>({} as ScoreContextProperties)
-export const useScoreContext = () => {
-    const context = useContext(ScoreContext);
-    if (isEmpty(context)) {
-        throw new Error('useScoreContext must be used within a ScoreContextProvider')
-    }
-
-    return context;
-};

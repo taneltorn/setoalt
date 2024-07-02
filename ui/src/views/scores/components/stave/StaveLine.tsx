@@ -1,9 +1,8 @@
 import React from 'react';
 import {useTranslation} from "react-i18next";
-import {useScoreContext} from "../../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../../hooks/useScoreContext.tsx";
 import {Line} from "../../../../model/Line.ts";
 import {Layout} from "../../../../utils/constants.ts";
-// import {getDetuneLabel} from "../../../../utils/helpers.tsx";
 import DetuneIndicator from "./DetuneIndicator.tsx";
 
 interface Properties {
@@ -35,11 +34,6 @@ const StaveLine: React.FC<Properties> = ({line, offsetY}) => {
                         opacity={1}
                         color={"black"}
                     />}
-
-                {/*{line.detune &&*/}
-                {/*    <text x={20} y={y + 5} fontSize={10} fill={"black"}>*/}
-                {/*        {getDetuneLabel(line.detune, t("unit.centsAbbr"))}*/}
-                {/*    </text>}*/}
             </>}
             <line
                 key={line.pitch}

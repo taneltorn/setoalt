@@ -1,9 +1,8 @@
-import React, {useContext} from 'react';
+import React from 'react';
 import {Note} from "../model/Note";
-import {isEmpty} from "../utils/helpers.tsx";
-import {ScoreContextProperties} from "./ScoreContext";
 import {Stave} from "../model/Stave.ts";
 import {Instrument} from "../model/Instrument.ts";
+import {ScoreContextProperties} from "./ScoreContext.tsx";
 
 export interface AudioContextProperties {
 
@@ -30,12 +29,3 @@ export interface AudioContextProperties {
 }
 
 export const AudioContext = React.createContext<AudioContextProperties>({} as AudioContextProperties);
-
-export const useAudioContext = () => {
-    const context = useContext(AudioContext);
-    if (isEmpty(context)) {
-        throw new Error('useAudioContext must be used within a AudioContextProvider')
-    }
-
-    return context;
-};

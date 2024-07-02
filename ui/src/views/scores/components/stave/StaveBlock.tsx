@@ -1,8 +1,8 @@
 import React, {useMemo} from 'react';
 import StaveLine from "./StaveLine.tsx";
 import {Line} from "../../../../model/Line.ts";
-import {useScoreContext} from "../../../../context/ScoreContext.tsx";
-import {useDevMode} from "../../../../context/DevModeContext.tsx";
+import {useScoreContext} from "../../../../hooks/useScoreContext.tsx";
+import {useDevMode} from "../../../../hooks/useDevContext.tsx";
 import {calculateStaveBlockCoords} from "../../../../utils/calculation.helpers.tsx";
 import {Layout} from "../../../../utils/constants.ts";
 

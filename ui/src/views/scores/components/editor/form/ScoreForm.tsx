@@ -1,5 +1,5 @@
 import React from 'react';
-import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {useTranslation} from "react-i18next";
 import {
     Input,

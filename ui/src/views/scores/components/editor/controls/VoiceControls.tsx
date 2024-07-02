@@ -1,20 +1,23 @@
 import React from 'react';
-import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {Button, Group} from "@mantine/core";
 import VoiceFilterButton from "../../../../../components/controls/VoiceFilterButton.tsx";
 import {MdRecordVoiceOver} from "react-icons/md";
-import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
+import {useDialogContext} from "../../../../../hooks/useDialogContext.tsx";
 import {useTranslation} from "react-i18next";
 import {FaPlus} from "react-icons/fa";
 import {DefaultVoices} from "../../../../../utils/dictionaries.ts";
 import {FaRegTrashCan} from "react-icons/fa6";
 import {Voice} from "../../../../../model/Voice.ts";
 import {Size} from "../../../../../utils/constants.ts";
+import {useHistory} from "../../../../../hooks/useHistory.tsx";
+import {DialogType} from "../../../../../utils/enums.ts";
 
 const VoiceControls: React.FC = () => {
 
     const {t} = useTranslation();
     const context = useScoreContext();
+    const history = useHistory();
     const {open, close} = useDialogContext();
 
     const showAllVoices = () => {
@@ -61,7 +64,7 @@ const VoiceControls: React.FC = () => {
     }
 
     const handleVoiceRemove = (name: string) => {
-        context.takeSnapshot();
+        history.snapshot(context);
 
         context.score.data.voices = context.score.data.voices
             .filter(v => v.name !== name);

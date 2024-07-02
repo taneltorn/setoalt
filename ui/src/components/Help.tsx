@@ -29,12 +29,13 @@ import {IoSettingsOutline} from "react-icons/io5";
 import {BsCodeSlash, BsFiletypePng, BsMusicNoteList} from "react-icons/bs";
 import {GrReturn} from "react-icons/gr";
 import {RxDividerVertical} from "react-icons/rx";
-import {GoArrowLeft, GoArrowRight} from "react-icons/go";
 import {FaDeleteLeft} from "react-icons/fa6";
 import {RiIncreaseDecreaseFill, RiParenthesesLine} from "react-icons/ri";
 import Icon from "@mdi/react";
 import {mdiMusicNoteEighth, mdiMusicNoteHalf, mdiMusicNoteQuarter} from "@mdi/js";
 import {PiSpeakerSimpleHigh} from "react-icons/pi";
+import {ShiftLeftIcons, ShiftRightIcons} from "../utils/icons.tsx";
+import {ShiftMode} from "../utils/enums.ts";
 
 interface Properties {
     tab?: string;
@@ -271,20 +272,28 @@ const Help: React.FC<Properties> = (props) => {
                             ning kolmas eemaldab.
                         </HelpText>
 
-                        <HelpText icon={<GoArrowLeft size={Size.icon.SM}/>}>
+                        <HelpText icon={ShiftLeftIcons.get(ShiftMode.NOTES)}>
                             Nihuta noote vasakule.
                         </HelpText>
 
-                        <HelpText icon={<GoArrowRight size={Size.icon.SM}/>}>
+                        <HelpText icon={ShiftRightIcons.get(ShiftMode.NOTES)}>
                             Nihuta noote paremale.
                         </HelpText>
 
-                        <HelpText icon={<Group gap={0}><GoArrowLeft size={Size.icon.SM}/><Text>ᵃᵇ</Text></Group>}>
+                        <HelpText icon={ShiftLeftIcons.get(ShiftMode.LYRICS)}>
                             Nihuta laulusõnu vasakule. Vajalik <Kbd>Ctrl</Kbd> nupu all hoidmine.
                         </HelpText>
 
-                        <HelpText icon={<Group gap={0}><Text>ᵃᵇ</Text><GoArrowRight size={Size.icon.SM}/></Group>}>
+                        <HelpText icon={ShiftRightIcons.get(ShiftMode.LYRICS)}>
                             Nihuta laulusõnu paremale. Vajalik <Kbd>Ctrl</Kbd> nupu all hoidmine.
+                        </HelpText>
+
+                        <HelpText icon={ShiftLeftIcons.get(ShiftMode.VOICES)}>
+                            Nihuta kõiki noote ja eraldajaid vasakule. Vajalik <Kbd>Shift</Kbd> nupu all hoidmine.
+                        </HelpText>
+
+                        <HelpText icon={ShiftRightIcons.get(ShiftMode.VOICES)}>
+                            Nihuta kõiki noote ja eraldajaid paremale. Vajalik <Kbd>Shift</Kbd> nupu all hoidmine.
                         </HelpText>
 
                         <HelpText icon={<FaDeleteLeft size={Size.icon.SM}/>}>

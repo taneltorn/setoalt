@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from 'react';
 import Dialog from "../../../../../components/dialog/Dialog.tsx";
-import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
+import {useDialogContext} from "../../../../../hooks/useDialogContext.tsx";
 import {useTranslation} from "react-i18next";
 import {ColorPicker, InputWrapper, NativeSelect, Radio, TextInput} from "@mantine/core";
-import {useScoreContext} from '../../../../../context/ScoreContext.tsx';
+import {useScoreContext} from '../../../../../hooks/useScoreContext.tsx';
 import {useForm} from 'react-hook-form';
 import {Color} from "../../../../../utils/constants.ts";
 import {clone} from "../../../../../utils/helpers.tsx";
 import {Voice, VoiceType} from '../../../../../model/Voice.ts';
+import {DialogType} from "../../../../../utils/enums.ts";
 
 interface FormValues {
     name: string;

@@ -1,11 +1,10 @@
 import React, {useEffect, useState} from "react";
 import {Score} from "../../model/Score.ts";
-import ScoreContextProvider from "../../context/ScoreContextProvider.tsx";
 import {useParams} from "react-router";
 import useScoreService from "../../hooks/useScoreService.tsx";
 import KeyPressHandler from "../../components/KeyPressHandler.tsx";
 import DevInfo from "../../components/DevInfo.tsx";
-import {useDevMode} from "../../context/DevModeContext.tsx";
+import {useDevMode} from "../../hooks/useDevContext.tsx";
 import {useTranslation} from "react-i18next";
 import {DisplayError} from "../../utils/helpers.tsx";
 import LoadingOverlay from "../../components/LoadingOverlay.tsx";
@@ -14,8 +13,8 @@ import ScoreDetails from "./components/ScoreDetails.tsx";
 import ScoreDialogs from "./components/dialog/ScoreDialogs.tsx";
 import ScoreEditor from "./components/ScoreEditor.tsx";
 import Editor from "./components/Editor.tsx";
-import HistoryContextProvider from "../../context/HistoryContextProvider.tsx";
 import ScoreEmbedding from "./components/ScoreEmbedding.tsx";
+import ContextProviders from "../../ContextProviders.tsx";
 
 interface Properties {
     mode: "details" | "edit" | "new" | "embed";
@@ -48,23 +47,21 @@ const ScoreManager: React.FC<Properties> = ({mode}) => {
     }, []);
 
     return (
-        <HistoryContextProvider>
-            <ScoreContextProvider>
-                <LoadingOverlay isLoading={scoreService.isLoading}>
-                    {mode !== "embed" && noData && <ScoreNotFound/>}
+        <ContextProviders>
+            <LoadingOverlay isLoading={scoreService.isLoading}>
+                {mode !== "embed" && noData && <ScoreNotFound/>}
 
-                    {mode === "details" && score && <ScoreDetails score={score}/>}
-                    {mode === "edit" && score && <ScoreEditor score={score}/>}
-                    {mode === "new" && <Editor/>}
-                    {mode === "embed" && score && <ScoreEmbedding score={score}/>}
+                {mode === "details" && score && <ScoreDetails score={score}/>}
+                {mode === "edit" && score && <ScoreEditor score={score}/>}
+                {mode === "new" && <Editor/>}
+                {mode === "embed" && score && <ScoreEmbedding score={score}/>}
 
-                    {isDevMode && <DevInfo/>}
-                </LoadingOverlay>
+                {isDevMode && <DevInfo/>}
+            </LoadingOverlay>
 
-                <KeyPressHandler/>
-                <ScoreDialogs/>
-            </ScoreContextProvider>
-        </HistoryContextProvider>
+            <KeyPressHandler/>
+            <ScoreDialogs/>
+        </ContextProviders>
     );
 }
 

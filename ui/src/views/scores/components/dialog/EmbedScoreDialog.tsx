@@ -2,11 +2,12 @@ import React, {useEffect, useMemo, useState} from 'react';
 import Dialog from "../../../../components/dialog/Dialog.tsx";
 import {useTranslation} from "react-i18next";
 import {Button, Code, CopyButton, Grid, Group, Input, Switch, Text, TextInput} from "@mantine/core";
-import {DialogType, useDialogContext} from "../../../../context/DialogContext.tsx";
-import {useScoreContext} from "../../../../context/ScoreContext.tsx";
+import {useDialogContext} from "../../../../hooks/useDialogContext.tsx";
+import {useScoreContext} from "../../../../hooks/useScoreContext.tsx";
 import {Layout, Size} from "../../../../utils/constants.ts";
 import {TbArrowAutofitHeight, TbArrowAutofitWidth} from "react-icons/tb";
 import {MdOutlineContentCopy} from "react-icons/md";
+import {DialogType} from "../../../../utils/enums.ts";
 
 const EmbedScoreDialog: React.FC = () => {
 

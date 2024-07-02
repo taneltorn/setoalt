@@ -1,12 +1,16 @@
 import React, {useMemo} from 'react';
-import PreviewNote from "./PreviewNote.tsx";
-import {useScoreContext} from "../../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../../hooks/useScoreContext.tsx";
 import {calculateCursorCoords} from "../../../../utils/calculation.helpers.tsx";
 import {Layout} from "../../../../utils/constants.ts";
-import {useAudioContext} from "../../../../context/AudioContext.tsx";
+import {useAudioContext} from "../../../../hooks/useAudioContext.tsx";
+import {useMantineTheme} from "@mantine/core";
+import {useTranslation} from "react-i18next";
+import PreviewNote from "./PreviewNote.tsx";
 
 const CursorMarker: React.FC = () => {
 
+    const {t} = useTranslation();
+    const theme = useMantineTheme();
     const context = useScoreContext();
     const {stopPlayback} = useAudioContext();
     const breaksDependency = JSON.stringify(context.score.data.breaks);
@@ -35,15 +39,17 @@ const CursorMarker: React.FC = () => {
 
     return (<>
             <rect
-                x={x - Layout.stave.note.SPACING / 2 - Layout.stave.note.RADIUS / 2}
-                // x={x}
+                className={"hover-pointer"}
+                x={x}
                 y={y}
-                width={Layout.stave.note.SPACING * 1.5}
+                width={Layout.stave.cursor.WIDTH}
                 height={context.dimensions.y}
+                fill={theme.colors.gray[9]}
                 opacity={x >= (Layout.stave.container.PADDING_X_START - Layout.stave.note.SPACING) ? 0.05 : 0}
-                fill={"gray"}
                 onClick={event => handleClick(event)}
-            />
+            >
+                <title>{t("tooltip.activatePosition", {position: context.cursorPosition})}</title>
+            </rect>
 
             {showNote && context.score.data.stave.lines.map(line =>
                 <PreviewNote

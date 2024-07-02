@@ -1,10 +1,10 @@
 import React, {useMemo} from 'react';
-import {useScoreContext} from "../../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../../hooks/useScoreContext.tsx";
 import {Layout, Size} from "../../../../utils/constants.ts";
 import {calculateLoopRangeCoords} from "../../../../utils/calculation.helpers.tsx";
 import {RxReset} from "react-icons/rx";
 import {useTranslation} from "react-i18next";
-import {useAudioContext} from "../../../../context/AudioContext.tsx";
+import {useAudioContext} from "../../../../hooks/useAudioContext.tsx";
 
 const ActiveRangeMarkers: React.FC = () => {
 

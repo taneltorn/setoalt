@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import React, {useEffect} from "react";
 import {useForm} from "react-hook-form";
 import {useNavigate} from "react-router-dom";
-import {useAuth} from "../context/AuthContext.tsx";
+import {useAuth} from "../hooks/useAuth.tsx";
 import Page from "../Page.tsx";
 
 type LoginFormValues = {

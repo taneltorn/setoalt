@@ -1,10 +1,12 @@
 import React, {useMemo, useState} from 'react';
 import {useTranslation} from "react-i18next";
-import {useScoreContext} from "../../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../../hooks/useScoreContext.tsx";
 import {Divider, DividerType} from "../../../../model/Divider.ts";
-import {useDevMode} from "../../../../context/DevModeContext.tsx";
-import {Color, Layout} from "../../../../utils/constants.ts";
+import {useDevMode} from "../../../../hooks/useDevContext.tsx";
+import {Layout} from "../../../../utils/constants.ts";
 import {calculateDividerCoords} from "../../../../utils/calculation.helpers.tsx";
+import {useLayoutControls} from "../../../../hooks/useLayoutControls.tsx";
+import {useMantineTheme} from "@mantine/core";
 
 interface Properties {
     divider: Divider;
@@ -13,8 +15,10 @@ interface Properties {
 const StaveDivider: React.FC<Properties> = ({divider}) => {
 
     const [t] = useTranslation();
-    const {isDevMode} = useDevMode();
+    const theme = useMantineTheme();
     const context = useScoreContext();
+    const {isDevMode} = useDevMode();
+    const {removeDivider} = useLayoutControls();
     const [isHovering, setIsHovering] = useState(false);
 
     const height = divider.type === DividerType.SEPARATOR
@@ -30,7 +34,7 @@ const StaveDivider: React.FC<Properties> = ({divider}) => {
             {context.isEditMode &&
                 <text x={x}
                       y={y + 20}
-                      fill={Color.accent.PRIMARY}
+                      fill={theme.colors.red[9]}
                       fontSize={18}>
                     {isHovering ? "✖" : ""}
                 </text>}
@@ -44,7 +48,7 @@ const StaveDivider: React.FC<Properties> = ({divider}) => {
 
             <rect
                 className={context.isEditMode ? "hover-pointer" : ""}
-                onClick={() => context.removeDivider(divider.position)}
+                onClick={() => removeDivider(divider.position)}
                 onMouseOver={() => setIsHovering(true)}
                 onMouseLeave={() => setIsHovering(false)}
                 opacity={isDevMode ? 0.1 : 0}

@@ -2,9 +2,10 @@ import React from 'react';
 import Dialog from "../../../../components/dialog/Dialog.tsx";
 import {Trans, useTranslation} from "react-i18next";
 import {Text} from "@mantine/core";
-import {DialogType, useDialogContext} from "../../../../context/DialogContext.tsx";
+import {useDialogContext} from "../../../../hooks/useDialogContext.tsx";
 import useScoreService from "../../../../hooks/useScoreService.tsx";
 import {DisplayError, DisplaySuccess} from "../../../../utils/helpers.tsx";
+import {DialogType} from "../../../../utils/enums.ts";
 
 const RemoveScoreDialog: React.FC = () => {
 

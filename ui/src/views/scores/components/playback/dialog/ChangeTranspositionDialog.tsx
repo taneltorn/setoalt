@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from "react-i18next";
 import {Text} from "@mantine/core";
-import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
-import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
+import {useDialogContext} from "../../../../../hooks/useDialogContext.tsx";
+import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {Playback} from "../../../../../utils/constants.ts";
 import Dialog from "../../../../../components/dialog/Dialog.tsx";
-import {useAudioContext} from "../../../../../context/AudioContext.tsx";
+import {useAudioContext} from "../../../../../hooks/useAudioContext.tsx";
 import Slider from "../../../../../components/controls/Slider.tsx";
+import {DialogType} from "../../../../../utils/enums.ts";
 
 const ChangeTranspositionDialog: React.FC = () => {
 

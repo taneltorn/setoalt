@@ -8,7 +8,7 @@ import Scores from "./views/scores/ScoreList.tsx";
 import Login from "./views/Login.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Admin from "./views/admin/Admin.tsx";
-import {Role} from "./context/AuthContext.tsx";
+import {Role} from "./utils/enums.ts";
 import ScoreManager from "./views/scores/ScoreManager.tsx";
 import Home from "./views/Home.tsx";
 import ChangeLog from "./views/ChangeLog.tsx";
@@ -17,7 +17,7 @@ import Error from "./views/Error.tsx";
 const router = createBrowserRouter([
     {
         path: "/",
-        errorElement: <Error/>,
+        ...(import.meta.env.VITE_ENVIRONMENT === "local" ? {} : {errorElement: <Error/>}),
         element: <Layout/>,
         children: [
             {
@@ -56,7 +56,7 @@ const router = createBrowserRouter([
                 path: "/admin",
                 element: (
                     <ProtectedRoute allowedRoles={[Role.ADMIN]}>
-                        <Admin />
+                        <Admin/>
                     </ProtectedRoute>
                 ),
             }
@@ -73,7 +73,7 @@ const AppRouter = () => {
 
     return (<>
             <React.Suspense fallback={<p>Loading</p>}>
-                <RouterProvider router={router} />
+                <RouterProvider router={router}/>
             </React.Suspense>
         </>
     );

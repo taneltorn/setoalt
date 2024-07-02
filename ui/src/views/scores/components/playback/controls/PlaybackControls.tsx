@@ -2,9 +2,9 @@ import React from 'react';
 import {useTranslation} from "react-i18next";
 import {GiTunePitch} from "react-icons/gi";
 import {ActionIcon, Box, Group, Slider} from "@mantine/core";
-import {useAudioContext} from "../../../../../context/AudioContext.tsx";
-import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
-import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
+import {useAudioContext} from "../../../../../hooks/useAudioContext.tsx";
+import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
+import {useDialogContext} from "../../../../../hooks/useDialogContext.tsx";
 import {Playback, Size} from "../../../../../utils/constants.ts";
 import {IoIosSpeedometer} from "react-icons/io";
 import InstrumentSelection from "./InstrumentSelection.tsx";
@@ -12,6 +12,7 @@ import {PiRepeatFill} from "react-icons/pi";
 import {FaBackward, FaForward, FaPauseCircle, FaPlayCircle} from "react-icons/fa";
 import {getDetuneLabel, getTempoLabel} from "../../../../../utils/helpers.tsx";
 import ValueIndicator from "./ValueIndicator.tsx";
+import {DialogType} from "../../../../../utils/enums.ts";
 
 const PlaybackControls: React.FC = () => {
 

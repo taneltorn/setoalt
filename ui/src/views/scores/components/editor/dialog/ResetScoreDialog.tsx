@@ -1,18 +1,30 @@
 import React from 'react';
-import {useScoreContext} from "../../../../../context/ScoreContext.tsx";
+import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import Dialog from "../../../../../components/dialog/Dialog.tsx";
-import {DialogType, useDialogContext} from "../../../../../context/DialogContext.tsx";
+import {useDialogContext} from "../../../../../hooks/useDialogContext.tsx";
 import {useTranslation} from "react-i18next";
 import {Text} from "@mantine/core";
+import {EmptyScore} from "../../../../../utils/helpers.tsx";
+import {DefaultVoices} from "../../../../../utils/dictionaries.ts";
+import {useHistory} from "../../../../../hooks/useHistory.tsx";
+import {DialogType} from "../../../../../utils/enums.ts";
 
 const ResetScoreDialog: React.FC = () => {
 
     const [t] = useTranslation();
-    const context = useScoreContext();
+    const history = useHistory();
+    const {setActiveVoice, setActivePosition, setLoopRange, setScore} = useScoreContext();
     const {close} = useDialogContext();
 
     const confirm = () => {
-        context.reset();
+        setScore(structuredClone(EmptyScore));
+        setActiveVoice(DefaultVoices[0].name);
+        setActivePosition(0);
+        setLoopRange(undefined);
+        history.setUndoStates([]);
+        history.setRedoStates([]);
+        history.setRecoverStates([]);
+
         close();
     }
 
