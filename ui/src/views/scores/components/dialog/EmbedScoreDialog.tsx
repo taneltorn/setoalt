@@ -17,7 +17,7 @@ const EmbedScoreDialog: React.FC = () => {
 
     const [simplified, setSimplified] = useState<boolean>(false);
     const [width, setWidth] = useState<number>(Layout.stave.container.MAX_WIDTH);
-    const [height, setHeight] = useState<number>(context.dimensions.containerY + 250);
+    const [height, setHeight] = useState<number>(context.dimensions.containerY + 1250);
 
     const code = useMemo(() => {
         return `<iframe src="${window.location.origin}/embed/${context.score.id}?simplified=${simplified}" width="${width}" height="${height}" title="${context.score.name}"></iframe>`;
@@ -25,7 +25,7 @@ const EmbedScoreDialog: React.FC = () => {
 
     useEffect(() => {
         setWidth(context.dimensions.x);
-        setHeight(context.dimensions.containerY);
+        setHeight(context.dimensions.containerY + 250);
     }, [context.dimensions]);
 
 
@@ -96,7 +96,7 @@ const EmbedScoreDialog: React.FC = () => {
                 </Button>
 
                 <CopyButton value={code}>
-                    {({ copied, copy }) => (
+                    {({copied, copy}) => (
                         <Button
                             color={copied ? 'teal' : 'red'}
                             size={"md"}
