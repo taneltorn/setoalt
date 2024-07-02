@@ -33,7 +33,7 @@ const SaveNotificationsDialog: React.FC = () => {
 
 
     const onSubmit = async (values: Notification) => {
-        const saveNotification = () => context.notification.id
+        const saveNotification = () => context.notification?.id
             ? notificationService.updateNotification(context.notification.id, values)
             : notificationService.createNotification(values);
         saveNotification()
