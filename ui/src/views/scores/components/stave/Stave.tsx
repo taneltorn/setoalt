@@ -91,6 +91,7 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                                     position: n,
                                     text: context.score.data.lyrics.find(l => l.position === n)?.text || ""
                                 }}/>)}
+
             </svg>
         </div>
     )

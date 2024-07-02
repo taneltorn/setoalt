@@ -37,6 +37,7 @@ export const NoteControlsContextProvider: React.FC<Properties> = ({children}) =>
             voice.notes.push(note);
             voice.notes.sort((a, b) => (a.position || 0) - (b.position || 0));
 
+            context.refresh();
             if (moveToNext) {
                 context.activate(note.position + 1);
             }
@@ -120,7 +121,7 @@ export const NoteControlsContextProvider: React.FC<Properties> = ({children}) =>
         changeType,
         increasePitch,
         decreasePitch
-    }), [context.score]);
+    }), [context.score, context.endPosition]);
 
     return (
         <NoteControlsContext.Provider value={ctx}>

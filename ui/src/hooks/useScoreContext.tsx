@@ -258,7 +258,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         containerRef, setContainerRef,
         svgRef, setSvgRef
 
-    }), [containerRef, endPosition, isEditMode, isExportMode, isTypeMode, dimensions, score, score.data.lyrics,
+    }), [containerRef, endPosition, isEditMode, isExportMode, isTypeMode, dimensions, score,
         activeNote, activePosition, activeVoice, activeDuration, endPosition, cursorPosition, loopRange, isSimplifiedMode]);
 
     return (
