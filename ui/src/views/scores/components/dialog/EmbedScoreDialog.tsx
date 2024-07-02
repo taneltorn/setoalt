@@ -17,7 +17,7 @@ const EmbedScoreDialog: React.FC = () => {
 
     const [simplified, setSimplified] = useState<boolean>(false);
     const [width, setWidth] = useState<number>(Layout.stave.container.MAX_WIDTH);
-    const [height, setHeight] = useState<number>(context.dimensions.containerY);
+    const [height, setHeight] = useState<number>(context.dimensions.containerY + 250);
 
     const code = useMemo(() => {
         return `<iframe src="${window.location.origin}/embed/${context.score.id}?simplified=${simplified}" width="${width}" height="${height}" title="${context.score.name}"></iframe>`;
