@@ -11,6 +11,7 @@ import {useScoreContext} from "../../../../hooks/useScoreContext.tsx";
 import {EmptyScore, range} from "../../../../utils/helpers.tsx";
 import {Layout} from "../../../../utils/constants.ts";
 import ActiveRangeMarkers from "./ActiveRangeMarkers.tsx";
+import ActiveNotes from "../playback/controls/ActiveNotes.tsx";
 
 interface Properties {
     score?: Score;
@@ -39,6 +40,7 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                 overflowX: "scroll",
                 height: context.dimensions.y * context.dimensions.blocks + 15
             }}>
+            <ActiveNotes/>
             <svg id={"notation"}
                  ref={svgRef}
                  width={context.dimensions.x}

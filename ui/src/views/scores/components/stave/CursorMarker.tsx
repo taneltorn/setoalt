@@ -50,6 +50,7 @@ const CursorMarker: React.FC = () => {
             <rect
                 className={"hover-pointer"}
                 x={x - Layout.stave.note.SPACING / 2 - Layout.stave.note.RADIUS / 2}
+                y={y}
                 width={Layout.stave.note.SPACING * 1.5}
                 height={context.dimensions.y}
                 opacity={ 0}

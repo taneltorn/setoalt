@@ -200,11 +200,16 @@ export const clone = (object: any): any => {
     return JSON.parse(JSON.stringify(object));
 }
 
-export const getDetuneLabel = (detune: number | undefined, unit?: string): string => {
+export const getTotalDetune = (note: Note, stave: Stave) => {
+    return (note.detune || 0) + (stave.lines.find(l => l.pitch === note.pitch)?.detune || 0);
+}
+
+export const getDetuneLabel = (detune: number | undefined, unit?: string, parenthesis?: boolean): string => {
     if (!detune) {
         return "";
     }
-    return `${detune > 0 ? "+" : ""}${detune}${unit ? unit : ""}`
+    const label = `${detune > 0 ? "+" : ""}${detune}${unit ? unit : ""}`;
+    return parenthesis ? ` (${label})` : label;
 }
 
 
