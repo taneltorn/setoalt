@@ -11,7 +11,7 @@ import {useScoreContext} from "./useScoreContext.tsx";
 import {useAudioContext} from "./useAudioContext.tsx";
 import {useLayoutControls} from "./useLayoutControls.tsx";
 import {useHistory} from "./useHistory.tsx";
-import { NoteControlsContext } from '../context/NoteControlsContext.tsx';
+import {NoteControlsContext} from '../context/NoteControlsContext.tsx';
 
 interface Properties {
     children: React.ReactNode;
@@ -82,7 +82,7 @@ export const NoteControlsContextProvider: React.FC<Properties> = ({children}) =>
             }
 
             note.duration = duration;
-            playNotes([note],context. score.data.stave);
+            playNotes([note], context.score.data.stave);
         }
     }
 
@@ -90,7 +90,7 @@ export const NoteControlsContextProvider: React.FC<Properties> = ({children}) =>
         note.pitch = pitch;
 
         playNotes([note], context.score.data.stave);
-       context. refresh();
+        context.refresh();
     }
 
     const increasePitch = (note: Note) => {

@@ -30,10 +30,7 @@ const DurationControls: React.FC = () => {
         if (activeNote) {
             if (activeNote.duration === "8n") {
                 changeDuration("16n", activeNote, false);
-                if (activeNote) {
-
-                }
-                const note = NoteFactory.create(activeNote.pitch, activeNote.position + 0.5, "16");
+                const note = NoteFactory.create(activeNote.pitch, activeNote.position + 0.5, "16n");
                 insertNote(note);
                 return;
             }

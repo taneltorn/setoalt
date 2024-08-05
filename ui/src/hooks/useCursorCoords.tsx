@@ -28,7 +28,7 @@ const useCursorCoords = (elementRef: RefObject<HTMLElement> | undefined, dimensi
                 const cy = ev.clientY - rect.top;
 
                 let x = Math.round(cx / Layout.stave.note.SPACING) - 1;
-                if ( halfPositions?.length) {
+                if (halfPositions?.length) {
                     const inMiddle = halfPositions.find(it => cx >= it.cutoffCoordStart && cx < it.cutoffCoordEnd);
                     if (inMiddle) {
                         x = inMiddle.position;
