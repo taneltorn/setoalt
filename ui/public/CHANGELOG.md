@@ -1,3 +1,7 @@
+#### [0.2.9] - *16.08.2024*
+
+- Teekide uuendused
+
 #### [0.2.8] - *05.08.2024*
 
 - Parandatud viga, kus 16ndik nooti ei olnud võimalik valida
