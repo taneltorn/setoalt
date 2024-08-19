@@ -19,6 +19,7 @@ export enum DialogType {
     JSON,
     ADD_VOICE,
     EMBED_SCORE,
+    LOGIN,
 }
 
 export enum ShiftMode {

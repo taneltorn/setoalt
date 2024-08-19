@@ -20,6 +20,7 @@ import {Notifications} from "@mantine/notifications";
 import {useDialogContext} from "./hooks/useDialogContext.tsx";
 import ProfileLink from "./components/ProfileLink.tsx";
 import DevNotice from "./components/DevNotice.tsx";
+import LoginDialog from "./views/login/LoginDialog.tsx";
 
 const ENV = import.meta.env.VITE_ENVIRONMENT;
 
@@ -83,6 +84,8 @@ const Layout: React.FC = () => {
 
             <AppShell.Main id={"content"} pb={50}>
                 <Outlet/>
+
+                <LoginDialog/>
 
                 {!opened && isAtBottom && !active &&
                     <Affix position={{bottom: 20, right: 20}}>

@@ -11,6 +11,8 @@ import {useAudioContext} from "../../hooks/useAudioContext.tsx";
 import {BsMusicNoteList} from "react-icons/bs";
 import {Size} from "../../utils/constants.ts";
 import Logo from "../Logo.tsx";
+import {DialogType} from "../../utils/enums.ts";
+import {useDialogContext} from "../../hooks/useDialogContext.tsx";
 
 const routes = [
     {id: 'home', icon: <IoHome className={classes.icon} size={Size.icon.SM}/>, link: "/"},
@@ -33,6 +35,7 @@ const Navigation: React.FC<Properties> = (props) => {
     const navigate = useNavigate();
     const auth = useAuth();
     const {stopPlayback} = useAudioContext();
+    const {open} = useDialogContext();
 
     const handleNavigate = (link: string) => {
         navigate(link);
@@ -84,11 +87,11 @@ const Navigation: React.FC<Properties> = (props) => {
             <Divider mt={"xs"}/>
 
             {!auth.currentUser && <Group mt={"lg"} justify={"center"}>
-                <Link to={"/login"} onClick={props.onNavigate}>
-                    <Button size={"sm"} variant={"outline"}>
+                {/*<Link to={"/login"} onClick={props.onNavigate}>*/}
+                    <Button size={"sm"} variant={"outline"} onClick={() => open(DialogType.LOGIN)}>
                         {t("page.sidebar.navigation.login")}
                     </Button>
-                </Link>
+                {/*</Link>*/}
             </Group>}
 
             {auth.currentUser &&

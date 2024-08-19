@@ -5,7 +5,6 @@ import {
 } from "react-router-dom";
 import Layout from "./Layout.tsx";
 import Scores from "./views/scores/ScoreList.tsx";
-import Login from "./views/Login.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Admin from "./views/admin/Admin.tsx";
 import {Role} from "./utils/enums.ts";
@@ -27,10 +26,6 @@ const router = createBrowserRouter([
             {
                 path: "/changelog",
                 element: <ChangeLog/>,
-            },
-            {
-                path: "/login",
-                element: <Login/>,
             },
             {
                 path: "/scores",

@@ -13,6 +13,8 @@ export interface Score {
     text?: string;
     visibility?: string;
     createdBy?: string;
+    createdAt?: Date;
+    modifiedAt?: Date;
 }
 
 export interface ScoreData {

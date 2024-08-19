@@ -3,6 +3,7 @@
     "title": "Seto laulu alternatiivne noodikiri",
     "loading": "Laen andmeid...",
     "help": "Näita juhendit",
+    "example": "Näide",
     "search": "Otsi",
     "sidebar": {
       "navigation": {
@@ -42,7 +43,9 @@
         "stave": "Noodijoonestik",
         "voices": "Hääled",
         "visibility": "Nähtavus",
-        "createdBy": "Looja"
+        "createdBy": "Sisestaja",
+        "createdAt": "Sisestatud",
+        "modifiedAt": "Viimati muudetud"
       }
     },
     "scoreDetails": {

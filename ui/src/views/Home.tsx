@@ -50,14 +50,16 @@ const Home: React.FC = () => {
                     <Tabs.List>
                         {exampleA &&
                             <Tabs.Tab value="example1" onClick={() => setActive(exampleA)}>
-                                <Text size={"lg"}>
+                                {t("page.example")}:
+                                <Text size={"lg"} fw={"bold"}>
                                     {exampleA?.name}
                                 </Text>
                             </Tabs.Tab>}
 
                         {exampleB &&
                             <Tabs.Tab value="example2" onClick={() => setActive(exampleB)}>
-                                <Text size={"lg"}>
+                                {t("page.example")}:
+                                <Text size={"lg"} fw={"bold"}>
                                     {exampleB?.name}
                                 </Text>
                             </Tabs.Tab>}
