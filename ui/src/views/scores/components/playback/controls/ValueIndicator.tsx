@@ -1,5 +1,5 @@
 import React from 'react';
-import {Badge} from "@mantine/core";
+import {Badge, Text} from "@mantine/core";
 
 interface Properties {
     label: string;
@@ -12,8 +12,11 @@ const ValueIndicator: React.FC<Properties> = (props) => {
             color={props.label ? "black" : "transparent"}
             variant={"transparent"}
             w={75}
-            style={{position: "relative", top: -10 , textTransform: "lowercase"}}>
-            {props.label || "-"}
+            style={{textTransform: "lowercase", justifyItems: "center"}}
+        >
+            <Text w={75} fw={"bold"} size={"xs"} style={{textAlign: "center"}}>
+                {props.label || "-"}
+            </Text>
         </Badge>
     )
 }

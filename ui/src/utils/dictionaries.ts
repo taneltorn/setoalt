@@ -1,5 +1,6 @@
 import {Voice, VoiceType} from "../model/Voice";
 import {Instrument} from "../model/Instrument.ts";
+import {Setting} from "../views/scores/components/ScoreSettings.tsx";
 
 export const DefaultVoices: Voice[] = [
     {
@@ -16,6 +17,12 @@ export const DefaultVoices: Voice[] = [
     }
 ];
 
+export const AllScoreSettings = [
+    Setting.CHANGE_MODE,
+    Setting.EMBED_CODE,
+    Setting.EXPORT_PNG,
+    Setting.CLONE_SCORE,
+]
 export const Durations: string[] = [
     "2n", "4n", "8n"
 ];

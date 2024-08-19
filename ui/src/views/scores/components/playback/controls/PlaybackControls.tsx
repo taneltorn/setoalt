@@ -85,8 +85,8 @@ const PlaybackControls: React.FC = () => {
                         <ValueIndicator label={getDetuneLabel(transposition, t("unit.semitonesAbbr"))}/>
                     </Box>
 
-                    <Box style={{position: "relative", top: 10}} size={75} ml={-32}>
-                        <Group justify={"center"}>
+                    <Box style={{position: "relative", top: 10}} size={200} ml={-32}>
+                        <Group justify={"center"} align={"center"}>
                             <ActionIcon
                                 size={"xl"}
                                 title={t("tooltip.changeTempo")}

@@ -6,14 +6,19 @@ import {BsCodeSlash, BsFiletypePng} from "react-icons/bs";
 import {Size} from "../../../utils/constants.ts";
 import {useDialogContext} from "../../../hooks/useDialogContext.tsx";
 import {IoSettingsOutline} from "react-icons/io5";
-import {FaItunesNote} from "react-icons/fa";
+import {FaItunesNote, FaRegCopy} from "react-icons/fa";
 import {DialogType} from "../../../utils/enums.ts";
 import Help from "../../../components/Help.tsx";
+import {DisplayError, DisplaySuccess} from "../../../utils/helpers.tsx";
+import useScoreService from "../../../hooks/useScoreService.tsx";
+import {useNavigate} from "react-router-dom";
+import {useAuth} from "../../../hooks/useAuth.tsx";
 
 export enum Setting {
     CHANGE_MODE,
     EXPORT_PNG,
-    EMBED_CODE
+    EMBED_CODE,
+    CLONE_SCORE
 }
 
 interface Properties {
@@ -26,6 +31,9 @@ const ScoreSettings: React.FC<Properties> = ({settings}) => {
     const context = useScoreContext();
     const {open} = useDialogContext();
     const [isLoading, setIsLoading] = useState<boolean>(false);
+    const scoreService = useScoreService();
+    const navigate = useNavigate();
+    const auth = useAuth();
 
     const exportToPng = () => {
         setIsLoading(true);
@@ -38,6 +46,21 @@ const ScoreSettings: React.FC<Properties> = ({settings}) => {
                     setIsLoading(false);
                 })
         }, 1000);
+    }
+
+    const cloneScore = () => {
+        const clone = {...context.score};
+        clone.name = t("view.scoreDetails.clonedScore", {name: clone.name});
+
+        scoreService.createScore(clone)
+            .then((response) => {
+                DisplaySuccess(t("toast.success.saveScore"));
+                if (response) {
+                    navigate(`/scores/${response.id}`)
+                    window.location.reload();
+                }
+            })
+            .catch(() => DisplayError(t("toast.error.saveScore")));
     }
 
     const downloadPng = async () => {
@@ -79,7 +102,7 @@ const ScoreSettings: React.FC<Properties> = ({settings}) => {
     return (
         <Group gap={4}>
             <Help tab={location.pathname.includes("edit") ? "editor" : "playback"}/>
-            <Menu shadow={"md"} position={"bottom-start"}>
+            <Menu shadow={"md"} position={"bottom-end"}>
                 <Menu.Target>
                     <ActionIcon
                         size={"xl"}
@@ -97,7 +120,7 @@ const ScoreSettings: React.FC<Properties> = ({settings}) => {
                     {settings.includes(Setting.CHANGE_MODE) &&
                         <Menu.Item onClick={() => context.setIsSimplifiedMode(!context.isSimplifiedMode)}>
                             <Group>
-                                <FaItunesNote size={Size.icon.MD}/>
+                                <FaItunesNote size={Size.icon.SM}/>
                                 <Text
                                     mr={"md"}>{t(`view.scoreDetails.settings.${context.isSimplifiedMode ? "selectDetailMode" : "selectSimplifiedMode"}`)}</Text>
                             </Group>
@@ -106,7 +129,7 @@ const ScoreSettings: React.FC<Properties> = ({settings}) => {
                     {settings.includes(Setting.EMBED_CODE) &&
                         <Menu.Item onClick={() => open(DialogType.EMBED_SCORE)}>
                             <Group>
-                                <BsCodeSlash size={Size.icon.MD}/>
+                                <BsCodeSlash size={Size.icon.SM}/>
                                 <Text mr={"md"}>{t("view.scoreDetails.settings.embedScore")}</Text>
                             </Group>
                         </Menu.Item>}
@@ -114,8 +137,16 @@ const ScoreSettings: React.FC<Properties> = ({settings}) => {
                     {settings.includes(Setting.EXPORT_PNG) &&
                         <Menu.Item onClick={exportToPng}>
                             <Group>
-                                <BsFiletypePng size={Size.icon.MD}/>
+                                <BsFiletypePng size={Size.icon.SM}/>
                                 <Text mr={"md"}>{t("view.scoreDetails.settings.exportPng")}</Text>
+                            </Group>
+                        </Menu.Item>}
+
+                    {settings.includes(Setting.CLONE_SCORE) && auth.currentUser?.isAuthorized &&
+                        <Menu.Item onClick={cloneScore}>
+                            <Group>
+                                <FaRegCopy size={Size.icon.SM}/>
+                                <Text mr={"md"}>{t("view.scoreDetails.settings.cloneScore")}</Text>
                             </Group>
                         </Menu.Item>}
                 </Menu.Dropdown>

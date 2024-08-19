@@ -22,7 +22,8 @@ import {useAudioContext} from "../../../hooks/useAudioContext.tsx";
 import {Size} from "../../../utils/constants.ts";
 import {BsMusicNoteList} from "react-icons/bs";
 import {PiSliders} from "react-icons/pi";
-import ScoreSettings, {Setting} from "./ScoreSettings.tsx";
+import ScoreSettings from "./ScoreSettings.tsx";
+import {AllScoreSettings} from "../../../utils/dictionaries.ts";
 
 interface Properties {
     score: Score;
@@ -93,7 +94,7 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
                 <Tabs.Panel value="editor" pt={"xl"}>
                     <Group justify={"space-between"}>
                         <ScorePlaybackPanel/>
-                        <ScoreSettings settings={[Setting.CHANGE_MODE, Setting.EMBED_CODE, Setting.EXPORT_PNG]}/>
+                        <ScoreSettings settings={AllScoreSettings}/>
                     </Group>
 
                     <VoiceControls/>

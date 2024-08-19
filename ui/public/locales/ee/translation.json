@@ -54,7 +54,8 @@
         "selectSimplifiedMode": "Kuva lihtsustatud vaade",
         "selectDetailMode": "Kuva detailne vaade",
         "exportPng": "Ekspordi PNG",
-        "embedScore": "Manustamiskood"
+        "embedScore": "Manustamiskood",
+        "cloneScore": "Tee koopia"
       }
     },
     "editor": {

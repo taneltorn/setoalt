@@ -15,9 +15,8 @@ import BackLink from "../../../components/controls/BackLink.tsx";
 import {useAudioContext} from "../../../hooks/useAudioContext.tsx";
 import {MdLyrics} from "react-icons/md";
 import {Size} from "../../../utils/constants.ts";
-import {DisplayError, DisplaySuccess} from "../../../utils/helpers.tsx";
-import useScoreService from "../../../hooks/useScoreService.tsx";
-import ScoreSettings, {Setting} from "./ScoreSettings.tsx";
+import ScoreSettings from "./ScoreSettings.tsx";
+import {AllScoreSettings} from "../../../utils/dictionaries.ts";
 
 interface Properties {
     score: Score;
@@ -28,7 +27,6 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
     const [t] = useTranslation();
     const theme = useMantineTheme();
     const {stopPlayback} = useAudioContext();
-    const scoreService = useScoreService();
     const auth = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -36,21 +34,6 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
     const handleClick = () => {
         stopPlayback();
         navigate("edit");
-    }
-
-    const cloneScore = () => {
-        const clone = {...score};
-        clone.name = t("view.scoreDetails.clonedScore", {name: clone.name});
-
-        scoreService.createScore(clone)
-            .then((response) => {
-                DisplaySuccess(t("toast.success.saveScore"));
-                if (response) {
-                    navigate(`/scores/${response.id}`)
-                    window.location.reload();
-                }
-            })
-            .catch(() => DisplayError(t("toast.error.saveScore")));
     }
 
     return (
@@ -61,11 +44,10 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
                     {auth.currentUser?.isAuthorized &&
                         <ScoreControls
                             primaryButtonLabel={t("button.edit")}
-                            secondaryButtonLabel={t("button.clone")}
                             primaryButtonVariant={"outline"}
                             secondaryButtonVariant={"outline"}
                             onPrimaryButtonClick={handleClick}
-                            onSecondaryButtonClick={cloneScore}
+                            hideSecondaryButton
                         />}
                 </>
                 }>
@@ -81,7 +63,7 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
 
             <Group justify={"space-between"}>
                 <ScorePlaybackPanel/>
-                <ScoreSettings settings={[Setting.CHANGE_MODE, Setting.EMBED_CODE, Setting.EXPORT_PNG]}/>
+                <ScoreSettings settings={AllScoreSettings}/>
             </Group>
 
             <VoiceFilter/>
