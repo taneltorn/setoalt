@@ -271,7 +271,8 @@
     "guest": "külaline"
   },
   "field": {
-    "required": "Väli on kohustuslik"
+    "required": "Väli on kohustuslik",
+    "voiceExists": "Sellise nimega hääl on juba lisatud"
   },
   "toast": {
     "success": {

@@ -37,7 +37,7 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
             style={{
                 marginTop: 15,
                 maxWidth: Layout.stave.container.MAX_WIDTH,
-                overflowX: "scroll",
+                overflowX: "auto",
                 height: context.dimensions.y * context.dimensions.blocks + 15
             }}>
             <ActiveNotes/>

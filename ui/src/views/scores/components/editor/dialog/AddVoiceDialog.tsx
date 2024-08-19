@@ -39,6 +39,7 @@ const AddVoiceDialog: React.FC = () => {
 
     const {
         register,
+        reset,
         handleSubmit,
         formState: {errors}
     } = useForm<FormValues>({defaultValues: DEFAULT_VALUES});
@@ -51,8 +52,8 @@ const AddVoiceDialog: React.FC = () => {
             notes: copyFrom ? clone(scoreContext.score.data.voices.find(v => v.name === copyFrom)?.notes || []) : []
         }
         scoreContext.score.data.voices.push(voice);
-
         dialogContext.context.onConfirm(voice);
+        reset();
     }
 
     const handleVoiceChange = (type: VoiceType) => {
@@ -84,7 +85,7 @@ const AddVoiceDialog: React.FC = () => {
                     <TextInput
                         size={"xl"}
                         placeholder={t("dialog.addVoice.name")}
-                        {...register("name", {required: t("field.required")})}
+                        {...register("name", {required: t("field.required"), validate: v => !scoreContext.score.data.voices.map(v => v.name).includes(v) || t("field.voiceExists")})}
                         error={errors.name?.message}
                         autoComplete={"off"}
                     />
