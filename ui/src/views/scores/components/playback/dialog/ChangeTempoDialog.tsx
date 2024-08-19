@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from "react-i18next";
-import {Text} from "@mantine/core";
+import {Button, Group, Text} from "@mantine/core";
 import {useDialogContext} from "../../../../../hooks/useDialogContext.tsx";
 import {Playback} from "../../../../../utils/constants.ts";
 import Dialog from "../../../../../components/dialog/Dialog.tsx";
@@ -16,6 +16,7 @@ const ChangeTempoDialog: React.FC = () => {
     const audioContext = useAudioContext();
     const scoreContext = useScoreContext();
     const [tempo, setTempo] = useState<number>(scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO);
+    const preset = [-50, -25, -10, 10, 25];
 
     const handleSave = () => {
         audioContext.setTempo(tempo);
@@ -55,6 +56,17 @@ const ChangeTempoDialog: React.FC = () => {
                 onChange={v => setTempo(v)}
                 onReset={() => setTempo(scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO)}
             />
+
+            <Group mt={"md"} gap={4}>
+                {preset.map((change, index) =>
+                    <Button key={index}
+                            size={"xs"}
+                            variant={(scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO) * (100 + change) / 100 === tempo ? "filled" : "subtle"}
+                            onClick={() => setTempo((scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO) * (100 + change) / 100)}
+                    >
+                        {change >= 0 && "+"}{change}%
+                    </Button>)}
+            </Group>
         </Dialog>
     )
 };
