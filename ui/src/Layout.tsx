@@ -21,6 +21,8 @@ import {useDialogContext} from "./hooks/useDialogContext.tsx";
 import ProfileLink from "./components/ProfileLink.tsx";
 import DevNotice from "./components/DevNotice.tsx";
 
+const ENV = import.meta.env.VITE_ENVIRONMENT;
+
 const Layout: React.FC = () => {
 
     const {t} = useTranslation();
@@ -75,7 +77,7 @@ const Layout: React.FC = () => {
                     </Box>
 
                     <Navigation onNavigate={close}/>
-                    <DevNotice onNavigate={close}/>
+                    {ENV !== "production" && <DevNotice onNavigate={close}/>}
                 </ScrollArea>
             </AppShell.Navbar>
 

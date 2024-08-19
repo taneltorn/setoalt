@@ -125,6 +125,7 @@ const ScoreList: React.FC = () => {
                                 .slice(0, 3)
                                 .map(v => v.name)
                                 .join(", ")}
+                            {score.data.voices.length > 3 && ", ..."}
                         </Group>,
                         score.createdBy,
                         <Badge

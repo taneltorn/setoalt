@@ -8,6 +8,7 @@ import {useDialogContext} from "../../../hooks/useDialogContext.tsx";
 import {IoSettingsOutline} from "react-icons/io5";
 import {FaItunesNote} from "react-icons/fa";
 import {DialogType} from "../../../utils/enums.ts";
+import Help from "../../../components/Help.tsx";
 
 export enum Setting {
     CHANGE_MODE,
@@ -76,47 +77,50 @@ const ScoreSettings: React.FC<Properties> = ({settings}) => {
     }
 
     return (
-        <Menu shadow={"md"} position={"bottom-start"}>
-            <Menu.Target>
-                <ActionIcon
-                    size={"xl"}
-                    variant={"subtle"}
-                    color={"gray"}
-                    data-active={"true"}
-                    title={t("button.settings")}
-                >
-                    {isLoading
-                        ? <Loader size={Size.icon.MD}/>
-                        : <IoSettingsOutline size={Size.icon.MD}/>}
-                </ActionIcon>
-            </Menu.Target>
-            <Menu.Dropdown>
-                {settings.includes(Setting.CHANGE_MODE) &&
-                    <Menu.Item onClick={() => context.setIsSimplifiedMode(!context.isSimplifiedMode)}>
-                        <Group>
-                            <FaItunesNote size={Size.icon.MD}/>
-                            <Text
-                                mr={"md"}>{t(`view.scoreDetails.settings.${context.isSimplifiedMode ? "selectDetailMode" : "selectSimplifiedMode"}`)}</Text>
-                        </Group>
-                    </Menu.Item>}
+        <Group gap={4}>
+            <Help tab={location.pathname.includes("edit") ? "editor" : "playback"}/>
+            <Menu shadow={"md"} position={"bottom-start"}>
+                <Menu.Target>
+                    <ActionIcon
+                        size={"xl"}
+                        variant={"subtle"}
+                        color={"gray"}
+                        data-active={"true"}
+                        title={t("button.settings")}
+                    >
+                        {isLoading
+                            ? <Loader size={Size.icon.MD}/>
+                            : <IoSettingsOutline size={Size.icon.MD}/>}
+                    </ActionIcon>
+                </Menu.Target>
+                <Menu.Dropdown>
+                    {settings.includes(Setting.CHANGE_MODE) &&
+                        <Menu.Item onClick={() => context.setIsSimplifiedMode(!context.isSimplifiedMode)}>
+                            <Group>
+                                <FaItunesNote size={Size.icon.MD}/>
+                                <Text
+                                    mr={"md"}>{t(`view.scoreDetails.settings.${context.isSimplifiedMode ? "selectDetailMode" : "selectSimplifiedMode"}`)}</Text>
+                            </Group>
+                        </Menu.Item>}
 
-                {settings.includes(Setting.EMBED_CODE) &&
-                    <Menu.Item onClick={() => open(DialogType.EMBED_SCORE)}>
-                        <Group>
-                            <BsCodeSlash size={Size.icon.MD}/>
-                            <Text mr={"md"}>{t("view.scoreDetails.settings.embedScore")}</Text>
-                        </Group>
-                    </Menu.Item>}
+                    {settings.includes(Setting.EMBED_CODE) &&
+                        <Menu.Item onClick={() => open(DialogType.EMBED_SCORE)}>
+                            <Group>
+                                <BsCodeSlash size={Size.icon.MD}/>
+                                <Text mr={"md"}>{t("view.scoreDetails.settings.embedScore")}</Text>
+                            </Group>
+                        </Menu.Item>}
 
-                {settings.includes(Setting.EXPORT_PNG) &&
-                    <Menu.Item onClick={exportToPng}>
-                        <Group>
-                            <BsFiletypePng size={Size.icon.MD}/>
-                            <Text mr={"md"}>{t("view.scoreDetails.settings.exportPng")}</Text>
-                        </Group>
-                    </Menu.Item>}
-            </Menu.Dropdown>
-        </Menu>
+                    {settings.includes(Setting.EXPORT_PNG) &&
+                        <Menu.Item onClick={exportToPng}>
+                            <Group>
+                                <BsFiletypePng size={Size.icon.MD}/>
+                                <Text mr={"md"}>{t("view.scoreDetails.settings.exportPng")}</Text>
+                            </Group>
+                        </Menu.Item>}
+                </Menu.Dropdown>
+            </Menu>
+        </Group>
     );
 };
 

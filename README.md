@@ -4,13 +4,15 @@ Antud veebirakendus on osa Kirjandusmuuseumi loovuurimuslikust projektist "Seto 
 ### Running app on server
 Make sure you have **Docker** and **Docker Compose** installed.
 
-Create **.env** and a **docker-compose.yml** files in project root. Use *.example* files as base.
+Create **.env** and a **docker-compose.yml** files in the root directory where you want to run the application. Use *.example* files from the code repository as base.
 
 #### Build Docker containers
 ```shell
 docker-compose build
 ```
-This also takes care of the database setup and creates the necessary tables. It inserts some initial data to the database, but most importantly it creates an admin user that the application requires. Check *database/scripts/insert_data.sql* and change the corresponding password hash. You can use **Bcrypt-Generator** to generate the hash: https://bcrypt-generator.com.
+This also takes care of the database setup and creates the necessary tables. It inserts some initial data to the database, but most importantly it creates an admin user that the application requires. 
+
+**NB!** Check *database/scripts/insert_data.sql* and change the corresponding password hash. You can use **Bcrypt-Generator** to generate the hash: https://bcrypt-generator.com.
 #### Run Docker containers
 ```shell
 docker-compose up -d
@@ -29,7 +31,7 @@ Change the branch parameter in *.env* to specific tag version. For example:
 ```yaml
 BRANCH=1.0.0
 ```
-Then follow regular release process.
+Then follow the regular release process.
 ```shell
 docker-compose down
 docker-compose build
@@ -38,7 +40,7 @@ docker-compose up -d
 
 
 ### Local development
-Local development requires database setup. The easiest way is to follow the instructions listed above (*Runing app on server*). Alternatively, you can set up the database yourself and run the scripts in *database/scripts*.
+Local development requires database setup. The easiest way is to follow the instructions listed above (*Running app on server*). Alternatively, you can set up the database yourself and run the scripts in *database/scripts*.
 
 #### Clone the repository
 ```shell

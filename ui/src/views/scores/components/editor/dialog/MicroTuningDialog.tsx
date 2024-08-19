@@ -18,7 +18,7 @@ const MicroTuningDialog: React.FC = () => {
     const {close} = useDialogContext();
     const {playNotes} = useAudioContext();
     const [detune, setDetune] = useState<number>(context.activeNote?.detune || 0);
-    const [showDetuneIndicator, setShowDetuneIndicator] = useState<boolean>(!!context.activeNote?.showDetuneIndicator);
+    const [showDetuneIndicator, setShowDetuneIndicator] = useState<boolean>(context.activeNote?.showDetuneIndicator !== false);
 
     const handleSave = () => {
         if (context.activeNote) {
@@ -38,12 +38,12 @@ const MicroTuningDialog: React.FC = () => {
 
     const handleReset = () => {
         setDetune(0);
-        setShowDetuneIndicator(false);
+        setShowDetuneIndicator(true);
     }
 
     useEffect(() => {
         setDetune(context.activeNote?.detune || 0);
-        setShowDetuneIndicator(!!context.activeNote?.showDetuneIndicator)
+        setShowDetuneIndicator(context.activeNote?.showDetuneIndicator  !== false)
     }, [context.activeNote]);
 
     return (

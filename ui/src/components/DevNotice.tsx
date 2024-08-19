@@ -1,17 +1,17 @@
 import React from 'react';
-import {Link, useLocation} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {
     Button,
     Group,
     Switch,
-    Text,
+    Text, useMantineTheme,
 } from "@mantine/core";
 import {FaGitAlt} from "react-icons/fa";
 import {Size} from "../utils/constants.ts";
 import {useAuth} from "../hooks/useAuth.tsx";
 import {useDevMode} from "../hooks/useDevContext.tsx";
 import {useTranslation} from "react-i18next";
-import Help from "./Help.tsx";
+import {FaCircleInfo} from "react-icons/fa6";
 
 interface Properties {
     onNavigate: () => void;
@@ -21,17 +21,13 @@ const DevNotice: React.FC<Properties> = ({onNavigate}) => {
 
     const {t} = useTranslation();
     const auth = useAuth();
-    const location = useLocation();
+    const theme = useMantineTheme();
     const {isDevMode, setIsDevMode} = useDevMode();
 
     return (
         <>
             <Group p={"md"} mt={"xl"}>
-                <Group gap={"xs"}>
-                    {/*<FaInfoCircle color={theme.colors.blue[9]} size={Size.icon.MD}/>*/}
-                    <Help tab={location.pathname.includes("edit") ? "editor" : "playback"}/>
-                </Group>
-
+                <FaCircleInfo size={Size.icon.MD} color={theme.colors.blue[9]}/>
                 <Text size={"md"}>
                     {t("page.sidebar.notice.message")}
                 </Text>
