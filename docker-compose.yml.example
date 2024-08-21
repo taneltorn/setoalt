@@ -25,12 +25,15 @@ services:
   ui:
     build:
       context: https://github.com/taneltorn/setoalt.git#${BRANCH}:ui
+      additional_contexts:
+        - root=./
       args:
         - VITE_API_URL=${VITE_API_URL}
         - VITE_ENVIRONMENT=${VITE_ENVIRONMENT}
     container_name: setoalt-ui
     ports:
       - "80:80"
+      - "443:443"
     restart: always
     environment:
       - VITE_API_URL=${VITE_API_URL}
@@ -39,6 +42,9 @@ services:
       - api
     networks:
       setoalt-network:
+    volumes:
+      - ./cert.pem:/etc/nginx/ssl/cert.pem:ro
+      - ./privkey.pem:/etc/nginx/ssl/privkey.pem:ro
 
   database:
     image: postgres:14
