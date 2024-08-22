@@ -55,7 +55,7 @@ but most importantly it creates an admin user that the application requires for 
 docker-compose up -d
 ```
 
-#### Releasing changes
+### Releasing changes
 Releasing new changes is simple, you just need to rebuild the Docker images and containers. Code gets pulled directly from GitHub - specific branch is denoted by BRANCH parameter in .env file. The default branch is 'master', which should be used for all new releases.
 ```shell
 docker-compose down
