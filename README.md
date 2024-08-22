@@ -1,6 +1,9 @@
 # Seto laulu alternatiivne noodikiri
 Antud veebirakendus on osa Kirjandusmuuseumi loovuurimuslikust projektist "Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil".
 
+
+![alt text](ui/public/architecture.png)
+
 ### Running app on server
 Make sure you have **Docker** and **Docker Compose** (2.17.0+) installed:
 
