@@ -3,9 +3,9 @@ Current application is the digital solution for creating and listening to notati
 It is part of a research project called **Teaching Seto polyphonic singing with the help of an alternative musical notation** by the Estonian Literary Museum.
 
 
-![alt text](ui/public/architecture.png)
+## Components
 
-## Components:
+![alt text](ui/public/architecture.png)
 
 #### React Frontend
 - The client-side part of the application.
