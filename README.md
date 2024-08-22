@@ -1,6 +1,6 @@
 # Seto laulu alternatiivne noodikiri
 Current application is the digital solution for creating and listening to notations of Seto multi-part singing in an alternative notation system. 
-It is part of a research project called **Teaching Seto polyphonic singing with the help of an alternative musical notation** by the Estonian Literary Museum.
+It is part of a research project called **"Teaching Seto polyphonic singing with the help of an alternative musical notation"** by the Estonian Literary Museum.
 
 
 ## Components
@@ -56,7 +56,8 @@ docker-compose up -d
 ```
 
 ## Releasing changes
-Releasing new changes is simple, you just need to rebuild the Docker images and containers. Code gets pulled directly from GitHub - specific branch is denoted by BRANCH parameter in .env file. The default branch is 'master', which should be used for all new releases.
+Releasing new changes is simple, you just need to rebuild the Docker images and containers. Code gets pulled directly from GitHub - 
+specific branch is denoted by BRANCH parameter in *.env* file. The default branch is 'master', which should be used for all new releases.
 ```shell
 docker-compose down
 docker-compose build
