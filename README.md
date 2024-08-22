@@ -2,7 +2,11 @@
 Antud veebirakendus on osa Kirjandusmuuseumi loovuurimuslikust projektist "Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil".
 
 ### Running app on server
-Make sure you have **Docker** and **Docker Compose** (2.17.0+) installed.
+Make sure you have **Docker** and **Docker Compose** (2.17.0+) installed:
+
+https://docs.docker.com/engine/
+
+https://docs.docker.com/compose/install/standalone/
 
 Create **.env**, **nginx.conf** and a **docker-compose.yml** files in the root directory where you want to run the application. Use *.example* files from the code repository as base. Parameters that should be changed are marked by comments.
 
