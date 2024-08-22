@@ -1,3 +1,6 @@
+#### [0.2.11] - *21.08.2024*
+- Konfiguratsioonimuudatused
+
 #### [0.2.10] - *19.08.2024*
 - Pisitäiendused
 
