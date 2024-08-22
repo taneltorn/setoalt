@@ -41,8 +41,8 @@ services:
     networks:
       setoalt-network:
     volumes:
-      - ./cert.pem:/etc/nginx/ssl/cert.pem:ro
-      - ./privkey.pem:/etc/nginx/ssl/privkey.pem:ro
+      - ${SSL_CERTIFICATE}:/etc/nginx/ssl/cert.pem:ro
+      - ${SSL_PRIVATE_KEY}:/etc/nginx/ssl/privkey.pem:ro
 
   database:
     image: postgres:16
