@@ -5,7 +5,7 @@ It is part of a research project called **Teaching Seto polyphonic singing with 
 
 ![alt text](ui/public/architecture.png)
 
-### Components:
+## Components:
 
 #### React Frontend
 - The client-side part of the application.
@@ -27,7 +27,7 @@ It is part of a research project called **Teaching Seto polyphonic singing with 
 - Docker Compose is used to orchestrate and manage these containers.
 
 
-### Running app on server
+## Running app on server
 The following lists minimum instructions for running the application on a server. 
 
 It's fair to state that the whole setup (using Nginx, default configuration in the example files etc.) is somewhat opinionated - it's just one way how to do it. 
@@ -55,7 +55,7 @@ but most importantly it creates an admin user that the application requires for 
 docker-compose up -d
 ```
 
-### Releasing changes
+## Releasing changes
 Releasing new changes is simple, you just need to rebuild the Docker images and containers. Code gets pulled directly from GitHub - specific branch is denoted by BRANCH parameter in .env file. The default branch is 'master', which should be used for all new releases.
 ```shell
 docker-compose down
@@ -75,7 +75,7 @@ docker-compose build
 docker-compose up -d
 ```
 
-### Local development
+## Local development
 Local development requires database setup. The easiest way is to follow the instructions listed above (*Running app on server*). Alternatively, you can set up the database yourself and run the scripts in *database/scripts*.
 
 #### Clone the repository
