@@ -39,24 +39,41 @@ https://docs.docker.com/engine/
 
 https://docs.docker.com/compose/install/standalone/
 
+
+#### Initial setup
 Create **.env**, **nginx.conf** and a **docker-compose.yml** files in the root directory where you want to run the application. 
 Use *.example* files from the code repository as base. Parameters that should be changed are marked by comments.
 
-#### Build Docker containers
+Additionally, copy the database scripts from the *database/scripts* directory and change the password hash for the admin user in *insert-data.sql*. 
+You can use **Bcrypt-Generator** to generate the hash: https://bcrypt-generator.com. 
+
+At the end you should have the following project structure:
+```
+/
+├── .env
+├── docker-compose.yml
+├── nginx.conf
+└── database/
+    └── scripts/
+        ├── init-db.sql
+        └── insert-data.sql
+```
+
+#### Build Docker images
 ```shell
 docker-compose build
 ```
-This also takes care of the initial database setup and creates the necessary tables. It inserts some example data to the database, 
+This creates the Docker images and also takes care of the initial database setup by creating the necessary tables. It inserts some example data to the database, 
 but most importantly it creates an admin user that the application requires for user management. 
 
-**NB!** Check *database/scripts/insert_data.sql* and change the corresponding password hash. You can use **Bcrypt-Generator** to generate the hash: https://bcrypt-generator.com.
-#### Run Docker containers
+#### Build Docker containers
 ```shell
 docker-compose up -d
 ```
+This builds and runs the Docker containers.
 
 ## Releasing changes
-Releasing new changes is simple, you just need to rebuild the Docker images and containers. Code gets pulled directly from GitHub - 
+Releasing new changes is fairly simple, you just need to rebuild the Docker images and containers. Code gets pulled directly from GitHub - 
 specific branch is denoted by BRANCH parameter in *.env* file. The default branch is 'master', which should be used for all new releases.
 ```shell
 docker-compose down
