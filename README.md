@@ -1,5 +1,27 @@
 # Seto laulu alternatiivne noodikiri
-Antud veebirakendus on osa Kirjandusmuuseumi loovuurimuslikust projektist "Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil".
+Current application is the digital solution for creating and listening to notations of Seto multi-part singing in an alternative notation system. 
+It is part of a research project called **Teaching Seto polyphonic singing with the help of an alternative musical notation** by the Estonian Literary Museum.
+
+### Components:
+
+#### React Frontend
+- The client-side part of the application.
+- Allows the user to create and listen to notations, communicates with the backend via API requests.
+
+#### Node.js Backend
+- The server-side part of the application.
+- Handles the business logic, processes API requests from the frontend, and interacts with the database.
+
+#### Postgres Database
+- Relational database where the application's data is stored.
+
+#### Nginx:
+- Serves as the web server and reverse proxy for the React frontend.
+- It routes incoming HTTP requests to the appropriate service (in this case, the React frontend).
+
+#### Docker & Docker Compose:
+- Each part of the application is containerized using Docker.
+- Docker Compose is used to orchestrate and manage these containers.
 
 
 ![alt text](ui/public/architecture.png)
