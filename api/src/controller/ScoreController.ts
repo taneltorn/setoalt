@@ -26,7 +26,6 @@ class ScoreController {
     async getScores(req: Request, res: Response): Promise<Score[]> {
         try {
             this.logger.info("GET /api/scores");
-            this.logger.info(req);
 
             // @ts-ignore todo use custom type
             const user = req.user;
