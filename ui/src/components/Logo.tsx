@@ -1,8 +1,6 @@
 import React from 'react';
-import {Badge, Box, Code, Group, Text} from "@mantine/core";
+import {Box, Code, Group, Text} from "@mantine/core";
 import packageInfo from "../../package.json";
-
-const ENV = import.meta.env.VITE_ENVIRONMENT;
 
 interface Properties {
     onClick?: () => void;
@@ -18,7 +16,6 @@ const Logo: React.FC<Properties> = (props) => {
             <Group mt={-10}>
                 <Code color={"transparent"}>{packageInfo.version}</Code>
             </Group>
-            {ENV !== "production" && <Badge size={"xs"}>{ENV}</Badge>}
         </Box>);
 }
 
