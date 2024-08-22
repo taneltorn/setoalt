@@ -31,13 +31,13 @@ It is part of a research project called **"Teaching Seto polyphonic singing with
 The following lists minimum instructions for running the application on a server. 
 
 It's fair to state that the whole setup (using Nginx, provided configuration examples etc.) is somewhat opinionated - it's just one way how to do it. 
-I got it working as such, but I must say I have fairly little experience when it comes to systems administration. So, feel free to change the configuration and the setup logic that follows.
+I got it working as such, but I must say I have fairly little experience when it comes to system administration. So, feel free to change the configuration
+and the setup logic that follows.
 
 Make sure you have **Docker** and **Docker Compose** (2.17.0+) installed:
 
-https://docs.docker.com/engine/
-
-https://docs.docker.com/compose/install/standalone/
+- https://docs.docker.com/engine/
+- https://docs.docker.com/compose/install/standalone/
 
 
 #### Initial setup
