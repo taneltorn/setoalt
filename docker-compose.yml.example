@@ -2,6 +2,8 @@ services:
   api:
     build:
       context: https://github.com/taneltorn/setoalt.git#${BRANCH}:api
+      args:
+        - LOG_DIRECTORY=${LOG_DIRECTORY}
     container_name: setoalt-api
     ports:
       - "3000:3000"
