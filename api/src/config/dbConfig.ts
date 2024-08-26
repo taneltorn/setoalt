@@ -11,19 +11,19 @@ config({path: path.resolve(__dirname, '../../../.env')});
 logger.info("Creating database pool");
 logger.info(`host: ${process.env.POSTGRES_HOST}`);
 logger.info(`database: ${process.env.POSTGRES_DB}`);
-logger.info(`user: ${process.env.POSTGRES_USER}`);
+logger.info(`user: ${process.env.DB_USER}`);
 logger.info(`port: ${process.env.POSTGRES_PORT}`);
 
 
 const pool = new Pool({
     host: process.env.POSTGRES_HOST,
     database: process.env.POSTGRES_DB,
-    user: process.env.POSTGRES_USER,
-    password: process.env.POSTGRES_PASSWORD,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
     port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
 });
 
-const testConnection = async (maxRetries = 5, delay = 2000) => {
+const testConnection = async (maxRetries = 10, delay = 2000) => {
     for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
             const client = await pool.connect();

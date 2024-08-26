@@ -44,7 +44,16 @@ Make sure you have **Docker** and **Docker Compose** (2.17.0+) installed:
 Create **.env**, **nginx.conf** and a **docker-compose.yml** files in the root directory where you want to run the application. 
 Use *.example* files from the code repository as base. Parameters that should be changed are marked by comments.
 
-Additionally, copy the database scripts from the *database/scripts* directory and change the password hash for the admin user in *insert-data.sql*. 
+Additionally, copy the database scripts from the *database/scripts* directory and change the user credential in create-db-user.sql. 
+
+Specifically, you should change:
+1. 'app_user' and 'app_password'
+
+
+
+These will be used by the application to connect to the database.
+
+the password hash for the admin user in *insert-data.sql*. 
 You can use **Bcrypt-Generator** to generate the hash: https://bcrypt-generator.com. 
 
 At the end you should have the following project structure:
@@ -55,6 +64,7 @@ At the end you should have the following project structure:
 ├── nginx.conf
 └── database/
     └── scripts/
+        ├── create-db-user.sql
         ├── init-db.sql
         └── insert-data.sql
 ```
@@ -96,8 +106,7 @@ Then follow the regular release process.
 
 #### Accessing logs
 ```shell
-docker exec -it setoalt-api sh
-cat /app/logs/app.log
+docker-compose logs -t -f --tail 10
 ```
 
 ## Local development

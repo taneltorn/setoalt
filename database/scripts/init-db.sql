@@ -1,3 +1,5 @@
+-- This script initializes the database
+
 CREATE SCHEMA IF NOT EXISTS setoalt;
 
 CREATE TABLE IF NOT EXISTS setoalt.users (

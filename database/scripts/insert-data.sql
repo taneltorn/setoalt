@@ -1,6 +1,8 @@
+-- creates an admin user that can be used for in-app user management (change the password hash)
 INSERT INTO setoalt.users (username, password, role, deleted_at)
 VALUES ('admin', '$2a$10$u2oOh6egvw1l4sEGvgfB4e62yEQoEg/Hnm/ObH8byJOYRM4VKHh7i', 'ADMIN', NULL);
 
+-- inserts example notation
 INSERT INTO setoalt.scores (name, description, data, default_tempo, visibility, text, created_by, deleted_at)
 VALUES ('Põllulaul',
         'ERA, DH 17 (34) < Värska al - Žanna Pärtlas, Janika Oras, Andreas Kalkun, Triino Ojamaa, salv. Jaan Tamm < Anastassia Puhm, eestütleja, Maria Rõžikova, killõ, ja koor (2006).',
