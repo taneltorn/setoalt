@@ -22,6 +22,8 @@ services:
       - database
     networks:
       setoalt-network:
+    volumes:
+      - api-logs:${LOG_DIRECTORY}
 
   ui:
     build:
