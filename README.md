@@ -73,6 +73,13 @@ docker-compose down
 docker-compose build
 docker-compose up -d
 ```
+Then follow the regular release process.
+
+#### Accessing logs
+```shell
+docker exec -it setoalt-api sh
+cat /app/logs/app.log
+```
 
 ### Local development
 Local development requires database setup. The easiest way is to follow the instructions listed above (*Running app on server*). Alternatively, you can set up the database yourself and run the scripts in *database/scripts*.
