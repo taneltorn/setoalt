@@ -42,7 +42,8 @@ Make sure you have **Docker** and **Docker Compose** (2.17.0+) installed:
 
 #### Initial setup
 Create **.env**, **nginx.conf** and a **docker-compose.yml** files in the root directory where you want to run the application. 
-Use *.example* files from the code repository as base. Parameters that should be changed are marked by comments.
+Use *.example* files from the code repository as base, but change the values according to your needs. Values that should be changed 
+are marked by comments.
 
 Additionally, copy the database scripts from the *database/scripts* directory and change the user credential in create-db-user.sql. 
 

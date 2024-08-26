@@ -9,18 +9,17 @@ logger.level = process.env.LOG_LEVEL;
 config({path: path.resolve(__dirname, '../../../.env')});
 
 logger.info("Creating database pool");
-logger.info(`host: ${process.env.POSTGRES_HOST}`);
-logger.info(`database: ${process.env.POSTGRES_DB}`);
+logger.info(`host: ${process.env.DB_HOST}`);
+logger.info(`database: ${process.env.DB_NAME}`);
 logger.info(`user: ${process.env.DB_USER}`);
-logger.info(`port: ${process.env.POSTGRES_PORT}`);
-
+logger.info(`port: ${process.env.DB_PORT}`);
 
 const pool = new Pool({
-    host: process.env.POSTGRES_HOST,
-    database: process.env.POSTGRES_DB,
+    host: process.env.DB_HOST,
+    database: process.env.DB_NAME,
     user: process.env.DB_USER,
     password: process.env.DB_PASSWORD,
-    port: parseInt(process.env.POSTGRES_PORT || '5432', 10),
+    port: parseInt(process.env.DB_PORT, 10),
 });
 
 const testConnection = async (maxRetries = 10, delay = 2000) => {
