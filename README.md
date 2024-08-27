@@ -32,7 +32,7 @@ The following lists minimum instructions for running the application on a server
 
 It's fair to state that the whole setup (using Nginx, provided configuration examples etc.) is somewhat opinionated - it's just one way how to do it. 
 I have tried to make the setup process as straightforward as possible, and got it working as such, but it must be noted that
-I have fairly little experience when it comes to system administration. So, feel free to change the configuration
+I have fairly little experience in systems administration. So, feel free to change the configuration
 and the setup logic that follows.
 
 Make sure you have **Docker** and **Docker Compose** (2.17.0+) installed:
@@ -46,8 +46,8 @@ Create **.env**, **nginx.conf** and a **docker-compose.yml** files in the root d
 Use *.example* files from the code repository as base, but change the values according to your needs. Values that should be changed 
 are marked by comments.
 
-Additionally, copy the database scripts from the *database/scripts* directory and change the password for app_user in
-*init-db.sql* (be sure that it matches the one in .env). The *init-db.sql* creates the necessary schema, tables and a non-superuser
+Additionally, copy the database scripts from the *database/scripts* directory and change the password for **app_user** in
+*init-db.sql* (be sure that it matches the one in *.env*). The *init-db.sql* creates the necessary schema, tables and a non-superuser
 role for the backend to interact with the database.
 
 The *insert-data.sql* script inserts a new application-level admin user
