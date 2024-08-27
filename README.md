@@ -27,11 +27,12 @@ It is part of a research project called **"Teaching Seto polyphonic singing with
 - Docker Compose is used to orchestrate and manage these containers.
 
 
-## Running app on server
+## Running app on server (production)
 The following lists minimum instructions for running the application on a server. 
 
 It's fair to state that the whole setup (using Nginx, provided configuration examples etc.) is somewhat opinionated - it's just one way how to do it. 
-I got it working as such, but I must say I have fairly little experience when it comes to system administration. So, feel free to change the configuration
+I have tried to make the setup process as straightforward as possible, and got it working as such, but it must be noted that
+I have fairly little experience when it comes to system administration. So, feel free to change the configuration
 and the setup logic that follows.
 
 Make sure you have **Docker** and **Docker Compose** (2.17.0+) installed:
@@ -45,17 +46,13 @@ Create **.env**, **nginx.conf** and a **docker-compose.yml** files in the root d
 Use *.example* files from the code repository as base, but change the values according to your needs. Values that should be changed 
 are marked by comments.
 
-Additionally, copy the database scripts from the *database/scripts* directory and change the user credential in create-db-user.sql. 
+Additionally, copy the database scripts from the *database/scripts* directory and change the password for app_user in
+*init-db.sql* (be sure that it matches the one in .env). The *init-db.sql* creates the necessary schema, tables and a non-superuser
+role for the backend to interact with the database.
 
-Specifically, you should change:
-1. 'app_user' and 'app_password'
-
-
-
-These will be used by the application to connect to the database.
-
-the password hash for the admin user in *insert-data.sql*. 
-You can use **Bcrypt-Generator** to generate the hash: https://bcrypt-generator.com. 
+The *insert-data.sql* script inserts a new application-level admin user
+that can be used for in-app user management. Be sure to change the corresponding password hash in the script file.
+You can use **Bcrypt-Generator** to generate the hash: https://bcrypt-generator.com.
 
 At the end you should have the following project structure:
 ```
@@ -65,7 +62,6 @@ At the end you should have the following project structure:
 ├── nginx.conf
 └── database/
     └── scripts/
-        ├── create-db-user.sql
         ├── init-db.sql
         └── insert-data.sql
 ```
@@ -74,8 +70,7 @@ At the end you should have the following project structure:
 ```shell
 docker-compose build
 ```
-This creates the Docker images and also takes care of the initial database setup by creating the necessary tables. It inserts some example data to the database, 
-but most importantly it creates an admin user that the application requires for user management. 
+This creates the Docker images and also takes care of the initial database setup by running the scripts listed above.
 
 #### Build Docker containers
 ```shell
@@ -103,7 +98,6 @@ docker-compose down
 docker-compose build
 docker-compose up -d
 ```
-Then follow the regular release process.
 
 #### Accessing logs
 ```shell
@@ -135,11 +129,12 @@ POSTGRES_PASSWORD=postgres
 
 ALLOWED_ORIGIN=http://localhost:5173
 JWT_SECRET_KEY=somesecret
+DB_USER=app_user
+DB_PASSWORD=app_password
 
 VITE_ENVIRONMENT=local
 VITE_API_URL=http://localhost:3000
 ```
-
 
 #### Running backend
 ```shell
@@ -152,3 +147,5 @@ npm run dev
 cd ui
 npm run dev
 ```
+
+You should then be able to access the UI at: http://localhost:5173
