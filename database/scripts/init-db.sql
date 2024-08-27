@@ -1,8 +1,8 @@
--- Create the application schema
-CREATE SCHEMA IF NOT EXISTS setoalt AUTHORIZATION app_user;
-
 -- Create a non-superuser role for the application (change password - both here and in .env)
 CREATE USER app_user WITH PASSWORD 'app_password';
+
+-- Create the application schema
+CREATE SCHEMA IF NOT EXISTS setoalt AUTHORIZATION app_user;
 
 -- Grant necessary privileges to the app_user
 GRANT CONNECT ON DATABASE setoalt TO app_user;
