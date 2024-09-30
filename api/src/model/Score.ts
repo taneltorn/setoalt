@@ -2,6 +2,7 @@ export type Score = {
     id: number;
     name: string;
     description?: string;
+    recording?: string;
     data: object;
     defaultTempo?: number;
     defaultTransposition?: number;

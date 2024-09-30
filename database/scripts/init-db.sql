@@ -36,6 +36,7 @@ CREATE TABLE IF NOT EXISTS setoalt.scores
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description TEXT,
+    recording VARCHAR(255),
     data JSON NOT NULL,
     default_tempo INTEGER,
     default_transposition INTEGER,

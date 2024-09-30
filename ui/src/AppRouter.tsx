@@ -61,6 +61,11 @@ const router = createBrowserRouter([
         path: "/embed/:id",
         element: <ScoreManager mode={"embed"}/>,
         errorElement: <>Error</>
+    },
+    {
+        path: "/embed",
+        element: <ScoreManager mode={"embed-new"}/>,
+        errorElement: <>Error</>
     }
 ]);
 

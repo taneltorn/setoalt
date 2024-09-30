@@ -73,6 +73,7 @@
         "lineDetune": "Noodijoonte mikrotonaalsus (tsentides)",
         "text": "Laulusõnad",
         "visibility": "Nähtavus",
+        "recording": "Link salvestusele",
         "editor": "Noodistus",
         "data": "Andmed",
         "stave": "Sätted"

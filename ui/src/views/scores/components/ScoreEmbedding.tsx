@@ -8,13 +8,16 @@ import {useScoreContext} from "../../../hooks/useScoreContext.tsx";
 import {Layout} from "../../../utils/constants.ts";
 import {Group} from "@mantine/core";
 import ScoreSettings, {Setting} from "./ScoreSettings.tsx";
+import ScoreEditorPanel from "./editor/ScoreEditorPanel.tsx";
+import VoiceControls from "./editor/controls/VoiceControls.tsx";
 
 interface Properties {
     score?: Score;
     simplified?: boolean;
+    isEditMode?: boolean;
 }
 
-const ScoreEmbedding: React.FC<Properties> = ({score}) => {
+const ScoreEmbedding: React.FC<Properties> = ({score, isEditMode}) => {
 
     const {dimensions, setIsSimplifiedMode} = useScoreContext();
     const [searchParams] = useSearchParams();
@@ -36,6 +39,7 @@ const ScoreEmbedding: React.FC<Properties> = ({score}) => {
             setMaxHeight(+height)
         }
     }, []);
+
     return (
         <div style={{
             maxWidth: maxWidth || Layout.stave.container.MAX_WIDTH,
@@ -47,8 +51,17 @@ const ScoreEmbedding: React.FC<Properties> = ({score}) => {
                 <ScoreSettings settings={[Setting.CHANGE_MODE, Setting.EXPORT_PNG]}/>
             </Group>
 
-            <VoiceFilter/>
-            <Stave score={score}/>
+            {isEditMode
+                ? <>
+                    <VoiceControls/>
+                    <ScoreEditorPanel/>
+                    <Stave isEditMode/>
+                </>
+                : <>
+                    <VoiceFilter/>
+                    <Stave score={score}/>
+                </>
+            }
         </div>
     );
 }

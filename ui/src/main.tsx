@@ -5,6 +5,7 @@ import '@mantine/core/styles.css';
 import './index.scss'
 import '@mantine/notifications/styles.css';
 import '@mantine/dates/styles.css';
+import 'react-h5-audio-player/lib/styles.css';
 
 import {MantineProvider, createTheme} from '@mantine/core';
 import {AuthContextProvider} from "./hooks/useAuth.tsx";

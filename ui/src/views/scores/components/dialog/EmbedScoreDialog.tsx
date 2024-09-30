@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 import {Button, Code, CopyButton, Grid, Group, Input, Switch, Text, TextInput} from "@mantine/core";
 import {useDialogContext} from "../../../../hooks/useDialogContext.tsx";
 import {useScoreContext} from "../../../../hooks/useScoreContext.tsx";
-import {Layout, Size} from "../../../../utils/constants.ts";
+import {Size} from "../../../../utils/constants.ts";
 import {TbArrowAutofitHeight, TbArrowAutofitWidth} from "react-icons/tb";
 import {MdOutlineContentCopy} from "react-icons/md";
 import {DialogType} from "../../../../utils/enums.ts";
@@ -16,16 +16,15 @@ const EmbedScoreDialog: React.FC = () => {
     const context = useScoreContext();
 
     const [simplified, setSimplified] = useState<boolean>(false);
-    const [width, setWidth] = useState<number>(Layout.stave.container.MAX_WIDTH);
-    const [height, setHeight] = useState<number>(context.dimensions.containerY + 1250);
+    const [width, setWidth] = useState<string>("100%");
+    const [height, setHeight] = useState<string>(`${context.dimensions.containerY + 1250}`);
 
     const code = useMemo(() => {
         return `<iframe src="${window.location.origin}/embed/${context.score.id}?simplified=${simplified}" width="${width}" height="${height}" title="${context.score.name}"></iframe>`;
     }, [width, height, simplified, context.score]);
 
     useEffect(() => {
-        setWidth(context.dimensions.x);
-        setHeight(context.dimensions.containerY + 250);
+        setHeight(`${context.dimensions.containerY + 250}`);
     }, [context.dimensions]);
 
 
@@ -50,7 +49,7 @@ const EmbedScoreDialog: React.FC = () => {
                             size={"xl"}
                             placeholder={t("view.editor.form.name")}
                             value={width}
-                            onChange={e => setWidth(+e.currentTarget.value)}
+                            onChange={e => setWidth(e.currentTarget.value)}
                         />
                     </Input.Wrapper>
                 </Grid.Col>
@@ -62,7 +61,7 @@ const EmbedScoreDialog: React.FC = () => {
                             size={"xl"}
                             placeholder={t("view.editor.form.name")}
                             value={height}
-                            onChange={e => setHeight(+e.currentTarget.value)}
+                            onChange={e => setHeight(e.currentTarget.value)}
                         />
                     </Input.Wrapper>
                 </Grid.Col>

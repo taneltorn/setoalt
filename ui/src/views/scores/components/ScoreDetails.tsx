@@ -1,6 +1,6 @@
-import React from "react";
+import React, {createRef} from "react";
 import Page from "../../../Page.tsx";
-import {Badge, Box, Group, Tabs, Text, useMantineTheme} from "@mantine/core";
+import {Badge, Box, Group, useMantineTheme} from "@mantine/core";
 import {Score} from "../../../model/Score.ts";
 import Header from "../../../components/controls/Header.tsx";
 import {useTranslation} from "react-i18next";
@@ -13,16 +13,19 @@ import Stave from "./stave/Stave.tsx";
 import ScorePlaybackPanel from "./playback/ScorePlaybackPanel.tsx";
 import BackLink from "../../../components/controls/BackLink.tsx";
 import {useAudioContext} from "../../../hooks/useAudioContext.tsx";
-import {MdLyrics} from "react-icons/md";
 import {Size} from "../../../utils/constants.ts";
 import ScoreSettings from "./ScoreSettings.tsx";
 import {AllScoreSettings} from "../../../utils/dictionaries.ts";
+import AudioPlayer from "react-h5-audio-player";
+import {PiSpeakerHighFill} from "react-icons/pi";
 
 interface Properties {
     score: Score;
 }
 
 const ScoreDetails: React.FC<Properties> = ({score}) => {
+
+    const playerRef = createRef();
 
     const [t] = useTranslation();
     const theme = useMantineTheme();
@@ -59,6 +62,7 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
                     </Badge>
                 </Group>
             </Header>
+
             <Description>{score.description}</Description>
 
             <Group justify={"space-between"}>
@@ -69,22 +73,28 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
             <VoiceFilter/>
             <Stave score={score}/>
 
-            {score.text &&
-                <Tabs defaultValue="lyrics" radius={"xs"}>
-                    <Tabs.List>
-                        <Tabs.Tab value="lyrics" leftSection={<MdLyrics size={Size.icon.MD}/>}>
-                            <Text size={"lg"}>
-                                {t("view.scoreDetails.lyrics")}
-                            </Text>
-                        </Tabs.Tab>
-                    </Tabs.List>
+            {score.recording &&
+                <Group mb={"md"} maw={400}>
+                    <AudioPlayer
+                        // @ts-ignore
+                        ref={playerRef}
+                        src={score.recording}
+                        autoPlay={false}
+                        layout={"horizontal-reverse"}
+                        showJumpControls={false}
+                        customVolumeControls={[]}
+                        customAdditionalControls={[]}
+                        customIcons={{
+                            play: <PiSpeakerHighFill size={Size.icon.XS} style={{display: "flex"}}/>,
+                            pause: <PiSpeakerHighFill size={Size.icon.XS} color={theme.colors.red[9]}
+                                                      style={{display: "flex"}}/>
+                        }}
+                    />
+                </Group>}
 
-                    <Tabs.Panel value="lyrics">
-                        <Box>
-                            <pre style={{whiteSpace: "pre-wrap"}}>{score?.text}</pre>
-                        </Box>
-                    </Tabs.Panel>
-                </Tabs>}
+            {score.text && <Box>
+                <pre style={{whiteSpace: "pre-wrap"}}>{score?.text}</pre>
+            </Box>}
         </Page>
     );
 }

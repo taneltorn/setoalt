@@ -82,6 +82,20 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
             </Input.Wrapper>
 
             <Input.Wrapper
+                label={t("view.editor.form.recording")}
+                size={"xl"}
+                mb={"xl"}
+                error={errors.recording?.message}
+            >
+                <TextInput
+                    size={"xl"}
+                    placeholder={t("view.editor.form.recording")}
+                    {...register("recording")}
+                    {...handleFocus}
+                />
+            </Input.Wrapper>
+
+            <Input.Wrapper
                 label={t("view.editor.form.text")}
                 size={"xl"}
                 error={errors.text?.message}

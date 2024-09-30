@@ -1,7 +1,7 @@
 export const Layout = {
     stave: {
         container: {
-            MAX_WIDTH: 1450,
+            MAX_WIDTH: 1500,
             PADDING_X_START: 75,
             PADDING_X_END: 60,
             SYMBOLS_BAR: 50,

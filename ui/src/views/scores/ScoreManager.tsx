@@ -17,7 +17,7 @@ import ScoreEmbedding from "./components/ScoreEmbedding.tsx";
 import ContextProviders from "../../ContextProviders.tsx";
 
 interface Properties {
-    mode: "details" | "edit" | "new" | "embed";
+    mode: "details" | "edit" | "new" | "embed" | "embed-new";
 }
 
 const ScoreManager: React.FC<Properties> = ({mode}) => {
@@ -55,6 +55,7 @@ const ScoreManager: React.FC<Properties> = ({mode}) => {
                 {mode === "edit" && score && <ScoreEditor score={score}/>}
                 {mode === "new" && <Editor/>}
                 {mode === "embed" && score && <ScoreEmbedding score={score}/>}
+                {mode === "embed-new" && <ScoreEmbedding isEditMode />}
 
                 {isDevMode && <DevInfo/>}
             </LoadingOverlay>

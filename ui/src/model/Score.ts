@@ -7,6 +7,7 @@ export interface Score {
     id?: number;
     name: string;
     description?: string;
+    recording?: string;
     data: ScoreData;
     defaultTempo?: number;
     defaultTransposition?: number;

@@ -66,7 +66,7 @@ const ChangeTranspositionDialog: React.FC = () => {
                             variant={(scoreContext.score.defaultTransposition || Playback.DEFAULT_TRANSPOSITION) + change === transposition ? "filled" : "subtle"}
                             onClick={() => setTransposition((scoreContext.score.defaultTransposition || Playback.DEFAULT_TRANSPOSITION) + change)}
                     >
-                        {change >= 0 && "+"}{change}%
+                        {change >= 0 && "+"}{change}pt
                     </Button>)}
             </Group>
         </Dialog>

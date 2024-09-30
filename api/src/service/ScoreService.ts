@@ -53,15 +53,16 @@ class ScoreService {
     public async insert(score: any, user: any): Promise<any> {
         try {
             this.logger.info(`Inserting new score`);
-            const query = `INSERT INTO setoalt.scores(name, description, data, default_tempo, default_transposition,
+            const query = `INSERT INTO setoalt.scores(name, description, recording, data, default_tempo, default_transposition,
                                                       text, visibility,
                                                       created_by,
                                                       deleted_at)
-                           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9)
+                           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
                            RETURNING *`;
             const result = await pool.query(query, [
                 score.name,
                 score.description,
+                score.recording,
                 score.data,
                 score.defaultTempo,
                 score.defaultTransposition,
@@ -86,19 +87,21 @@ class ScoreService {
                 UPDATE setoalt.scores
                 SET name                  = $1,
                     description           = $2,
-                    data                  = $3,
-                    default_tempo         = $4,
-                    default_transposition = $5,
-                    text                  = $6,
-                    visibility            = $7,
-                    modified_by           = $8,
+                    recording             = $3,
+                    data                  = $4,
+                    default_tempo         = $5,
+                    default_transposition = $6,
+                    text                  = $7,
+                    visibility            = $8,
+                    modified_by           = $9,
                     modified_at           = NOW()
-                WHERE id = $9
+                WHERE id = $10
                 RETURNING *;
             `;
             const result = await pool.query(query, [
                 score.name,
                 score.description,
+                score.recording,
                 score.data,
                 score.defaultTempo,
                 score.defaultTransposition,
@@ -142,22 +145,6 @@ class ScoreService {
             this.logger.error(err);
             return {success: false, error: `Error deleting score with id ${id}`, detail: err.detail};
         }
-
-        // try {
-        //     this.logger.info(`Deleting score with id = ${id}`);
-        //
-        //     // TODO: Implement soft delete
-        //     const query = "UPDATE setoalt.scores SET deleted_at WHERE id = $1 RETURNING id";
-        //     const result = await pool.query(query, [id]);
-        //     if (result.rows.length === 0) {
-        //         return {success: false, error: "Not found"};
-        //     }
-        //     this.logger.info(`Deleted ${result.rows.length} ${result.rows.length === 1 ? "row" : "rows"}`);
-        //     return {success: true, data: result.rows[0]};
-        // } catch (err) {
-        //     this.logger.error(err);
-        //     return {success: false, error: `Error deleting score with id ${id}`, detail: err.detail};
-        // }
     }
 }
 

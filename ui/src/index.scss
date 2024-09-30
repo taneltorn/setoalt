@@ -62,3 +62,16 @@ a {
   font-weight: 600;
   padding-bottom: 8px;
 }
+
+.rhap_container {
+  box-shadow: none !important;
+  padding: 0 !important;
+
+  .rhap_controls-section {
+    max-width: 50px !important;
+  }
+
+  .rhap_footer {
+    text-align: end;
+  }
+}
