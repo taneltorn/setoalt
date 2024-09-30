@@ -1,3 +1,6 @@
+#### [0.2.12] - 
+- Pisimuudatused
+
 #### [0.2.11] - *21.08.2024*
 - Konfiguratsioonimuudatused
 

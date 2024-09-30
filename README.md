@@ -126,13 +126,11 @@ LOG_LEVEL=info
 POSTGRES_HOST=localhost
 POSTGRES_PORT=5432
 POSTGRES_DB=setoalt
-POSTGRES_USER=postgres
-POSTGRES_PASSWORD=postgres
+DB_USER=app_user
+DB_PASSWORD=app_password
 
 ALLOWED_ORIGIN=http://localhost:5173
 JWT_SECRET_KEY=somesecret
-DB_USER=app_user
-DB_PASSWORD=app_password
 
 VITE_ENVIRONMENT=local
 VITE_API_URL=http://localhost:3000
