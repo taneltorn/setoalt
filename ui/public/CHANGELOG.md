@@ -1,4 +1,4 @@
-#### [0.2.12] - 
+#### [0.2.12] - 01.10.2024
 
 - Lisatud helisalvestuse lingi lisamine
 - Lisatud redigeeritava noodistuse manustamine
