@@ -25,7 +25,7 @@ const EmbedScoreDialog: React.FC = () => {
     }, [width, height, simplified, position, context.score]);
 
     useEffect(() => {
-        setHeight(`${context.dimensions.containerY + 250}`);
+        setHeight(`${context.dimensions.containerY + 150}`);
     }, [context.dimensions]);
 
     return (
