@@ -16,17 +16,17 @@ const EmbedScoreDialog: React.FC = () => {
     const context = useScoreContext();
 
     const [simplified, setSimplified] = useState<boolean>(false);
+    const [position, setPosition] = useState<string>("");
     const [width, setWidth] = useState<string>("100%");
     const [height, setHeight] = useState<string>(`${context.dimensions.containerY + 1250}`);
 
     const code = useMemo(() => {
-        return `<iframe src="${window.location.origin}/embed/${context.score.id}?simplified=${simplified}" width="${width}" height="${height}" title="${context.score.name}"></iframe>`;
-    }, [width, height, simplified, context.score]);
+        return `<iframe src="${window.location.origin}/embed/${context.score.id}?simplified=${simplified}&position=${position}" width="${width}" height="${height}" title="${context.score.name}"></iframe>`;
+    }, [width, height, simplified, position, context.score]);
 
     useEffect(() => {
         setHeight(`${context.dimensions.containerY + 250}`);
     }, [context.dimensions]);
-
 
     return (
         <Dialog
@@ -43,7 +43,10 @@ const EmbedScoreDialog: React.FC = () => {
 
             <Grid>
                 <Grid.Col span={{xs: 12, sm: 6}}>
-                    <Input.Wrapper size={"xl"}>
+                    <Input.Wrapper
+                        size={"xl"}
+                        label={t("dialog.embedScore.width")}
+                    >
                         <TextInput
                             leftSection={<TbArrowAutofitWidth size={Size.icon.MD}/>}
                             size={"xl"}
@@ -55,7 +58,10 @@ const EmbedScoreDialog: React.FC = () => {
                 </Grid.Col>
                 <Grid.Col span={{xs: 12, sm: 6}}>
 
-                    <Input.Wrapper size={"xl"}>
+                    <Input.Wrapper
+                        size={"xl"}
+                        label={t("dialog.embedScore.height")}
+                    >
                         <TextInput
                             leftSection={<TbArrowAutofitHeight size={Size.icon.MD}/>}
                             size={"xl"}
@@ -67,7 +73,22 @@ const EmbedScoreDialog: React.FC = () => {
                 </Grid.Col>
             </Grid>
 
-            <Group mt={"md"}>
+
+            <Input.Wrapper
+                size={"xl"}
+                mt={"lg"}
+                label={t("dialog.embedScore.position")}
+            >
+                <TextInput
+                    leftSection={<TbArrowAutofitHeight size={Size.icon.MD}/>}
+                    size={"xl"}
+                    placeholder={t("dialog.embedScore.position")}
+                    value={position}
+                    onChange={e => setPosition(e.currentTarget.value)}
+                />
+            </Input.Wrapper>
+
+            <Group mt={"lg"}>
                 <Switch
                     size={"xl"}
                     className={"hover-pointer"}

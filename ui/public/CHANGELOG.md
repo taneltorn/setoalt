@@ -1,10 +1,16 @@
 #### [0.2.12] - 
-- Pisimuudatused
+
+- Lisatud helisalvestuse lingi lisamine
+- Lisatud redigeeritava noodistuse manustamine
+- Lisatud võimalus määrata manustatud noodistuse alguspositsioon
+- Pisitäiendused
 
 #### [0.2.11] - *21.08.2024*
+
 - Konfiguratsioonimuudatused
 
 #### [0.2.10] - *19.08.2024*
+
 - Pisitäiendused
 
 #### [0.2.9] - *16.08.2024*

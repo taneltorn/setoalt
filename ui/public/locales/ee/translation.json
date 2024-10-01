@@ -231,7 +231,10 @@
     },
     "embedScore": {
       "title": "Kuva noodistus välisel lehel",
-      "description": "Sisesta maksimaalsed ekraanimõõdud ja kopeeri kood enda lehele."
+      "description": "Sisesta maksimaalsed ekraanimõõdud ja kopeeri kood enda lehele.",
+      "position": "Alguspositsioon",
+      "width": "Laius",
+      "height": "Kõrgus"
     },
     "microTuning": {
       "title": "Mikrotonaalsus",

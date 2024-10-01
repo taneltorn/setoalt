@@ -19,7 +19,7 @@ interface Properties {
 
 const ScoreEmbedding: React.FC<Properties> = ({score, isEditMode}) => {
 
-    const {dimensions, setIsSimplifiedMode} = useScoreContext();
+    const {dimensions, setIsSimplifiedMode, setActivePosition} = useScoreContext();
     const [searchParams] = useSearchParams();
 
     const [maxWidth, setMaxWidth] = useState<number>();
@@ -38,14 +38,18 @@ const ScoreEmbedding: React.FC<Properties> = ({score, isEditMode}) => {
         if (height) {
             setMaxHeight(+height)
         }
+
+        const position = searchParams.get("position");
+        if (position && !isNaN(parseInt(position))) {
+            setActivePosition(+position)
+        }
     }, []);
 
     return (
         <div style={{
-            maxWidth: maxWidth || Layout.stave.container.MAX_WIDTH,
+            maxWidth: maxWidth || Layout.stave.container.MAX_WIDTH + 50,
             maxHeight: maxHeight || dimensions.containerY + 300,
-            overflow: "scroll"
-        }}>
+         }}>
             <Group justify={"space-between"}>
                 <ScorePlaybackPanel/>
                 <ScoreSettings settings={[Setting.CHANGE_MODE, Setting.EXPORT_PNG]}/>

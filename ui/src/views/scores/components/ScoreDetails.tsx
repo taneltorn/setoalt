@@ -1,6 +1,6 @@
 import React, {createRef} from "react";
 import Page from "../../../Page.tsx";
-import {Badge, Box, Group, useMantineTheme} from "@mantine/core";
+import {Badge, Box, Button, Group, useMantineTheme} from "@mantine/core";
 import {Score} from "../../../model/Score.ts";
 import Header from "../../../components/controls/Header.tsx";
 import {useTranslation} from "react-i18next";
@@ -18,6 +18,7 @@ import ScoreSettings from "./ScoreSettings.tsx";
 import {AllScoreSettings} from "../../../utils/dictionaries.ts";
 import AudioPlayer from "react-h5-audio-player";
 import {PiSpeakerHighFill} from "react-icons/pi";
+import {FaPauseCircle} from "react-icons/fa";
 
 interface Properties {
     score: Score;
@@ -63,15 +64,6 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
                 </Group>
             </Header>
 
-            <Description>{score.description}</Description>
-
-            <Group justify={"space-between"}>
-                <ScorePlaybackPanel/>
-                <ScoreSettings settings={AllScoreSettings}/>
-            </Group>
-
-            <VoiceFilter/>
-            <Stave score={score}/>
 
             {score.recording &&
                 <Group mb={"md"} maw={400}>
@@ -85,12 +77,30 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
                         customVolumeControls={[]}
                         customAdditionalControls={[]}
                         customIcons={{
-                            play: <PiSpeakerHighFill size={Size.icon.XS} style={{display: "flex"}}/>,
-                            pause: <PiSpeakerHighFill size={Size.icon.XS} color={theme.colors.red[9]}
-                                                      style={{display: "flex"}}/>
+                            play:
+                                <Button size={"compact-lg"} px={4} variant={"subtle"} display={"flex"}
+                                        color={theme.colors.dark[9]}>
+                                    <PiSpeakerHighFill size={Size.icon.SM}/>
+                                </Button>,
+                            pause:
+                                <Button size={"compact-lg"} px={4} variant={"subtle"} display={"flex"}
+                                        color={theme.colors.dark[9]}>
+                                    <FaPauseCircle size={Size.icon.SM}/>
+                                </Button>
                         }}
                     />
                 </Group>}
+
+            <Description>{score.description}</Description>
+
+            <Group justify={"space-between"}>
+                <ScorePlaybackPanel/>
+                <ScoreSettings settings={AllScoreSettings}/>
+            </Group>
+
+            <VoiceFilter/>
+            <Stave score={score}/>
+
 
             {score.text && <Box>
                 <pre style={{whiteSpace: "pre-wrap"}}>{score?.text}</pre>

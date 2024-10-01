@@ -8,7 +8,6 @@ import {useDialogContext} from "../../../../../hooks/useDialogContext.tsx";
 import {Playback, Size} from "../../../../../utils/constants.ts";
 import {IoIosSpeedometer} from "react-icons/io";
 import InstrumentSelection from "./InstrumentSelection.tsx";
-import {PiRepeatFill} from "react-icons/pi";
 import {FaBackward, FaForward, FaPauseCircle, FaPlayCircle} from "react-icons/fa";
 import {getDetuneLabel, getTempoLabel} from "../../../../../utils/helpers.tsx";
 import ValueIndicator from "./ValueIndicator.tsx";
@@ -17,10 +16,10 @@ import {DialogType} from "../../../../../utils/enums.ts";
 const PlaybackControls: React.FC = () => {
 
     const {t} = useTranslation();
-    const {isPlaying, startPlayback, stopPlayback} = useAudioContext();
     const context = useScoreContext();
-    const {tempo, transposition, volume, setVolume} = useAudioContext();
     const {open} = useDialogContext();
+    const {isPlaying, startPlayback, stopPlayback} = useAudioContext();
+    const {tempo, transposition, volume, setVolume} = useAudioContext();
 
     return (
         <Group gap={"xl"}>
@@ -53,9 +52,7 @@ const PlaybackControls: React.FC = () => {
                         variant={"subtle"}
                         onClick={() => startPlayback(context)}
                     >
-                        {context.loopRange
-                            ? <PiRepeatFill size={Size.icon.XL}/>
-                            : <FaPlayCircle size={Size.icon.XL}/>}
+                        {<FaPlayCircle size={Size.icon.XL}/>}
                     </ActionIcon>}
 
                 <ActionIcon
