@@ -1,40 +1,35 @@
-import React, {useEffect} from "react";
+import React from "react";
 import {Alert, Button, Group, Pagination, Table, Text, useMantineTheme} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import LoadingOverlay from "../LoadingOverlay.tsx";
-import {PaginationFilter} from "../../model/PaginationFilter.ts";
+import {usePagination} from "../../hooks/usePagination.tsx";
+import {ItemsPerPageOptions} from "../../context/PaginationContext.tsx";
+import {Row} from "../../model/Row.ts";
 
 interface Properties {
     isLoading?: boolean;
-    onChange: (q: string) => void;
-    pagination: PaginationFilter;
-    setPagination: (pagination: PaginationFilter) => void;
-    columns: string[];
+    headers: string[];
     rows: Row[];
-
 }
 
-export interface Row {
-    name: string;
-    data: any[];
-}
-
-const PaginatedTable: React.FC<Properties> = ({isLoading, onChange, columns, rows, pagination, setPagination}) => {
+const PaginatedTable: React.FC<Properties> = ({isLoading, headers, rows}) => {
 
     const {t} = useTranslation();
     const theme = useMantineTheme();
-    const itemsPerPageOptions = [10, 20, 50];
 
-    useEffect(() => {
-        onChange(pagination.query || "");
-    }, [pagination]);
+    const {page, setPage, itemsPerPage, setItemsPerPage} = usePagination();
+
+    const handleItemsPerPageChange = (itemsPerPage: number) => {
+        setItemsPerPage(itemsPerPage);
+        setPage(1);
+    }
 
     return (
         <LoadingOverlay isLoading={!!isLoading}>
             <Table highlightOnHover verticalSpacing={"sm"} variant={""}>
                 <Table.Thead>
                     <Table.Tr>
-                        {columns.map((column, index) =>
+                        {headers.map((column, index) =>
                             <Table.Th key={index}>
                                 <Text fw={"bold"}>
                                     {column}
@@ -44,7 +39,7 @@ const PaginatedTable: React.FC<Properties> = ({isLoading, onChange, columns, row
                 </Table.Thead>
                 <Table.Tbody>
                     {rows
-                        .slice((pagination.page - 1) * pagination.itemsPerPage, pagination.page * pagination.itemsPerPage)
+                        .slice((page - 1) * itemsPerPage, page * itemsPerPage)
                         .map((row, rowIndex) =>
                             <Table.Tr key={rowIndex}>
                                 {row.data.map((cell, cellIndex) =>
@@ -56,38 +51,36 @@ const PaginatedTable: React.FC<Properties> = ({isLoading, onChange, columns, row
             </Table>
 
             {rows.length
-                ?
-                <Group justify={"space-between"}>
+                ? <Group justify={"space-between"}>
                     <Group gap={4}>
                         <Text size={"sm"} c={"gray.8"} mr={"sm"} visibleFrom={"md"}>
                             {t("page.table.itemsPerPage")}
                         </Text>
-                        {itemsPerPageOptions.map(it => (
+                        {ItemsPerPageOptions.map(it => (
                             <Button
                                 key={it}
                                 size={"xs"}
                                 color={theme.primaryColor}
                                 visibleFrom={"md"}
-                                variant={it === pagination.itemsPerPage ? "filled" : "default"}
-                                onClick={() => setPagination({...pagination, itemsPerPage: it, page: 1})}
+                                variant={it === itemsPerPage ? "filled" : "default"}
+                                onClick={() => handleItemsPerPageChange(it)}
                             >
                                 {it}
                             </Button>))}
                         <Text size={"sm"} c={"gray.8"} ml={"md"} visibleFrom={"md"}>
                             {t("page.table.results", {count: rows.length})}
                         </Text>
-
                     </Group>
+
                     <Pagination
                         mt={"md"}
                         mb={"md"}
-                        value={pagination.page}
-                        total={Math.ceil(rows.length / pagination.itemsPerPage)}
-                        onChange={v => setPagination({...pagination, page: v})}
+                        value={page}
+                        total={Math.ceil(rows.length / itemsPerPage)}
+                        onChange={v => setPage(v)}
                     />
                 </Group>
-                :
-                <Alert variant={"transparent"}>
+                : <Alert variant={"transparent"}>
                     <Group justify={"center"}>
                         <Text>
                             {t("page.table.noData")}

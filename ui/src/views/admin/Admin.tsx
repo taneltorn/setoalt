@@ -2,12 +2,12 @@ import React from "react";
 import {useTranslation} from "react-i18next";
 import {Tabs, Text} from "@mantine/core";
 import Page from "../../Page.tsx";
-import UserList from "./panel/UserList.tsx";
+import UserList from "./users/UserList.tsx";
 import {FaUser} from "react-icons/fa";
 import {IoMdSettings} from "react-icons/io";
 import Header from "../../components/controls/Header.tsx";
 import {Size} from "../../utils/constants.ts";
-import NotificationList from "./panel/NotificationList.tsx";
+import NotificationList from "./notifications/NotificationList.tsx";
 
 const Admin: React.FC = () => {
 

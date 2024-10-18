@@ -21,7 +21,7 @@ const BackLink: React.FC<Properties> = (props) => {
             navigate(props.to, {state: props.state});
             return;
         }
-        navigate(-1)
+        navigate(-1);
     }
 
     return (

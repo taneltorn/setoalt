@@ -56,8 +56,7 @@ const ScoreSettings: React.FC<Properties> = ({settings}) => {
             .then((response) => {
                 DisplaySuccess(t("toast.success.saveScore"));
                 if (response) {
-                    navigate(`/scores/${response.id}`)
-                    window.location.reload();
+                    navigate(`/scores/${response.id}`);
                 }
             })
             .catch(() => DisplayError(t("toast.error.saveScore")));

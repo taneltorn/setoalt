@@ -2,6 +2,7 @@ import React from 'react';
 import {useTranslation} from "react-i18next";
 import {Button, Group} from "@mantine/core";
 import {useAuth} from "../../../../../hooks/useAuth.tsx";
+import {useDataService} from "../../../../../hooks/useDataService.tsx";
 
 interface Properties {
     onPrimaryButtonClick: () => void;
@@ -18,6 +19,7 @@ const ScoreControls: React.FC<Properties> = (props) => {
 
     const {t} = useTranslation();
     const auth = useAuth();
+    const {isSaving} = useDataService();
 
     return (
         <Group gap={4} justify={"end"}>
@@ -35,6 +37,7 @@ const ScoreControls: React.FC<Properties> = (props) => {
                     type={"submit"}
                     size={"md"}
                     variant={props.primaryButtonVariant || "filled"}
+                    loading={isSaving}
                     onClick={props.onPrimaryButtonClick}
                 >
                     {props.primaryButtonLabel || t("button.save")}

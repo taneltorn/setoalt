@@ -1,17 +1,33 @@
-import {useState} from "react";
-import {PaginationFilter} from "../model/PaginationFilter.ts";
+import React, {useContext, useMemo, useState} from "react";
+import useLocalStorage from "./useLocalStorage.tsx";
+import {isEmpty} from "../utils/helpers.tsx";
+import {ItemsPerPageOptions, PaginationContext} from "../context/PaginationContext.tsx";
 
-const usePagination = () => {
+interface Properties {
+    children: React.ReactNode;
+}
 
-    const [pagination, setPagination] = useState<PaginationFilter>({
-        page: 1,
-        itemsPerPage: 10,
-        query: ""
-    });
+export const PaginationContextProvider: React.FC<Properties> = ({children}) => {
 
-    return {
-        pagination, setPagination,
+    const [page, setPage] = useState<number>(1);
+    const [itemsPerPage, setItemsPerPage] = useLocalStorage<number>("itemsPerPage", ItemsPerPageOptions[0]);
+
+    const context = useMemo(() => ({
+        page, setPage,
+        itemsPerPage, setItemsPerPage,
+    }), [page, itemsPerPage]);
+
+    return (
+        <PaginationContext.Provider value={context}>
+            {children}
+        </PaginationContext.Provider>);
+}
+
+export const usePagination = () => {
+    const context = useContext(PaginationContext);
+    if (isEmpty(context)) {
+        throw new Error('usePagination must be used within a PaginationContextProvider')
     }
-};
 
-export default usePagination;
+    return context;
+};

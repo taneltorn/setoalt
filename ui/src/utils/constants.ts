@@ -1,3 +1,5 @@
+export const DateFormat = "DD.MM.yyyy HH:mm";
+
 export const Layout = {
     stave: {
         container: {
@@ -24,7 +26,7 @@ export const Layout = {
             HALF_NOTE_STROKE: 2,
         },
         divider: {
-            SEPARATOR_HEIGHT: 45,
+            SEPARATOR_HEIGHT: 40,
             WIDTH: 2,
             CONTAINER_WIDTH: 15,
         },

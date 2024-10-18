@@ -17,7 +17,7 @@ export enum DialogType {
     CHANGE_TEMPO,
     STAVE_SELECTION,
     JSON,
-    ADD_VOICE,
+    SAVE_VOICE,
     EMBED_SCORE,
     LOGIN,
 }

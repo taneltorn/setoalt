@@ -21,6 +21,7 @@ import {useDialogContext} from "./hooks/useDialogContext.tsx";
 import ProfileLink from "./components/ProfileLink.tsx";
 import DevNotice from "./components/DevNotice.tsx";
 import LoginDialog from "./views/login/LoginDialog.tsx";
+import NotificationPanel from "./NotificationPanel.tsx";
 
 const ENV = import.meta.env.VITE_ENVIRONMENT;
 
@@ -83,6 +84,7 @@ const Layout: React.FC = () => {
             </AppShell.Navbar>
 
             <AppShell.Main id={"content"} pb={50}>
+                <NotificationPanel/>
                 <Outlet/>
 
                 <LoginDialog/>

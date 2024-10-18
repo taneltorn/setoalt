@@ -2,7 +2,6 @@ import express, {Request, Response} from "express";
 import log4js from "log4js";
 import {verifyToken} from "../utils/verifyToken";
 import {checkUser} from "../utils/checkUser";
-import {Score} from "../model/Score";
 import notificationService from "../service/NotificationService";
 import {Notification} from "../model/Notification";
 
@@ -27,11 +26,11 @@ class NotificationController {
 
     async getNotification(req: Request, res: Response): Promise<Notification> {
         try {
-            const id = parseInt(req.params.id);
-            this.logger.info(`GET /api/notifications/${id}`);
-
             // @ts-ignore todo use custom type
             const user = req.user;
+            const id = parseInt(req.params.id);
+
+            this.logger.info(`GET /api/notifications/${id} from ${req.hostname} as user ${user?.username}`);
 
             if (isNaN(id)) {
                 this.logger.info(`Invalid ID: ${id}`);
@@ -57,7 +56,10 @@ class NotificationController {
 
     async getNotifications(req: Request, res: Response): Promise<Notification[]> {
         try {
-            this.logger.info("GET /api/notifications");
+            // @ts-ignore todo use custom type
+            const user = req.user;
+
+            this.logger.info(`GET /api/notifications from ${req.hostname} as user ${user?.username}`);
 
             const result = await notificationService.find();
             if (!result.success) {
@@ -74,7 +76,10 @@ class NotificationController {
 
     async getActiveNotifications(req: Request, res: Response): Promise<Notification[]> {
         try {
-            this.logger.info("GET /api/notifications/active");
+            // @ts-ignore todo use custom type
+            const user = req.user;
+
+            this.logger.info(`GET /api/notifications/active from ${req.hostname} as user ${user?.username}`);
 
             const result = await notificationService.find(true);
             if (!result.success) {
@@ -94,7 +99,7 @@ class NotificationController {
             const user = req.user;
             const data = req.body;
 
-            this.logger.info(`POST /api/notifications as ${user.username}:`)
+            this.logger.info(`POST /api/notifications from ${req.hostname} as user ${user?.username}:`)
             this.logger.info(req.body);
 
             if (!data) {
@@ -122,7 +127,7 @@ class NotificationController {
             const data = req.body;
 
             const id = parseInt(req.params.id);
-            this.logger.info(`PUT /notifications/${id} as ${user.username}:`);
+            this.logger.info(`PUT /notifications/${id} from ${req.hostname} as user ${user?.username}:`);
             this.logger.info(req.body);
 
             if (isNaN(id)) {
@@ -155,7 +160,7 @@ class NotificationController {
             const user = req.user;
 
             const id = parseInt(req.params.id);
-            this.logger.info(`DELETE /api/notifications/${id} as ${user.username}`);
+            this.logger.info(`DELETE /api/notifications/${id} from ${req.hostname} as user ${user?.username}`);
 
             if (isNaN(id)) {
                 this.logger.info(`Invalid ID: ${id}`);

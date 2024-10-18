@@ -7,7 +7,6 @@ import {Score} from "../../model/Score.ts";
 import {DisplayError, DisplaySuccess} from "../../utils/helpers.tsx";
 import {useAuth} from "../../hooks/useAuth.tsx";
 import Page from "../../Page.tsx";
-import PaginatedTable, {Row} from "../../components/table/PaginatedTable.tsx";
 import {FaPencil, FaRegTrashCan} from "react-icons/fa6";
 import {useDialogContext} from "../../hooks/useDialogContext.tsx";
 import SearchInput from "../../components/controls/SearchInput.tsx";
@@ -17,23 +16,27 @@ import RemoveScoreDialog from "./components/dialog/RemoveScoreDialog.tsx";
 import Header from "../../components/controls/Header.tsx";
 import {FaRegCopy} from "react-icons/fa";
 import {Size} from "../../utils/constants.ts";
-import usePagination from "../../hooks/usePagination.tsx";
 import {DialogType} from "../../utils/enums.ts";
+import DataTable from "../../components/table/DataTable.tsx";
+import {usePagination} from "../../hooks/usePagination.tsx";
+import {Row} from "../../model/Row.ts";
 
 const ScoreList: React.FC = () => {
 
-    const {t} = useTranslation();2
+    const {t} = useTranslation();
+    const theme = useMantineTheme();
+
     const scoreService = useScoreService();
+    const navigate = useNavigate();
+    const location = useLocation();
+    const auth = useAuth();
+    const {open} = useDialogContext();
+    const {page, setPage} = usePagination();
+
+    const [query, setQuery] = useState<string>("");
     const [scores, setScores] = useState<Score[]>([]);
     const [filteredScores, setFilteredScores] = useState<Score[]>(scores);
 
-    const {pagination, setPagination} = usePagination();
-    const navigate = useNavigate();
-    const location = useLocation();
-
-    const auth = useAuth();
-    const {open} = useDialogContext();
-    const theme = useMantineTheme();
 
     const fetchData = () => {
         scoreService.fetchScores()
@@ -41,8 +44,14 @@ const ScoreList: React.FC = () => {
             .catch(() => DisplayError(t("toast.error.fetchData")));
     }
 
-    const handleSearch = (value: string) => {
+    const handleSearch = (value: string, resetPage?: boolean) => {
+        setQuery(value);
+        if (resetPage) {
+            setPage(1);
+        }
+
         const query = value?.toLowerCase();
+
         setFilteredScores(scores.filter(r => r.name?.toLowerCase().includes(query)
             || r.description?.toLowerCase().includes(query)
             || r.text?.toLowerCase().includes(query)
@@ -71,25 +80,29 @@ const ScoreList: React.FC = () => {
     }, []);
 
     useEffect(() => {
-        handleSearch(pagination.query);
-    }, [scores]);
+        handleSearch(query);
+    }, [scores, query]);
 
     useEffect(() => {
-        if (location.state?.pagination) {
-            setPagination(location.state.pagination);
+        if (location.state?.page) {
+            setPage(location.state.page);
+        }
+
+        if (location.state?.query) {
+            setQuery(location.state.query);
         }
     }, [location]);
 
     return (
         <Page title={t("view.scoreList.title")}>
             <Header>{t("view.scoreList.header")}</Header>
-
             <Group justify={"space-between"} mt={"lg"} mb={"md"}>
                 <SearchInput
-                    value={pagination.query}
-                    onChange={v => setPagination({...pagination, query: v, page: 1})}
-                    onClear={() => setPagination({...pagination, query: "", page: 1})}
+                    value={query}
+                    onChange={v => handleSearch(v, true)}
+                    onClear={() => handleSearch("", true)}
                 />
+
                 {auth.currentUser?.isAuthorized &&
                     <Button size={"md"}
                             variant={"outline"}
@@ -99,12 +112,9 @@ const ScoreList: React.FC = () => {
                     </Button>}
             </Group>
 
-            <PaginatedTable
+            <DataTable
                 isLoading={scoreService.isLoading}
-                onChange={handleSearch}
-                pagination={pagination}
-                setPagination={setPagination}
-                columns={[
+                headers={[
                     t("view.scoreList.table.name"),
                     t("view.scoreList.table.stave"),
                     t("view.scoreList.table.voices"),
@@ -114,7 +124,7 @@ const ScoreList: React.FC = () => {
                 rows={filteredScores.map(score => ({
                     name: score.name,
                     data: [
-                        <Link to={`/scores/${score.id}`} state={{pagination: pagination}}>
+                        <Link to={`/scores/${score.id}`} state={{page: page, query: query}}>
                             <Text fz={"md"} c={theme.primaryColor} fw={"bold"} className={"text-link"}>
                                 {score.name}
                             </Text>
@@ -143,7 +153,7 @@ const ScoreList: React.FC = () => {
                             <IconButton
                                 title={t("button.edit")}
                                 icon={<FaPencil size={Size.icon.XS}/>}
-                                onClick={() => navigate(`/scores/${score.id}/edit`, {state: {pagination: pagination}})}
+                                onClick={() => navigate(`/scores/${score.id}/edit`)}
                             />
 
                             <IconButton
@@ -159,7 +169,6 @@ const ScoreList: React.FC = () => {
                     ]
                 }) as Row)}
             />
-
             <RemoveScoreDialog/>
         </Page>
     );

@@ -5,7 +5,7 @@ import VoiceFilterButton from "../../../../../components/controls/VoiceFilterBut
 import {MdRecordVoiceOver} from "react-icons/md";
 import {useDialogContext} from "../../../../../hooks/useDialogContext.tsx";
 import {useTranslation} from "react-i18next";
-import {FaPlus} from "react-icons/fa";
+import {FaEdit, FaPlus} from "react-icons/fa";
 import {DefaultVoices} from "../../../../../utils/dictionaries.ts";
 import {FaRegTrashCan} from "react-icons/fa6";
 import {Voice} from "../../../../../model/Voice.ts";
@@ -58,7 +58,7 @@ const VoiceControls: React.FC = () => {
         context.refresh();
     }
 
-    const handleVoiceAdd = (voice: Voice) => {
+    const handleVoiceSave = (voice: Voice) => {
         changeVoice(voice.name);
         close();
     }
@@ -93,9 +93,8 @@ const VoiceControls: React.FC = () => {
                     color={"blue"}
                     leftSection={<FaPlus/>}
                     variant={"subtle"}
-                    onClick={() => open(DialogType.ADD_VOICE, {
-                        voices: context.score.data.voices,
-                        onConfirm: handleVoiceAdd
+                    onClick={() => open(DialogType.SAVE_VOICE, {
+                        onConfirm: handleVoiceSave
                     })}>
                     {t("button.addNew")}
                 </Button>
@@ -123,7 +122,19 @@ const VoiceControls: React.FC = () => {
                         {t("button.showActive")}
                     </Button>}
 
-                {!DefaultVoices.map(v => v.name).includes(context.activeVoice) &&
+                {!DefaultVoices.map(v => v.name).includes(context.activeVoice) && <>
+                    <Button
+                        size={"xs"}
+                        color={"blue"}
+                        leftSection={<FaEdit size={Size.icon.XS}/>}
+                        variant={"subtle"}
+                        onClick={() => open(DialogType.SAVE_VOICE, {
+                            voice: context.score.data.voices.find(v => v.name === context.activeVoice),
+                            onConfirm: handleVoiceSave
+                        })}
+                    >
+                        {t("button.changeVoice")}
+                    </Button>
                     <Button
                         size={"xs"}
                         color={"red"}
@@ -132,7 +143,8 @@ const VoiceControls: React.FC = () => {
                         onClick={() => handleVoiceRemove(context.activeVoice)}
                     >
                         {t("button.removeVoice")}
-                    </Button>}
+                    </Button>
+                </>}
             </Group>
         </Group>
 

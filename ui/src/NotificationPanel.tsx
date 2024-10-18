@@ -14,7 +14,7 @@ const NotificationPanel: React.FC = () => {
         notificationService.fetchActiveNotifications()
             .then(response => {
                 setNotifications(response);
-            })
+            });
     }, []);
 
     return (

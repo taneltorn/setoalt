@@ -16,6 +16,7 @@ interface Properties {
     onSecondaryButtonClick?: () => void;
     onClose?: () => void;
     children?: React.ReactNode;
+    isLoading?: boolean;
 }
 
 const Dialog: React.FC<Properties> = (props) => {
@@ -60,7 +61,7 @@ const Dialog: React.FC<Properties> = (props) => {
 
                     {!props.hidePrimaryButton &&
                         <Button size={"md"}
-
+                                loading={props.isLoading}
                                 onClick={() => props.onPrimaryButtonClick && props.onPrimaryButtonClick()}>
                             {props.primaryButtonLabel || t("button.save")}
                         </Button>}

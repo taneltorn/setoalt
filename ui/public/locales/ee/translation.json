@@ -101,7 +101,9 @@
           "id": "ID",
           "username": "Kasutajanimi",
           "name": "Nimi",
-          "role": "Roll"
+          "role": "Roll",
+          "createdAt": "Loodud",
+          "modifiedAt": "Muudetud"
         },
         "form": {
           "username": "Kasutajanimi",
@@ -150,6 +152,7 @@
     "pngExport": "PNG",
     "showAll": "Näita kõiki",
     "showActive": "Näita aktiivset",
+    "changeVoice": "Muuda häält",
     "removeVoice": "Kustuta hääl",
     "changeInstrument": "Muuda heliväljundit",
     "backToTop": "Tagasi üles",
@@ -202,7 +205,7 @@
       "title": "Salvesta noodistus",
       "description": "Salvesta tehtud noodistus."
     },
-    "addVoice": {
+    "saveVoice": {
       "title": "Lisa hääl",
       "name": "Nimi",
       "type": {

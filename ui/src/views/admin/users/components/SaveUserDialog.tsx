@@ -1,13 +1,14 @@
 import React, {useEffect} from 'react';
-import Dialog from "../../../components/dialog/Dialog.tsx";
-import {useDialogContext} from "../../../hooks/useDialogContext.tsx";
+import Dialog from "../../../../components/dialog/Dialog.tsx";
+import {useDialogContext} from "../../../../hooks/useDialogContext.tsx";
 import {useTranslation} from "react-i18next";
 import {Input, Radio, TextInput} from "@mantine/core";
 import {Controller, useForm} from 'react-hook-form';
-import {DialogType, Role} from "../../../utils/enums.ts";
-import {User} from "../../../model/User.ts";
-import useUserService from "../../../hooks/useUserService.tsx";
-import {DisplayError, DisplaySuccess} from "../../../utils/helpers.tsx";
+import {DialogType, Role} from "../../../../utils/enums.ts";
+import {User} from "../../../../model/User.ts";
+import useUserService from "../../../../hooks/useUserService.tsx";
+import {DisplayError, DisplaySuccess} from "../../../../utils/helpers.tsx";
+import {useAuth} from "../../../../hooks/useAuth.tsx";
 
 const DEFAULT_VALUES = {
     username: "",
@@ -18,8 +19,10 @@ const DEFAULT_VALUES = {
 const SaveUserDialog: React.FC = () => {
 
     const [t] = useTranslation();
+
     const {close, context} = useDialogContext();
     const userService = useUserService();
+    const auth = useAuth();
 
     const {
         register,
@@ -109,7 +112,7 @@ const SaveUserDialog: React.FC = () => {
                     <TextInput
                         size={"xl"}
                         placeholder={t("view.admin.users.form.firstname")}
-                        {...register("firstname", {required: t("field.required")})}
+                        {...register("firstname")}
                     />
                 </Input.Wrapper>
 
@@ -122,47 +125,48 @@ const SaveUserDialog: React.FC = () => {
                     <TextInput
                         size={"xl"}
                         placeholder={t("view.admin.users.form.lastname")}
-                        {...register("lastname", {required: t("field.required")})}
+                        {...register("lastname")}
                     />
                 </Input.Wrapper>
 
-                <Input.Wrapper
-                    label={t("view.admin.users.form.role")}
-                    size={"xl"}
-                    mb={"xl"}
-                    error={errors.role?.message}
-                >
-                    <Controller
-                        name="role"
-                        control={control}
-                        render={({field}) => (
-                            <Radio.Group
-                                {...field}
-                                value={field.value}
-                                onChange={field.onChange}
-                            >
-                                <Radio
-                                    size={"md"}
-                                    mb={"md"}
-                                    value={Role.USER}
-                                    label={t("role.user")}
-                                />
-                                <Radio
-                                    size={"md"}
-                                    mb={"md"}
-                                    value={Role.EDITOR}
-                                    label={t("role.editor")}
-                                />
-                                <Radio
-                                    size={"md"}
-                                    mb={"md"}
-                                    value={Role.ADMIN}
-                                    label={t("role.admin")}
-                                />
-                            </Radio.Group>
-                        )}
-                    />
-                </Input.Wrapper>
+                {!(auth.currentUser?.id === context?.user?.id) &&
+                    <Input.Wrapper
+                        label={t("view.admin.users.form.role")}
+                        size={"xl"}
+                        mb={"xl"}
+                        error={errors.role?.message}
+                    >
+                        <Controller
+                            name="role"
+                            control={control}
+                            render={({field}) => (
+                                <Radio.Group
+                                    {...field}
+                                    value={field.value}
+                                    onChange={field.onChange}
+                                >
+                                    <Radio
+                                        size={"md"}
+                                        mb={"md"}
+                                        value={Role.USER}
+                                        label={t("role.user")}
+                                    />
+                                    <Radio
+                                        size={"md"}
+                                        mb={"md"}
+                                        value={Role.EDITOR}
+                                        label={t("role.editor")}
+                                    />
+                                    <Radio
+                                        size={"md"}
+                                        mb={"md"}
+                                        value={Role.ADMIN}
+                                        label={t("role.admin")}
+                                    />
+                                </Radio.Group>
+                            )}
+                        />
+                    </Input.Wrapper>}
             </form>
         </Dialog>
     )

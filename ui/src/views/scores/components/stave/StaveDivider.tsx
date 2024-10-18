@@ -41,7 +41,7 @@ const StaveDivider: React.FC<Properties> = ({divider}) => {
 
             <rect
                 x={x + 7}
-                y={y}
+                y={y + (divider.type === "Separator" ? 12 : 0)}
                 width={Layout.stave.divider.WIDTH}
                 height={height}
             />

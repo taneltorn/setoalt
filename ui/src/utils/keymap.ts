@@ -17,4 +17,5 @@ export enum ShortKey {
     NEXT = "ARROWRIGHT",
     UNDO = "Z",
     REDO = "Y",
+    SAVE = "S",
 }

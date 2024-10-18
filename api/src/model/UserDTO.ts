@@ -4,4 +4,6 @@ export type UserDTO = {
     firstname?: string;
     lastname?: string;
     role: string;
+    createdAt?: Date;
+    modifiedAt?: Date;
 }

@@ -29,7 +29,7 @@ class UserController {
             // @ts-ignore todo use custom type
             const user = req.user;
 
-            this.logger.info(`GET /api/users as user ${user.username}`);
+            this.logger.info(`GET /api/users from ${req.hostname} as user ${user?.username}`);
             if (user?.role !== 'ADMIN') {
                 this.logger.info(`Not authorized: ${user.username}`);
                 res.status(403).json({error: "Not authorized"});
@@ -55,7 +55,7 @@ class UserController {
             // @ts-ignore todo use custom type
             const user = req.user;
 
-            this.logger.info(`POST /api/users as user ${user.username}`);
+            this.logger.info(`POST /api/users from ${req.hostname} as user ${user?.username}`);
             const data = req.body;
 
             if (user?.role !== 'ADMIN') {
@@ -95,11 +95,13 @@ class UserController {
 
     async updateUser(req: Request, res: Response): Promise<void> {
         try {
-            const id = parseInt(req.params.id);
-            this.logger.info(`PATCH /api/users/${id}`);
-
             // @ts-ignore todo use custom type
             const user = req.user;
+
+            const id = parseInt(req.params.id);
+            this.logger.info(`PATCH /api/users/${id} from ${req.hostname} as user ${user?.username}`);
+
+
             const data = req.body;
 
             if (user?.role !== 'ADMIN') {
@@ -128,11 +130,13 @@ class UserController {
 
     async deleteUser(req: Request, res: Response): Promise<void> {
         try {
-            const userId = parseInt(req.params.id);
-            this.logger.info(`DELETE /api/users/${userId}`);
-
             // @ts-ignore todo use custom type
             const user = req.user;
+
+            const userId = parseInt(req.params.id);
+            this.logger.info(`DELETE /api/users/${userId} from ${req.hostname} as user ${user?.username}`);
+
+
             if (user?.role !== 'ADMIN') {
                 this.logger.info(`Not authorized: ${user.username}`);
                 res.status(403).json({error: "Not authorized"});

@@ -24,7 +24,7 @@ class AuthController {
         try {
             const { username, password } = req.body;
 
-            this.logger.info(`Got login request for user ${username}`)
+            this.logger.info(`POST /login from ${req.hostname} as user ${username}`)
 
             const result = await userService.findByUsername(username);
             if (result.data) {
@@ -67,15 +67,21 @@ class AuthController {
         }
     };
 
-    private logout = (_: Request, res: Response) => {
-        this.logger.info(`Got logout request`);
+    private logout = (req: Request, res: Response) => {
+        // @ts-ignore todo use custom type
+        const user = req.user;
+
+        this.logger.info(`POST /logout from ${req.hostname} as user ${user}`);
 
         res.clearCookie("token");
         res.status(200).json({ message: "Logged out successfully" });
     };
 
     private verifySession = (req: Request, res: Response) => {
-        this.logger.info(`Verifying session`);
+        // @ts-ignore todo use custom type
+        const user = req.user;
+
+        this.logger.info(`GET /verify from ${req.hostname} as user ${user.username}`);
 
         // @ts-ignore
         res.json({ message: "Session is valid", user: req.user });

@@ -116,7 +116,6 @@ export const getLineCoords = (line: Line, startingY: number, context: ScoreConte
 
     return {x: context.dimensions.x, y: y};
 }
-
 export const isHighlighted = (note: Note, context: ScoreContextProperties) => {
     if (context.isExportMode) {
         return false;
@@ -252,4 +251,3 @@ export const isActive = (notification: Notification): boolean => {
         && (!notification.validTo || new Date(notification.validTo) >= currentTime)
 }
 
-export const DateFormatter = new Intl.DateTimeFormat('et-EE', {dateStyle: 'long'});

@@ -24,9 +24,10 @@ const SaveScoreDialog: React.FC = () => {
 
     const [t] = useTranslation();
     const context = useScoreContext();
-    const {close} = useDialogContext();
     const scoreService = useScoreService();
+
     const navigate = useNavigate();
+    const {close} = useDialogContext();
 
     const methods = useForm<Score>({defaultValues: DEFAULT_VALUES});
 
@@ -36,10 +37,10 @@ const SaveScoreDialog: React.FC = () => {
 
         const saveScore = () => score.id ? scoreService.updateScore(score.id, score) : scoreService.createScore(score);
         saveScore()
-            .then(() => {
+            .then((r) => {
                 DisplaySuccess(t("toast.success.saveScore"))
                 close();
-                navigate("/scores");
+                navigate(r.id ? `/scores/${r.id}` : "/scores");
             })
             .catch(() => DisplayError(t("toast.error.saveScore")));
     }

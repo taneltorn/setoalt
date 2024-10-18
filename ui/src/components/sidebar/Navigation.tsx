@@ -13,6 +13,7 @@ import {Size} from "../../utils/constants.ts";
 import Logo from "../Logo.tsx";
 import {DialogType} from "../../utils/enums.ts";
 import {useDialogContext} from "../../hooks/useDialogContext.tsx";
+import {usePagination} from "../../hooks/usePagination.tsx";
 
 const routes = [
     {id: 'home', icon: <IoHome className={classes.icon} size={Size.icon.SM}/>, link: "/"},
@@ -31,16 +32,20 @@ interface Properties {
 const Navigation: React.FC<Properties> = (props) => {
 
     const [t] = useTranslation();
+
     const location = useLocation();
     const navigate = useNavigate();
     const auth = useAuth();
+
     const {stopPlayback} = useAudioContext();
     const {open} = useDialogContext();
+    const {setPage} = usePagination();
 
     const handleNavigate = (link: string) => {
         navigate(link);
         props.onNavigate();
         stopPlayback();
+        setPage(1);
     }
 
     const handleLogout = () => {
@@ -87,11 +92,9 @@ const Navigation: React.FC<Properties> = (props) => {
             <Divider mt={"xs"}/>
 
             {!auth.currentUser && <Group mt={"lg"} justify={"center"}>
-                {/*<Link to={"/login"} onClick={props.onNavigate}>*/}
-                    <Button size={"sm"} variant={"outline"} onClick={() => open(DialogType.LOGIN)}>
-                        {t("page.sidebar.navigation.login")}
-                    </Button>
-                {/*</Link>*/}
+                <Button size={"sm"} variant={"outline"} onClick={() => open(DialogType.LOGIN)}>
+                    {t("page.sidebar.navigation.login")}
+                </Button>
             </Group>}
 
             {auth.currentUser &&

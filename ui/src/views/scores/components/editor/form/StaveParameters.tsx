@@ -24,7 +24,6 @@ const StaveParameters: React.FC = () => {
 
     return (
         <>
-
             <Input.Wrapper
                 label={t("view.editor.form.defaultTransposition")}
                 size={"xl"}
@@ -78,7 +77,7 @@ const StaveParameters: React.FC = () => {
                             <Box mb={"lg"}>
                                 <Group justify={"space-between"}>
                                     <Text fw={"bold"}>
-                                        {line.pitch.toUpperCase()}
+                                        {t(`pitch.${line.pitch.toLowerCase()}`)}
                                     </Text>
                                     <Group justify={"space-between"}>
                                         {field.value &&

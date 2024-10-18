@@ -1,6 +1,7 @@
 import pool from "../config/dbConfig";
 import log4js from "log4js";
 import Mapper from "../utils/Mapper";
+import {User} from "../model/User";
 
 class ScoreService {
     private logger = log4js.getLogger("ScoreService");
@@ -9,14 +10,14 @@ class ScoreService {
         this.logger.level = process.env.LOG_LEVEL;
     }
 
-    public async find(username?: string): Promise<any> {
+    public async find(user?: User): Promise<any> {
         try {
             this.logger.info(`Fetching scores`);
 
             let query = `SELECT *
                          FROM setoalt.scores
                          WHERE deleted_at IS NULL`;
-            query += username ? ` AND (created_by = '${username}' OR visibility = 'PUBLIC')` : "";
+            query += user?.role !== "ADMIN" ?  ` AND (created_by = '${user?.username}' OR visibility = 'PUBLIC')`  : "";
             query += ` ORDER BY name ASC`;
 
             const result = await pool.query(query);
@@ -29,12 +30,12 @@ class ScoreService {
         }
     }
 
-    public async findById(id: number, username?: string): Promise<any> {
+    public async findById(id: number, user?: User): Promise<any> {
         try {
             this.logger.info(`Fetching score with id = ${id}`);
 
             let query = "SELECT * FROM setoalt.scores WHERE id = $1 AND deleted_at IS NULL";
-            query += username ? ` AND (created_by = '${username}' OR visibility = 'PUBLIC')` : "";
+            query += user?.role !== "ADMIN" ?  ` AND (created_by = '${user?.username}' OR visibility = 'PUBLIC')`  : "";
 
             const result = await pool.query(query, [id]);
 
@@ -79,7 +80,7 @@ class ScoreService {
         }
     }
 
-    public async update(id: number, score: any, user: any): Promise<any> {
+    public async update(id: number, score: any, user: User): Promise<any> {
         try {
             this.logger.info(`Updating score with id = ${id}`);
 
@@ -121,7 +122,7 @@ class ScoreService {
         }
     }
 
-    public async delete(id: number, user: any): Promise<any> {
+    public async delete(id: number, user: User): Promise<any> {
         try {
             this.logger.info(`Deleting score with id = ${id}`);
 

@@ -30,7 +30,9 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
 
     const [t] = useTranslation();
     const theme = useMantineTheme();
+
     const {stopPlayback} = useAudioContext();
+
     const auth = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -63,7 +65,6 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
                     </Badge>
                 </Group>
             </Header>
-
 
             {score.recording &&
                 <Group mb={"md"} maw={400}>

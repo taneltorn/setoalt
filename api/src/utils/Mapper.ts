@@ -9,6 +9,8 @@ class Mapper {
             firstname: user.firstname,
             lastname: user.lastname,
             role: user.role,
+            createdAt: user.createdAt,
+            modifiedAt: user.modifiedAt,
         };
     }
 

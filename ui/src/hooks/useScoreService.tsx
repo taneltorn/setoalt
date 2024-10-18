@@ -1,13 +1,13 @@
-import {useState} from "react";
 import {Score} from "../model/Score.ts";
 import axios from 'axios';
 import {normalize} from "../utils/helpers.tsx";
+import {useDataService} from "./useDataService.tsx";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const useScoreService = () => {
 
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const {isLoading, setIsLoading, isSaving, setIsSaving} = useDataService();
     const cancelSource = axios.CancelToken.source();
 
     const fetchScore = async (id: string): Promise<Score> => {
@@ -47,7 +47,7 @@ const useScoreService = () => {
     }
 
     const createScore = async (score: Score): Promise<Score> => {
-        setIsLoading(true);
+        setIsSaving(true);
         return axios.post(`${API_URL}/api/scores`, normalize(score), {
             headers: {
                 'Content-Type': 'application/json',
@@ -55,17 +55,17 @@ const useScoreService = () => {
             withCredentials: true
         })
             .then(response => {
-                setIsLoading(false);
+                setIsSaving(false);
                 return response.data;
             })
             .catch(error => {
-                setIsLoading(false);
+                setIsSaving(false);
                 throw error;
             });
     }
 
     const updateScore = async (id: number, score: Score): Promise<Score> => {
-        setIsLoading(true);
+        setIsSaving(true);
         return axios.put(`${API_URL}/api/scores/${id}`, normalize(score), {
             headers: {
                 'Content-Type': 'application/json',
@@ -73,17 +73,17 @@ const useScoreService = () => {
             withCredentials: true
         })
             .then(response => {
-                setIsLoading(false);
+                setIsSaving(false);
                 return response.data;
             })
             .catch(error => {
-                setIsLoading(false);
+                setIsSaving(false);
                 throw error;
             });
     }
 
     const removeScore = async (id: number): Promise<Score> => {
-        setIsLoading(true);
+        setIsSaving(true);
         return axios.delete(`${API_URL}/api/scores/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
@@ -91,17 +91,18 @@ const useScoreService = () => {
             withCredentials: true
         })
             .then(response => {
-                setIsLoading(false);
+                setIsSaving(false);
                 return response.data;
             })
             .catch(error => {
-                setIsLoading(false);
+                setIsSaving(false);
                 throw error;
             });
     }
 
     return {
         isLoading,
+        isSaving,
         fetchScore,
         fetchScores,
         createScore,

@@ -27,11 +27,12 @@ const ColorMapping = {
     "2": Color.voice.BOTTOM_TORRO
 }
 
-const AddVoiceDialog: React.FC = () => {
+const SaveVoiceDialog: React.FC = () => {
 
     const [t] = useTranslation();
     const dialogContext = useDialogContext();
     const scoreContext = useScoreContext();
+
     const [copyFrom, setCopyFrom] = useState<string>("-");
     const [color, setColor] = useState<string>(DEFAULT_VALUES.color);
     const [voiceType, setVoiceType] = useState<VoiceType>(VoiceType.TORRO);
@@ -41,17 +42,25 @@ const AddVoiceDialog: React.FC = () => {
         register,
         reset,
         handleSubmit,
+        setValue,
         formState: {errors}
-    } = useForm<FormValues>({defaultValues: DEFAULT_VALUES});
+    } = useForm<FormValues>({defaultValues: dialogContext.context.voice || DEFAULT_VALUES});
 
     const onSubmit = async (values: FormValues) => {
         const voice = {
-            name: values.name,
+            name: values.name.trim(),
             type: voiceType,
             color: color,
             notes: copyFrom ? clone(scoreContext.score.data.voices.find(v => v.name === copyFrom)?.notes || []) : []
         }
-        scoreContext.score.data.voices.push(voice);
+
+        if (dialogContext.context.voice) {
+            dialogContext.context.voice.name = voice.name;
+            dialogContext.context.voice.type = voice.type;
+            dialogContext.context.voice.color = voice.color;
+        } else {
+            scoreContext.score.data.voices.push(voice);
+        }
         dialogContext.context.onConfirm(voice);
         reset();
     }
@@ -62,14 +71,22 @@ const AddVoiceDialog: React.FC = () => {
     }
 
     useEffect(() => {
-        setVoiceNames(["-", ...(dialogContext.context.voices?.map((v: Voice) => v.name) || [])]);
-    }, [dialogContext.context.voices]);
+        setVoiceNames(["-", ...(scoreContext.score.data.voices?.map((v: Voice) => v.name) || [])]);
+    }, [scoreContext.score.data.voices]);
+
+    useEffect(() => {
+        if (dialogContext.context.voice) {
+            setValue("name", dialogContext.context.voice.name || "");
+            setColor(dialogContext.context.voice.color);
+            setVoiceType(dialogContext.context.voice.type);
+        }
+    }, [dialogContext.context]);
 
     return (
         <Dialog
             size={"lg"}
-            type={DialogType.ADD_VOICE}
-            title={t("dialog.addVoice.title")}
+            type={DialogType.SAVE_VOICE}
+            title={t("dialog.saveVoice.title")}
             primaryButtonLabel={t("button.save")}
             secondaryButtonLabel={t("button.cancel")}
             onPrimaryButtonClick={handleSubmit(onSubmit)}
@@ -80,19 +97,23 @@ const AddVoiceDialog: React.FC = () => {
                 <InputWrapper
                     size={"xl"}
                     mb={"xl"}
-                    label={t("dialog.addVoice.name")}
+                    label={t("dialog.saveVoice.name")}
                 >
                     <TextInput
                         size={"xl"}
-                        placeholder={t("dialog.addVoice.name")}
-                        {...register("name", {required: t("field.required"), validate: v => !scoreContext.score.data.voices.map(v => v.name).includes(v) || t("field.voiceExists")})}
+                        placeholder={t("dialog.saveVoice.name")}
+                        {...register("name", {
+                            required: t("field.required"), validate: v => !scoreContext.score.data.voices
+                                .filter(v => v.name !== scoreContext.activeVoice)
+                                .map(v => v.name).includes(v.trim()) || t("field.voiceExists")
+                        })}
                         error={errors.name?.message}
                         autoComplete={"off"}
                     />
                 </InputWrapper>
 
                 <InputWrapper
-                    label={t("dialog.addVoice.type.label")}
+                    label={t("dialog.saveVoice.type.label")}
                     size={"xl"}
                     mb={"xl"}
                 >
@@ -102,7 +123,7 @@ const AddVoiceDialog: React.FC = () => {
                             mb={"md"}
                             size={"md"}
                             checked={type === voiceType}
-                            label={t(`dialog.addVoice.type.${type}`)}
+                            label={t(`dialog.saveVoice.type.${type}`)}
                             onChange={() => handleVoiceChange(type)}
                         />
                     ))}
@@ -111,7 +132,7 @@ const AddVoiceDialog: React.FC = () => {
                 <InputWrapper
                     size={"xl"}
                     mt={"lg"}
-                    label={t("dialog.addVoice.color")}
+                    label={t("dialog.saveVoice.color")}
                 >
                     <ColorPicker
                         format="hex"
@@ -122,22 +143,23 @@ const AddVoiceDialog: React.FC = () => {
                     />
                 </InputWrapper>
 
-                <InputWrapper
-                    size={"xl"}
-                    mt={"lg"}
-                    label={t("dialog.addVoice.copyFrom")}
-                >
-                    <NativeSelect
+                {!dialogContext.context.voice &&
+                    <InputWrapper
                         size={"xl"}
-                        value={copyFrom}
-                        defaultValue={""}
-                        onChange={(event) => setCopyFrom(event.currentTarget.value)}
-                        data={voiceNames}
-                    />
-                </InputWrapper>
+                        mt={"lg"}
+                        label={t("dialog.saveVoice.copyFrom")}
+                    >
+                        <NativeSelect
+                            size={"xl"}
+                            value={copyFrom}
+                            defaultValue={""}
+                            onChange={(event) => setCopyFrom(event.currentTarget.value)}
+                            data={voiceNames}
+                        />
+                    </InputWrapper>}
             </form>
         </Dialog>
     )
 };
 
-export default AddVoiceDialog;
+export default SaveVoiceDialog;

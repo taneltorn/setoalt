@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useScoreContext} from "../hooks/useScoreContext.tsx";
 import {useAudioContext} from "../hooks/useAudioContext.tsx";
 import {ShortKey} from "../utils/keymap";
-import {range} from "../utils/helpers.tsx";
+import {DisplayError, DisplaySuccess, range} from "../utils/helpers.tsx";
 import {useDialogContext} from "../hooks/useDialogContext.tsx";
 import {NoteType} from "../model/Note.ts";
 import {DialogType, ShiftMode} from "../utils/enums.ts";
@@ -11,14 +11,18 @@ import {NoteFactory} from "../utils/factories.ts";
 import {useLayoutControls} from "../hooks/useLayoutControls.tsx";
 import {useActiveKeys} from "../hooks/useActiveKeys.tsx";
 import {useHistory} from "../hooks/useHistory.tsx";
+import useScoreService from "../hooks/useScoreService.tsx";
+import {useTranslation} from "react-i18next";
 
 const KeyPressHandler: React.FC = () => {
 
+    const {t} = useTranslation();
+
     const audioContext = useAudioContext();
-    const {playNotes} = useAudioContext();
     const scoreContext = useScoreContext();
+    const dialogContext = useDialogContext();
+
     const {setIsCtrlKeyActive, setIsShiftKeyActive} = useActiveKeys();
-    const {activeNote, activePosition, activeDuration,} = useScoreContext();
     const {
         changeDuration,
         changePitch,
@@ -30,7 +34,7 @@ const KeyPressHandler: React.FC = () => {
     } = useNoteControls();
     const {shiftLeft, shiftRight, toggleBreak, toggleDivider} = useLayoutControls();
     const history = useHistory();
-    const dialogContext = useDialogContext();
+    const scoreService = useScoreService();
 
     const handleKeyUp = (event: KeyboardEvent) => {
         if (event.key === "Control") {
@@ -60,17 +64,16 @@ const KeyPressHandler: React.FC = () => {
         event.preventDefault();
 
         if (scoreContext.isEditMode) {
-
             if (range(9).includes(+event.key)) {
                 const pitch = scoreContext.score.data.stave.lines.map(l => l.pitch).reverse()[+event.key - 1];
                 if (pitch) {
-                    if (activeNote) {
-                        changePitch(activeNote, pitch);
+                    if (scoreContext.activeNote) {
+                        changePitch(scoreContext.activeNote, pitch);
                         return;
                     }
-                    const note = NoteFactory.create(pitch, activePosition, activeDuration);
+                    const note = NoteFactory.create(pitch, scoreContext.activePosition, scoreContext.activeDuration);
                     insertNote(note, true);
-                    playNotes([note], scoreContext.score.data.stave);
+                    audioContext.playNotes([note], scoreContext.score.data.stave);
                 }
                 return;
             }
@@ -87,6 +90,13 @@ const KeyPressHandler: React.FC = () => {
                             history.redo(scoreContext);
                         }
                         return;
+                    case ShortKey.SAVE:
+                        if (scoreContext.score.id) {
+                            scoreService.updateScore(scoreContext.score.id, scoreContext.score)
+                                .then(() => DisplaySuccess(t("toast.success.saveScore")))
+                                .catch(() => DisplayError(t("toast.error.saveScore")));
+                        }
+                        break;
                     default:
                         break;
                 }
@@ -102,40 +112,38 @@ const KeyPressHandler: React.FC = () => {
                     return shiftLeft(event.shiftKey
                         ? ShiftMode.VOICES
                         : (event.ctrlKey ? ShiftMode.LYRICS : ShiftMode.NOTES));
-                    break;
                 case ShortKey.SHIFT_RIGHT:
                     return shiftRight(event.shiftKey
                         ? ShiftMode.VOICES
                         : (event.ctrlKey ? ShiftMode.LYRICS : ShiftMode.NOTES));
-                    break;
                 case ShortKey.REMOVE_NOTE:
                 case ShortKey.DELETE_NOTE:
                     removeNote(scoreContext.activePosition, true);
                     break;
 
                 case ShortKey.HALF_NOTE:
-                    changeDuration("2n", activeNote, true);
+                    changeDuration("2n", scoreContext.activeNote, true);
                     break;
                 case ShortKey.QUARTER_NOTE:
-                    changeDuration("4n", activeNote, true);
+                    changeDuration("4n", scoreContext.activeNote, true);
                     break;
                 case ShortKey.EIGHT_NOTE:
-                    changeDuration("8n", activeNote, true);
+                    changeDuration("8n", scoreContext.activeNote, true);
                     break;
 
                 case ShortKey.INCREASE_PITCH:
-                    if (activeNote) {
-                        increasePitch(activeNote);
+                    if (scoreContext.activeNote) {
+                        increasePitch(scoreContext.activeNote);
                     }
                     break;
                 case ShortKey.DECREASE_PITCH:
-                    if (activeNote) {
-                        decreasePitch(activeNote);
+                    if (scoreContext.activeNote) {
+                        decreasePitch(scoreContext.activeNote);
                     }
                     break;
                 case ShortKey.CHANGE_TYPE:
-                    if (activeNote) {
-                        changeType(activeNote, scoreContext.activeNote?.type === NoteType.SMALL
+                    if (scoreContext.activeNote) {
+                        changeType(scoreContext.activeNote, scoreContext.activeNote?.type === NoteType.SMALL
                             ? NoteType.REGULAR
                             : NoteType.SMALL);
                     }

@@ -8,7 +8,7 @@ export type User = {
     createdBy?: string;
     createdAt?: Date;
     modifiedBy?: string;
-    modifiedAt?: Date ;
+    modifiedAt?: Date;
     deletedBy?: string;
     deletedAt?: Date;
 }

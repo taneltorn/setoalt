@@ -15,7 +15,7 @@ import log4js from "log4js";
 import * as process from "process";
 
 const app = express();
-const port = 3000;
+const port = 4000;
 
 config({path: path.resolve(__dirname, '../../.env')});
 

@@ -1,3 +1,12 @@
+#### [0.2.13] - 18.10.2024
+
+- Muudetud pealehe näited
+- Tulemuste arv lehel hoitakse meeles
+- Salvestamisel suunatakse salvestuse detaillehele
+- Lisatud Ctrl+S klahvikombinatsiooniga salvestamine
+- Lisatud hääle muutmise võimalus
+- Pisiparandused ja -täiustused
+
 #### [0.2.12] - 01.10.2024
 
 - Lisatud helisalvestuse lingi lisamine

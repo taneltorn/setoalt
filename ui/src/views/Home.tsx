@@ -10,7 +10,6 @@ import {Score} from "../model/Score.ts";
 import KeyPressHandler from "../components/KeyPressHandler.tsx";
 import ScoreDialogs from "./scores/components/dialog/ScoreDialogs.tsx";
 import Example from "./Example.tsx";
-import NotificationPanel from "../NotificationPanel.tsx";
 import ContextProviders from "../ContextProviders.tsx";
 
 const Home: React.FC = () => {
@@ -18,7 +17,6 @@ const Home: React.FC = () => {
     const {t} = useTranslation();
     const [active, setActive] = useState<Score>();
     const [exampleA, setExampleA] = useState<Score>();
-    const [exampleB, setExampleB] = useState<Score>();
 
     useEffect(() => {
         fetch("/examples/a.example.json")
@@ -27,16 +25,11 @@ const Home: React.FC = () => {
                 setExampleA(score);
                 setActive(score);
             });
-
-        fetch("/examples/b.example.json")
-            .then(response => response.json())
-            .then(score => setExampleB(score));
     }, []);
 
     return (
         <ContextProviders>
             <Page title={t("view.home.title")}>
-                <NotificationPanel/>
 
                 <Header>
                     {t("view.home.header")}
@@ -53,14 +46,6 @@ const Home: React.FC = () => {
                                 {t("page.example")}:
                                 <Text size={"lg"} fw={"bold"}>
                                     {exampleA?.name}
-                                </Text>
-                            </Tabs.Tab>}
-
-                        {exampleB &&
-                            <Tabs.Tab value="example2" onClick={() => setActive(exampleB)}>
-                                {t("page.example")}:
-                                <Text size={"lg"} fw={"bold"}>
-                                    {exampleB?.name}
                                 </Text>
                             </Tabs.Tab>}
                     </Tabs.List>

@@ -44,7 +44,7 @@ const ScoreManager: React.FC<Properties> = ({mode}) => {
             });
 
         return () => scoreService.cancelSource.cancel();
-    }, []);
+    }, [params.id]);
 
     return (
         <ContextProviders>
@@ -55,7 +55,7 @@ const ScoreManager: React.FC<Properties> = ({mode}) => {
                 {mode === "edit" && score && <ScoreEditor score={score}/>}
                 {mode === "new" && <Editor/>}
                 {mode === "embed" && score && <ScoreEmbedding score={score}/>}
-                {mode === "embed-new" && <ScoreEmbedding isEditMode />}
+                {mode === "embed-new" && <ScoreEmbedding isEditMode/>}
 
                 {isDevMode && <DevInfo/>}
             </LoadingOverlay>

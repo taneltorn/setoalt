@@ -25,12 +25,12 @@ class ScoreController {
 
     async getScores(req: Request, res: Response): Promise<Score[]> {
         try {
-            this.logger.info("GET /api/scores");
-
             // @ts-ignore todo use custom type
             const user = req.user;
 
-            const result = await scoreService.find(user?.role !== 'ADMIN' ? user?.username : undefined);
+            this.logger.info(`GET /api/scores from ${req.hostname} as user ${user?.username}`);
+
+            const result = await scoreService.find(user);
 
             if (!result.success) {
                 res.status(500).json({error: result.error});
@@ -45,11 +45,11 @@ class ScoreController {
 
     async getScore(req: Request, res: Response): Promise<Score> {
         try {
-            const id = parseInt(req.params.id);
-            this.logger.info(`GET /api/scores/${id}`);
-
             // @ts-ignore todo use custom type
             const user = req.user;
+            const id = parseInt(req.params.id);
+
+            this.logger.info(`GET /api/scores/${id} from ${req.hostname} as user ${user?.username}`);
 
             if (isNaN(id)) {
                 this.logger.info(`Invalid ID: ${id}`);
@@ -57,7 +57,7 @@ class ScoreController {
                 return;
             }
 
-            const result = await scoreService.findById(id, user?.role !== 'ADMIN' ? user?.username : undefined);
+            const result = await scoreService.findById(id, user);
             if (!result.success) {
                 if (result.error === "Not found") {
                     res.status(404).json({error: `Score ${id} not found`});
@@ -79,7 +79,7 @@ class ScoreController {
             const user = req.user;
             const data = req.body;
 
-            this.logger.info(`POST /api/scores as ${user.username}:`)
+            this.logger.info(`POST /api/scores from ${req.hostname} as user ${user?.username}:`)
             this.logger.info(req.body);
 
             if (!data) {
@@ -107,7 +107,7 @@ class ScoreController {
             const data = req.body;
 
             const id = parseInt(req.params.id);
-            this.logger.info(`PUT /scores/${id} as ${user.username}:`);
+            this.logger.info(`PUT /scores/${id} from ${req.hostname} as user ${user?.username}:`);
             this.logger.info(req.body);
 
             if (isNaN(id)) {
@@ -140,7 +140,7 @@ class ScoreController {
             const user = req.user;
 
             const id = parseInt(req.params.id);
-            this.logger.info(`DELETE /api/scores/${id} as ${user.username}`);
+            this.logger.info(`DELETE /api/scores/${id} from ${req.hostname} as user ${user?.username}`);
 
             if (isNaN(id)) {
                 this.logger.info(`Invalid ID: ${id}`);

@@ -16,6 +16,11 @@ export const verifyToken = (req: Request, res: Response, next: NextFunction) => 
     try {
         // @ts-ignore todo use custom type
         req.user = jwt.verify(token, process.env.JWT_SECRET_KEY!);
+
+        // @ts-ignore todo use custom type
+        const user = req.user;
+
+        logger.info(`User authenticated as ${user?.username}`)
     } catch (err) {
         return res.status(401).json({error: "Invalid or expired token"});
     }

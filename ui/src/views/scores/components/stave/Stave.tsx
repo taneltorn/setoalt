@@ -40,7 +40,8 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                 overflowX: "auto",
                 height: context.dimensions.y * context.dimensions.blocks + 15
             }}>
-            <ActiveNotes/>
+            {!context.isSimplifiedMode && <ActiveNotes/>}
+
             <svg id={"notation"}
                  ref={svgRef}
                  width={context.dimensions.x}
@@ -93,7 +94,6 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                                     position: n,
                                     text: context.score.data.lyrics.find(l => l.position === n)?.text || ""
                                 }}/>)}
-
             </svg>
         </div>
     )

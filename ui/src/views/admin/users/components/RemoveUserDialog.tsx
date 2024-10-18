@@ -1,11 +1,11 @@
 import React from 'react';
-import Dialog from "../../../components/dialog/Dialog.tsx";
-import {useDialogContext} from "../../../hooks/useDialogContext.tsx";
+import Dialog from "../../../../components/dialog/Dialog.tsx";
+import {useDialogContext} from "../../../../hooks/useDialogContext.tsx";
 import {Trans, useTranslation} from "react-i18next";
 import {Text} from "@mantine/core";
-import {DisplayError, DisplaySuccess} from "../../../utils/helpers.tsx";
-import useUserService from "../../../hooks/useUserService.tsx";
-import {DialogType} from "../../../utils/enums.ts";
+import {DisplayError, DisplaySuccess} from "../../../../utils/helpers.tsx";
+import useUserService from "../../../../hooks/useUserService.tsx";
+import {DialogType} from "../../../../utils/enums.ts";
 
 const RemoveUserDialog: React.FC = () => {
 

@@ -7,4 +7,6 @@ export interface User {
     firstname?: string;
     lastname?: string;
     role: Role;
+    createdAt?: Date;
+    modifiedAt?: Date;
 }

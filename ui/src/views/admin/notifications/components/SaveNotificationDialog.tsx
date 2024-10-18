@@ -1,15 +1,14 @@
 import React, {useEffect} from 'react';
-import Dialog from "../../../components/dialog/Dialog.tsx";
-import {useDialogContext} from "../../../hooks/useDialogContext.tsx";
+import Dialog from "../../../../components/dialog/Dialog.tsx";
+import {useDialogContext} from "../../../../hooks/useDialogContext.tsx";
 import {useTranslation} from "react-i18next";
 import {Input, Textarea, TextInput} from "@mantine/core";
 import {Controller, useForm} from 'react-hook-form';
-import {dayEnd, dayStart, DisplayError, DisplaySuccess} from "../../../utils/helpers.tsx";
-import useNotificationService from "../../../hooks/useNotificationService.tsx";
-import {Notification} from "../../../model/Notification.ts";
+import {dayEnd, dayStart, DisplayError, DisplaySuccess} from "../../../../utils/helpers.tsx";
+import useNotificationService from "../../../../hooks/useNotificationService.tsx";
+import {Notification} from "../../../../model/Notification.ts";
 import {DatePickerInput} from "@mantine/dates";
-import {DialogType} from "../../../utils/enums.ts";
-import "dayjs/locale/et.js";
+import {DialogType} from "../../../../utils/enums.ts";
 
 const DEFAULT_VALUES = {
     message: "",
@@ -94,7 +93,7 @@ const SaveNotificationsDialog: React.FC = () => {
                         minRows={4}
                         maxRows={12}
                         placeholder={t("view.admin.notifications.message")}
-                        {...register("message", {required: t("field.required")})}
+                        {...register("message")}
                     />
                 </Input.Wrapper>
 
