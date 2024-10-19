@@ -1,79 +1,64 @@
-import React, {useEffect, useState} from "react";
+import React, {useMemo} from "react";
 import {useTranslation} from "react-i18next";
 import {Button, Group} from "@mantine/core";
-import {DisplayError} from "../../../utils/helpers.tsx";
 import {useDialogContext} from "../../../hooks/useDialogContext.tsx";
 import {BiPlus} from "react-icons/bi";
 import {Size} from "../../../utils/constants.ts";
-import {Notification} from "../../../model/Notification.ts";
 import SearchInput from "../../../components/controls/SearchInput.tsx";
 import SaveNotificationDialog from "./components/SaveNotificationDialog.tsx";
 import RemoveNotificationDialog from "./components/RemoveNotificationDialog.tsx";
-import useNotificationService from "../../../hooks/useNotificationService.tsx";
 import {DialogType} from "../../../utils/enums.ts";
-import {usePagination} from "../../../hooks/usePagination.tsx";
-import NotificationTable from "./NotificationTable.tsx";
+import useNotificationData from "./hooks/useNotificationData.tsx";
+import useSearchQuery from "../../../hooks/useSearchQuery.tsx";
+import PaginatedTable from "../../../components/table/PaginatedTable.tsx";
+import NotificationRow from "./components/NotificationRow.tsx";
 
 const NotificationList: React.FC = () => {
 
     const {t} = useTranslation();
 
-    const notificationService = useNotificationService();
-
     const {open} = useDialogContext();
-    const {setPage} = usePagination();
+    const {notifications, fetchNotifications, isLoading} = useNotificationData();
+    const {query, setQuery} = useSearchQuery();
 
-    const [query, setQuery] = useState<string>("");
-    const [notifications, setNotifications] = useState<Notification[]>([]);
-    const [filteredNotifications, setFilteredNotifications] = useState<Notification[]>(notifications);
-
-    const fetchData = () => {
-        notificationService.fetchNotifications()
-            .then(r => setNotifications(r))
-            .catch(() => DisplayError(t("toast.error.fetchData")));
-    }
-
-    const handleSearch = (value: string) => {
-        setQuery(value);
-        setPage(1);
-
-        const query = value?.toLowerCase();
-        setFilteredNotifications(notifications.filter(r => r.message?.toLowerCase().includes(query)));
-    }
-
-
-    useEffect(() => {
-        handleSearch(query);
+    const filteredNotifications = useMemo(() => {
+        const lowerCaseQuery = query.toLowerCase();
+        return notifications.filter(notification =>
+            notification.message?.toLowerCase().includes(lowerCaseQuery) ||
+            notification.title?.toLowerCase().includes(lowerCaseQuery)
+        );
     }, [notifications, query]);
-
-
-    useEffect(() => {
-        fetchData();
-        return () => notificationService.cancelSource.cancel();
-    }, []);
 
     return (
         <>
             <Group justify={"space-between"} mb={"md"}>
                 <SearchInput
                     value={query}
-                    onChange={handleSearch}
-                    onClear={() => handleSearch("")}
+                    onChange={setQuery}
+                    onClear={() => setQuery("")}
                 />
 
                 <Button size={"md"}
                         variant={"outline"}
                         leftSection={<BiPlus size={Size.icon.SM}/>}
                         onClick={() => open(DialogType.SAVE_NOTIFICATION, {
-                            onSave: () => fetchData()
+                            onSave: () => fetchNotifications()
                         })}>
                     {t("button.addNew")}
                 </Button>
             </Group>
 
-            <NotificationTable
-                notifications={filteredNotifications}
-                onChange={fetchData}
+            <PaginatedTable
+                isLoading={isLoading}
+                headers={[
+                    t("view.admin.notifications.id"),
+                    t("view.admin.notifications.title"),
+                    t("view.admin.notifications.message"),
+                    t("view.admin.notifications.validFrom"),
+                    t("view.admin.notifications.validTo"),
+                    t("view.admin.notifications.status"),
+                ]}
+                rows={filteredNotifications.map(n => <NotificationRow notification={n} onChange={fetchNotifications}/>)}
             />
 
             <SaveNotificationDialog/>

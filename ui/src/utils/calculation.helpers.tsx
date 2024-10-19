@@ -234,13 +234,15 @@ export const calculateStaveDimensions = (score: Score): StaveDimensions => {
     const distances = score.data.voices.flatMap(v => v.notes).map(n => {
         const nearestBreak = score.data.breaks.filter(p => p <= n.position).slice(-1)?.[0] || 0;
         return n.position - nearestBreak;
-    })
+    });
+
+    //todo include dividers and breaks
     const x = Math.max(...distances) * Layout.stave.note.SPACING + Layout.stave.container.PADDING_X_START + Layout.stave.container.PADDING_X_END;
 
     const blocks = score.data.breaks.length + 1;
 
     return {
-        x: Math.max(x, Layout.stave.container.MAX_WIDTH),
+        x: Math.min(Math.max(x + 250, Layout.stave.container.MIN_WIDTH), Layout.stave.container.MAX_WIDTH),
         y: y,
         blocks: blocks,
         containerY: y * blocks,

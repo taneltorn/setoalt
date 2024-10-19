@@ -4,7 +4,7 @@ import {Tabs, Text} from "@mantine/core";
 import Page from "../../Page.tsx";
 import UserList from "./users/UserList.tsx";
 import {FaUser} from "react-icons/fa";
-import {IoMdSettings} from "react-icons/io";
+import {IoMdNotifications} from "react-icons/io";
 import Header from "../../components/controls/Header.tsx";
 import {Size} from "../../utils/constants.ts";
 import NotificationList from "./notifications/NotificationList.tsx";
@@ -19,13 +19,13 @@ const Admin: React.FC = () => {
 
             <Tabs defaultValue="users" radius={"xs"}>
                 <Tabs.List>
-                    <Tabs.Tab value="users" leftSection={<FaUser size={Size.icon.SM}/>}>
+                    <Tabs.Tab value="users" leftSection={<FaUser size={Size.icon.XS}/>}>
                         <Text size={"lg"}>
                             {t("view.admin.tab.users")}
                         </Text>
                     </Tabs.Tab>
 
-                    <Tabs.Tab value="notifications" leftSection={<IoMdSettings size={Size.icon.SM}/>}>
+                    <Tabs.Tab value="notifications" leftSection={<IoMdNotifications size={Size.icon.SM}/>}>
                         <Text size={"lg"}>
                             {t("view.admin.tab.notifications")}
                         </Text>

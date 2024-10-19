@@ -1,12 +1,12 @@
 import React from "react";
 import {useTranslation} from "react-i18next";
 import {Group} from "@mantine/core";
-import {useDialogContext} from "../../../hooks/useDialogContext.tsx";
+import {useDialogContext} from "../../../../hooks/useDialogContext.tsx";
 import {FaPencil, FaRegTrashCan} from "react-icons/fa6";
-import IconButton from "../../../components/controls/IconButton.tsx";
-import {Size} from "../../../utils/constants.ts";
-import {Notification} from "../../../model/Notification.ts";
-import {DialogType} from "../../../utils/enums.ts";
+import IconButton from "../../../../components/controls/IconButton.tsx";
+import {Size} from "../../../../utils/constants.ts";
+import {Notification} from "../../../../model/Notification.ts";
+import {DialogType} from "../../../../utils/enums.ts";
 
 interface Properties {
     notification: Notification;

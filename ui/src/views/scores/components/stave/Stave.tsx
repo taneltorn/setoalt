@@ -36,7 +36,7 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
             ref={ref}
             style={{
                 marginTop: 15,
-                maxWidth: Layout.stave.container.MAX_WIDTH,
+                maxWidth: context.dimensions.x,
                 overflowX: "auto",
                 height: context.dimensions.y * context.dimensions.blocks + 15
             }}>

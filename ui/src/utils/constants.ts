@@ -3,6 +3,7 @@ export const DateFormat = "DD.MM.yyyy HH:mm";
 export const Layout = {
     stave: {
         container: {
+            MIN_WIDTH: 1000,
             MAX_WIDTH: 1500,
             PADDING_X_START: 75,
             PADDING_X_END: 60,

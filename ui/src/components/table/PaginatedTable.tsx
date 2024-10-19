@@ -1,18 +1,17 @@
-import React from "react";
+import React, {ReactNode} from "react";
 import {Alert, Button, Group, Pagination, Table, Text, useMantineTheme} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import LoadingOverlay from "../LoadingOverlay.tsx";
 import {usePagination} from "../../hooks/usePagination.tsx";
 import {ItemsPerPageOptions} from "../../context/PaginationContext.tsx";
-import {Row} from "../../model/Row.ts";
 
 interface Properties {
     isLoading?: boolean;
     headers: string[];
-    rows: Row[];
+    rows: ReactNode[];
 }
 
-const DataTable: React.FC<Properties> = ({isLoading, headers, rows}) => {
+const PaginatedTable: React.FC<Properties> = ({isLoading, headers, rows}) => {
 
     const {t} = useTranslation();
     const theme = useMantineTheme();
@@ -40,13 +39,7 @@ const DataTable: React.FC<Properties> = ({isLoading, headers, rows}) => {
                 <Table.Tbody>
                     {rows
                         .slice((page - 1) * itemsPerPage, page * itemsPerPage)
-                        .map((row, rowIndex) =>
-                            <Table.Tr key={rowIndex}>
-                                {row.data.map((cell, cellIndex) =>
-                                    <Table.Td key={cellIndex}>
-                                        {cell}
-                                    </Table.Td>)}
-                            </Table.Tr>)}
+                        .map((row, rowIndex) => <React.Fragment key={rowIndex}>{row}</React.Fragment>)}
                 </Table.Tbody>
             </Table>
 
@@ -91,4 +84,4 @@ const DataTable: React.FC<Properties> = ({isLoading, headers, rows}) => {
     );
 }
 
-export default DataTable;
+export default PaginatedTable;
