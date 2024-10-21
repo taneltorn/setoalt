@@ -1,11 +1,14 @@
 import {Score} from "../model/Score.ts";
 import axios from 'axios';
-import {normalize} from "../utils/helpers.tsx";
+import {DisplayError, DisplaySuccess, normalize} from "../utils/helpers.tsx";
 import {useDataService} from "./useDataService.tsx";
+import {useTranslation} from "react-i18next";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const useScoreService = () => {
+
+    const {t} = useTranslation();
 
     const {isLoading, setIsLoading, isSaving, setIsSaving} = useDataService();
     const cancelSource = axios.CancelToken.source();
@@ -23,6 +26,8 @@ const useScoreService = () => {
                 return response.data;
             })
             .catch(error => {
+                DisplayError(t("toast.error.score.fetchScore"), error);
+
                 setIsLoading(false);
                 throw error;
             });
@@ -41,6 +46,8 @@ const useScoreService = () => {
                 return response.data;
             })
             .catch(error => {
+                DisplayError(t("toast.error.score.fetchScores"), error);
+
                 setIsLoading(false);
                 throw error;
             });
@@ -55,13 +62,24 @@ const useScoreService = () => {
             withCredentials: true
         })
             .then(response => {
+                DisplaySuccess(t("toast.success.score.saveScore"));
+
                 setIsSaving(false);
                 return response.data;
             })
             .catch(error => {
+                DisplayError(t("toast.error.score.saveScore"), error);
+
                 setIsSaving(false);
                 throw error;
             });
+    }
+
+    const cloneScore = async (name: string, score: Score): Promise<Score> => {
+        const clone = {...score};
+        clone.name = name;
+
+        return createScore(clone);
     }
 
     const updateScore = async (id: number, score: Score): Promise<Score> => {
@@ -73,10 +91,14 @@ const useScoreService = () => {
             withCredentials: true
         })
             .then(response => {
+                DisplaySuccess(t("toast.success.score.saveScore"));
+
                 setIsSaving(false);
                 return response.data;
             })
             .catch(error => {
+                DisplayError(t("toast.error.score.removeScore"), error);
+
                 setIsSaving(false);
                 throw error;
             });
@@ -91,10 +113,14 @@ const useScoreService = () => {
             withCredentials: true
         })
             .then(response => {
+                DisplaySuccess(t("toast.success.score.removeScore"));
+
                 setIsSaving(false);
                 return response.data;
             })
             .catch(error => {
+                DisplayError(t("toast.error.score.removeScore"), error);
+
                 setIsSaving(false);
                 throw error;
             });
@@ -106,9 +132,10 @@ const useScoreService = () => {
         fetchScore,
         fetchScores,
         createScore,
+        cloneScore,
         updateScore,
         removeScore,
-        cancelSource
+        cancelSource,
     }
 };
 

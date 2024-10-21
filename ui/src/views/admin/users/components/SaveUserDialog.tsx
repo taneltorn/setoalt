@@ -7,7 +7,6 @@ import {Controller, useForm} from 'react-hook-form';
 import {DialogType, Role} from "../../../../utils/enums.ts";
 import {User} from "../../../../model/User.ts";
 import useUserService from "../../../../hooks/useUserService.tsx";
-import {DisplayError, DisplaySuccess} from "../../../../utils/helpers.tsx";
 import {useAuth} from "../../../../hooks/useAuth.tsx";
 
 const DEFAULT_VALUES = {
@@ -41,11 +40,9 @@ const SaveUserDialog: React.FC = () => {
 
         saveUser()
             .then(() => {
-                DisplaySuccess(t("toast.success.saveUser"))
                 context.onSave && context.onSave();
                 handleClose();
-            })
-            .catch(() => DisplayError(t("toast.error.saveUser")));
+            });
     }
 
     const handleClose = () => {

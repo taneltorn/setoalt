@@ -1,6 +1,6 @@
 import {Voice, VoiceType} from "../model/Voice";
 import {Instrument} from "../model/Instrument.ts";
-import {Setting} from "../views/scores/components/ScoreSettings.tsx";
+import {Setting} from "../views/scores/details/components/ScoreSettings.tsx";
 
 export const DefaultVoices: Voice[] = [
     {

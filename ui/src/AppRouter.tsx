@@ -4,7 +4,7 @@ import {
     RouterProvider,
 } from "react-router-dom";
 import Layout from "./Layout.tsx";
-import Scores from "./views/scores/ScoreList.tsx";
+import Scores from "./views/scores/list/ScoreList.tsx";
 import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Admin from "./views/admin/Admin.tsx";
 import {Role} from "./utils/enums.ts";

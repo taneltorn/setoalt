@@ -1,9 +1,9 @@
 import React, {useEffect} from "react";
 import {Score} from "../model/Score.ts";
-import Stave from "./scores/components/stave/Stave.tsx";
-import ScorePlaybackPanel from "./scores/components/playback/ScorePlaybackPanel.tsx";
+import Stave from "./scores/details/components/stave/Stave.tsx";
 import {useScoreContext} from "../hooks/useScoreContext.tsx";
 import {useAudioContext} from "../hooks/useAudioContext.tsx";
+import PlaybackControls from "./scores/details/components/playback/PlaybackControls.tsx";
 
 interface Properties {
     score?: Score;
@@ -26,7 +26,7 @@ const Example: React.FC<Properties> = ({score}) => {
         <>
             {score &&
                 <>
-                    <ScorePlaybackPanel/>
+                    <PlaybackControls/>
                     <Stave score={score}/>
                 </>}
         </>

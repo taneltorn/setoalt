@@ -4,7 +4,7 @@ import {useDialogContext} from "../../../../hooks/useDialogContext.tsx";
 import {useTranslation} from "react-i18next";
 import {Input, Textarea, TextInput} from "@mantine/core";
 import {Controller, useForm} from 'react-hook-form';
-import {dayEnd, dayStart, DisplayError, DisplaySuccess} from "../../../../utils/helpers.tsx";
+import {dayEnd, dayStart} from "../../../../utils/helpers.tsx";
 import useNotificationService from "../../../../hooks/useNotificationService.tsx";
 import {Notification} from "../../../../model/Notification.ts";
 import {DatePickerInput} from "@mantine/dates";
@@ -37,11 +37,9 @@ const SaveNotificationsDialog: React.FC = () => {
             : notificationService.createNotification(values);
         saveNotification()
             .then(() => {
-                DisplaySuccess(t("toast.success.saveNotification"))
                 context.onSave && context.onSave();
                 handleClose();
-            })
-            .catch(() => DisplayError(t("toast.error.saveNotification")));
+            });
     }
 
     const handleClose = () => {

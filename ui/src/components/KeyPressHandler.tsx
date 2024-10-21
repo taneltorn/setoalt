@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useScoreContext} from "../hooks/useScoreContext.tsx";
 import {useAudioContext} from "../hooks/useAudioContext.tsx";
 import {ShortKey} from "../utils/keymap";
-import {DisplayError, DisplaySuccess, range} from "../utils/helpers.tsx";
+import {range} from "../utils/helpers.tsx";
 import {useDialogContext} from "../hooks/useDialogContext.tsx";
 import {NoteType} from "../model/Note.ts";
 import {DialogType, ShiftMode} from "../utils/enums.ts";
@@ -12,11 +12,8 @@ import {useLayoutControls} from "../hooks/useLayoutControls.tsx";
 import {useActiveKeys} from "../hooks/useActiveKeys.tsx";
 import {useHistory} from "../hooks/useHistory.tsx";
 import useScoreService from "../hooks/useScoreService.tsx";
-import {useTranslation} from "react-i18next";
 
 const KeyPressHandler: React.FC = () => {
-
-    const {t} = useTranslation();
 
     const audioContext = useAudioContext();
     const scoreContext = useScoreContext();
@@ -92,9 +89,7 @@ const KeyPressHandler: React.FC = () => {
                         return;
                     case ShortKey.SAVE:
                         if (scoreContext.score.id) {
-                            scoreService.updateScore(scoreContext.score.id, scoreContext.score)
-                                .then(() => DisplaySuccess(t("toast.success.saveScore")))
-                                .catch(() => DisplayError(t("toast.error.saveScore")));
+                            scoreService.updateScore(scoreContext.score.id, scoreContext.score);
                         }
                         break;
                     default:

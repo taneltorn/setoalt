@@ -1,22 +1,19 @@
 import React from 'react';
 import Dialog from "../../../../components/dialog/Dialog.tsx";
-import {useDialogContext} from "../../../../hooks/useDialogContext.tsx";
 import {Trans, useTranslation} from "react-i18next";
 import {Text} from "@mantine/core";
-import useNotificationService from "../../../../hooks/useNotificationService.tsx";
+import {useDialogContext} from "../../../../hooks/useDialogContext.tsx";
+import useScoreService from "../../../../hooks/useScoreService.tsx";
 import {DialogType} from "../../../../utils/enums.ts";
 
-const RemoveNotificationDialog: React.FC = () => {
+const RemoveScoreDialog: React.FC = () => {
 
     const [t] = useTranslation();
     const {close, context} = useDialogContext();
-    const notificationService = useNotificationService();
+    const {removeScore} = useScoreService();
 
     const confirm = async () => {
-        if (!context.notification?.id) {
-            return;
-        }
-        notificationService.removeNotification(context.notification.id)
+        removeScore(context.id)
             .then(() => {
                 close();
                 context.onRemove && context.onRemove();
@@ -25,9 +22,8 @@ const RemoveNotificationDialog: React.FC = () => {
 
     return (
         <Dialog
-            type={DialogType.REMOVE_NOTIFICATION}
-            size={"sm"}
-            title={t("dialog.removeNotification.title")}
+            type={DialogType.REMOVE_SCORE}
+            title={t("dialog.removeScore.title")}
             primaryButtonLabel={t("button.confirm")}
             secondaryButtonLabel={t("button.cancel")}
             onPrimaryButtonClick={confirm}
@@ -36,12 +32,12 @@ const RemoveNotificationDialog: React.FC = () => {
         >
             <Text size={"xl"}>
                 <Trans
-                    i18nKey="dialog.removeNotification.description"
-                    values={{title: context.notification?.title}}
+                    i18nKey="dialog.removeScore.description"
+                    values={{name: context.name}}
                 />
             </Text>
         </Dialog>
     )
 };
 
-export default RemoveNotificationDialog;
+export default RemoveScoreDialog;

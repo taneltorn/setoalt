@@ -8,12 +8,12 @@ import {useDevMode} from "../../hooks/useDevContext.tsx";
 import {useTranslation} from "react-i18next";
 import {DisplayError} from "../../utils/helpers.tsx";
 import LoadingOverlay from "../../components/LoadingOverlay.tsx";
-import ScoreNotFound from "./components/ScoreNotFound.tsx";
-import ScoreDetails from "./components/ScoreDetails.tsx";
-import ScoreDialogs from "./components/dialog/ScoreDialogs.tsx";
-import ScoreEditor from "./components/ScoreEditor.tsx";
-import Editor from "./components/Editor.tsx";
-import ScoreEmbedding from "./components/ScoreEmbedding.tsx";
+import ScoreNotFound from "./ScoreNotFound.tsx";
+import ScoreDetails from "./details/ScoreDetails.tsx";
+import ScoreDialogs from "./details/components/ScoreDialogs.tsx";
+import ScoreEditor from "./editor/ScoreEditor.tsx";
+import Editor from "./editor/Editor.tsx";
+import ScoreEmbedding from "./embed/ScoreEmbedding.tsx";
 import ContextProviders from "../../ContextProviders.tsx";
 
 interface Properties {

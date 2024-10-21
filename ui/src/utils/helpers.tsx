@@ -173,10 +173,10 @@ export const wouldProduceOverlap = (note: Note, occupiedPositions: number[] | un
     return positionRange.some(p => occupiedPositions && occupiedPositions.includes(p));
 }
 
-export const DisplayError = (message: string) => {
+export const DisplayError = (message: string, error?: Error) => {
     notifications.show({
         color: 'red',
-        message: message,
+        message: error ? `${message}\n${error.message}` : message,
         p: "md",
         radius: "sm",
         withBorder: true,
@@ -184,7 +184,7 @@ export const DisplayError = (message: string) => {
     });
 }
 
-export const DisplaySuccess = (message: string) => {
+export const DisplaySuccess = (message: any) => {
     notifications.show({
         color: 'white',
         message: message,

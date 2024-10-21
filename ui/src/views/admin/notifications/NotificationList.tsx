@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Button, Group} from "@mantine/core";
 import {useDialogContext} from "../../../hooks/useDialogContext.tsx";
@@ -8,18 +8,22 @@ import SearchInput from "../../../components/controls/SearchInput.tsx";
 import SaveNotificationDialog from "./components/SaveNotificationDialog.tsx";
 import RemoveNotificationDialog from "./components/RemoveNotificationDialog.tsx";
 import {DialogType} from "../../../utils/enums.ts";
-import useNotificationData from "./hooks/useNotificationData.tsx";
 import useSearchQuery from "../../../hooks/useSearchQuery.tsx";
 import PaginatedTable from "../../../components/table/PaginatedTable.tsx";
 import NotificationRow from "./components/NotificationRow.tsx";
+import useNotificationService from "../../../hooks/useNotificationService.tsx";
+import {Notification} from "../../../model/Notification.ts";
 
 const NotificationList: React.FC = () => {
 
     const {t} = useTranslation();
-
     const {open} = useDialogContext();
-    const {notifications, fetchNotifications, isLoading} = useNotificationData();
     const {query, setQuery} = useSearchQuery();
+    const {fetchNotifications, isLoading, cancelSource} =useNotificationService();
+
+    const [notifications, setNotifications] = useState<Notification[]>([]);
+
+    const fetchData = () => fetchNotifications().then(setNotifications);
 
     const filteredNotifications = useMemo(() => {
         const lowerCaseQuery = query.toLowerCase();
@@ -28,6 +32,11 @@ const NotificationList: React.FC = () => {
             notification.title?.toLowerCase().includes(lowerCaseQuery)
         );
     }, [notifications, query]);
+
+    useEffect(() => {
+        fetchData();
+        return () => cancelSource.cancel();
+    }, []);
 
     return (
         <>
@@ -42,7 +51,7 @@ const NotificationList: React.FC = () => {
                         variant={"outline"}
                         leftSection={<BiPlus size={Size.icon.SM}/>}
                         onClick={() => open(DialogType.SAVE_NOTIFICATION, {
-                            onSave: () => fetchNotifications()
+                            onSave: fetchData
                         })}>
                     {t("button.addNew")}
                 </Button>
@@ -58,7 +67,12 @@ const NotificationList: React.FC = () => {
                     t("view.admin.notifications.validTo"),
                     t("view.admin.notifications.status"),
                 ]}
-                rows={filteredNotifications.map(n => <NotificationRow notification={n} onChange={fetchNotifications}/>)}
+                rows={filteredNotifications.map((notification) =>
+                    <NotificationRow
+                        key={notification.id}
+                        notification={notification}
+                        onChange={fetchData}
+                    />)}
             />
 
             <SaveNotificationDialog/>

@@ -81,7 +81,7 @@ class AuthController {
         // @ts-ignore todo use custom type
         const user = req.user;
 
-        this.logger.info(`GET /verify from ${req.hostname} as user ${user.username}`);
+        this.logger.info(`GET /verify from ${req.hostname} as user ${user?.username}`);
 
         // @ts-ignore
         res.json({ message: "Session is valid", user: req.user });

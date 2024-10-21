@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import {Badge, Table} from "@mantine/core";
 import {DateFormat} from "../../../../utils/constants.ts";
 import moment from "moment";
-import NotificationControls from "./NotificationControls.tsx";
+import NotificationRowControls from "./NotificationRowControls.tsx";
 import {isActive} from "../../../../utils/helpers.tsx";
 import {Notification} from "../../../../model/Notification.ts";
 
@@ -29,7 +29,7 @@ const NotificationRow: React.FC<Properties> = ({notification, onChange}) => {
                 </Badge>
             </Table.Td>
             <Table.Td>
-                <NotificationControls notification={notification} onChange={onChange}/>
+                <NotificationRowControls notification={notification} onChange={onChange}/>
             </Table.Td>
         </Table.Tr>
     );

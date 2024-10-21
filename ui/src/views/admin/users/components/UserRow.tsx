@@ -4,7 +4,7 @@ import {Badge, Table, useMantineTheme} from "@mantine/core";
 import {User} from "../../../../model/User.ts";
 import {Role} from "../../../../utils/enums.ts";
 import {DateFormat} from "../../../../utils/constants.ts";
-import UserListControls from "./UserControls.tsx";
+import UserListControls from "./UserRowControls.tsx";
 import moment from "moment";
 
 interface Properties {

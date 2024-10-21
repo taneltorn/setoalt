@@ -1,10 +1,14 @@
 import {useState} from "react";
 import axios from 'axios';
 import {User} from "../model/User.ts";
+import {DisplayError, DisplaySuccess} from "../utils/helpers.tsx";
+import {useTranslation} from "react-i18next";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const useUserService = () => {
+
+    const {t} = useTranslation();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const cancelSource = axios.CancelToken.source();
@@ -22,6 +26,8 @@ const useUserService = () => {
                 return response.data;
             })
             .catch(error => {
+                DisplayError(t("toast.error.user.fetchUsers"), error);
+
                 setIsLoading(false);
                 throw error;
             });
@@ -36,10 +42,14 @@ const useUserService = () => {
             withCredentials: true
         })
             .then(response => {
+                DisplaySuccess(t("toast.success.user.saveUser"));
+
                 setIsLoading(false);
                 return response.data;
             })
             .catch(error => {
+                DisplayError(t("toast.error.user.saveUser"), error);
+
                 setIsLoading(false);
                 throw error;
             });
@@ -54,10 +64,14 @@ const useUserService = () => {
             withCredentials: true
         })
             .then(response => {
+                DisplaySuccess(t("toast.success.user.saveUser"));
+
                 setIsLoading(false);
                 return response.data;
             })
             .catch(error => {
+                DisplayError(t("toast.error.user.saveUser"), error);
+
                 setIsLoading(false);
                 throw error;
             });
@@ -72,10 +86,14 @@ const useUserService = () => {
             withCredentials: true
         })
             .then(response => {
+                DisplaySuccess(t("toast.success.user.removeUser"));
+
                 setIsLoading(false);
                 return response.data;
             })
             .catch(error => {
+                DisplayError(t("toast.error.user.removeUser"), error);
+
                 setIsLoading(false);
                 throw error;
             });

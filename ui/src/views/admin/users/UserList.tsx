@@ -1,4 +1,4 @@
-import React, {useMemo} from "react";
+import React, {useEffect, useMemo, useState} from "react";
 import {useTranslation} from "react-i18next";
 import {Button, Group} from "@mantine/core";
 import {useDialogContext} from "../../../hooks/useDialogContext.tsx";
@@ -8,18 +8,22 @@ import SearchInput from "../../../components/controls/SearchInput.tsx";
 import SaveUserDialog from "./components/SaveUserDialog.tsx";
 import RemoveUserDialog from "./components/RemoveUserDialog.tsx";
 import {Size} from "../../../utils/constants.ts";
-import useUserData from "./hooks/useUserData.tsx";
 import PaginatedTable from "../../../components/table/PaginatedTable.tsx";
 import UserRow from "./components/UserRow.tsx";
 import useSearchQuery from "../../../hooks/useSearchQuery.tsx";
+import {User} from "../../../model/User.ts";
+import useUserService from "../../../hooks/useUserService.tsx";
 
 const UserList: React.FC = () => {
 
     const {t} = useTranslation();
-
     const {open} = useDialogContext();
-    const {users, fetchUsers, isLoading} = useUserData();
+    const {fetchUsers, isLoading, cancelSource} = useUserService();
+
+    const [users, setUsers] = useState<User[]>([]);
     const {query, setQuery} = useSearchQuery();
+
+    const fetchData = () => fetchUsers().then(setUsers);
 
     const filteredUsers = useMemo(() => {
         const lowerCaseQuery = query.toLowerCase();
@@ -29,6 +33,12 @@ const UserList: React.FC = () => {
             user.lastname?.toLowerCase().includes(lowerCaseQuery)
         );
     }, [users, query]);
+
+
+    useEffect(() => {
+        fetchData();
+        return () => cancelSource.cancel();
+    }, []);
 
     return (
         <>
@@ -42,7 +52,7 @@ const UserList: React.FC = () => {
                     size={"md"}
                     variant={"outline"}
                     leftSection={<BiPlus size={Size.icon.SM}/>}
-                    onClick={() => open(DialogType.SAVE_USER, {onSave: () => fetchUsers()})}
+                    onClick={() => open(DialogType.SAVE_USER, {onSave: fetchData})}
                 >
                     {t("button.addNew")}
                 </Button>
@@ -57,7 +67,12 @@ const UserList: React.FC = () => {
                     t("view.admin.users.table.role"),
                     t("view.admin.users.table.createdAt"),
                 ]}
-                rows={filteredUsers.map(user => <UserRow user={user} onChange={fetchUsers}/>)}
+                rows={filteredUsers.map((user) =>
+                    <UserRow
+                        key={user.id}
+                        user={user}
+                        onChange={fetchData}
+                    />)}
             />
 
             <SaveUserDialog/>

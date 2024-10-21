@@ -8,7 +8,7 @@ import Description from "../components/controls/Description.tsx";
 import {Trans} from 'react-i18next';
 import {Score} from "../model/Score.ts";
 import KeyPressHandler from "../components/KeyPressHandler.tsx";
-import ScoreDialogs from "./scores/components/dialog/ScoreDialogs.tsx";
+import ScoreDialogs from "./scores/details/components/ScoreDialogs.tsx";
 import Example from "./Example.tsx";
 import ContextProviders from "../ContextProviders.tsx";
 

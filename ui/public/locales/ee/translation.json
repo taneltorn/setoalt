@@ -286,26 +286,40 @@
   },
   "toast": {
     "success": {
-      "saveScore": "Noodistus salvestatud.",
-      "saveUser": "Kasutaja salvestatud.",
-      "saveNotification": "Teavitus salvestatud.",
-      "removeScore": "Noodistus kustutatud.",
-      "removeUser": "Kasutaja kustutatud.",
-      "removeNotification": "Teavitus kustutatud."
+      "score": {
+        "saveScore": "Noodistus salvestatud!",
+        "removeScore": "Noodistus kustutatud!"
+      },
+      "user": {
+        "saveUser": "Kasutaja salvestatud!",
+        "removeUser": "Kasutaja kustutatud!"
+      },
+      "notification": {
+        "saveNotification": "Teavitus salvestatud!",
+        "removeNotification": "Teavitus kustutatud!"
+      }
     },
     "error": {
+      "score": {
+        "fetchScore": "Noodistuse laadimine ebaõnnestus!",
+        "fetchScores": "Noodistuste laadimine ebaõnnestus!",
+        "removeScore": "Noodistuse kustutamine ebaõnnestus!",
+        "saveScore": "Noodistuse salvestamine ebaõnnestus!",
+        "updateScore": "Noodistuse muutmine ebaõnnestus!"
+      },
+      "user": {
+        "fetchUsers": "Kasutajate laadimine ebaõnnestus!",
+        "saveUser": "Kasutaja salvestamine ebaõnnestus!",
+        "removeUser": "Kasutaja kustutamine ebaõnnestus!"
+      },
+      "notification": {
+        "saveNotification": "Teavituse salvestamine ebaõnnestus!",
+        "removeNotification": "Teavituse kustutamine ebaõnnestus!"
+      },
       "message": "Midagi läks valesti.",
       "fetchData": "Ei õnnestunud andmeid laadida.",
       "wrongCredentials": "Vale kasutajanimi/parool",
-      "logout": "Ei õnnestunud andmeid laadida.",
-      "fetchScore": "Noodistuse laadimine ebaõnnestus.",
-      "removeScore": "Noodistuse kustutamine ebaõnnestus.",
-      "saveScore": "Noodistuse salvestamine ebaõnnestus.",
-      "updateScore": "Noodistuse muutmine ebaõnnestus.",
-      "saveUser": "Kasutaja salvestamine ebaõnnestus.",
-      "removeUser": "Kasutaja kustutamine ebaõnnestus.",
-      "saveNotification": "Teavituse salvestamine ebaõnnestus.",
-      "removeNotification": "Teavituse kustutamine ebaõnnestus."
+      "logout": "Ei õnnestunud andmeid laadida."
     }
   },
   "stave": {

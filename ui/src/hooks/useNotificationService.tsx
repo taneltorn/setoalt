@@ -1,10 +1,14 @@
 import {useState} from "react";
 import {Notification} from "../model/Notification.ts";
 import axios from 'axios';
+import {useTranslation} from "react-i18next";
+import {DisplayError, DisplaySuccess} from "../utils/helpers.tsx";
 
 const API_URL = import.meta.env.VITE_API_URL;
 
 const useNotificationService = () => {
+
+    const {t} = useTranslation();
 
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const cancelSource = axios.CancelToken.source();
@@ -22,6 +26,8 @@ const useNotificationService = () => {
                 return response.data;
             })
             .catch(error => {
+                DisplayError(t("toast.error.notification.fetchNotification"), error);
+
                 setIsLoading(false);
                 throw error;
             });
@@ -40,6 +46,8 @@ const useNotificationService = () => {
                 return response.data;
             })
             .catch(error => {
+                DisplayError(t("toast.error.notification.fetchNotifications"), error);
+
                 setIsLoading(false);
                 throw error;
             });
@@ -58,6 +66,8 @@ const useNotificationService = () => {
                 return response.data;
             })
             .catch(error => {
+                DisplayError(t("toast.error.notification.fetchNotification"), error);
+
                 setIsLoading(false);
                 throw error;
             });
@@ -72,10 +82,14 @@ const useNotificationService = () => {
             withCredentials: true
         })
             .then(response => {
+                DisplaySuccess(t("toast.success.notification.saveNotification"));
+
                 setIsLoading(false);
                 return response.data;
             })
             .catch(error => {
+                DisplayError(t("toast.error.notification.saveNotification"), error);
+
                 setIsLoading(false);
                 throw error;
             });
@@ -90,10 +104,14 @@ const useNotificationService = () => {
             withCredentials: true
         })
             .then(response => {
+                DisplaySuccess(t("toast.success.notification.saveNotification"));
+
                 setIsLoading(false);
                 return response.data;
             })
             .catch(error => {
+                DisplayError(t("toast.error.notification.saveNotification"), error);
+
                 setIsLoading(false);
                 throw error;
             });
@@ -108,10 +126,14 @@ const useNotificationService = () => {
             withCredentials: true
         })
             .then(response => {
+                DisplaySuccess(t("toast.success.notification.removeNotification"));
+
                 setIsLoading(false);
                 return response.data;
             })
             .catch(error => {
+                DisplayError(t("toast.error.notification.removeNotification"), error);
+
                 setIsLoading(false);
                 throw error;
             });
