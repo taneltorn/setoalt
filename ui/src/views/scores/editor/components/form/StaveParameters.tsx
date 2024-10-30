@@ -137,7 +137,7 @@ const StaveParameters: React.FC = () => {
                                 label={null}
                                 min={Playback.MIN_TEMPO}
                                 max={Playback.MAX_TEMPO}
-                                step={Playback.TEMPO_STEP}
+                                step={Playback.TEMPO_SLIDER_STEP}
                                 value={field.value || 0}
                                 onChange={field.onChange}
                             />

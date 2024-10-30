@@ -27,8 +27,8 @@ export const AudioContextProvider: React.FC<Properties> = ({children}) => {
     const [instrument, setInstrument] = useState<Instrument>(Instruments.find(i => i.name === Playback.DEFAULT_INSTRUMENT) || Instruments[0]);
 
     const changeInstrument = (instrument: Instrument) => {
-        setInstrument(instrument);
         player.use(instrument);
+        setInstrument(instrument);
     }
 
     const playNotes = (notes: Note[], stave: Stave) => {
@@ -44,8 +44,8 @@ export const AudioContextProvider: React.FC<Properties> = ({children}) => {
         stopPlayback();
         setIsPlaying(true);
 
-        if (Tone.context.state !== 'running') {
-            Tone.context.resume();
+        if (Tone.getContext().state !== 'running') {
+            Tone.getContext().resume().then(() => console.log("resuming"));
         }
 
         const isLooping = context.loopRange?.start !== undefined && context.loopRange?.end !== undefined;
@@ -101,27 +101,27 @@ export const AudioContextProvider: React.FC<Properties> = ({children}) => {
             sequenceRef.current.loopEnd = longestDuration;
         }
 
-        Tone.Transport.scheduleOnce(() => {
+        Tone.getContext().transport.scheduleOnce(() => {
             if (!isLooping) {
                 resetPlayback(context);
             }
         }, `+${longestDuration}`);
 
-        Tone.Transport.start();
+        Tone.getContext().transport.start();
     };
 
     const stopPlayback = () => {
         setIsPlaying(false);
 
-        if (Tone.Transport.state === "stopped") return;
+        if (Tone.getContext().transport.state === "stopped") return;
 
         if (sequenceRef.current) {
             sequenceRef.current.stop();
             sequenceRef.current.dispose();
             sequenceRef.current = null;
         }
-        Tone.Transport.cancel();
-        Tone.Transport.stop();
+        Tone.getContext().transport.cancel();
+        Tone.getContext().transport.stop();
     };
 
     const resetPlayback = (context: ScoreContextProperties) => {
@@ -135,7 +135,7 @@ export const AudioContextProvider: React.FC<Properties> = ({children}) => {
     }, [volume]);
 
     useEffect(() => {
-        Tone.Transport.bpm.value = tempo;
+        Tone.getContext().transport.bpm.value = tempo;
     }, [tempo]);
 
     const context = useMemo(() => ({

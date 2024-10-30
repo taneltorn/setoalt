@@ -39,7 +39,7 @@ export const NoteControlsContextProvider: React.FC<Properties> = ({children}) =>
 
             context.refresh();
             if (moveToNext) {
-                context.activate(note.position + 1);
+                context.activate(note.position + durationToScalar(note.duration));
             }
         }
     }

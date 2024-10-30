@@ -1,3 +1,9 @@
+#### [0.2.14] - 30.10.2024
+
+- Muudetud PNG font
+- Tempo/transponeerimise aknas kuvatakse +/- nupud
+- 
+
 #### [0.2.13] - 18.10.2024
 
 - Muudetud pealehe näited

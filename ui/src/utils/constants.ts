@@ -82,8 +82,9 @@ export const Playback = {
 
     DEFAULT_TEMPO: 80,
     MIN_TEMPO: 20,
-    MAX_TEMPO: 240,
-    TEMPO_STEP: 1,
+    MAX_TEMPO: 180,
+    TEMPO_SLIDER_STEP: 1,
+    TEMPO_ADJUSTMENT_STEP: 5,
     ALLOWED_TEMPO_CHANGE: 1,
 
     MIN_DETUNE: -100,

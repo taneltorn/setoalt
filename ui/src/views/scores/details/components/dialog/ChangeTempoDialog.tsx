@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from "react-i18next";
-import {Button, Group, Text} from "@mantine/core";
+import {Text} from "@mantine/core";
 import {useDialogContext} from "../../../../../hooks/useDialogContext.tsx";
 import {Playback} from "../../../../../utils/constants.ts";
 import Dialog from "../../../../../components/dialog/Dialog.tsx";
@@ -8,6 +8,7 @@ import {useAudioContext} from "../../../../../hooks/useAudioContext.tsx";
 import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import Slider from "../../../../../components/controls/Slider.tsx";
 import {DialogType} from "../../../../../utils/enums.ts";
+import AdjustmentControls from "../../../../../components/controls/AdjustmentControls.tsx";
 
 const ChangeTempoDialog: React.FC = () => {
 
@@ -16,7 +17,6 @@ const ChangeTempoDialog: React.FC = () => {
     const audioContext = useAudioContext();
     const scoreContext = useScoreContext();
     const [tempo, setTempo] = useState<number>(scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO);
-    const preset = [-50, -25, -10, 10, 25];
 
     const handleSave = () => {
         audioContext.setTempo(tempo);
@@ -47,9 +47,9 @@ const ChangeTempoDialog: React.FC = () => {
             </Text>
 
             <Slider
-                min={Math.max(Playback.MIN_TEMPO, (scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO) * (1 - Playback.ALLOWED_TEMPO_CHANGE))}
-                max={Math.min(Playback.MAX_TEMPO, (scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO) * (Playback.ALLOWED_TEMPO_CHANGE + 1))}
-                step={Playback.TEMPO_STEP}
+                min={Playback.MIN_TEMPO}
+                max={Playback.MAX_TEMPO}
+                step={Playback.TEMPO_SLIDER_STEP}
                 defaultValue={scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO}
                 value={tempo}
                 label={t("unit.bpm")}
@@ -57,16 +57,12 @@ const ChangeTempoDialog: React.FC = () => {
                 onReset={() => setTempo(scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO)}
             />
 
-            <Group mt={"md"} gap={4}>
-                {preset.map((change, index) =>
-                    <Button key={index}
-                            size={"xs"}
-                            variant={(scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO) * (100 + change) / 100 === tempo ? "filled" : "subtle"}
-                            onClick={() => setTempo((scoreContext.score.defaultTempo || Playback.DEFAULT_TEMPO) * (100 + change) / 100)}
-                    >
-                        {change >= 0 && "+"}{change}%
-                    </Button>)}
-            </Group>
+            <AdjustmentControls
+                decreaseDisabled={tempo <= Playback.MIN_TEMPO}
+                increaseDisabled={tempo >= Playback.MAX_TEMPO}
+                onDecrease={() => setTempo(Math.max(tempo - Playback.TEMPO_ADJUSTMENT_STEP, Playback.MIN_TEMPO))}
+                onIncrease={() => setTempo(Math.min(tempo + Playback.TEMPO_ADJUSTMENT_STEP, Playback.MAX_TEMPO))}
+            />
         </Dialog>
     )
 };

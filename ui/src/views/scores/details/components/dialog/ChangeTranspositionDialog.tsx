@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from 'react';
 import {useTranslation} from "react-i18next";
-import {Button, Group, Text} from "@mantine/core";
+import {Text} from "@mantine/core";
 import {useDialogContext} from "../../../../../hooks/useDialogContext.tsx";
 import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {Playback} from "../../../../../utils/constants.ts";
@@ -8,6 +8,7 @@ import Dialog from "../../../../../components/dialog/Dialog.tsx";
 import {useAudioContext} from "../../../../../hooks/useAudioContext.tsx";
 import Slider from "../../../../../components/controls/Slider.tsx";
 import {DialogType} from "../../../../../utils/enums.ts";
+import AdjustmentControls from "../../../../../components/controls/AdjustmentControls.tsx";
 
 const ChangeTranspositionDialog: React.FC = () => {
 
@@ -16,7 +17,6 @@ const ChangeTranspositionDialog: React.FC = () => {
     const audioContext = useAudioContext();
     const {close} = useDialogContext();
     const [transposition, setTransposition] = useState<number>(audioContext.transposition);
-    const preset = [-3, -2, -1, 1, 2, 3];
 
     const handleSave = () => {
         audioContext.setTransposition(transposition);
@@ -58,17 +58,12 @@ const ChangeTranspositionDialog: React.FC = () => {
                 onReset={() => setTransposition(scoreContext.score.defaultTransposition || Playback.DEFAULT_TRANSPOSITION)}
             />
 
-
-            <Group mt={"md"} gap={4}>
-                {preset.map((change, index) =>
-                    <Button key={index}
-                            size={"xs"}
-                            variant={(scoreContext.score.defaultTransposition || Playback.DEFAULT_TRANSPOSITION) + change === transposition ? "filled" : "subtle"}
-                            onClick={() => setTransposition((scoreContext.score.defaultTransposition || Playback.DEFAULT_TRANSPOSITION) + change)}
-                    >
-                        {change >= 0 && "+"}{change}pt
-                    </Button>)}
-            </Group>
+            <AdjustmentControls
+                decreaseDisabled={transposition <= Playback.MIN_TRANSPOSITION}
+                increaseDisabled={transposition >= Playback.MAX_TRANSPOSITION}
+                onDecrease={() => setTransposition(transposition - Playback.TRANSPOSITION_STEP)}
+                onIncrease={() => setTransposition(transposition + Playback.TRANSPOSITION_STEP)}
+            />
         </Dialog>
     )
 };
