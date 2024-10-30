@@ -8,6 +8,8 @@ export interface AudioContextProperties {
 
     isPlaying: boolean;
     setIsPlaying: (value: boolean) => void;
+    isSwitching: boolean;
+    setIsSwitching: (value: boolean) => void;
 
     playNotes: (notes: Note[], stave: Stave) => void;
 

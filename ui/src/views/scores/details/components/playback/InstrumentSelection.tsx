@@ -1,6 +1,6 @@
 import React from 'react';
 import {useTranslation} from "react-i18next";
-import {ActionIcon, Group, Menu, Text} from "@mantine/core";
+import {ActionIcon, Group, Loader, Menu, Text} from "@mantine/core";
 import {useAudioContext} from "../../../../../hooks/useAudioContext.tsx";
 import {Instruments} from "../../../../../utils/dictionaries.ts";
 import {InstrumentIcons} from "../../../../../utils/icons.tsx";
@@ -26,7 +26,7 @@ const InstrumentSelection: React.FC = () => {
                     data-active={"true"}
                     title={t("button.changeInstrument")}
                 >
-                    {InstrumentIcons.get(context.instrument.name)}
+                    {context.isSwitching ? <Loader size={"sm"}/>  : InstrumentIcons.get(context.instrument.name)}
                 </ActionIcon>
             </Menu.Target>
             <Menu.Dropdown style={{zIndex: 5}}>

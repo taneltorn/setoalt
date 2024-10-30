@@ -19,7 +19,7 @@ const PlaybackControls: React.FC = () => {
     const context = useScoreContext();
     const {open} = useDialogContext();
     const {isPlaying, startPlayback, stopPlayback} = useAudioContext();
-    const {tempo, transposition, volume, setVolume} = useAudioContext();
+    const {tempo, transposition, volume, setVolume, isSwitching} = useAudioContext();
 
     return (
         <Group gap={"xl"}>
@@ -50,6 +50,7 @@ const PlaybackControls: React.FC = () => {
                         size={Size.icon.XL}
                         title={t(`tooltip.${context.loopRange ? "startPlaybackRepeat" : "startPlayback"}`)}
                         variant={"subtle"}
+                        disabled={isSwitching}
                         onClick={() => startPlayback(context)}
                     >
                         {<FaPlayCircle size={Size.icon.XL}/>}

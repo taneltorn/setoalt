@@ -10,16 +10,21 @@ const useAudioPlayer = () => {
     const polySynth = new Tone.PolySynth().connect(volume);
     const [player, setPlayer] = useState<Sampler | PolySynth>(polySynth);
 
-    const use = (instrument: Instrument) => {
+    const use = (instrument: Instrument, onLoadCallback: () => void) => {
         if (instrument.name === "synth") {
             setPlayer(polySynth);
+            onLoadCallback();
             return;
         }
-        setPlayer(new Tone.Sampler({
+
+        const sampler = new Tone.Sampler({
             urls: instrument.mapping,
-            baseUrl: instrument.path
-        }).connect(volume));
-    }
+            baseUrl: instrument.path,
+            onload: onLoadCallback
+        }).connect(volume);
+
+        setPlayer(sampler);
+    };
 
     const playNotes = (frequencies: number[], durations: string[]) => {
         try {

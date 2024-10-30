@@ -1,8 +1,9 @@
 #### [0.2.14] - 30.10.2024
 
-- Muudetud PNG font
 - Tempo/transponeerimise aknas kuvatakse +/- nupud
-- 
+- Parandatud viga, kus numbritega sisestamisel ei liigutud õigele positsioonile
+- Muudetud PNG fonti
+- Proovitud parandada instrumendi vahetamisel tekkivat viga, kus helifailid ei ole veel laetud 
 
 #### [0.2.13] - 18.10.2024
 

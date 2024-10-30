@@ -21,13 +21,15 @@ export const AudioContextProvider: React.FC<Properties> = ({children}) => {
     const sequenceRef = useRef<Tone.Part | null>(null);
 
     const [isPlaying, setIsPlaying] = useState<boolean>(false);
+    const [isSwitching, setIsSwitching] = useState<boolean>(false);
     const [volume, setVolume] = useState<number>(Playback.DEFAULT_VOLUME);
     const [tempo, setTempo] = useState<number>(Playback.DEFAULT_TEMPO);
     const [transposition, setTransposition] = useState<number>(Playback.DEFAULT_TRANSPOSITION);
     const [instrument, setInstrument] = useState<Instrument>(Instruments.find(i => i.name === Playback.DEFAULT_INSTRUMENT) || Instruments[0]);
 
     const changeInstrument = (instrument: Instrument) => {
-        player.use(instrument);
+        setIsSwitching(true);
+        player.use(instrument, () => setIsSwitching(false));
         setInstrument(instrument);
     }
 
@@ -41,6 +43,11 @@ export const AudioContextProvider: React.FC<Properties> = ({children}) => {
     }
 
     const startPlayback = (context: ScoreContextProperties) => {
+        if (isSwitching) {
+            console.log("still switching instruments!")
+            return;
+        }
+
         stopPlayback();
         setIsPlaying(true);
 
@@ -141,6 +148,7 @@ export const AudioContextProvider: React.FC<Properties> = ({children}) => {
     const context = useMemo(() => ({
 
         isPlaying, setIsPlaying,
+        isSwitching, setIsSwitching,
 
         playNotes,
         startPlayback,
@@ -151,7 +159,7 @@ export const AudioContextProvider: React.FC<Properties> = ({children}) => {
         volume, setVolume,
         tempo, setTempo,
         transposition, setTransposition,
-    }), [isPlaying, instrument, tempo, transposition, volume]);
+    }), [isPlaying, isSwitching, instrument, tempo, transposition, volume]);
 
     return (
         <AudioContext.Provider value={context}>
