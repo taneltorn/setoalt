@@ -9,7 +9,6 @@ import StaveBlock from "./StaveBlock.tsx";
 import {Score} from "../../../../../model/Score.ts";
 import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {EmptyScore, range} from "../../../../../utils/helpers.tsx";
-import {Layout} from "../../../../../utils/constants.ts";
 import ActiveRangeMarkers from "./ActiveRangeMarkers.tsx";
 import ActiveNotes from "../playback/ActiveNotes.tsx";
 
