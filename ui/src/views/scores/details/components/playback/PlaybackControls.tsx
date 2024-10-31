@@ -22,8 +22,8 @@ const PlaybackControls: React.FC = () => {
     const {tempo, transposition, volume, setVolume, isSwitching} = useAudioContext();
 
     return (
-        <Group gap={"xl"}>
-            <Group gap={"xs"}>
+        <Group gap={4}>
+            <Group gap={4}>
                 <InstrumentSelection/>
 
                 <ActionIcon
@@ -66,9 +66,10 @@ const PlaybackControls: React.FC = () => {
                     <FaForward size={Size.icon.MD}/>
                 </ActionIcon>
             </Group>
-            <Group gap={"xs"}>
-                <Group>
-                    <Box style={{position: "relative", top: 10}} size={75} ml={-24}>
+
+            <Group gap={0}>
+                <Group gap={0}>
+                    <Box style={{position: "relative", top: 10}} size={75}>
                         <Group justify={"center"}>
                             <ActionIcon
                                 size={"xl"}
@@ -83,8 +84,8 @@ const PlaybackControls: React.FC = () => {
                         <ValueIndicator label={getDetuneLabel(transposition, t("unit.semitonesAbbr"))}/>
                     </Box>
 
-                    <Box style={{position: "relative", top: 10}} size={200} ml={-32}>
-                        <Group justify={"center"} align={"center"}>
+                    <Box style={{position: "relative", top: 10}} >
+                        <Group justify={"center"} align={"center"} >
                             <ActionIcon
                                 size={"xl"}
                                 title={t("tooltip.changeTempo")}
@@ -97,9 +98,9 @@ const PlaybackControls: React.FC = () => {
                         </Group>
                         <ValueIndicator label={getTempoLabel(tempo, context.score.defaultTempo)}/>
                     </Box>
-
                 </Group>
                 <Slider
+                    visibleFrom={"sm"}
                     w={200}
                     size={"md"}
                     min={Playback.MIN_VOLUME}

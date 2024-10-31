@@ -35,12 +35,7 @@ export const NoteRange = [
 ];
 
 export const Instruments: Instrument[] = [
-    {
-        name: "synth",
-        path: "",
-        mapping: {}
-    },
-    {
+      {
         name: "piano",
         path: "/samples/piano/",
         mapping:{
@@ -89,6 +84,11 @@ export const Instruments: Instrument[] = [
             "A#6": "As6.mp3",
             "B6": "B6.mp3",
         }
+    },
+    {
+        name: "synth",
+        path: "",
+        mapping: {}
     },
     {
         name: "violin",

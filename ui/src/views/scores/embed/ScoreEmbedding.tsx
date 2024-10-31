@@ -28,7 +28,7 @@ const ScoreEmbedding: React.FC<Properties> = ({score, isEditMode}) => {
 
         const position = searchParams.get("position");
         if (position && !isNaN(parseInt(position))) {
-            setActivePosition(+position)
+            setActivePosition(+position);
         }
     }, []);
 
@@ -48,8 +48,7 @@ const ScoreEmbedding: React.FC<Properties> = ({score, isEditMode}) => {
                 : <>
                     <VoiceFilter/>
                     <Stave score={score}/>
-                </>
-            }
+                </>}
         </Page>
     );
 }

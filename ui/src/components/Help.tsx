@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    ActionIcon,
+    ActionIcon, Box,
     Button,
     Divider,
     Drawer,
@@ -49,7 +49,7 @@ const Help: React.FC<Properties> = (props) => {
     const [opened, {open, close}] = useDisclosure(false);
 
     return (
-        <>
+        <Box visibleFrom={"sm"}>
             <ActionIcon
                 title={t("page.help")}
                 size={Size.icon.MD}
@@ -316,7 +316,7 @@ const Help: React.FC<Properties> = (props) => {
                     </Tabs.Panel>
                 </Tabs>
             </Drawer>
-        </>
+        </Box>
     );
 }
 

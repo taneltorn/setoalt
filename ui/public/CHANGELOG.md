@@ -1,3 +1,10 @@
+#### [0.2.15] - 31.10.2024
+
+- Vaikimisi instrument = klaver
+- Valitud instrument jäetakse meelde
+- Pisiparandused
+
+
 #### [0.2.14] - 30.10.2024
 
 - Tempo/transponeerimise aknas kuvatakse +/- nupud

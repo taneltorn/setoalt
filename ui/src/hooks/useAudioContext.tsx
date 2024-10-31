@@ -10,6 +10,7 @@ import {Instruments} from "../utils/dictionaries.ts";
 import {AudioContext} from "../context/AudioContext.tsx";
 import {GroupedNote} from "../model/GroupedNote.ts";
 import {ScoreContextProperties} from "../context/ScoreContext.tsx";
+import useLocalStorage from "./useLocalStorage.tsx";
 
 interface Properties {
     children: React.ReactNode;
@@ -25,7 +26,7 @@ export const AudioContextProvider: React.FC<Properties> = ({children}) => {
     const [volume, setVolume] = useState<number>(Playback.DEFAULT_VOLUME);
     const [tempo, setTempo] = useState<number>(Playback.DEFAULT_TEMPO);
     const [transposition, setTransposition] = useState<number>(Playback.DEFAULT_TRANSPOSITION);
-    const [instrument, setInstrument] = useState<Instrument>(Instruments.find(i => i.name === Playback.DEFAULT_INSTRUMENT) || Instruments[0]);
+    const [instrument, setInstrument] = useLocalStorage<Instrument>("active-instrument", Instruments.find(i => i.name === Playback.DEFAULT_INSTRUMENT) || Instruments[0]);
 
     const changeInstrument = (instrument: Instrument) => {
         setIsSwitching(true);
@@ -57,7 +58,7 @@ export const AudioContextProvider: React.FC<Properties> = ({children}) => {
 
         const isLooping = context.loopRange?.start !== undefined && context.loopRange?.end !== undefined;
         const startPosition = context.loopRange?.start !== undefined ? context.loopRange.start : context.activePosition >= context.endPosition ? 0 : Math.max(0, context.activePosition);
-        const endPosition = context.loopRange?.end !== undefined ? context.loopRange.end :  context.endPosition;
+        const endPosition = context.loopRange?.end !== undefined ? context.loopRange.end : context.endPosition;
 
         const endTimes: number[] = [];
         const events: Array<[number, { position: number, notes: Note[] }]> = [];
@@ -144,6 +145,11 @@ export const AudioContextProvider: React.FC<Properties> = ({children}) => {
     useEffect(() => {
         Tone.getContext().transport.bpm.value = tempo;
     }, [tempo]);
+
+
+    useEffect(() => {
+        changeInstrument(instrument);
+    }, []);
 
     const context = useMemo(() => ({
 

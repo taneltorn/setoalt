@@ -73,7 +73,7 @@ export const Color = {
 }
 
 export const Playback = {
-    DEFAULT_INSTRUMENT: "synth",
+    DEFAULT_INSTRUMENT: "piano",
 
     DEFAULT_VOLUME: -10,
     MIN_VOLUME: -60,

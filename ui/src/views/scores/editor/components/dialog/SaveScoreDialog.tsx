@@ -7,7 +7,6 @@ import useScoreService from '../../../../../hooks/useScoreService.tsx';
 import {FormProvider, useForm} from 'react-hook-form';
 import {Playback} from "../../../../../utils/constants.ts";
 import {Score} from "../../../../../model/Score.ts";
-import {DisplayError, DisplaySuccess} from "../../../../../utils/helpers.tsx";
 import {useNavigate} from "react-router-dom";
 import ScoreForm from "../form/ScoreForm.tsx";
 import {DialogType} from "../../../../../utils/enums.ts";
@@ -38,11 +37,9 @@ const SaveScoreDialog: React.FC = () => {
         const saveScore = () => score.id ? scoreService.updateScore(score.id, score) : scoreService.createScore(score);
         saveScore()
             .then((r) => {
-                DisplaySuccess(t("toast.success.saveScore"))
                 close();
                 navigate(r.id ? `/scores/${r.id}` : "/scores");
-            })
-            .catch(() => DisplayError(t("toast.error.saveScore")));
+            });
     }
 
     return (

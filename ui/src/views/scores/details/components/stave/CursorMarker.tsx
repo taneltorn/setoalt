@@ -38,14 +38,14 @@ const CursorMarker: React.FC = () => {
     }
 
     return (<>
-            <rect
+            {context.isEditMode && <rect
                 x={x}
                 width={Layout.stave.cursor.WIDTH}
                 y={y}
                 height={context.dimensions.y}
                 fill={theme.colors.gray[9]}
                 opacity={x >= (Layout.stave.container.PADDING_X_START - Layout.stave.note.SPACING) ? 0.05 : 0}
-           />
+            />}
 
             <rect
                 className={"hover-pointer"}
@@ -53,7 +53,7 @@ const CursorMarker: React.FC = () => {
                 y={y}
                 width={Layout.stave.note.SPACING * 1.5}
                 height={context.dimensions.y}
-                opacity={ 0}
+                opacity={0}
                 onClick={event => handleClick(event)}
             >
                 <title>{t("tooltip.activatePosition", {position: context.cursorPosition})}</title>
