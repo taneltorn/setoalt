@@ -46,6 +46,7 @@ const StaveDivider: React.FC<Properties> = ({divider}) => {
                 height={height}
             />
 
+            {context.isEditMode &&
             <rect
                 className={context.isEditMode ? "hover-pointer" : ""}
                 onClick={() => removeDivider(divider.position)}
@@ -58,7 +59,7 @@ const StaveDivider: React.FC<Properties> = ({divider}) => {
                 height={height}
             >
                 <title>{t("tooltip.removeDivider")}</title>
-            </rect>
+            </rect>}
         </>
     )
 };
