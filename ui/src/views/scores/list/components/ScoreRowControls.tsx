@@ -31,7 +31,7 @@ const ScoreRowControls: React.FC<Properties> = ({score, onChange}) => {
     }
 
     return (
-        <Group justify={"end"} gap={4}>
+        <Group justify={"end"} gap={4} wrap={"nowrap"}>
             <IconButton
                 title={t("button.clone")}
                 icon={<FaRegCopy size={Size.icon.XS}/>}
