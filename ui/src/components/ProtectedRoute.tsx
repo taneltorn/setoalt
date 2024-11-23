@@ -12,7 +12,7 @@ const ProtectedRoute: React.FC<Properties> = ({children, allowedRoles}) => {
     const auth = useAuth();
 
     if (!allowedRoles.includes(auth.currentUser?.role as string)) {
-        return <Navigate to="/login" replace/>;
+        return <Navigate to="/" replace/>;
     }
 
     useEffect(() => {

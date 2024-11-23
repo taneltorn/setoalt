@@ -9,6 +9,7 @@ import {Color} from "../../../../../utils/constants.ts";
 import {clone} from "../../../../../utils/helpers.tsx";
 import {Voice, VoiceType} from '../../../../../model/Voice.ts';
 import {DialogType} from "../../../../../utils/enums.ts";
+import {VoiceTypes} from "../../../../../utils/dictionaries.ts";
 
 interface FormValues {
     name: string;
@@ -18,13 +19,15 @@ interface FormValues {
 const DEFAULT_VALUES = {
     name: "",
     type: VoiceType.TORRO,
-    color: "#00000",
+    color: Color.voice.TORRO,
+    copyFrom: "-",
 }
 
 const ColorMapping = {
     "0": Color.voice.TORRO,
     "1": Color.voice.KILLO,
-    "2": Color.voice.BOTTOM_TORRO
+    "2": Color.voice.BOTTOM_TORRO,
+    "3": Color.voice.FRONT
 }
 
 const SaveVoiceDialog: React.FC = () => {
@@ -33,7 +36,7 @@ const SaveVoiceDialog: React.FC = () => {
     const dialogContext = useDialogContext();
     const scoreContext = useScoreContext();
 
-    const [copyFrom, setCopyFrom] = useState<string>("-");
+    const [copyFrom, setCopyFrom] = useState<string>(DEFAULT_VALUES.copyFrom);
     const [color, setColor] = useState<string>(DEFAULT_VALUES.color);
     const [voiceType, setVoiceType] = useState<VoiceType>(VoiceType.TORRO);
     const [voiceNames, setVoiceNames] = useState<string[]>([]);
@@ -59,8 +62,26 @@ const SaveVoiceDialog: React.FC = () => {
             dialogContext.context.voice.type = voice.type;
             dialogContext.context.voice.color = voice.color;
         } else {
-            scoreContext.score.data.voices.push(voice);
+            let lastIndex = -1;
+            scoreContext.score.data.voices.forEach((v, i) => {
+                if (v.type === voiceType) {
+                    lastIndex = i;
+                }
+            });
+            
+            if (voiceType === VoiceType.FRONT && lastIndex === -1) {
+                scoreContext.score.data.voices.splice(0, 0, voice);
+            } else if (lastIndex >= 0) {
+                scoreContext.score.data.voices.splice(lastIndex + 1, 0, voice);
+            } else {
+                scoreContext.score.data.voices.push(voice);
+            }
         }
+
+        scoreContext.score.data.voices.forEach((voice: Voice, index: number) => {
+            voice.order = index;
+        });
+
         dialogContext.context.onConfirm(voice);
         reset();
     }
@@ -79,6 +100,11 @@ const SaveVoiceDialog: React.FC = () => {
             setValue("name", dialogContext.context.voice.name || "");
             setColor(dialogContext.context.voice.color);
             setVoiceType(dialogContext.context.voice.type);
+        } else {
+            setValue("name", DEFAULT_VALUES.name);
+            setColor(DEFAULT_VALUES.color);
+            setVoiceType(DEFAULT_VALUES.type);
+            setCopyFrom(DEFAULT_VALUES.copyFrom);
         }
     }, [dialogContext.context]);
 
@@ -117,7 +143,7 @@ const SaveVoiceDialog: React.FC = () => {
                     size={"xl"}
                     mb={"xl"}
                 >
-                    {[VoiceType.TORRO, VoiceType.KILLO, VoiceType.BOTTOM_TORRO].map(type => (
+                    {VoiceTypes.map(type => (
                         <Radio
                             key={type}
                             mb={"md"}

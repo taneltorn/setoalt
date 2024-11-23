@@ -8,7 +8,7 @@ import CursorMarker from "./CursorMarker.tsx";
 import StaveBlock from "./StaveBlock.tsx";
 import {Score} from "../../../../../model/Score.ts";
 import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
-import {EmptyScore, range} from "../../../../../utils/helpers.tsx";
+import {EmptyScore, range, sortVoicesByPriority} from "../../../../../utils/helpers.tsx";
 import ActiveRangeMarkers from "./ActiveRangeMarkers.tsx";
 import ActiveNotes from "../playback/ActiveNotes.tsx";
 
@@ -64,8 +64,7 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                             position={position}
                         />)}
 
-                {context.score.data.voices
-                    .sort((a, b) => (a.type || 0) - (b.type || 0))
+                {sortVoicesByPriority(context.score.data.voices)
                     .filter(v => isEditMode || !v.hidden)
                     .map(voice =>
                         <VoiceLine

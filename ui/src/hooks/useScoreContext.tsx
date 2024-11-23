@@ -221,7 +221,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
             });
             voice.occupiedPositions = sort(Array.from(new Set(occupiedPositions)));
         }
-        refresh()
+        refresh();
     }, [score.data.voices, activeVoice, activeDuration]);
 
 

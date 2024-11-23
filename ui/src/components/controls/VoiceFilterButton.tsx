@@ -3,6 +3,8 @@ import {MdRecordVoiceOver, MdVoiceOverOff} from "react-icons/md";
 import {Button} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import {Size} from "../../utils/constants.ts";
+import {RxDragHandleDots2} from "react-icons/rx";
+import {useScoreContext} from "../../hooks/useScoreContext.tsx";
 
 interface Properties {
     active: boolean;
@@ -17,6 +19,7 @@ interface Properties {
 const VoiceFilterButton: React.FC<Properties> = ({active, halfActive, disabled, label, onClick}) => {
 
     const {t} = useTranslation();
+    const {isEditMode} = useScoreContext();
 
     return (
         <Button
@@ -35,6 +38,7 @@ const VoiceFilterButton: React.FC<Properties> = ({active, halfActive, disabled, 
                     size={Size.icon.XS}
                     style={{color: "#ccc"}}
                 />}
+            rightSection={isEditMode && <RxDragHandleDots2 size={Size.icon.XS}/>}
             onClick={onClick}
         >
             {label}

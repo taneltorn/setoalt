@@ -1,3 +1,10 @@
+#### [0.2.16] - 23.11.2024
+
+- Lisatud võimalus hääli ümber tõsta
+- Lisatud eeslaulu hääletüüp
+- Muudetud logo
+- Pisiparandused
+
 #### [0.2.15] - 31.10.2024
 
 - Vaikimisi instrument = klaver

@@ -86,13 +86,14 @@ export const calculateLyricCoords = (lyric: Lyric, context: ScoreContextProperti
 export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreContextProperties): XY => {
     const offset = getOffset(note.position, context.score.data.breaks, context.dimensions);
 
-    if (voice.type === VoiceType.KILLO) {
+    if (voice.type === VoiceType.KILLO || voice.type === VoiceType.FRONT) {
         const positionOccupied = context.score.data.voices
-            .filter(v => v.type !== VoiceType.KILLO)
+            // .filter(v => v.type !== voice.type)
+            .filter(v => v.type <= voice.type)
             .flatMap(v => v.notes)
-            .find(n => n.position === note.position && n.pitch === note.pitch);
-        if (positionOccupied) {
-            offset.x -= Layout.stave.note.REPEATING_OFFSET;
+            .filter(n => n.position === note.position && n.pitch === note.pitch);
+        if (positionOccupied.length > 0) {
+            offset.x -= Layout.stave.note.REPEATING_OFFSET * (positionOccupied.length - 1);
         }
     }
 

@@ -1,7 +1,7 @@
 import * as Tone from "tone";
 import {Frequency} from "tone";
 import {Note} from "../model/Note";
-import {Voice} from "../model/Voice";
+import {Voice, VoiceType} from "../model/Voice";
 import {Layout, Size} from "./constants";
 import {Score} from "../model/Score";
 import {Line} from "../model/Line";
@@ -132,6 +132,15 @@ export const range = (start: number, end?: number): number[] => {
 
 export const sort = (array: number[]) => {
     return array.sort((a, b) => (a || 0) - (b || 0));
+}
+
+export const sortVoicesByOrder = (voices: Voice[]): Voice[] => {
+    return voices.sort((a, b) => (a.order ?? 0) - (b.order ?? 0));
+};
+
+export const sortVoicesByPriority = (voices: Voice[]): Voice[] => {
+    return voices.sort((a, b) => ((a.type || 0) - (a.type === VoiceType.FRONT ? 10 : 0))
+        - ((b.type || 0) - (b.type === VoiceType.FRONT ? 10 : 0)))
 }
 
 export const transpose = (pitch: string, transposition?: number): string => {

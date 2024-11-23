@@ -7,6 +7,7 @@ import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {Voice} from "../../../../../model/Voice.ts";
 import {useAudioContext} from "../../../../../hooks/useAudioContext.tsx";
 import {Size} from "../../../../../utils/constants.ts";
+import {sortVoicesByOrder} from "../../../../../utils/helpers.tsx";
 
 const VoiceFilter: React.FC = () => {
 
@@ -35,7 +36,7 @@ const VoiceFilter: React.FC = () => {
     return (
         <Group justify={"space-between"} mt={"md"}>
             <Group gap={4}>
-                {context.score.data.voices.map(voice => (
+                {sortVoicesByOrder(context.score.data.voices).map(voice => (
                     <VoiceFilterButton
                         key={voice.name}
                         active={context.isEditMode ? voice.name === context.activeVoice : !voice.hidden}

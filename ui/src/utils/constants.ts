@@ -69,6 +69,7 @@ export const Color = {
         TORRO: "#000000",
         KILLO: "#1aa7ec",
         BOTTOM_TORRO: "#777777",
+        FRONT: "#008000",
     }
 }
 
