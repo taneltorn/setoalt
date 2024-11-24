@@ -44,6 +44,7 @@ export const Layout = {
         lyrics: {
             HEIGHT: 20,
             FONT_SIZE: 16,
+            INCREASED_FONT_SIZE: 18,
             DECREASED_FONT_SIZE: 14,
             FONT_WEIGHT: 600
         }
@@ -69,6 +70,7 @@ export const Color = {
         TORRO: "#000000",
         KILLO: "#1aa7ec",
         BOTTOM_TORRO: "#777777",
+        FRONT: "#008000",
     }
 }
 

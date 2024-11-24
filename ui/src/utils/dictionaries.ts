@@ -7,14 +7,23 @@ export const DefaultVoices: Voice[] = [
         name: "torrõ",
         type: VoiceType.TORRO,
         color: "black",
-        notes: []
+        notes: [],
+        order: 0
     },
     {
         name: "killõ",
         type: VoiceType.KILLO,
         color: "#1aa7ec",
-        notes: []
+        notes: [],
+        order: 1
     }
+];
+
+export const VoiceTypes = [
+    VoiceType.TORRO,
+    VoiceType.KILLO,
+    VoiceType.BOTTOM_TORRO,
+    VoiceType.FRONT,  
 ];
 
 export const AllScoreSettings = [

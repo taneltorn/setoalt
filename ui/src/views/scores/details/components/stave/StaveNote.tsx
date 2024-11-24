@@ -2,7 +2,7 @@ import React, {useMemo} from 'react';
 import {useTranslation} from "react-i18next";
 import {Note, NoteType} from "../../../../../model/Note.ts";
 import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
-import {Voice} from "../../../../../model/Voice.ts";
+import {Voice, VoiceType} from "../../../../../model/Voice.ts";
 import {calculateNoteCoords, calculateNoteOpacity} from "../../../../../utils/calculation.helpers.tsx";
 import {Layout} from "../../../../../utils/constants.ts";
 import {isHighlighted} from "../../../../../utils/helpers.tsx";
@@ -41,6 +41,7 @@ const StaveNote: React.FC<Properties> = ({note, voice}) => {
                 r={note.type === NoteType.SMALL ? Layout.stave.note.RADIUS_SMALL : Layout.stave.note.RADIUS}
                 fill={isHighlighted(note, context) ? theme.colors.red[9] : note.color || voice.color || "black"}
                 opacity={opacity}
+                z={voice.type === VoiceType.FRONT ? 1000: 200 }
             >
                 <title>{t(`pitch.${note.pitch.toLowerCase()}`)}</title>
             </circle>

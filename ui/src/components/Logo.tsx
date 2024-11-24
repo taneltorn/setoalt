@@ -10,9 +10,11 @@ const Logo: React.FC<Properties> = (props) => {
 
     return (
         <Box onClick={props.onClick}>
-            <Text c={"red"} fz={24} ff={"Roboto"}>
-                Seto<strong style={{color: "black"}}>alt</strong>
-            </Text>
+            <Group gap={0}>
+                <Text c={"red"} fz={24} ff={"Roboto"}>seto</Text>
+                <Text c={"black"} fz={24} fw={"bold"} ff={"Roboto"}>noot</Text>
+            </Group>
+           
             <Group mt={-10}>
                 <Code color={"transparent"}>{packageInfo.version}</Code>
             </Group>

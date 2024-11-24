@@ -212,7 +212,8 @@
         "label": "Hääletüüp",
         "0": "Torrõ",
         "1": "Killõ",
-        "2": "Alumine torrõ"
+        "2": "Alumine torrõ",
+        "3": "Eeslaul"
       },
       "color": "Värv",
       "copyFrom": "Kopeeri noodid olemasolevalt häälelt?"

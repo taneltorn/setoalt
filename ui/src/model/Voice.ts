@@ -3,7 +3,8 @@ import {Note} from "./Note";
 export enum VoiceType {
     TORRO,
     KILLO,
-    BOTTOM_TORRO
+    BOTTOM_TORRO,
+    FRONT = 3,
 }
 
 export interface Voice {
@@ -13,4 +14,5 @@ export interface Voice {
     color: string;
     occupiedPositions?: number[];
     hidden?: boolean;
+    order?: number;
 }
