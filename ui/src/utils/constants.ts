@@ -44,7 +44,7 @@ export const Layout = {
         lyrics: {
             HEIGHT: 20,
             FONT_SIZE: 16,
-            INCREASED_FONT_SIZE: 18,
+            INCREASED_FONT_SIZE: 20,
             DECREASED_FONT_SIZE: 14,
             FONT_WEIGHT: 600
         }

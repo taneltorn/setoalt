@@ -93,7 +93,7 @@ export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreCont
             .flatMap(v => v.notes)
             .filter(n => n.position === note.position && n.pitch === note.pitch);
         if (positionOccupied.length > 0) {
-            offset.x -= Layout.stave.note.REPEATING_OFFSET * (positionOccupied.length - 1);
+            offset.x -= Layout.stave.note.REPEATING_OFFSET;
         }
     }
 

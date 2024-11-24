@@ -1,3 +1,7 @@
+#### [0.2.17] - 24.11.2024
+
+- Pisiparandused
+
 #### [0.2.16] - 23.11.2024
 
 - Lisatud võimalus hääli ümber tõsta
