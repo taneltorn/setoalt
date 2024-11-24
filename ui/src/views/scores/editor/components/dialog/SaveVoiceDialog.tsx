@@ -39,7 +39,6 @@ const SaveVoiceDialog: React.FC = () => {
     const [copyFrom, setCopyFrom] = useState<string>(DEFAULT_VALUES.copyFrom);
     const [color, setColor] = useState<string>(DEFAULT_VALUES.color);
     const [voiceType, setVoiceType] = useState<VoiceType>(VoiceType.TORRO);
-    const [voiceNames, setVoiceNames] = useState<string[]>([]);
 
     const {
         register,
@@ -59,6 +58,7 @@ const SaveVoiceDialog: React.FC = () => {
 
         if (dialogContext.context.voice) {
             dialogContext.context.voice.name = voice.name;
+            dialogContext.context.voice.name = voice.name;
             dialogContext.context.voice.type = voice.type;
             dialogContext.context.voice.color = voice.color;
         } else {
@@ -68,7 +68,7 @@ const SaveVoiceDialog: React.FC = () => {
                     lastIndex = i;
                 }
             });
-            
+
             if (voiceType === VoiceType.FRONT && lastIndex === -1) {
                 scoreContext.score.data.voices.splice(0, 0, voice);
             } else if (lastIndex >= 0) {
@@ -90,10 +90,6 @@ const SaveVoiceDialog: React.FC = () => {
         setVoiceType(type);
         setColor(ColorMapping[type]);
     }
-
-    useEffect(() => {
-        setVoiceNames(["-", ...(scoreContext.score.data.voices?.map((v: Voice) => v.name) || [])]);
-    }, [scoreContext.score.data.voices]);
 
     useEffect(() => {
         if (dialogContext.context.voice) {
@@ -130,8 +126,9 @@ const SaveVoiceDialog: React.FC = () => {
                         placeholder={t("dialog.saveVoice.name")}
                         {...register("name", {
                             required: t("field.required"), validate: v => !scoreContext.score.data.voices
-                                .filter(v => v.name !== scoreContext.activeVoice)
-                                .map(v => v.name).includes(v.trim()) || t("field.voiceExists")
+                                .filter(v => !dialogContext.context.isEdit || v.name !== scoreContext.activeVoice)
+                                .map(v => v.name)
+                                .includes(v.trim()) || t("field.voiceExists")
                         })}
                         error={errors.name?.message}
                         autoComplete={"off"}
@@ -180,7 +177,7 @@ const SaveVoiceDialog: React.FC = () => {
                             value={copyFrom}
                             defaultValue={""}
                             onChange={(event) => setCopyFrom(event.currentTarget.value)}
-                            data={voiceNames}
+                            data={["-", ...(scoreContext.score.data.voices?.map((v: Voice) => v.name) || [])]}
                         />
                     </InputWrapper>}
             </form>

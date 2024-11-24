@@ -22,6 +22,20 @@ const VoiceControls: React.FC = () => {
     const history = useHistory();
     const {open, close} = useDialogContext();
 
+    const showAllVoices = () => {
+        context.score.data.voices.forEach(v => {
+            v.hidden = false;
+        })
+        context.refresh();
+    }
+
+    const showActiveVoice = (voiceName: string) => {
+        context.score.data.voices.forEach(v => {
+            v.hidden = v.name !== voiceName;
+        })
+        context.refresh();
+    }
+    
     const handleDragEnd = (result: any) => {
         if (!result.destination) return;
 
@@ -49,6 +63,7 @@ const VoiceControls: React.FC = () => {
 
     const handleVoiceSave = (voice: Voice) => {
         context.setActiveVoice(voice.name);
+        showActiveVoice(voice.name);
         close();
     };
 
@@ -133,25 +148,25 @@ const VoiceControls: React.FC = () => {
                     </Button>
                 </Group>
                 <Group gap={4}>
-                    <Button
-                        size={"xs"}
-                        color={"blue"}
-                        leftSection={<MdRecordVoiceOver size={Size.icon.XS}/>}
-                        variant={"subtle"}
-                        onClick={() =>
-                            context.score.data.voices.some((v) => v.hidden)
-                                ? context.score.data.voices.forEach((v) => (v.hidden = false))
-                                : context.score.data.voices.forEach(
-                                    (v) => (v.hidden = v.name !== context.activeVoice)
-                                )
-                        }
-                    >
-                        {t(
-                            context.score.data.voices.some((v) => v.hidden)
-                                ? "button.showAll"
-                                : "button.showActive"
-                        )}
-                    </Button>
+                    {context.score.data.voices.some(v => v.hidden)
+                        ?  <Button
+                            size={"xs"}
+                            color={"blue"}
+                            leftSection={<MdRecordVoiceOver size={Size.icon.XS}/>}
+                            variant={"subtle"}
+                            onClick={showAllVoices}
+                        >
+                            {t("button.showAll")}
+                        </Button>
+                        :   <Button
+                            size={"xs"}
+                            color={"blue"}
+                            leftSection={<MdRecordVoiceOver size={Size.icon.XS}/>}
+                            variant={"subtle"}
+                            onClick={() => showActiveVoice(context.activeVoice)}
+                        >
+                            {t("button.showActive")}
+                        </Button>}
 
                     {!DefaultVoices.map((v) => v.name).includes(context.activeVoice) && (
                         <>
@@ -165,6 +180,7 @@ const VoiceControls: React.FC = () => {
                                         voice: context.score.data.voices.find(
                                             (v) => v.name === context.activeVoice
                                         ),
+                                        isEdit: true,
                                         onConfirm: handleVoiceSave,
                                     })
                                 }
