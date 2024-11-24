@@ -3,6 +3,8 @@ FROM node:20 as build
 ARG VITE_API_URL
 ARG VITE_ENVIRONMENT
 
+ENV NODE_OPTIONS=--max-old-space-size=1024
+
 WORKDIR /app
 
 COPY package*.json ./
