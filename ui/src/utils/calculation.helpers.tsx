@@ -88,8 +88,7 @@ export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreCont
 
     if (voice.type === VoiceType.KILLO || voice.type === VoiceType.FRONT) {
         const positionOccupied = context.score.data.voices
-            // .filter(v => v.type !== voice.type)
-            .filter(v => v.type <= voice.type)
+            .filter(v => v.type !== voice.type)
             .flatMap(v => v.notes)
             .filter(n => n.position === note.position && n.pitch === note.pitch);
         if (positionOccupied.length > 0) {
