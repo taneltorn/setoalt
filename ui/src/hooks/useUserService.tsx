@@ -77,6 +77,29 @@ const useUserService = () => {
             });
     }
 
+
+    const updateUserPassword = async (id: number, user: User): Promise<User> => {
+        setIsLoading(true);
+        return axios.patch(`${API_URL}/api/users/${id}/password`, user, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true
+        })
+            .then(response => {
+                DisplaySuccess(t("toast.success.user.saveUser"));
+
+                setIsLoading(false);
+                return response.data;
+            })
+            .catch(error => {
+                DisplayError(t("toast.error.user.saveUser"), error);
+
+                setIsLoading(false);
+                throw error;
+            });
+    }
+
     const removeUser = async (id: number): Promise<User> => {
         setIsLoading(true);
         return axios.delete(`${API_URL}/api/users/${id}`, {
@@ -104,6 +127,7 @@ const useUserService = () => {
         fetchUsers,
         createUser,
         updateUser,
+        updateUserPassword,
         removeUser,
         cancelSource
     }

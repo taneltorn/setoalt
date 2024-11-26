@@ -111,6 +111,33 @@ class UserService {
         }
     }
 
+
+    public async updateUserPassword(id: number, password: string, user: any) {
+        try {
+            this.logger.info(`Updating user password with id = ${id}`);
+            const query = `
+                UPDATE setoalt.users
+                SET password   = $1,
+                    modified_by = $2,
+                    modified_at = NOW()
+                WHERE id = $3
+                RETURNING *;
+            `;
+
+            const result = await pool.query(query, [
+                password,
+                user.username,
+                id
+            ]);
+
+            this.logger.info(`Updated ${result.rowCount} ${result.rowCount === 1 ? "row" : "rows"}`);
+            return {success: true, data: result.rows[0]};
+        } catch (err) {
+            this.logger.error(err);
+            return {success: false, error: `Error updating user with id ${id}`, detail: err.detail};
+        }
+    }
+
     public async delete(id: number) {
         try {
             this.logger.info(`Deleting user with id = ${id}`);

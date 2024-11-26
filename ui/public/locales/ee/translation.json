@@ -79,6 +79,12 @@
         "stave": "Sätted"
       }
     },
+    "profile": {
+      "title": "Profiil",
+      "form": {
+        "newPassword": "Uus parool"
+      }
+    },
     "admin": {
       "title": "Adminpaneel",
       "tab": {

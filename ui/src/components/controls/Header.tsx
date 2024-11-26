@@ -1,10 +1,11 @@
 import React, {ReactNode} from 'react';
-import {Divider, Group, Title} from "@mantine/core";
+import {Divider, Group, Title, TitleOrder} from "@mantine/core";
 
 interface Properties {
     leftSection?: ReactNode;
     rightSection?: ReactNode;
     children?: ReactNode;
+    order?: TitleOrder;
 }
 
 const Header: React.FC<Properties> = (props) => {
@@ -14,7 +15,7 @@ const Header: React.FC<Properties> = (props) => {
             <Group justify={"space-between"}>
                 <Group>
                     {props.leftSection}
-                    <Title order={1}>
+                    <Title order={props.order || 1}>
                         {props.children}
                     </Title>
                 </Group>

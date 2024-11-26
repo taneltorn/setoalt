@@ -21,6 +21,7 @@ class UserController {
         this.router.get("/", verifyToken, this.getUsers.bind(this));
         this.router.post("/", verifyToken, this.createUser.bind(this));
         this.router.patch("/:id", verifyToken, this.updateUser.bind(this));
+        this.router.patch("/:id/password", verifyToken, this.updateUserPassword.bind(this));
         this.router.delete("/:id", verifyToken, this.deleteUser.bind(this));
     }
 
@@ -70,12 +71,7 @@ class UserController {
                 return;
             }
 
-            data.password = await bcrypt
-                .genSalt(10)
-                .then(salt => {
-                    return bcrypt.hash(data.password, salt);
-                })
-                .catch(err => console.error(err.message));
+            data.password = await this.hashPassword(data.password);
 
             const result = await userService.insert(data, user);
             if (!result.success) {
@@ -128,6 +124,47 @@ class UserController {
         }
     }
 
+    async updateUserPassword(req: Request, res: Response): Promise<void> {
+        try {
+            // @ts-ignore todo use custom type
+            const user = req.user;
+
+            const id = parseInt(req.params.id);
+            this.logger.info(`PATCH /api/users/password/${id} from ${req.hostname} as user ${user?.username}`);
+
+            const data = req.body;
+
+            if (user?.id !== id) {
+                this.logger.info(`Not authorized: ${user.username}`);
+                res.status(403).json({error: "Not authorized"});
+                return;
+            }
+
+            if (!data) {
+                this.logger.info(`Request body is null`);
+                res.status(400).json({error: "Missing password information"});
+                return;
+            }
+
+            const password = await this.hashPassword(data.password);
+            if (!password) {
+                this.logger.info(`Password is null`);
+                res.status(400).json({error: "Missing password information"});
+                return;
+            }
+            
+            const result = await userService.updateUserPassword(id, password, user);
+            if (!result.success) {
+                res.status(500).json({error: result.error});
+                return;
+            }
+            res.status(200).json(result.data);
+        } catch (err) {
+            this.logger.error(err);
+            res.status(500).json({error: "An unexpected error occurred."});
+        }
+    }
+
     async deleteUser(req: Request, res: Response): Promise<void> {
         try {
             // @ts-ignore todo use custom type
@@ -159,6 +196,15 @@ class UserController {
             this.logger.error(err);
             res.status(500).json({error: "An unexpected error occurred."});
         }
+    }
+
+    async hashPassword(password: string) {
+        return await bcrypt
+            .genSalt(10)
+            .then(salt => {
+                return bcrypt.hash(password, salt);
+            })
+            .catch(err => this.logger.error(err.message));
     }
 }
 
