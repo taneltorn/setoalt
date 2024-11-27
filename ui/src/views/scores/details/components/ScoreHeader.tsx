@@ -1,5 +1,5 @@
 import React from "react";
-import {Badge, Group, useMantineTheme} from "@mantine/core";
+import {Group} from "@mantine/core";
 import {Score} from "../../../../model/Score.ts";
 import Header from "../../../../components/controls/Header.tsx";
 import {useTranslation} from "react-i18next";
@@ -16,7 +16,6 @@ interface Properties {
 const ScoreHeader: React.FC<Properties> = ({score}) => {
 
     const [t] = useTranslation();
-    const theme = useMantineTheme();
 
     const auth = useAuth();
     const navigate = useNavigate();
@@ -44,10 +43,6 @@ const ScoreHeader: React.FC<Properties> = ({score}) => {
             }>
             <Group>
                 {score.name}
-                <Badge py={"sm"}
-                       bg={score?.visibility === "PUBLIC" ? theme.primaryColor : theme.colors.gray[5]}>
-                    {t(`visibility.${score?.visibility?.toLowerCase()}`)}
-                </Badge>
             </Group>
         </Header>
     );
