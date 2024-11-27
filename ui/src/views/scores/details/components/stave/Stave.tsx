@@ -35,17 +35,17 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
             ref={ref}
             style={{
                 marginTop: 15,
-                maxWidth: context.dimensions.x,
+                maxWidth: context.dimensions.x + 15,
                 overflowX: "auto",
-                height: context.dimensions.y * context.dimensions.blocks + 15
+                height: context.dimensions.y * context.dimensions.blocks + 30
             }}>
             {!context.isSimplifiedMode && <ActiveNotes/>}
 
             <svg id={"notation"}
                  ref={svgRef}
-                 width={context.dimensions.x}
+                 width={context.dimensions.x - 15}
                  height={context.dimensions.y * context.dimensions.blocks}
-                 style={{padding: "0 5px"}}
+                 style={{padding: "0 0px"}}
             >
                 {range(context.score.data.breaks.length + 1)
                     .map((_, index) => (
