@@ -6,14 +6,19 @@ import {CiUser} from "react-icons/ci";
 import {Size} from "../utils/constants.ts";
 import {Link} from "react-router-dom";
 
-const ProfileLink: React.FC = () => {
+interface Properties {
+    onClick?: () => void;
+}
+
+
+const ProfileLink: React.FC<Properties> = (props) => {
 
     const auth = useAuth();
 
     return (
         <Group gap={"xs"}>
             {auth.currentUser
-                ? <Link to={"/profile"}><FaUser size={Size.icon.XS}/></Link>
+                ? <Link to={"/profile"} onClick={props.onClick}><FaUser size={Size.icon.XS}/></Link>
                 : <CiUser size={Size.icon.XS}/>}
         </Group>
     );

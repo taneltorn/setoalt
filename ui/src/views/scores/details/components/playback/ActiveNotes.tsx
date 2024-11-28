@@ -19,7 +19,7 @@ const ActiveNotes: React.FC = () => {
         }
         return excludeDuplicates(context.getNotes(context.activePosition));
 
-    }, [context.score, context.activeNote]);
+    }, [context.score, context.activePosition]);
 
     return (
         <Group gap={0} style={{position: "absolute"}}>

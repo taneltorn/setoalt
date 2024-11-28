@@ -19,11 +19,8 @@ import {useTranslation} from "react-i18next";
 import {Notifications} from "@mantine/notifications";
 import {useDialogContext} from "./hooks/useDialogContext.tsx";
 import ProfileLink from "./components/ProfileLink.tsx";
-import DevNotice from "./components/DevNotice.tsx";
 import LoginDialog from "./views/login/LoginDialog.tsx";
 import NotificationPanel from "./NotificationPanel.tsx";
-
-const ENV = import.meta.env.VITE_ENVIRONMENT;
 
 const Layout: React.FC = () => {
 
@@ -61,7 +58,7 @@ const Layout: React.FC = () => {
                         size="md"
                     />
                     <Group hiddenFrom={"md"}>
-                        <ProfileLink/>
+                        <ProfileLink onClick={close}/>
                     </Group>
                 </Group>
             </AppShell.Header>
@@ -71,15 +68,14 @@ const Layout: React.FC = () => {
                     <Box visibleFrom={"md"}>
                         <Group justify={"space-between"}>
                             <Link to={"/"} onClick={close}>
-                                <Logo/>
+                                <Logo />
                             </Link>
-                            <ProfileLink/>
+                            <ProfileLink />
                         </Group>
                         <Divider my={"md"}/>
                     </Box>
 
                     <Navigation onNavigate={close}/>
-                    {ENV !== "production" && <DevNotice onNavigate={close}/>}
                 </ScrollArea>
             </AppShell.Navbar>
 
