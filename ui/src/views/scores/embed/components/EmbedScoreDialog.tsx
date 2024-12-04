@@ -8,6 +8,7 @@ import {Size} from "../../../../utils/constants.ts";
 import {TbArrowAutofitHeight, TbArrowAutofitWidth} from "react-icons/tb";
 import {MdOutlineContentCopy} from "react-icons/md";
 import {DialogType} from "../../../../utils/enums.ts";
+import {calculateEmbeddingHeight} from "../../../../utils/calculation.helpers.tsx";
 
 const EmbedScoreDialog: React.FC = () => {
 
@@ -25,7 +26,8 @@ const EmbedScoreDialog: React.FC = () => {
     }, [width, height, simplified, position, context.score]);
 
     useEffect(() => {
-        setHeight(`${context.dimensions.containerY + 150}`);
+        const height = calculateEmbeddingHeight(context.score);
+        setHeight(`${height}`);
     }, [context.dimensions]);
 
     return (

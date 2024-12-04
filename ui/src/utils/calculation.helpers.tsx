@@ -248,3 +248,7 @@ export const calculateStaveDimensions = (score: Score): StaveDimensions => {
         containerY: y * blocks,
     };
 }
+
+export const calculateEmbeddingHeight = (score: Score): number => {
+    return (score.data.breaks.length || 0) * 245 + 400;
+}

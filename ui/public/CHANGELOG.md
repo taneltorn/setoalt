@@ -1,3 +1,8 @@
+#### [1.0.1] - 04.12.2024
+
+- Noodistuse loomisel vaikimisi transponeerimine => -6pt
+- Manustamiskoodi kõrguse parandused
+
 #### [1.0.0] - 28.11.2024
 
 - Pisiparandused

@@ -15,7 +15,7 @@ const DEFAULT_VALUES = {
     name: "",
     description: "",
     defaultTempo: Playback.DEFAULT_TEMPO,
-    defaultTransposition: Playback.DEFAULT_TRANSPOSITION,
+    defaultTransposition: Playback.DEFAULT_TRANSPOSITION_ON_SAVE,
     visibility: "PUBLIC",
 }
 
