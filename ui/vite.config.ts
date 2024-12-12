@@ -11,5 +11,5 @@ export default defineConfig({
   plugins: [react()],
   envDir: '../',
   // base: './',
-  // base: '/setonoot/',
+  base: '/setonoot/',
 })
