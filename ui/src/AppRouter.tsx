@@ -76,7 +76,7 @@ const router = createBrowserRouter([
         }
     ],
     {
-        basename: import.meta.env.VITE_ENVIRONMENT !== "production" ? "/setonoot" : "/"
+        basename: import.meta.env.VITE_ENVIRONMENT === "production" ? "/setonoot" : "/"
     }
 );
 
