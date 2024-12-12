@@ -11,13 +11,11 @@ import {Role} from "./utils/enums.ts";
 import ScoreManager from "./views/scores/ScoreManager.tsx";
 import Home from "./views/Home.tsx";
 import ChangeLog from "./views/ChangeLog.tsx";
-import Error from "./views/Error.tsx";
 import Profile from "./views/profile/Profile.tsx";
 
 const router = createBrowserRouter([
         {
             path: "/",
-            ...(import.meta.env.VITE_ENVIRONMENT === "local" ? {} : {errorElement: <Error/>}),
             element: <Layout/>,
             children: [
                 {
