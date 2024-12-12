@@ -16,7 +16,11 @@ import Profile from "./views/profile/Profile.tsx";
 const router = createBrowserRouter([
         {
             path: "/setonoot",
-            element: <h1>Hello</h1>
+            element: <h1>HELLO, WORLD</h1>
+        },
+        {
+            path: "/test",
+            element: <h1>TEST</h1>
         },
         {
             path: "/",
@@ -76,10 +80,7 @@ const router = createBrowserRouter([
             element: <ScoreManager mode={"embed-new"}/>,
             errorElement: <>Error</>
         }
-    ],
-    {
-        basename: import.meta.env.VITE_ENVIRONMENT === "local" ? "/" : "/setonoot",
-    });
+    ]);
 
 const AppRouter = () => {
 
