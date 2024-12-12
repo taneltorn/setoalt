@@ -15,6 +15,10 @@ import Profile from "./views/profile/Profile.tsx";
 
 const router = createBrowserRouter([
         {
+            path: "/setonoot",
+            element: <h1>Hello</h1>
+        },
+        {
             path: "/",
             element: <Layout/>,
             children: [
