@@ -17,7 +17,7 @@ import Profile from "./views/profile/Profile.tsx";
 const router = createBrowserRouter([
         {
             path: "/",
-            ...(import.meta.env.VITE_ENVIRONMENT === "local" ? {} : {errorElement: <Error/>}),
+            // ...(import.meta.env.VITE_ENVIRONMENT === "local" ? {} : {errorElement: <Error/>}),
             element: <Layout/>,
             children: [
                 {
