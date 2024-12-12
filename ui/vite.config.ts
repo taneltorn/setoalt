@@ -8,7 +8,7 @@ export default defineConfig({
     host: true,
     port: 5173
   },
-  base: '/',
+  base: '/setonoot/',
   plugins: [react()],
   envDir: '../',
   build: {
