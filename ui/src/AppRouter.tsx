@@ -80,7 +80,10 @@ const router = createBrowserRouter([
             element: <ScoreManager mode={"embed-new"}/>,
             errorElement: <>Error</>
         }
-    ]);
+    ],
+    {
+        basename: import.meta.env.VITE_ENVIRONMENT === "production" ? "/setonoot" : "/",
+    });
 
 const AppRouter = () => {
 
