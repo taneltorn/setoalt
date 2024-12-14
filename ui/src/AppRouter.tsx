@@ -15,66 +15,70 @@ import Error from "./views/Error.tsx";
 import Profile from "./views/profile/Profile.tsx";
 
 const router = createBrowserRouter([
+        {
+            path: "/",
+            ...(import.meta.env.VITE_ENVIRONMENT === "production" ? {errorElement: <Error/>} : {}),
+            element: <Layout/>,
+            children: [
+                {
+                    path: "/",
+                    element: <Home/>,
+                },
+                {
+                    path: "/changelog",
+                    element: <ChangeLog/>,
+                },
+                {
+                    path: "/scores",
+                    element: <Scores/>,
+                },
+                {
+                    path: "/scores/:id",
+                    element: <ScoreManager mode={"details"}/>,
+                },
+                {
+                    path: "/scores/:id/edit",
+                    element: (
+                        <ProtectedRoute allowedRoles={[Role.ADMIN, Role.EDITOR]}>
+                            <ScoreManager mode={"edit"}/>
+                        </ProtectedRoute>
+                    ),
+                },
+                {
+                    path: "/editor",
+                    element: <ScoreManager mode={"new"}/>,
+                },
+                {
+                    path: "/admin",
+                    element: (
+                        <ProtectedRoute allowedRoles={[Role.ADMIN]}>
+                            <Admin/>
+                        </ProtectedRoute>
+                    ),
+                },
+                {
+                    path: "/profile",
+                    element: (
+                        <Profile/>
+                    ),
+                }
+            ]
+        },
+        {
+            path: "/embed/:id",
+            element: <ScoreManager mode={"embed"}/>,
+            errorElement: <>Error</>
+        },
+        {
+            path: "/embed",
+            element: <ScoreManager mode={"embed-new"}/>,
+            errorElement: <>Error</>
+        }
+    ],
     {
-        path: "/",
-        ...(import.meta.env.VITE_ENVIRONMENT === "local" ? {} : {errorElement: <Error/>}),
-        element: <Layout/>,
-        children: [
-            {
-                path: "/",
-                element: <Home/>,
-            },
-            {
-                path: "/changelog",
-                element: <ChangeLog/>,
-            },
-            {
-                path: "/scores",
-                element: <Scores/>,
-            },
-            {
-                path: "/scores/:id",
-                element: <ScoreManager mode={"details"}/>,
-            },
-            {
-                path: "/scores/:id/edit",
-                element: (
-                    <ProtectedRoute allowedRoles={[Role.ADMIN, Role.EDITOR]}>
-                        <ScoreManager mode={"edit"}/>
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "/editor",
-                element: <ScoreManager mode={"new"}/>,
-            },
-            {
-                path: "/admin",
-                element: (
-                    <ProtectedRoute allowedRoles={[Role.ADMIN]}>
-                        <Admin/>
-                    </ProtectedRoute>
-                ),
-            },
-            {
-                path: "/profile",
-                element: (
-                    <Profile/>
-                ),
-            }
-        ]
-    },
-    {
-        path: "/embed/:id",
-        element: <ScoreManager mode={"embed"}/>,
-        errorElement: <>Error</>
-    },
-    {
-        path: "/embed",
-        element: <ScoreManager mode={"embed-new"}/>,
-        errorElement: <>Error</>
+        basename: import.meta.env.VITE_PATH_PREFIX || "/"
     }
-]);
+);
 
 const AppRouter = () => {
 

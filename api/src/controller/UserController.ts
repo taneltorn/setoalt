@@ -1,11 +1,12 @@
 import express, {Request, Response} from "express";
 import bcrypt from "bcrypt";
 import log4js from "log4js";
-import {verifyToken} from "../utils/verifyToken";
+import {verifyToken} from "../middleware/verifyToken";
 import userService from '../service//UserService';
 import {User} from "../model/User";
 import {UserDTO} from "../model/UserDTO";
 import Mapper from "../utils/Mapper";
+import {logRequest} from "../middleware/requestLogger";
 
 class UserController {
 
@@ -18,11 +19,11 @@ class UserController {
     }
 
     initializeRoutes() {
-        this.router.get("/", verifyToken, this.getUsers.bind(this));
-        this.router.post("/", verifyToken, this.createUser.bind(this));
-        this.router.patch("/:id", verifyToken, this.updateUser.bind(this));
-        this.router.patch("/:id/password", verifyToken, this.updateUserPassword.bind(this));
-        this.router.delete("/:id", verifyToken, this.deleteUser.bind(this));
+        this.router.get("/", verifyToken, logRequest, this.getUsers.bind(this));
+        this.router.post("/", verifyToken, logRequest, this.createUser.bind(this));
+        this.router.patch("/:id", verifyToken, logRequest, this.updateUser.bind(this));
+        this.router.patch("/:id/password", verifyToken, logRequest, this.updateUserPassword.bind(this));
+        this.router.delete("/:id", verifyToken, logRequest, this.deleteUser.bind(this));
     }
 
     async getUsers(req: Request, res: Response): Promise<UserDTO> {
@@ -30,7 +31,6 @@ class UserController {
             // @ts-ignore todo use custom type
             const user = req.user;
 
-            this.logger.info(`GET /api/users from ${req.hostname} as user ${user?.username}`);
             if (user?.role !== 'ADMIN') {
                 this.logger.info(`Not authorized: ${user.username}`);
                 res.status(403).json({error: "Not authorized"});
@@ -55,8 +55,6 @@ class UserController {
         try {
             // @ts-ignore todo use custom type
             const user = req.user;
-
-            this.logger.info(`POST /api/users from ${req.hostname} as user ${user?.username}`);
             const data = req.body;
 
             if (user?.role !== 'ADMIN') {
@@ -93,11 +91,7 @@ class UserController {
         try {
             // @ts-ignore todo use custom type
             const user = req.user;
-
             const id = parseInt(req.params.id);
-            this.logger.info(`PATCH /api/users/${id} from ${req.hostname} as user ${user?.username}`);
-
-
             const data = req.body;
 
             if (user?.role !== 'ADMIN') {
@@ -128,10 +122,7 @@ class UserController {
         try {
             // @ts-ignore todo use custom type
             const user = req.user;
-
             const id = parseInt(req.params.id);
-            this.logger.info(`PATCH /api/users/password/${id} from ${req.hostname} as user ${user?.username}`);
-
             const data = req.body;
 
             if (user?.id !== id) {
@@ -152,7 +143,7 @@ class UserController {
                 res.status(400).json({error: "Missing password information"});
                 return;
             }
-            
+
             const result = await userService.updateUserPassword(id, password, user);
             if (!result.success) {
                 res.status(500).json({error: result.error});
@@ -169,10 +160,7 @@ class UserController {
         try {
             // @ts-ignore todo use custom type
             const user = req.user;
-
             const userId = parseInt(req.params.id);
-            this.logger.info(`DELETE /api/users/${userId} from ${req.hostname} as user ${user?.username}`);
-
 
             if (user?.role !== 'ADMIN') {
                 this.logger.info(`Not authorized: ${user.username}`);

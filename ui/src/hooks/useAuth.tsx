@@ -19,7 +19,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
     const [currentUser, setCurrentUser] = useState<UserDetails | null>();
 
     const login = async (username: string, password: string): Promise<any> => {
-        return fetch(`${API_URL}/api/auth/login`, {
+        return fetch(`${API_URL}/auth/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
@@ -51,7 +51,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
 
     const logout = async (): Promise<any> => {
         try {
-            await fetch(`${API_URL}/api/auth/logout`, {
+            await fetch(`${API_URL}/auth/logout`, {
                 method: "POST",
                 credentials: "include"
             });
@@ -63,7 +63,7 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
     }
 
     const verify = async () => {
-        fetch(`${API_URL}/api/auth/verify`, {
+        fetch(`${API_URL}/auth/verify`, {
             credentials: "include"
         })
             .then(response => response.json())

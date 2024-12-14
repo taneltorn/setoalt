@@ -15,7 +15,7 @@ const useUserService = () => {
 
     const fetchUsers = async (): Promise<User[]> => {
         setIsLoading(true);
-        return axios.get(`${API_URL}/api/users`, {
+        return axios.get(`${API_URL}/users`, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -35,7 +35,7 @@ const useUserService = () => {
 
     const createUser = async (user: User): Promise<User> => {
         setIsLoading(true);
-        return axios.post(`${API_URL}/api/users`, user, {
+        return axios.post(`${API_URL}/users`, user, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -57,7 +57,7 @@ const useUserService = () => {
 
     const updateUser = async (id: number, user: User): Promise<User> => {
         setIsLoading(true);
-        return axios.patch(`${API_URL}/api/users/${id}`, user, {
+        return axios.patch(`${API_URL}/users/${id}`, user, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -80,7 +80,7 @@ const useUserService = () => {
 
     const updateUserPassword = async (id: number, user: User): Promise<User> => {
         setIsLoading(true);
-        return axios.patch(`${API_URL}/api/users/${id}/password`, user, {
+        return axios.patch(`${API_URL}/users/${id}/password`, user, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -102,7 +102,7 @@ const useUserService = () => {
 
     const removeUser = async (id: number): Promise<User> => {
         setIsLoading(true);
-        return axios.delete(`${API_URL}/api/users/${id}`, {
+        return axios.delete(`${API_URL}/users/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
             },

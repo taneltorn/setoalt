@@ -15,7 +15,7 @@ const useScoreService = () => {
 
     const fetchScore = async (id: string): Promise<Score> => {
         setIsLoading(true);
-        return axios.get(`${API_URL}/api/scores/${id}`, {
+        return axios.get(`${API_URL}/scores/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -35,7 +35,7 @@ const useScoreService = () => {
 
     const fetchScores = async (): Promise<Score[]> => {
         setIsLoading(true);
-        return axios.get(`${API_URL}/api/scores`, {
+        return axios.get(`${API_URL}/scores`, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -55,7 +55,7 @@ const useScoreService = () => {
 
     const createScore = async (score: Score): Promise<Score> => {
         setIsSaving(true);
-        return axios.post(`${API_URL}/api/scores`, normalize(score), {
+        return axios.post(`${API_URL}/scores`, normalize(score), {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -84,7 +84,7 @@ const useScoreService = () => {
 
     const updateScore = async (id: number, score: Score): Promise<Score> => {
         setIsSaving(true);
-        return axios.put(`${API_URL}/api/scores/${id}`, normalize(score), {
+        return axios.put(`${API_URL}/scores/${id}`, normalize(score), {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -106,7 +106,7 @@ const useScoreService = () => {
 
     const removeScore = async (id: number): Promise<Score> => {
         setIsSaving(true);
-        return axios.delete(`${API_URL}/api/scores/${id}`, {
+        return axios.delete(`${API_URL}/scores/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
             },

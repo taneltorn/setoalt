@@ -1,9 +1,10 @@
 import express, {Request, Response} from "express";
 import log4js from "log4js";
-import {verifyToken} from "../utils/verifyToken";
-import {checkUser} from "../utils/checkUser";
+import {verifyToken} from "../middleware/verifyToken";
+import {checkUser} from "../middleware/checkUser";
 import notificationService from "../service/NotificationService";
 import {Notification} from "../model/Notification";
+import {logRequest, logRequestWithBody} from "../middleware/requestLogger";
 
 class NotificationController {
 
@@ -16,21 +17,17 @@ class NotificationController {
     }
 
     initializeRoutes() {
-        this.router.get("/", checkUser, this.getNotifications.bind(this));
-        this.router.get("/active", checkUser, this.getActiveNotifications.bind(this));
-        this.router.get("/:id", checkUser, this.getNotification.bind(this));
-        this.router.post("/", verifyToken, this.createNotification.bind(this));
-        this.router.put("/:id", verifyToken, this.updateNotification.bind(this));
-        this.router.delete("/:id", verifyToken, this.deleteNotification.bind(this));
+        this.router.get("/", checkUser, logRequest, this.getNotifications.bind(this));
+        this.router.get("/active", checkUser, logRequest, this.getActiveNotifications.bind(this));
+        this.router.get("/:id", checkUser, logRequest, this.getNotification.bind(this));
+        this.router.post("/", verifyToken, logRequestWithBody, this.createNotification.bind(this));
+        this.router.put("/:id", verifyToken, logRequestWithBody, this.updateNotification.bind(this));
+        this.router.delete("/:id", verifyToken, logRequest, this.deleteNotification.bind(this));
     }
 
     async getNotification(req: Request, res: Response): Promise<Notification> {
         try {
-            // @ts-ignore todo use custom type
-            const user = req.user;
             const id = parseInt(req.params.id);
-
-            this.logger.info(`GET /api/notifications/${id} from ${req.hostname} as user ${user?.username}`);
 
             if (isNaN(id)) {
                 this.logger.info(`Invalid ID: ${id}`);
@@ -56,11 +53,6 @@ class NotificationController {
 
     async getNotifications(req: Request, res: Response): Promise<Notification[]> {
         try {
-            // @ts-ignore todo use custom type
-            const user = req.user;
-
-            this.logger.info(`GET /api/notifications from ${req.hostname} as user ${user?.username}`);
-
             const result = await notificationService.find();
             if (!result.success) {
                 res.status(500).json({error: result.error});
@@ -76,11 +68,6 @@ class NotificationController {
 
     async getActiveNotifications(req: Request, res: Response): Promise<Notification[]> {
         try {
-            // @ts-ignore todo use custom type
-            const user = req.user;
-
-            this.logger.info(`GET /api/notifications/active from ${req.hostname} as user ${user?.username}`);
-
             const result = await notificationService.find(true);
             if (!result.success) {
                 res.status(500).json({error: result.error});
@@ -95,12 +82,7 @@ class NotificationController {
 
     async createNotification(req: Request, res: Response): Promise<Notification> {
         try {
-            // @ts-ignore todo use custom type
-            const user = req.user;
             const data = req.body;
-
-            this.logger.info(`POST /api/notifications from ${req.hostname} as user ${user?.username}:`)
-            this.logger.info(req.body);
 
             if (!data) {
                 this.logger.info(`Request body is null`);
@@ -122,13 +104,8 @@ class NotificationController {
 
     async updateNotification(req: Request, res: Response): Promise<Notification> {
         try {
-            // @ts-ignore todo use custom type
-            const user = req.user;
             const data = req.body;
-
             const id = parseInt(req.params.id);
-            this.logger.info(`PUT /notifications/${id} from ${req.hostname} as user ${user?.username}:`);
-            this.logger.info(req.body);
 
             if (isNaN(id)) {
                 this.logger.info(`Invalid ID: ${id}`);
@@ -156,11 +133,7 @@ class NotificationController {
 
     async deleteNotification(req: Request, res: Response): Promise<number> {
         try {
-            // @ts-ignore todo use custom type
-            const user = req.user;
-
             const id = parseInt(req.params.id);
-            this.logger.info(`DELETE /api/notifications/${id} from ${req.hostname} as user ${user?.username}`);
 
             if (isNaN(id)) {
                 this.logger.info(`Invalid ID: ${id}`);

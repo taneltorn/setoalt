@@ -13,6 +13,7 @@ import ScoreController from "./controller/ScoreController";
 import NotificationController from "./controller/NotificationController";
 import log4js from "log4js";
 import * as process from "process";
+import {logRequest} from "./middleware/requestLogger";
 
 const app = express();
 const port = 3000;
@@ -31,17 +32,18 @@ app.use(cors({
     origin: process.env.ALLOWED_ORIGIN,
 }));
 
+// app.use(requestLogger);
+
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(cookieParser());
 
-app.use('/api/auth', AuthController);
-app.use('/api/scores', ScoreController);
-app.use('/api/users', UserController);
-app.use('/api/notifications', NotificationController);
+app.use('/auth', AuthController);
+app.use('/scores', ScoreController);
+app.use('/users', UserController);
+app.use('/notifications', NotificationController);
 
 app.get('/api/status', async (req: Request, res: Response): Promise<void> => {
-    logger.info("GET /api/status");
     try {
         logger.info("OK");
         res.json("OK");

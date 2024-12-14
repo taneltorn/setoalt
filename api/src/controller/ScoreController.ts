@@ -1,9 +1,10 @@
 import express, {Request, Response} from "express";
 import log4js from "log4js";
-import {verifyToken} from "../utils/verifyToken";
+import {verifyToken} from "../middleware/verifyToken";
 import scoreService from "../service/ScoreService";
-import {checkUser} from "../utils/checkUser";
+import {checkUser} from "../middleware/checkUser";
 import {Score} from "../model/Score";
+import {logRequest, logRequestWithBody} from "../middleware/requestLogger";
 
 class ScoreController {
 
@@ -16,11 +17,11 @@ class ScoreController {
     }
 
     initializeRoutes() {
-        this.router.get("/", checkUser, this.getScores.bind(this));
-        this.router.get("/:id", checkUser, this.getScore.bind(this));
-        this.router.post("/", verifyToken, this.createScore.bind(this));
-        this.router.put("/:id", verifyToken, this.updateScore.bind(this));
-        this.router.delete("/:id", verifyToken, this.deleteScore.bind(this));
+        this.router.get("/", checkUser, logRequest, this.getScores.bind(this));
+        this.router.get("/:id", checkUser, logRequest, this.getScore.bind(this));
+        this.router.post("/", verifyToken, logRequestWithBody, this.createScore.bind(this));
+        this.router.put("/:id", verifyToken, logRequestWithBody, this.updateScore.bind(this));
+        this.router.delete("/:id", verifyToken, logRequest, this.deleteScore.bind(this));
     }
 
     async getScores(req: Request, res: Response): Promise<Score[]> {
@@ -48,8 +49,6 @@ class ScoreController {
             // @ts-ignore todo use custom type
             const user = req.user;
             const id = parseInt(req.params.id);
-
-            this.logger.info(`GET /api/scores/${id} from ${req.hostname} as user ${user?.username}`);
 
             if (isNaN(id)) {
                 this.logger.info(`Invalid ID: ${id}`);
@@ -79,9 +78,6 @@ class ScoreController {
             const user = req.user;
             const data = req.body;
 
-            this.logger.info(`POST /api/scores from ${req.hostname} as user ${user?.username}:`)
-            this.logger.info(req.body);
-
             if (!data) {
                 this.logger.info(`Request body is null`);
                 res.status(400).json({error: "Missing score information"});
@@ -107,8 +103,6 @@ class ScoreController {
             const data = req.body;
 
             const id = parseInt(req.params.id);
-            this.logger.info(`PUT /scores/${id} from ${req.hostname} as user ${user?.username}:`);
-            this.logger.info(req.body);
 
             if (isNaN(id)) {
                 this.logger.info(`Invalid ID: ${id}`);
@@ -138,9 +132,7 @@ class ScoreController {
         try {
             // @ts-ignore todo use custom type
             const user = req.user;
-
             const id = parseInt(req.params.id);
-            this.logger.info(`DELETE /api/scores/${id} from ${req.hostname} as user ${user?.username}`);
 
             if (isNaN(id)) {
                 this.logger.info(`Invalid ID: ${id}`);

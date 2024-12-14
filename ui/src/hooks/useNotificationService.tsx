@@ -15,7 +15,7 @@ const useNotificationService = () => {
 
     const fetchNotification = async (id: string): Promise<Notification> => {
         setIsLoading(true);
-        return axios.get(`${API_URL}/api/notifications/${id}`, {
+        return axios.get(`${API_URL}/notifications/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -35,7 +35,7 @@ const useNotificationService = () => {
 
     const fetchNotifications = async (): Promise<Notification[]> => {
         setIsLoading(true);
-        return axios.get(`${API_URL}/api/notifications`, {
+        return axios.get(`${API_URL}/notifications`, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -55,7 +55,7 @@ const useNotificationService = () => {
 
     const fetchActiveNotifications = async (): Promise<Notification[]> => {
         setIsLoading(true);
-        return axios.get(`${API_URL}/api/notifications/active`, {
+        return axios.get(`${API_URL}/notifications/active`, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -75,7 +75,7 @@ const useNotificationService = () => {
 
     const createNotification = async (notification: Notification): Promise<Notification> => {
         setIsLoading(true);
-        return axios.post(`${API_URL}/api/notifications`, notification, {
+        return axios.post(`${API_URL}/notifications`, notification, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -97,7 +97,7 @@ const useNotificationService = () => {
 
     const updateNotification = async (id: number, notification: Notification): Promise<Notification> => {
         setIsLoading(true);
-        return axios.put(`${API_URL}/api/notifications/${id}`, notification, {
+        return axios.put(`${API_URL}/notifications/${id}`, notification, {
             headers: {
                 'Content-Type': 'application/json',
             },
@@ -119,7 +119,7 @@ const useNotificationService = () => {
 
     const removeNotification = async (id: number): Promise<number> => {
         setIsLoading(true);
-        return axios.delete(`${API_URL}/api/notifications/${id}`, {
+        return axios.delete(`${API_URL}/notifications/${id}`, {
             headers: {
                 'Content-Type': 'application/json',
             },

@@ -28,6 +28,7 @@ services:
       args:
         - VITE_API_URL=${VITE_API_URL}
         - VITE_ENVIRONMENT=${VITE_ENVIRONMENT}
+        - VITE_PATH_PREFIX=${VITE_PATH_PREFIX}
     container_name: setoalt-ui
     ports:
       - "80:80"
@@ -36,6 +37,7 @@ services:
     environment:
       - VITE_API_URL=${VITE_API_URL}
       - VITE_ENVIRONMENT=${VITE_ENVIRONMENT}
+      - VITE_PATH_PREFIX=${VITE_PATH_PREFIX}
     depends_on:
       - api
     networks:
