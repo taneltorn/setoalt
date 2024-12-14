@@ -26,6 +26,7 @@ logger.level = process.env.LOG_LEVEL;
 logger.info(`Starting API service`)
 logger.info(`Log level: ${process.env.LOG_LEVEL}`)
 logger.info(`Allowed origin: ${process.env.ALLOWED_ORIGIN}`)
+logger.info(`Path prefix: ${process.env.VITE_PATH_PREFIX}`)
 
 app.use(cors({
     credentials: true,
