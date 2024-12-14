@@ -15,6 +15,7 @@ services:
       - ALLOWED_ORIGIN=${ALLOWED_ORIGIN}
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
       - LOG_LEVEL=${LOG_LEVEL}
+      - VITE_PATH_PREFIX=${VITE_PATH_PREFIX}
     depends_on:
       - database
     networks:
