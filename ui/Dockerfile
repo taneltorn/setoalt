@@ -1,4 +1,4 @@
-FROM node:20 as build
+FROM node:20 AS build
 
 ARG VITE_API_URL
 ARG VITE_ENVIRONMENT
@@ -17,7 +17,7 @@ COPY . .
 RUN npm run build
 
 
-FROM nginx:stable-alpine as production
+FROM nginx:stable-alpine AS production
 
 COPY --from=build /app/dist /usr/share/nginx/html
 
