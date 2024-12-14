@@ -76,7 +76,7 @@ const router = createBrowserRouter([
         }
     ],
     {
-        basename: import.meta.env.VITE_PATH_PREFIX || "/"
+        basename: import.meta.env.VITE_PATH_PREFIX ? `/${import.meta.env.VITE_PATH_PREFIX}` : "/"
     }
 );
 
