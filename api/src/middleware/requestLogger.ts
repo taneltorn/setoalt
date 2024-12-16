@@ -8,7 +8,7 @@ export const logRequest = (req: Request, res: Response, next: NextFunction, logB
     // @ts-ignore todo use custom type for req.user
     logger.info(`${req.method} request to ${req.protocol}://${req.hostname}${req.originalUrl} from ${req.ip || req.socket.remoteAddress || "unknown"} authenticated as ${req.user?.username || "anonymous user"}`);
     if (logBody) {
-        logger.info(req.body);
+        logger.info(JSON.stringify(req.body));
     }
     next();
 };
