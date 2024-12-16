@@ -6,7 +6,7 @@ logger.level = process.env.LOG_LEVEL || "info";
 
 export const logRequest = (req: Request, res: Response, next: NextFunction, logBody: boolean = false) => {
     // @ts-ignore todo use custom type for req.user
-    logger.info(`${req.method} request to ${req.protocol}://${req.hostname}${req.path} from ${req.headers.origin} authenticated as ${req.user?.username || "anonymous user"}`);
+    logger.info(`${req.method} request to ${req.protocol}://${req.hostname}${req.path} from ${req.ip || req.socket.remoteAddress || "unknown"} authenticated as ${req.user?.username || "anonymous user"}`);
     if (logBody) {
         logger.info(req.body);
     }
