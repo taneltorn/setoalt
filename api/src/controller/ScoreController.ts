@@ -28,9 +28,6 @@ class ScoreController {
         try {
             // @ts-ignore todo use custom type
             const user = req.user;
-
-            this.logger.info(`GET /api/scores from ${req.hostname} as user ${user?.username}`);
-
             const result = await scoreService.find(user);
 
             if (!result.success) {
