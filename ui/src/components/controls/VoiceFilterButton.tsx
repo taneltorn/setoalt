@@ -27,7 +27,7 @@ const VoiceFilterButton: React.FC<Properties> = ({active, halfActive, disabled, 
             color={active ? "black" : "gray.1"}
             title={t(`tooltip.${active ? "hideVoice" : "showVoice"}`)}
             className={`me-2`}
-            size={"xs"}
+            size={"compact-sm"}
             disabled={disabled}
             leftSection={active || halfActive
                 ? <MdRecordVoiceOver

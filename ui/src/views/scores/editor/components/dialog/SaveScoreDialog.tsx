@@ -9,15 +9,8 @@ import {Playback} from "../../../../../utils/constants.ts";
 import {Score} from "../../../../../model/Score.ts";
 import {useNavigate} from "react-router-dom";
 import ScoreForm from "../form/ScoreForm.tsx";
-import {DialogType} from "../../../../../utils/enums.ts";
-
-const DEFAULT_VALUES = {
-    name: "",
-    description: "",
-    defaultTempo: Playback.DEFAULT_TEMPO,
-    defaultTransposition: Playback.DEFAULT_TRANSPOSITION_ON_SAVE,
-    visibility: "PUBLIC",
-}
+import {DialogType, Role} from "../../../../../utils/enums.ts";
+import {useAuth} from "../../../../../hooks/useAuth.tsx";
 
 const SaveScoreDialog: React.FC = () => {
 
@@ -27,14 +20,25 @@ const SaveScoreDialog: React.FC = () => {
 
     const navigate = useNavigate();
     const {close} = useDialogContext();
+    const auth = useAuth();
 
+    const DEFAULT_VALUES = {
+        name: "",
+        description: "",
+        defaultTempo: Playback.DEFAULT_TEMPO,
+        defaultTransposition: Playback.DEFAULT_TRANSPOSITION_ON_SAVE,
+        visibility: [Role.ADMIN, Role.EDITOR].includes(auth.currentUser?.role as Role) ? "PUBLIC" : "PRIVATE",
+    }
     const methods = useForm<Score>({defaultValues: DEFAULT_VALUES});
 
+    
     const onSubmit = async (values: Score) => {
         const score = {...values, data: context.score.data};
         score.data.voices.forEach(v => v.hidden = false);
 
-        const saveScore = () => score.id ? scoreService.updateScore(score.id, score) : scoreService.createScore(score);
+        const saveScore = () => score.id 
+            ? scoreService.updateScore(score.id, score)
+            : scoreService.createScore(score);
         saveScore()
             .then((r) => {
                 close();

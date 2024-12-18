@@ -7,18 +7,18 @@ export const Layout = {
             MAX_WIDTH: 1500,
             PADDING_X_START: 75,
             PADDING_X_END: 60,
-            SYMBOLS_BAR: 50,
-            LYRICS_BAR: 70
+            SYMBOLS_BAR: 30,
+            LYRICS_BAR: 50
         },
         line: {
-            SPACING: 12,
+            SPACING: 9,
             PRIMARY_LINE_STROKE_WIDTH: 2,
             SECONDARY_LINE_STROKE_WIDTH: 1,
             STROKE_WIDTH_BOLD: 3,
         },
         note: {
-            RADIUS: 8,
-            RADIUS_SMALL: 6,
+            RADIUS: 7,
+            RADIUS_SMALL: 5,
             REPEATING_OFFSET: 7,
             SPACING: 60,
             SHAPE: 0,
@@ -56,8 +56,8 @@ export const Size = {
         XS: 20,
         SM: 24,
         MD: 32,
-        LG: 48,
-        XL: 64,
+        LG: 42,
+        XL: 56,
     }
 }
 

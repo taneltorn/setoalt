@@ -8,6 +8,7 @@ import {useAuth} from "../../../../hooks/useAuth.tsx";
 import {useLocation, useNavigate} from "react-router-dom";
 import BackLink from "../../../../components/controls/BackLink.tsx";
 import {useAudioContext} from "../../../../hooks/useAudioContext.tsx";
+import {Role} from "../../../../utils/enums.ts";
 
 interface Properties {
     score: Score;
@@ -31,14 +32,15 @@ const ScoreHeader: React.FC<Properties> = ({score}) => {
         <Header
             leftSection={<BackLink to={"/scores"} state={location.state}/>}
             rightSection={<>
-                {auth.currentUser?.isAuthorized &&
-                    <ScoreControls
-                        primaryButtonLabel={t("button.edit")}
-                        primaryButtonVariant={"outline"}
-                        secondaryButtonVariant={"outline"}
-                        onPrimaryButtonClick={handleEditClick}
-                        hideSecondaryButton
-                    />}
+                <ScoreControls
+                    primaryButtonLabel={t("button.edit")}
+                    primaryButtonVariant={"outline"}
+                    secondaryButtonVariant={"outline"}
+                    onPrimaryButtonClick={handleEditClick}
+                    hidePrimaryButton={!(score.createdBy === auth.currentUser?.username
+                        || [Role.ADMIN, Role.EDITOR].includes(auth.currentUser?.role as Role))}
+                    hideSecondaryButton
+                />
             </>
             }>
             <Group>

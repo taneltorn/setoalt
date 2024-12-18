@@ -1,8 +1,8 @@
 import React from 'react';
 import {useTranslation} from "react-i18next";
 import {Button, Group} from "@mantine/core";
-import {useAuth} from "../../../../../hooks/useAuth.tsx";
 import {useDataService} from "../../../../../hooks/useDataService.tsx";
+import {Role} from "../../../../../utils/enums.ts";
 
 interface Properties {
     onPrimaryButtonClick: () => void;
@@ -11,14 +11,14 @@ interface Properties {
     secondaryButtonLabel?: string;
     primaryButtonVariant?: string;
     secondaryButtonVariant?: string;
-    primaryButtonRequiresAuth?: boolean;
+    primaryButtonRequiresAuth?: Role;
+    hidePrimaryButton?: boolean;
     hideSecondaryButton?: boolean;
 }
 
 const ScoreControls: React.FC<Properties> = (props) => {
 
     const {t} = useTranslation();
-    const auth = useAuth();
     const {isSaving} = useDataService();
 
     return (
@@ -32,7 +32,7 @@ const ScoreControls: React.FC<Properties> = (props) => {
                 >
                     {props.secondaryButtonLabel || t("button.cancel")}
                 </Button>}
-            {(!props.primaryButtonRequiresAuth || auth.currentUser?.isAuthorized) &&
+            {!props.hidePrimaryButton &&
                 <Button
                     type={"submit"}
                     size={"md"}

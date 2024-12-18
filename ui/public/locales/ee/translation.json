@@ -73,6 +73,7 @@
         "lineDetune": "Noodijoonte mikrotonaalsus (tsentides)",
         "text": "Laulusõnad",
         "visibility": "Nähtavus",
+        "visibilityComment": "Otselingiga on noodistus alati ligipääsetav.",
         "recording": "Link salvestusele",
         "editor": "Noodistus",
         "data": "Andmed",

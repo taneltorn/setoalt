@@ -47,7 +47,7 @@ const VoiceFilter: React.FC = () => {
             {context.score.data.voices.some(v => v.hidden) &&
                 <Group justify={"end"}>
                     <Button
-                        size={"xs"}
+                        size={"compact-sm"}
                         color={"blue"}
                         leftSection={<MdRecordVoiceOver size={Size.icon.XS}/>}
                         variant={"subtle"}

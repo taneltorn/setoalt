@@ -3,13 +3,15 @@ import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {useTranslation} from "react-i18next";
 import {
     Input,
-    Switch,
+    Switch, Text,
     Textarea,
     TextInput
 } from "@mantine/core";
 import {Controller, useFormContext} from "react-hook-form";
 import {Score} from "../../../../../model/Score.ts";
 import {Size} from "../../../../../utils/constants.ts";
+import {useAuth} from "../../../../../hooks/useAuth.tsx";
+import {Role} from "../../../../../utils/enums.ts";
 
 interface Properties {
     onSubmit: (values: Score) => void;
@@ -20,6 +22,7 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
     const [t] = useTranslation();
     const context = useScoreContext();
     const {register, handleSubmit, control, formState: {errors}} = useFormContext<Score>();
+    const auth = useAuth();
 
     const handleFocus = {
         onFocus: () => context.setIsTypeMode(true),
@@ -55,13 +58,16 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
                         <Switch
                             size={"xl"}
                             {...field}
-                            disabled={false}
+                            disabled={auth.currentUser?.role === Role.USER}
                             label={t(`visibility.${field.value?.toLowerCase()}`)}
                             checked={field.value === "PUBLIC"}
                             onChange={(event) => field.onChange(event.currentTarget.checked ? "PUBLIC" : "PRIVATE")}
                         />
                     )}
                 />
+                <Text mt={"xs"}>
+                    {t("view.editor.form.visibilityComment")}
+                </Text>
             </Input.Wrapper>
 
             <Input.Wrapper

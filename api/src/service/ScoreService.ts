@@ -35,7 +35,7 @@ class ScoreService {
             this.logger.info(`Fetching score with id = ${id}`);
 
             let query = "SELECT * FROM setoalt.scores WHERE id = $1 AND deleted_at IS NULL";
-            query += user?.role !== "ADMIN" ?  ` AND (created_by = '${user?.username}' OR visibility = 'PUBLIC')`  : "";
+            // query += user?.role !== "ADMIN" ?  ` AND (created_by = '${user?.username}' OR visibility = 'PUBLIC')`  : "";
 
             const result = await pool.query(query, [id]);
 

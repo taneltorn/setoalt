@@ -6,6 +6,7 @@ export interface UserDetails {
     firstname?: string;
     lastname?: string;
     role: Role;
-    isAuthorized: boolean;
+    isUser: boolean;
+    isEditor: boolean;
     isAdmin: boolean;
 }

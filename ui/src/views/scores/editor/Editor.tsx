@@ -10,14 +10,16 @@ import Stave from "../details/components/stave/Stave.tsx";
 import {useAudioContext} from "../../../hooks/useAudioContext.tsx";
 import {Group} from "@mantine/core";
 import ScoreSettings, {Setting} from "../details/components/ScoreSettings.tsx";
-import {DialogType} from "../../../utils/enums.ts";
+import {DialogType, Role} from "../../../utils/enums.ts";
 import PlaybackControls from "../details/components/playback/PlaybackControls.tsx";
+import {useAuth} from "../../../hooks/useAuth.tsx";
 
 const Editor: React.FC = () => {
 
     const {t} = useTranslation();
     const {open} = useDialogContext();
     const {stopPlayback} = useAudioContext();
+    const auth = useAuth();
 
     const handleClick = () => {
         stopPlayback();
@@ -30,7 +32,7 @@ const Editor: React.FC = () => {
                 <ScoreControls
                     onPrimaryButtonClick={handleClick}
                     primaryButtonVariant={"outline"}
-                    primaryButtonRequiresAuth
+                    hidePrimaryButton={![Role.ADMIN, Role.EDITOR, Role.USER].includes(auth.currentUser?.role as Role)}
                     hideSecondaryButton
                 />
             }>

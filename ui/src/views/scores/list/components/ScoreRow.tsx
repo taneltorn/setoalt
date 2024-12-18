@@ -44,7 +44,7 @@ const ScoreRow: React.FC<Properties> = ({score, state, onChange}) => {
                     {t(`visibility.${score.visibility?.toLowerCase()}`)}
                 </Badge>
             </Table.Td>
-            {auth.currentUser?.isAuthorized &&
+            {auth.currentUser?.isEditor &&
                 <Table.Td>
                     <ScoreRowControls score={score} onChange={onChange}/>
                 </Table.Td>}

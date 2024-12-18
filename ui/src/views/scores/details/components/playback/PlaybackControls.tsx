@@ -23,7 +23,7 @@ const PlaybackControls: React.FC = () => {
 
     return (
         <Group gap={4}>
-            <Group gap={4}>
+            <Group gap={0}>
                 <InstrumentSelection/>
 
                 <ActionIcon
@@ -33,7 +33,7 @@ const PlaybackControls: React.FC = () => {
                     variant={"subtle"}
                     onClick={() => context.previous()}
                 >
-                    <FaBackward size={Size.icon.MD}/>
+                    <FaBackward size={Size.icon.SM}/>
                 </ActionIcon>
 
                 {isPlaying
@@ -63,7 +63,7 @@ const PlaybackControls: React.FC = () => {
                     variant={"subtle"}
                     onClick={() => context.next()}
                 >
-                    <FaForward size={Size.icon.MD}/>
+                    <FaForward size={Size.icon.SM}/>
                 </ActionIcon>
             </Group>
 

@@ -1,6 +1,7 @@
 import React from "react";
 import {
-    ActionIcon, Box,
+    ActionIcon, 
+    Box,
     Button,
     Divider,
     Drawer,
@@ -13,16 +14,15 @@ import {
 import {useTranslation} from "react-i18next";
 import {useDisclosure} from "@mantine/hooks";
 import {
-    FaBackward,
+    FaBackward, FaCircle,
     FaForward,
     FaItunesNote,
     FaPlayCircle,
     FaRegTrashAlt
 } from "react-icons/fa";
-import {Size} from "../utils/constants.ts";
-import {BiSolidPiano} from "react-icons/bi";
+import {Color, Size} from "../utils/constants.ts";
 import HelpText from "./HelpText.tsx";
-import {MdOutlineCallSplit, MdRecordVoiceOver, MdVoiceOverOff} from "react-icons/md";
+import {MdOutlineCallSplit, MdOutlinePiano, MdRecordVoiceOver, MdVoiceOverOff} from "react-icons/md";
 import {GiFClef, GiTunePitch} from "react-icons/gi";
 import {IoIosSpeedometer, IoMdRedo, IoMdUndo} from "react-icons/io";
 import {IoSettingsOutline} from "react-icons/io5";
@@ -33,9 +33,10 @@ import {FaDeleteLeft} from "react-icons/fa6";
 import {RiIncreaseDecreaseFill, RiParenthesesLine} from "react-icons/ri";
 import Icon from "@mdi/react";
 import {mdiMusicNoteEighth, mdiMusicNoteHalf, mdiMusicNoteQuarter} from "@mdi/js";
-import {PiSpeakerSimpleHigh} from "react-icons/pi";
+import {PiSpeakerHighFill, PiSpeakerSimpleHigh} from "react-icons/pi";
 import {ShiftLeftIcons, ShiftRightIcons} from "../utils/icons.tsx";
 import {ShiftMode} from "../utils/enums.ts";
+import {HiArrowNarrowDown, HiArrowNarrowUp} from "react-icons/hi";
 
 interface Properties {
     tab?: string;
@@ -79,16 +80,43 @@ const Help: React.FC<Properties> = (props) => {
                     <Tabs.Panel value={"playback"} pt={"xl"}>
                         Siin saad kuulata loodud noodistusi.
 
-                        <Title order={5} my={"md"}>Häälte sisse/välja lülilitamine</Title>
+                        <Title order={5} my={"md"}>Hääled</Title>
+
+                        <HelpText icon={<FaCircle color={Color.voice.TORRO} />}>
+                            Torrõ
+                        </HelpText>
+
+                        <HelpText icon={<FaCircle color={Color.voice.KILLO} />}>
+                            Killõ
+                        </HelpText>
+
+                        <HelpText icon={<FaCircle color={Color.voice.BOTTOM_TORRO} />}>
+                            Alumine torrõ
+                        </HelpText>
+
+                        <HelpText icon={<FaCircle color={Color.voice.FRONT} />}>
+                            Eeslaul
+                        </HelpText>
+
+                        <HelpText icon={<HiArrowNarrowUp color={Color.voice.TORRO} />}>
+                            Nooti on mikrotonaalselt kõrgendatud
+                        </HelpText>
+                        <HelpText icon={<HiArrowNarrowDown color={Color.voice.TORRO} />}>
+                            Nooti on mikrotonaalselt madaldatud
+                        </HelpText>
+                        
+                        <Title order={6} my={"md"}>Häälte sisse/välja lülilitamine</Title>
 
                         Hääli saad sisse ja välja lülitada vajutades vastava hääle nupul. Välja lülitatud hääli ei
                         kuvata noodistusel ega esitada vastavat heli.
-
+                  
                         <Grid mt={"md"}>
+                            
+                            
                             <Grid.Col span={3}>
                                 <Button
                                     color={"black"}
-                                    size={"xs"}
+                                    size={"compact-sm"}
                                     leftSection={<MdRecordVoiceOver size={Size.icon.SM}/>}>
                                     torrõ
                                 </Button>
@@ -102,7 +130,7 @@ const Help: React.FC<Properties> = (props) => {
                                 <Button
                                     c={"gray.5"}
                                     color={"gray.1"}
-                                    size={"xs"}
+                                    size={"compact-sm"}
                                     leftSection={<MdVoiceOverOff size={Size.icon.SM}/>}>
                                     torrõ
                                 </Button>
@@ -116,8 +144,12 @@ const Help: React.FC<Properties> = (props) => {
 
                         <Title order={5} mb={"md"}>Nupud</Title>
 
-                        <HelpText icon={<BiSolidPiano size={Size.icon.SM}/>}>
-                            Muuda heliväljundit. Valida saab süntesaatori (vaikimisi), klaveri, viiuli flöödi ja kitarri
+                        <HelpText icon={<PiSpeakerHighFill size={Size.icon.SM}/>}>
+                            Kuula arhiivisalvestist.
+                        </HelpText>
+
+                        <HelpText icon={<MdOutlinePiano size={Size.icon.SM}/>}>
+                            Muuda heliväljundit. Valida saab klaveri (vaikimisi), süntesaatori, viiuli, flöödi ja kitarri
                             vahel.
                         </HelpText>
 
@@ -180,7 +212,7 @@ const Help: React.FC<Properties> = (props) => {
                             <Grid.Col span={3}>
                                 <Button
                                     color={"black"}
-                                    size={"xs"}
+                                    size={"compact-sm"}
                                     leftSection={<MdRecordVoiceOver size={Size.icon.SM}/>}>
                                     torrõ
                                 </Button>
@@ -195,7 +227,7 @@ const Help: React.FC<Properties> = (props) => {
                                 <Button
                                     c={"black"}
                                     color={"gray.1"}
-                                    size={"xs"}
+                                    size={"compact-sm"}
                                     leftSection={<MdRecordVoiceOver color={"black"} size={Size.icon.SM}/>}>
                                     torrõ
                                 </Button>
@@ -210,7 +242,7 @@ const Help: React.FC<Properties> = (props) => {
                                 <Button
                                     c={"gray.5"}
                                     color={"gray.1"}
-                                    size={"xs"}
+                                    size={"compact-sm"}
                                     leftSection={<MdVoiceOverOff size={Size.icon.SM}/>}>
                                     torrõ
                                 </Button>

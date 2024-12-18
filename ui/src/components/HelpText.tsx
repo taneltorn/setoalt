@@ -11,7 +11,7 @@ const HelpText: React.FC<Properties> = (props) => {
 
     return (
         <Grid>
-            <Grid.Col span={2}>
+            <Grid.Col span={2} pt={"sm"}>
                 {props.icon}
             </Grid.Col>
             <Grid.Col span={10}>

@@ -1,3 +1,10 @@
+#### [1.0.2] - 18.12.2024
+
+- Kompaktsem noodijoonestik
+- Tavakasutaja saab noodistusi nüüd salvestada
+- Privaatsed salvestused on otselingiga ligipääsetavad
+- Pisiparandused
+
 #### [1.0.1] - 04.12.2024
 
 - Noodistuse loomisel vaikimisi transponeerimine => -6pt

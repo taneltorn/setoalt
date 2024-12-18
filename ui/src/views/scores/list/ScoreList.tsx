@@ -68,7 +68,7 @@ const ScoreList: React.FC = () => {
                     onClear={() => setQuery("")}
                 />
 
-                {auth.currentUser?.isAuthorized &&
+                {auth.currentUser?.isEditor &&
                     <Button size={"md"}
                             variant={"outline"}
                             leftSection={<BiPlus size={Size.icon.SM}/>}

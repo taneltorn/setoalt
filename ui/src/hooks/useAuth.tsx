@@ -35,7 +35,8 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
                 if (data.token && data.user) {
                     setCurrentUser({
                         ...data.user,
-                        isAuthorized: [Role.ADMIN, Role.EDITOR].includes(data.user.role),
+                        isUser: [Role.ADMIN, Role.EDITOR, Role.USER].includes(data.user.role),
+                        isEditor: [Role.ADMIN, Role.EDITOR].includes(data.user.role),
                         isAdmin: Role.ADMIN === data.user.role
                     });
                     return data;
@@ -71,7 +72,8 @@ export const AuthContextProvider: React.FC<AuthProviderProps> = ({children}) => 
                 if (data.user) {
                     setCurrentUser({
                         ...data.user,
-                        isAuthorized: [Role.ADMIN, Role.EDITOR].includes(data.user.role),
+                        isUser: [Role.ADMIN, Role.EDITOR, Role.USER].includes(data.user.role),
+                        isEditor: [Role.ADMIN, Role.EDITOR].includes(data.user.role),
                         isAdmin: Role.ADMIN === data.user.role
                     });
                     return;

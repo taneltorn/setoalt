@@ -89,7 +89,7 @@ const ScoreSettings: React.FC<Properties> = ({settings}) => {
                             </Group>
                         </Menu.Item>}
 
-                    {settings.includes(Setting.CLONE_SCORE) && auth.currentUser?.isAuthorized &&
+                    {settings.includes(Setting.CLONE_SCORE) && auth.currentUser?.isEditor &&
                         <Menu.Item onClick={handleCloneScore}>
                             <Group>
                                 <FaRegCopy size={Size.icon.SM}/>

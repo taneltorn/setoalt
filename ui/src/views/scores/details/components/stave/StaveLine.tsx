@@ -22,7 +22,7 @@ const StaveLine: React.FC<Properties> = ({line, offsetY}) => {
     return (<g>
 
             {!context.isSimplifiedMode && <>
-                <text x={0} y={y + 5} fontSize={14} fill={"black"}>
+                <text x={0} y={y + 5} fontSize={10} fill={"black"}>
                     {t(`pitch.${line.pitch.toLowerCase()}`)}
                 </text>
 
