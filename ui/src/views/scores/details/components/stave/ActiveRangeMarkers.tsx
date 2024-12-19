@@ -5,12 +5,14 @@ import {calculateLoopRangeCoords} from "../../../../../utils/calculation.helpers
 import {RxReset} from "react-icons/rx";
 import {useTranslation} from "react-i18next";
 import {useAudioContext} from "../../../../../hooks/useAudioContext.tsx";
+import {useMantineTheme} from "@mantine/core";
 
 const ActiveRangeMarkers: React.FC = () => {
 
     const {t} = useTranslation();
     const context = useScoreContext();
     const {stopPlayback} = useAudioContext();
+    const theme = useMantineTheme();
 
     // todo calc innerY inside provider
     const height = context.dimensions.y
@@ -42,7 +44,7 @@ const ActiveRangeMarkers: React.FC = () => {
                     x={start.x}
                     y={start.y}
                     width={Layout.stave.range.WIDTH}
-                    fill={"red"}
+                    fill={theme.colors.red[9]}
                     opacity={0.5}
                     height={height}
                 />}
@@ -51,7 +53,7 @@ const ActiveRangeMarkers: React.FC = () => {
                 x={end.x}
                 y={end.y}
                 width={Layout.stave.range.WIDTH}
-                fill={"red"}
+                fill={theme.colors.red[9]}
                 opacity={0.5}
                 height={height}
             />

@@ -42,7 +42,7 @@ export const Layout = {
             WIDTH: 4,
         },
         lyrics: {
-            HEIGHT: 20,
+            HEIGHT: 24,
             FONT_SIZE: 16,
             INCREASED_FONT_SIZE: 20,
             DECREASED_FONT_SIZE: 14,

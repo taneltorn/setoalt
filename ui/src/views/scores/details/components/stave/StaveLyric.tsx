@@ -69,7 +69,7 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
     return (<>
             {context.isEditMode && !context.isExportMode &&
                 <foreignObject key={`lyric-${lyric.position}`} x={x - 20} y={y} width={Layout.stave.note.SPACING}
-                               height="40">
+                               height={Layout.stave.lyrics.HEIGHT}>
                     <input
                         onFocus={handleFocus}
                         onBlur={() => save()}
@@ -83,7 +83,8 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
                                 ? theme.colors.red[9]
                                 : "black",
                             fontWeight: Layout.stave.lyrics.FONT_WEIGHT,
-                            fontSize: Layout.stave.lyrics.FONT_SIZE
+                            fontSize: Layout.stave.lyrics.FONT_SIZE,
+                            height: Layout.stave.lyrics.HEIGHT
                         }}
                         onChange={e => handleChange(e.target.value)}
                     />

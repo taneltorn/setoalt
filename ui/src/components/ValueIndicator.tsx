@@ -12,6 +12,7 @@ const ValueIndicator: React.FC<Properties> = (props) => {
             color={props.label ? "black" : "transparent"}
             variant={"transparent"}
             w={60}
+            mt={-5}
             style={{textTransform: "lowercase", justifyItems: "center"}}
         >
             <Text w={75} fw={"bold"} size={"xs"} style={{textAlign: "center"}}>

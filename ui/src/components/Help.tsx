@@ -158,7 +158,7 @@ const Help: React.FC<Properties> = (props) => {
                         </HelpText>
 
                         <HelpText icon={<FaPlayCircle color={theme.colors.red[9]} size={Size.icon.SM}/>}>
-                            Esita noodistuse mahamängimine. Heli kordavaks esitamiseks vali kõigepealt soovitud
+                            Esita noodistuse mahamängimine. Heli korduvaks esitamiseks vali kõigepealt soovitud
                             algusnoot ning
                             seejärel <Kbd>Ctrl</Kbd> klahvi all hoides lõpunoot.
                         </HelpText>
