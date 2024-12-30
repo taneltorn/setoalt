@@ -1,3 +1,7 @@
+#### [1.0.3] - 30.12.2024
+
+- Konfimuudatused
+
 #### [1.0.2] - 18.12.2024
 
 - Kompaktsem noodijoonestik
