@@ -8,9 +8,8 @@ i18n
     .init({
         lng: 'ee',
         fallbackLng: 'ee',
-
         backend: {
-            loadPath: '/locales/{{lng}}/{{ns}}.json'
+            loadPath: `${import.meta.env.VITE_PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`
         },
 
         ns: ['translation'],

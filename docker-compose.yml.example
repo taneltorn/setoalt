@@ -15,7 +15,7 @@ services:
       - ALLOWED_ORIGIN=${ALLOWED_ORIGIN}
       - JWT_SECRET_KEY=${JWT_SECRET_KEY}
       - LOG_LEVEL=${LOG_LEVEL}
-      - VITE_PATH_PREFIX=${VITE_PATH_PREFIX}
+      - VITE_PUBLIC_URL=${VITE_PUBLIC_URL}
     depends_on:
       - database
     networks:
@@ -29,7 +29,7 @@ services:
       args:
         - VITE_API_URL=${VITE_API_URL}
         - VITE_ENVIRONMENT=${VITE_ENVIRONMENT}
-        - VITE_PATH_PREFIX=${VITE_PATH_PREFIX}
+        - VITE_PUBLIC_URL=${VITE_PUBLIC_URL}
     container_name: setoalt-ui
     ports:
       - "80:80"
@@ -38,7 +38,7 @@ services:
     environment:
       - VITE_API_URL=${VITE_API_URL}
       - VITE_ENVIRONMENT=${VITE_ENVIRONMENT}
-      - VITE_PATH_PREFIX=${VITE_PATH_PREFIX}
+      - VITE_PUBLIC_URL=${VITE_PUBLIC_URL}
     depends_on:
       - api
     networks:

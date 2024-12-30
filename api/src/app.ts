@@ -13,7 +13,6 @@ import ScoreController from "./controller/ScoreController";
 import NotificationController from "./controller/NotificationController";
 import log4js from "log4js";
 import * as process from "process";
-import {logRequest} from "./middleware/requestLogger";
 
 const app = express();
 const port = 3000;
@@ -26,14 +25,12 @@ logger.level = process.env.LOG_LEVEL;
 logger.info(`Starting API service`)
 logger.info(`Log level: ${process.env.LOG_LEVEL}`)
 logger.info(`Allowed origin: ${process.env.ALLOWED_ORIGIN}`)
-logger.info(`Path prefix: ${process.env.VITE_PATH_PREFIX}`)
+logger.info(`Public URL: ${process.env.VITE_PUBLIC_URL}`)
 
 app.use(cors({
     credentials: true,
     origin: process.env.ALLOWED_ORIGIN,
 }));
-
-// app.use(requestLogger);
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));

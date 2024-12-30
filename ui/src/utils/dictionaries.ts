@@ -46,7 +46,7 @@ export const NoteRange = [
 export const Instruments: Instrument[] = [
       {
         name: "piano",
-        path: "/samples/piano/",
+        path: `${import.meta.env.VITE_PUBLIC_URL || ""}/samples/piano/`,
         mapping:{
             "C3": "C3.mp3",
             "D3": "D3.mp3",
@@ -101,7 +101,7 @@ export const Instruments: Instrument[] = [
     },
     {
         name: "violin",
-        path: "/samples/violin/",
+        path: `${import.meta.env.VITE_PUBLIC_URL || ""}/samples/violin/`,
         mapping: {
             "A3": "A3.mp3",
             "A4": "A4.mp3",
@@ -116,7 +116,7 @@ export const Instruments: Instrument[] = [
     },
     {
         name: "flute",
-        path: "/samples/flute/",
+        path: `${import.meta.env.VITE_PUBLIC_URL || ""}/samples/flute/`,
         mapping: {
             "A4": "A4.mp3",
             "A5": "A5.mp3",
@@ -131,7 +131,7 @@ export const Instruments: Instrument[] = [
     } ,
     {
         name: "guitar",
-        path: "/samples/guitar/",
+        path: `${import.meta.env.VITE_PUBLIC_URL || ""}/samples/guitar/`,
         mapping: {
             "A3": "A3.mp3",
             "A4": "A4.mp3",
