@@ -19,7 +19,7 @@ const Home: React.FC = () => {
     const [exampleA, setExampleA] = useState<Score>();
 
     useEffect(() => {
-        fetch("/examples/a.example.json")
+        fetch("/setonoot/examples/a.example.json")
             .then(response => response.json())
             .then(score => {
                 setExampleA(score);

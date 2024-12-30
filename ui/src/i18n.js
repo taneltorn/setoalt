@@ -10,7 +10,7 @@ i18n
         fallbackLng: 'ee',
 
         backend: {
-            loadPath: '/locales/{{lng}}/{{ns}}.json'
+            loadPath: '/setonoot/locales/{{lng}}/{{ns}}.json'
         },
 
         ns: ['translation'],
