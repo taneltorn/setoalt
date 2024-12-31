@@ -134,6 +134,7 @@ JWT_SECRET_KEY=somesecret
 
 VITE_ENVIRONMENT=local
 VITE_API_URL=http://localhost:3000
+VITE_PUBLIC_URL=http://localhost:5173
 ```
 
 #### Running backend
