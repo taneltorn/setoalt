@@ -1,3 +1,7 @@
+#### [1.0.4] - 31.12.2024
+
+- Avalehe näiteparandused
+
 #### [1.0.3] - 30.12.2024
 
 - Konfimuudatused
