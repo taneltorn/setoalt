@@ -105,6 +105,9 @@ docker-compose logs -t -f --tail 10
 ```
 
 ## Local development
+Make sure you have Node.js installed:
+https://nodejs.org/en/download
+
 Local development requires database setup. The easiest way is to follow the instructions listed above
 (*Running app on server*). Alternatively, you can set up the database yourself and run the scripts in
 *database/scripts* manually.
