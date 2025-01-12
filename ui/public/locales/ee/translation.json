@@ -194,6 +194,7 @@
     "playPrevious": "Eelmine",
     "startPlayback": "Esita",
     "startPlaybackRepeat": "Esita kordamisega",
+    "startPlaybackRecording": "Kuula helisalvestist",
     "stopPlayback": "Peata",
     "resetPlayback": "Algusesse",
     "changeTempo": "Muuda tempot",
@@ -204,6 +205,8 @@
     "splitNote": "Poolita noot",
     "undo": "Võta tagasi",
     "redo": "Tee uuesti",
+    "muteVolume": "Vaigista",
+    "unmuteVolume": "Tühista vaigistus",
     "changeVolume": "Muuda helitugevust",
     "staveSelection": "Vaheta noodijoonestikku"
   },
@@ -321,6 +324,7 @@
         "removeUser": "Kasutaja kustutamine ebaõnnestus!"
       },
       "notification": {
+        "fetchNotification": "Teavituse laadmine ebaõnnestus!",
         "saveNotification": "Teavituse salvestamine ebaõnnestus!",
         "removeNotification": "Teavituse kustutamine ebaõnnestus!"
       },

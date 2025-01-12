@@ -35,7 +35,7 @@ const VoiceControls: React.FC = () => {
         })
         context.refresh();
     }
-    
+
     const handleDragEnd = (result: any) => {
         if (!result.destination) return;
 
@@ -96,7 +96,7 @@ const VoiceControls: React.FC = () => {
     }
 
     return (
-        <Group justify={"space-between"} my={"md"}>
+        <Group justify={"space-between"}>
             <DragDropContext onDragEnd={handleDragEnd}>
                 <Group justify={"space-between"} my={"md"}>
                     <Droppable droppableId="voices" direction="horizontal">
@@ -149,7 +149,7 @@ const VoiceControls: React.FC = () => {
                 </Group>
                 <Group gap={4}>
                     {context.score.data.voices.some(v => v.hidden)
-                        ?  <Button
+                        ? <Button
                             size={"xs"}
                             color={"blue"}
                             leftSection={<MdRecordVoiceOver size={Size.icon.XS}/>}
@@ -158,7 +158,7 @@ const VoiceControls: React.FC = () => {
                         >
                             {t("button.showAll")}
                         </Button>
-                        :   <Button
+                        : <Button
                             size={"xs"}
                             color={"blue"}
                             leftSection={<MdRecordVoiceOver size={Size.icon.XS}/>}

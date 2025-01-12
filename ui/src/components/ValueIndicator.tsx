@@ -11,7 +11,7 @@ const ValueIndicator: React.FC<Properties> = (props) => {
         <Badge
             color={props.label ? "black" : "transparent"}
             variant={"transparent"}
-            w={60}
+            w={54}
             mt={-5}
             style={{textTransform: "lowercase", justifyItems: "center"}}
         >

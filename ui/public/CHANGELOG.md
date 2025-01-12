@@ -1,3 +1,9 @@
+#### [1.0.5] - 
+
+- Tühjad hääled peidetakse
+- Helitugevuse muutmise ümberkujundamine
+- Pisiparandused
+
 #### [1.0.4] - 31.12.2024
 
 - Avalehe näiteparandused
