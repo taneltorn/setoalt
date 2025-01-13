@@ -88,7 +88,7 @@ export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreCont
 
     if (voice.type === VoiceType.KILLO || voice.type === VoiceType.FRONT) {
         const positionOccupied = context.score.data.voices
-            .filter(v => v.type !== voice.type && !voice.muted)
+            .filter(v => v.type !== voice.type && !voice.hidden)
             .flatMap(v => v.notes)
             .filter(n => n.position === note.position && n.pitch === note.pitch);
         if (positionOccupied.length > 0) {
@@ -112,6 +112,10 @@ export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreCont
     return {x: x, y: y};
 }
 
+export const getNoteBaseKey = (note: Note, voice: Voice) => {
+    return `${note.position}-${note.pitch}-${voice.type === VoiceType.BOTTOM_TORRO ? VoiceType.TORRO : voice.type}-${voice.hidden}`;
+}
+
 export const isInsideLoop = (position: number, loopRange?: Range): boolean | undefined => {
     if (!loopRange) {
         return undefined;
@@ -128,12 +132,12 @@ export const calculateNoteOpacity = (note: Note, voice: Voice, context: ScoreCon
         return 1;
     }
 
-    const key = `${note.position}-${note.pitch}-${voice.type === VoiceType.BOTTOM_TORRO ? VoiceType.TORRO : voice.type}-${voice.name}`;
-    if (context.duplicateNoteKeys.includes(key)) {
+    const key = `${getNoteBaseKey(note, voice)}-${voice.name}`;
+    if (context.duplicateNoteKeys.includes(`${key}`)) {
         return 0;
     }
 
-    if (!voice.muted) {
+    if (!voice.hidden) {
         return 1
     }
 

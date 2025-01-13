@@ -7,9 +7,9 @@ import {HalfPosition} from "../model/HalfPosition.ts";
 import {Range} from "../model/Range.ts";
 import {useAudioContext} from "./useAudioContext.tsx";
 import {DefaultVoices} from "../utils/dictionaries.ts";
-import {calculateStaveDimensions, getOffset, isInsideLoop} from "../utils/calculation.helpers.tsx";
+import {calculateStaveDimensions, getNoteBaseKey, getOffset, isInsideLoop} from "../utils/calculation.helpers.tsx";
 import {Layout, Playback} from "../utils/constants.ts";
-import {Voice, VoiceType} from "../model/Voice.ts";
+import {Voice} from "../model/Voice.ts";
 import useCursorCoords from "./useCursorCoords.tsx";
 import {ScoreContext} from "../context/ScoreContext.tsx";
 
@@ -186,7 +186,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
             .filter(v => isEditMode || !v.muted)
             .forEach(v => {
                 v.notes.forEach(n => {
-                    const key = `${n.position}-${n.pitch}-${v.type === VoiceType.BOTTOM_TORRO ? VoiceType.TORRO : v.type}`;
+                    const key = getNoteBaseKey(n, v);
                     if (seen.has(key)) {
                         duplicates.add(`${key}-${v.name}`);
                     } else {
