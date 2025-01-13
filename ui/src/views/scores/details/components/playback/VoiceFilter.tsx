@@ -68,7 +68,7 @@ const VoiceFilter: React.FC = () => {
                     ))}
             </Group>
 
-            {voices.some((voice) => voice.muted) && (
+            {voices.some((voice) => voice.muted || voice.hidden) && (
                 <Group justify="end">
                     <Button
                         size="compact-sm"
