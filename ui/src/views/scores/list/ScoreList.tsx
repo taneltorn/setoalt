@@ -15,6 +15,7 @@ import {usePagination} from "../../../hooks/usePagination.tsx";
 import useSearchQuery from "../../../hooks/useSearchQuery.tsx";
 import PaginatedTable from "../../../components/table/PaginatedTable.tsx";
 import ScoreRow from "./components/ScoreRow.tsx";
+import Description from "../../../components/controls/Description.tsx";
 
 const ScoreList: React.FC = () => {
 
@@ -61,6 +62,10 @@ const ScoreList: React.FC = () => {
     return (
         <Page title={t("view.scoreList.title")}>
             <Header>{t("view.scoreList.header")}</Header>
+            <Description span={12}>
+                {t("view.scoreList.description")}
+            </Description>
+            
             <Group justify={"space-between"} mt={"lg"} mb={"md"}>
                 <SearchInput
                     value={query}

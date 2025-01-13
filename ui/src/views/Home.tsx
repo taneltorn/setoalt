@@ -36,7 +36,8 @@ const Home: React.FC = () => {
                 </Header>
 
                 <Description span={12}>
-                    <Trans i18nKey="view.home.description"/>
+                    <Trans i18nKey="view.home.description"
+                           components={[<Link target="_blank" to="https://laul.setomaa.ee/leelokool" />]}/>
                 </Description>
 
                 <Tabs defaultValue="example1" radius={"xs"}>
