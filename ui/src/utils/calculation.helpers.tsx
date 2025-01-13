@@ -88,7 +88,7 @@ export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreCont
 
     if (voice.type === VoiceType.KILLO || voice.type === VoiceType.FRONT) {
         const positionOccupied = context.score.data.voices
-            .filter(v => v.type !== voice.type && !voice.hidden)
+            .filter(v => v.type !== voice.type && !voice.muted)
             .flatMap(v => v.notes)
             .filter(n => n.position === note.position && n.pitch === note.pitch);
         if (positionOccupied.length > 0) {
@@ -133,7 +133,7 @@ export const calculateNoteOpacity = (note: Note, voice: Voice, context: ScoreCon
         return 0;
     }
 
-    if (!voice.hidden) {
+    if (!voice.muted) {
         return 1
     }
 

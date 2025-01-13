@@ -97,7 +97,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
                 ? note.position + durationToScalar(note.duration)
                 : activePosition + 1;
         } else {
-            const positions = getPositions(score.data.voices.filter(v => !v.hidden));
+            const positions = getPositions(score.data.voices.filter(v => !v.muted));
             const currentPositionIndex = positions.findIndex(p => p === activePosition);
             position = positions[Math.min(currentPositionIndex + 1, positions.length - 1)];
         }
@@ -108,7 +108,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         let position: number;
         if (isEditMode) {
             const closestNote: Note | undefined = score.data.voices
-                .filter(v => !v.hidden)
+                .filter(v => !v.muted)
                 .flatMap(v => v.notes)
                 .filter(n => n.position < activePosition)
                 .slice(-1)?.[0];
@@ -128,7 +128,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
     const getNotes = (position: number, voice?: Voice): Note[] => {
         const notes = score.data.voices
-            .filter(v => !v.hidden && (!voice || v.name === voice.name))
+            .filter(v => !v.muted && (!voice || v.name === voice.name))
             .flatMap(v => v.notes) || [];
         return notes.filter(n => n.position === position);
     }
@@ -136,7 +136,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     const getNote = (position: number, voiceName?: string): Note | undefined => {
         const notes = voiceName
             ? score.data.voices.find(v => v.name === voiceName)?.notes || []
-            : score.data.voices.filter(v => !v.hidden).flatMap(v => v.notes) || [];
+            : score.data.voices.filter(v => !v.muted).flatMap(v => v.notes) || [];
         return notes.find(n => n.position === position);
     }
 
@@ -183,7 +183,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         const seen = new Set<string>();
 
         score.data.voices
-            .filter(v => isEditMode || !v.hidden)
+            .filter(v => isEditMode || !v.muted)
             .forEach(v => {
                 v.notes.forEach(n => {
                     const key = `${n.position}-${n.pitch}-${v.type === VoiceType.BOTTOM_TORRO ? VoiceType.TORRO : v.type}`;

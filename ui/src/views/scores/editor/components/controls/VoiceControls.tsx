@@ -24,14 +24,14 @@ const VoiceControls: React.FC = () => {
 
     const showAllVoices = () => {
         context.score.data.voices.forEach(v => {
-            v.hidden = false;
+            v.muted = false;
         })
         context.refresh();
     }
 
     const showActiveVoice = (voiceName: string) => {
         context.score.data.voices.forEach(v => {
-            v.hidden = v.name !== voiceName;
+            v.muted = v.name !== voiceName;
         })
         context.refresh();
     }
@@ -83,14 +83,14 @@ const VoiceControls: React.FC = () => {
         if (event.ctrlKey) {
             const voice = context.score.data.voices.find(v => v.name === name);
             if (voice && voice.name !== context.activeVoice) {
-                voice.hidden = !voice.hidden;
+                voice.muted = !voice.muted;
                 context.refresh();
             }
             return;
         }
         context.setActiveVoice(name);
         context.score.data.voices.forEach(v => {
-            v.hidden = v.name !== name;
+            v.muted = v.name !== name;
         });
         context.refresh();
     }
@@ -119,8 +119,7 @@ const VoiceControls: React.FC = () => {
                                                 {...provided.dragHandleProps}
                                             >
                                                 <VoiceFilterButton
-                                                    active={voice.name === context.activeVoice}
-                                                    halfActive={!voice.hidden}
+                                                    state={voice.name === context.activeVoice ? "active" : !voice.muted ? "semi-active" : "disabled"}
                                                     label={voice.name}
                                                     onClick={(e) => handleVoiceClick(e, voice.name)}
                                                 />
@@ -148,7 +147,7 @@ const VoiceControls: React.FC = () => {
                     </Button>
                 </Group>
                 <Group gap={4}>
-                    {context.score.data.voices.some(v => v.hidden)
+                    {context.score.data.voices.some(v => v.muted)
                         ? <Button
                             size={"xs"}
                             color={"blue"}

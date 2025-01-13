@@ -13,6 +13,26 @@ const useUserService = () => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const cancelSource = axios.CancelToken.source();
 
+    const fetchUserByUserName = async (username: string): Promise<User> => {
+        setIsLoading(true);
+        return axios.get(`${API_URL}/users/${username}`, {
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            withCredentials: true
+        })
+            .then(response => {
+                setIsLoading(false);
+                return response.data;
+            })
+            .catch(error => {
+                DisplayError(t("toast.error.user.fetchUser"), error);
+
+                setIsLoading(false);
+                throw error;
+            });
+    }
+    
     const fetchUsers = async (): Promise<User[]> => {
         setIsLoading(true);
         return axios.get(`${API_URL}/users`, {
@@ -124,6 +144,7 @@ const useUserService = () => {
 
     return {
         isLoading,
+        fetchUserByUserName,
         fetchUsers,
         createUser,
         updateUser,

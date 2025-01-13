@@ -82,7 +82,14 @@
     },
     "profile": {
       "title": "Profiil",
+      "label": {
+        "name": "Nimi",
+        "username": "Kasutajanimi",
+        "role": "Roll",
+        "createdAt": "Loodud"
+      },
       "form": {
+        "changePassword": "Vaheta parool",
         "newPassword": "Uus parool"
       }
     },
@@ -194,7 +201,7 @@
     "playPrevious": "Eelmine",
     "startPlayback": "Esita",
     "startPlaybackRepeat": "Esita kordamisega",
-    "startPlaybackRecording": "Kuula helisalvestist",
+    "startPlaybackRecording": "Kuula helisalvestust",
     "stopPlayback": "Peata",
     "resetPlayback": "Algusesse",
     "changeTempo": "Muuda tempot",
@@ -319,6 +326,7 @@
         "updateScore": "Noodistuse muutmine ebaõnnestus!"
       },
       "user": {
+        "fetchUser": "Kasutaja laadimine ebaõnnestus!",
         "fetchUsers": "Kasutajate laadimine ebaõnnestus!",
         "saveUser": "Kasutaja salvestamine ebaõnnestus!",
         "removeUser": "Kasutaja kustutamine ebaõnnestus!"
