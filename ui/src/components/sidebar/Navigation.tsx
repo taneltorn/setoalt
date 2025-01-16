@@ -4,7 +4,7 @@ import {useTranslation} from "react-i18next";
 import {Box, Button, Divider, Group, NavLink} from "@mantine/core";
 import classes from "./Sidebar.module.scss";
 import {PiSpeakerSimpleHigh} from "react-icons/pi";
-import {IoHome, IoSettingsOutline} from "react-icons/io5";
+import {IoSettingsOutline} from "react-icons/io5";
 import {useAuth} from "../../hooks/useAuth.tsx";
 import {MdOutlineLogout} from "react-icons/md";
 import {useAudioContext} from "../../hooks/useAudioContext.tsx";
@@ -14,11 +14,13 @@ import Logo from "../Logo.tsx";
 import {DialogType} from "../../utils/enums.ts";
 import {useDialogContext} from "../../hooks/useDialogContext.tsx";
 import {usePagination} from "../../hooks/usePagination.tsx";
+import {LuClipboardList} from "react-icons/lu";
 
 const routes = [
-    {id: 'home', icon: <IoHome className={classes.icon} size={Size.icon.SM}/>, link: "/"},
     {id: 'scores', icon: <PiSpeakerSimpleHigh className={classes.icon} size={Size.icon.SM}/>, link: "/scores"},
     {id: 'editor', icon: <BsMusicNoteList className={classes.icon} size={Size.icon.SM}/>, link: "/editor"},
+    {id: 'about', icon: <LuClipboardList className={classes.icon} size={Size.icon.SM}/>, link: "/about"},
+
 ];
 
 const protectedRoutes = [

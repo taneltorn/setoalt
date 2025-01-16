@@ -19,8 +19,8 @@ export const Layout = {
         note: {
             RADIUS: 6,
             RADIUS_SMALL: 5,
-            REPEATING_OFFSET: 7,
-            SPACING: 60,
+            REPEATING_OFFSET: 6,
+            SPACING: 55,
             SHAPE: 0,
             DIMMED_OPACITY: 0.2,
             QUARTER_NOTE_STROKE: 4,
@@ -46,8 +46,13 @@ export const Layout = {
             FONT_SIZE: 16,
             INCREASED_FONT_SIZE: 20,
             DECREASED_FONT_SIZE: 14,
-            FONT_WEIGHT: 600
+            FONT_WEIGHT: 600,
+            DECREASE_FONT_FROM: 5
         }
+    },
+    embedding: {
+        BASE: 310,
+        ROW: 150,
     }
 }
 

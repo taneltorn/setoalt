@@ -1,10 +1,13 @@
 #### [1.0.5] - 
 
+- Avaleheks noodistuste nimekirjavaade
 - Detailvaates peidetakse tühjad (ilma nootideta) hääled
 - Lisatud võimalus häält peita ilma heli välja lülitamata (Ctrl + hiireklikk)
 - Helitugevuse muutmise ümberkujundamine
 - Abitekstide täiendused
 - Lisatud mõningad andmed profiili lehele
+- Vähendatud noodipeade suurust ja joonte vahelist kaugust
+- Automaatne kerimine on nüüd silmapilkne
 - Pisiparandused
 
 #### [1.0.4] - 31.12.2024

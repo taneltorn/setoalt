@@ -7,9 +7,9 @@
     "search": "Otsi",
     "sidebar": {
       "navigation": {
-        "home": "Avaleht",
         "scores": "Kuula",
         "editor": "Redaktor",
+        "about": "Projektist",
         "admin": "Seaded",
         "login": "Logi sisse",
         "logout": "Logi välja"
@@ -26,10 +26,13 @@
     }
   },
   "view": {
-    "home": {
-      "title": "Avaleht",
-      "header": "Seto laulu alternatiivne noodikiri",
-      "description": "Veebirakendus on osa loovuurimusprojektist <strong>Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil</strong> (Kultuuriministeerium, 4.1-3/23/46). <br/>Rakendusega saab luua ja kuulata seto leelo noodistusi. Noodikirja tutvustab lähemalt „Leelokool“ (<0 to=\"laul.setomaa.ee/leelokool\">laul.setomaa.ee/leelokool</0>, Seto laulupärimuse veebilehel).",
+    "about": {
+      "title": "Projektist",
+      "header": "Projektist",
+      "description": "Veebirakendus on osa loovuurimusprojektist <strong>\"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\"</strong>.",
+      "members": "Koostajad: {{members}}",
+      "fundedBy": "Rahastus: {{fundedBy}}",
+      "contact": "Kontakt: {{email}}",
       "link": {
         "scores": "Noodistused",
         "editor": "Katseta"
@@ -37,7 +40,9 @@
     },
     "scoreList": {
       "title": "Kuula",
-      "description": "Tärn laulu pealkirja järel tähendab, et seda lauluvarianti ei ole „Seto laulupärimuse“ lehel, on ainult siin rakenduses.",
+      "description": "Rakendusega saab luua ja kuulata seto leelo noodistusi.",
+      "description2": "Noodikirja tutvustab lähemalt <0>\"Leelokool\"</0> (<1>laul.setomaa.ee/leelokool</1>, Seto laulupärimuse veebilehel).",
+      "starredScores": "Tärn laulu pealkirja järel tähendab, et seda lauluvarianti ei ole „Seto laulupärimuse“ lehel, on ainult siin rakenduses.",
       "header": "Noodistused",
       "table": {
         "name": "Nimi",

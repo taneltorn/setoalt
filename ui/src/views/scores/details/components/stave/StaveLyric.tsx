@@ -98,7 +98,7 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
                         ? theme.colors.red[9]
                         : "black"}
                     fontWeight={Layout.stave.lyrics.FONT_WEIGHT}
-                    fontSize={lyric.text.length > 5 ? Layout.stave.lyrics.DECREASED_FONT_SIZE : Layout.stave.lyrics.FONT_SIZE}
+                    fontSize={lyric.text.length >= Layout.stave.lyrics.DECREASE_FONT_FROM ? Layout.stave.lyrics.DECREASED_FONT_SIZE : Layout.stave.lyrics.FONT_SIZE}
                     x={x}
                     y={y}
                     onClick={handleClick}

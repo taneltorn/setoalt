@@ -73,7 +73,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
                 containerRef.current.scrollLeft > x) {
                 containerRef.current.scrollTo({
                     left: x,
-                    behavior: 'smooth'
+                    behavior: 'instant',
                 });
             }
 
@@ -82,7 +82,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
                 const scrollTo = offset.y + containerRef.current.offsetTop - Layout.stave.container.SYMBOLS_BAR - 35;
                 window.scrollTo({
                     top: scrollTo,
-                    behavior: 'smooth'
+                    behavior: 'instant'
                 });
             }
         }

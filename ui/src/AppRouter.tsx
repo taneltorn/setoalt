@@ -1,6 +1,7 @@
 import React from "react";
 import {
     createBrowserRouter,
+    Navigate,
     RouterProvider,
 } from "react-router-dom";
 import Layout from "./Layout.tsx";
@@ -9,10 +10,10 @@ import ProtectedRoute from "./components/ProtectedRoute.tsx";
 import Admin from "./views/admin/Admin.tsx";
 import {Role} from "./utils/enums.ts";
 import ScoreManager from "./views/scores/ScoreManager.tsx";
-import Home from "./views/Home.tsx";
 import ChangeLog from "./views/ChangeLog.tsx";
 import Error from "./views/Error.tsx";
 import Profile from "./views/profile/Profile.tsx";
+import About from "./views/About.tsx";
 
 const router = createBrowserRouter([
         {
@@ -22,11 +23,15 @@ const router = createBrowserRouter([
             children: [
                 {
                     path: "/",
-                    element: <Home/>,
+                    element: <Navigate to="/scores" replace />
                 },
                 {
                     path: "/changelog",
                     element: <ChangeLog/>,
+                },
+                {
+                    path: "/about",
+                    element: <About/>,
                 },
                 {
                     path: "/scores",

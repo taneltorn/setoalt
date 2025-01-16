@@ -254,5 +254,5 @@ export const calculateStaveDimensions = (score: Score): StaveDimensions => {
 }
 
 export const calculateEmbeddingHeight = (score: Score): number => {
-    return (score.data.breaks.length || 0) * 160 + 310;
+    return (score.data.breaks.length || 0) * Layout.embedding.ROW + Layout.embedding.BASE;
 }
