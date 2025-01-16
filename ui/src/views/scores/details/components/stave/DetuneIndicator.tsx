@@ -16,7 +16,7 @@ const DetuneIndicator: React.FC<Properties> = ({x, y, detune, opacity, color}) =
     return (
         <svg
             x={x + 0.5 * Layout.stave.note.RADIUS}
-            y={y - (detune > 0 ? 2 : 2.5) * Layout.stave.note.RADIUS}
+            y={y - (detune > 0 ? 3 : 3.5) * Layout.stave.note.RADIUS}
             width={size}
             height={size}
             viewBox="0 0 24 24"

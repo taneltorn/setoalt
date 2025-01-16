@@ -11,13 +11,13 @@ export const Layout = {
             LYRICS_BAR: 50
         },
         line: {
-            SPACING: 9,
+            SPACING: 8,
             PRIMARY_LINE_STROKE_WIDTH: 2,
             SECONDARY_LINE_STROKE_WIDTH: 1,
             STROKE_WIDTH_BOLD: 3,
         },
         note: {
-            RADIUS: 7,
+            RADIUS: 6,
             RADIUS_SMALL: 5,
             REPEATING_OFFSET: 7,
             SPACING: 60,
