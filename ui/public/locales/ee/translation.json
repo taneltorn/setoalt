@@ -7,9 +7,10 @@
     "search": "Otsi",
     "sidebar": {
       "navigation": {
+        "home": "Avaleht",
         "scores": "Kuula",
-        "editor": "Redaktor",
-        "about": "Projektist",
+        "editor": "Kirjuta",
+        "about": "Rakendusest",
         "admin": "Seaded",
         "login": "Logi sisse",
         "logout": "Logi välja"
@@ -26,22 +27,27 @@
     }
   },
   "view": {
-    "about": {
-      "title": "Projektist",
-      "header": "Projektist",
-      "description": "Veebirakendus on osa loovuurimusprojektist <strong>\"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\"</strong>.",
-      "members": "Koostajad: {{members}}",
-      "fundedBy": "Rahastus: {{fundedBy}}",
-      "contact": "Kontakt: {{email}}",
+    "home": {
+      "title": "Avaleht",
+      "header": "Seto leelo noodikiri. Veebirakendus seto leeloviiside õppimiseks.",
+      "description": "Rakendusega saab luua ja kuulata seto leelo noodistusi seto noodikirjas.<br/>Noodikirja tutvustab lähemalt <0>\"Leelokool\"</0> (<1>laul.setomaa.ee/leelokool</1>) Seto laulupärimuse veebilehel.",
       "link": {
         "scores": "Noodistused",
         "editor": "Katseta"
       }
     },
+    "about": {
+      "title": "Rakendusest",
+      "header": "Rakendusest",
+      "description": "Veebirakendus on osa loovuurimusprojektist <strong>„Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil“</strong>",
+      "creators": "Koostajad:",
+      "sponsors": "Toetajad:",
+      "sponsorList": "Kultuuriministeeriumi kultuuri- ja loomevaldkondade loovuurimuse ja Setomaa<br/>pärimuskultuuri toetamise meetmed (4.1-3/23/46 ja .....)<br/>Eesti Teadusagentuur (PRG1288)<br/>Haridus- ja Teadusministeerium (TK215)",
+      "contact": "Kontakt:",
+      "copyright": "© koostajad, Eesti Kirjandusmuuseum"
+    },
     "scoreList": {
       "title": "Kuula",
-      "description": "Rakendusega saab luua ja kuulata seto leelo noodistusi.",
-      "description2": "Noodikirja tutvustab lähemalt <0>\"Leelokool\"</0> (<1>laul.setomaa.ee/leelokool</1>, Seto laulupärimuse veebilehel).",
       "starredScores": "Tärn laulu pealkirja järel tähendab, et seda lauluvarianti ei ole „Seto laulupärimuse“ lehel, on ainult siin rakenduses.",
       "header": "Noodistused",
       "table": {

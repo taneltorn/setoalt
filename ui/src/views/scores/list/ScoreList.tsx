@@ -1,7 +1,7 @@
-import {Button, Group, Text} from "@mantine/core";
-import {Trans, useTranslation} from "react-i18next";
+import {Button, Group} from "@mantine/core";
+import {useTranslation} from "react-i18next";
 import React, {useEffect, useMemo, useState} from "react";
-import {Link, useLocation, useNavigate} from "react-router-dom";
+import {useLocation, useNavigate} from "react-router-dom";
 import useScoreService from "../../../hooks/useScoreService.tsx";
 import {Score} from "../../../model/Score.ts";
 import {useAuth} from "../../../hooks/useAuth.tsx";
@@ -16,7 +16,6 @@ import useSearchQuery from "../../../hooks/useSearchQuery.tsx";
 import PaginatedTable from "../../../components/table/PaginatedTable.tsx";
 import ScoreRow from "./components/ScoreRow.tsx";
 import Description from "../../../components/controls/Description.tsx";
-import {RxInfoCircled} from "react-icons/rx";
 
 const ScoreList: React.FC = () => {
 
@@ -64,13 +63,10 @@ const ScoreList: React.FC = () => {
         <Page title={t("view.scoreList.title")}>
             <Header>{t("view.scoreList.header")}</Header>
             <Description span={12}>
-                <Text>
-                    {t("view.scoreList.description")}
-                </Text>
-                <Trans i18nKey="view.scoreList.description2"
-                       components={[<strong></strong>,
-                           <Link target="_blank" to="https://laul.setomaa.ee/leelokool"/>]}/>
 
+                <Group gap={4}>
+                    {t("view.scoreList.starredScores")}
+                </Group>
             </Description>
 
             <Group justify={"space-between"} mt={"lg"} mb={"md"}>
@@ -87,14 +83,6 @@ const ScoreList: React.FC = () => {
                             onClick={() => navigate("/editor")}>
                         {t("button.addNew")}
                     </Button>}
-            </Group>
-
-
-            <Group gap={4}>
-                <RxInfoCircled size={16}/>
-                <Text size={"xs"}>
-                    {t("view.scoreList.starredScores")}
-                </Text>
             </Group>
 
             <PaginatedTable

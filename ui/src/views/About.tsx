@@ -1,13 +1,14 @@
 import React, {} from "react";
-import {Text} from "@mantine/core";
+import {Group, Text} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import Page from "../Page.tsx";
 import Header from "../components/controls/Header.tsx";
-import Description from "../components/controls/Description.tsx";
 import {Trans} from 'react-i18next';
 import ContextProviders from "../ContextProviders.tsx";
+import Description from "../components/controls/Description.tsx";
+import Sponsors from "../components/Sponsors.tsx";
 
-const MEMBERS = [
+const Creators = [
     "Janika Oras",
     "Mari Palolill",
     "Žanna Pärtlas",
@@ -15,8 +16,9 @@ const MEMBERS = [
     "Tanel Torn",
 ];
 
-const FUNDED_BY = "Kultuuriministeerium, 4.1-3/23/46";
-const COPYRIGHT = "© Tanel Torn, Eesti Kirjandusmuuseum";
+const labelColWidth = 150;
+
+const Contact = "janika.oras@folklore.ee, tanel.torn@folklore.ee";
 
 const About: React.FC = () => {
 
@@ -29,20 +31,31 @@ const About: React.FC = () => {
                 <Header>
                     {t("view.about.header")}
                 </Header>
-                <Description span={12}>
-                    <Trans i18nKey="view.about.description"
-                           components={[<strong></strong>]}/>
-                    
-                    <Text mt={"xs"}>{t("view.about.fundedBy", {fundedBy: FUNDED_BY})}</Text>
-                    
-                    <Text mt={"xs"}>
-                        {t("view.about.members", {members: MEMBERS.join(", ")})}
-                    </Text>
 
-                    <Text mt={"xs"}>{t("view.about.contact", {email: "janika.oras@folklore.ee, tanel.torn@folklore.ee"})}</Text>
-                    <Text mt={"xs"}>{COPYRIGHT}</Text>
-                    
+                <Description span={12}>
+                    <Trans i18nKey="view.about.description"/>
                 </Description>
+
+                <Group align={"flex-start"} mt={"md"}>
+                    <Text w={labelColWidth}>{t("view.about.creators")}</Text>
+                    <Text>{Creators.map((m, i) => <><span key={i}>{m}</span><br/></>)}</Text>
+                </Group>
+
+                <Group align={"flex-start"} mt={"md"}>
+                    <Text w={labelColWidth}>{t("view.about.sponsors")}</Text>
+                    <Text>
+                        <Trans i18nKey="view.about.sponsorList"/>
+                    </Text>
+                </Group>
+
+                <Group align={"flex-start"} mt={"md"}>
+                    <Text w={labelColWidth}>{t("view.about.contact")}</Text>
+                    <Text>{Contact}</Text>
+                </Group>
+
+                <Text mt={"xl"}>{t("view.about.copyright")}</Text>
+
+                <Sponsors/>
             </Page>
         </ContextProviders>
     );
