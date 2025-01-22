@@ -1,6 +1,5 @@
 #### [1.0.5] - 
 
-- Avaleheks noodistuste nimekirjavaade
 - Detailvaates peidetakse tühjad (ilma nootideta) hääled
 - Lisatud võimalus häält peita ilma heli välja lülitamata (Ctrl + hiireklikk)
 - Helitugevuse muutmise ümberkujundamine
