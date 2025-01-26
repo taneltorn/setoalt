@@ -37,10 +37,12 @@
         "editor": "Katseta"
       },
       "creators": "Koostajad",
+      "creatorList": "Janika Oras<br/>Mari Palolill<br/>Žanna Pärtlas<br/>Hans-Gunter Lock<br/>Tanel Torn (tehniline lahendus)",
       "sponsors": "Toetajad",
       "sponsorList": "Kultuuriministeeriumi kultuuri- ja loomevaldkondade loovuurimuse ja Setomaapärimuskultuuri toetamise meetmed (loovuurimusprojekt \"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\")<br/>Eesti Teadusagentuur (PRG1288)<br/>Haridus- ja Teadusministeerium (TK215)",
       "contact": "Kontakt",
-      "copyright": "© koostajad, Eesti Kirjandusmuuseum"
+      "copyright": "© koostajad, Eesti Kirjandusmuuseum",
+      "technicalSolution": "Tehniline lahendus"
     },
     "about": {
       "title": "Rakendusest",

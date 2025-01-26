@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Button, Divider, Grid, Group, Text, Title} from "@mantine/core";
+import {Button, Divider, Grid, Group, Text} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import {Link} from "react-router-dom";
 import Page from "../Page.tsx";
@@ -11,7 +11,7 @@ import KeyPressHandler from "../components/KeyPressHandler.tsx";
 import ScoreDialogs from "./scores/details/components/ScoreDialogs.tsx";
 import Example from "./Example.tsx";
 import ContextProviders from "../ContextProviders.tsx";
-import {Contact, Creators} from "../utils/constants.ts";
+import {Contact} from "../utils/constants.ts";
 import Sponsors from "../components/Sponsors.tsx";
 
 const Home: React.FC = () => {
@@ -58,23 +58,19 @@ const Home: React.FC = () => {
 
                 <Divider my={"xl"}/>
 
-                <Title order={3} mt={"xl"}>
-                    {t("view.home.about")}
-                </Title>
-
                 <Grid>
-                    <Grid.Col span={{xl: 2, lg: 3, xs: 12}}>
-                        <Text mt={"md"} fw={"bold"}>{t("view.home.creators")}</Text>
-                        <Text>{Creators.map((m, i) => <><span key={i}>{m}</span><br/></>)}</Text>
+                    <Grid.Col span={{xl: 3, lg: 3, xs: 12}}>
+                        <Text fw={"bold"}>{t("view.home.creators")}</Text>
+                        <Text><Trans i18nKey={"view.home.creatorList"}/></Text>
                     </Grid.Col>
                     <Grid.Col span={{xl: 5, lg: 4, sm: 12}}>
-                        <Text mt={"md"} fw={"bold"}>{t("view.home.sponsors")}</Text>
+                        <Text fw={"bold"}>{t("view.home.sponsors")}</Text>
                         <Text>
                             <Trans i18nKey="view.home.sponsorList"/>
                         </Text>
                     </Grid.Col>
                     <Grid.Col span={{xl: 2, lg: 3, xs: 12}}>
-                        <Text mt={"md"} fw={"bold"}>{t("view.home.contact")}</Text>
+                        <Text fw={"bold"}>{t("view.home.contact")}</Text>
                         <Text>{Contact}</Text>
                     </Grid.Col>
                 </Grid>

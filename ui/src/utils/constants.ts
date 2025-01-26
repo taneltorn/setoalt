@@ -105,12 +105,4 @@ export const Playback = {
     TRANSPOSITION_STEP: 1,
 }
 
-export const Creators = [
-    "Janika Oras",
-    "Mari Palolill",
-    "Žanna Pärtlas",
-    "Hans-Gunther Lock",
-    "Tanel Torn",
-];
-
 export const Contact = "janika.oras@folklore.ee\ntanel.torn@folklore.ee";
