@@ -92,7 +92,7 @@ const EmbedScoreDialog: React.FC = () => {
 
             <Group mt={"lg"}>
                 <Switch
-                    size={"xl"}
+                    size={"lg"}
                     className={"hover-pointer"}
                     checked={simplified}
                     label={t(`view.scoreDetails.settings.selectSimplifiedMode`)}

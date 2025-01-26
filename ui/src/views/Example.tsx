@@ -27,13 +27,12 @@ const Example: React.FC<Properties> = ({score}) => {
     return (
         <>
             {score && <>
-                <Text size={"lg"} fw={"bold"} mb={"md"}>
+                <Text size={"lg"} fw={"bold"}>
                     {score.name}
                 </Text>
                 <Grid>
                     <Grid.Col span={{xs: 12, xl: 8}}>
                         {score.recording && <ScoreRecording recording={score.recording}/>}
-
                     </Grid.Col>
                 </Grid>
                 <PlaybackControls/>

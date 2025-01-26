@@ -3,7 +3,7 @@ import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
 import {Box, Button, Divider, Group, NavLink} from "@mantine/core";
 import classes from "./Sidebar.module.scss";
-import {PiSpeakerSimpleHigh, PiUsersThree} from "react-icons/pi";
+import {PiSpeakerSimpleHigh} from "react-icons/pi";
 import {IoHome, IoSettingsOutline} from "react-icons/io5";
 import {useAuth} from "../../hooks/useAuth.tsx";
 import {MdOutlineLogout} from "react-icons/md";
@@ -19,7 +19,6 @@ const routes = [
     {id: 'home', icon: <IoHome className={classes.icon} size={Size.icon.SM}/>, link: "/"},
     {id: 'scores', icon: <PiSpeakerSimpleHigh className={classes.icon} size={Size.icon.SM}/>, link: "/scores"},
     {id: 'editor', icon: <BsMusicNoteList className={classes.icon} size={Size.icon.SM}/>, link: "/editor"},
-    {id: 'about', icon: <PiUsersThree className={classes.icon} size={Size.icon.SM}/>, link: "/about"},
 ];
 
 const protectedRoutes = [

@@ -7,6 +7,7 @@
 - Lisatud mõningad andmed profiili lehele
 - Vähendatud noodipeade suurust ja joonte vahelist kaugust
 - Automaatne kerimine on nüüd silmapilkne
+- Avalehe muudatused
 - Pisiparandused
 
 #### [1.0.4] - 31.12.2024

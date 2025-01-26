@@ -80,7 +80,7 @@ const ScoreRecording: React.FC<Properties> = ({recording}) => {
     }, [playerRef, isDragging]);
 
     return (
-        <Group justify={"start"} mb={"md"}>
+        <Group justify={"start"}>
             <Button variant={"transparent"} px={0} onClick={handlePlayback}>
                 {!isPlaying
                     ? <FaPlay

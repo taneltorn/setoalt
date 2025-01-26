@@ -77,7 +77,7 @@ const ScoreList: React.FC = () => {
                 />
 
                 {auth.currentUser?.isEditor &&
-                    <Button size={"md"}
+                    <Button size={"sm"}
                             variant={"outline"}
                             leftSection={<BiPlus size={Size.icon.SM}/>}
                             onClick={() => navigate("/editor")}>

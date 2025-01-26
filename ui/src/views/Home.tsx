@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, Group} from "@mantine/core";
+import {Button, Divider, Grid, Group, Text, Title} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import {Link} from "react-router-dom";
 import Page from "../Page.tsx";
@@ -11,6 +11,8 @@ import KeyPressHandler from "../components/KeyPressHandler.tsx";
 import ScoreDialogs from "./scores/details/components/ScoreDialogs.tsx";
 import Example from "./Example.tsx";
 import ContextProviders from "../ContextProviders.tsx";
+import {Contact, Creators} from "../utils/constants.ts";
+import Sponsors from "../components/Sponsors.tsx";
 
 const Home: React.FC = () => {
 
@@ -39,23 +41,46 @@ const Home: React.FC = () => {
                                <Link target="_blank" to="https://laul.setomaa.ee/leelokool"/>]}/>
                 </Description>
 
-                {exampleScore &&
-                    <Box mt={"lg"}>
-                        <Example score={exampleScore}/>
-                    </Box>}
+                {exampleScore && <Example score={exampleScore}/>}
 
-                <Group gap={4} mt={"md"}>
+                <Group gap={4} mb={"xl"}>
                     <Link to={"/editor"}>
-                        <Button size={"md"} color={"red"}>
+                        <Button size={"sm"} color={"red"}>
                             {t("view.home.link.editor")}
                         </Button>
                     </Link>
                     <Link to={"/scores"}>
-                        <Button size={"md"} color={"red"}>
+                        <Button size={"sm"} color={"red"}>
                             {t("view.home.link.scores")}
                         </Button>
                     </Link>
                 </Group>
+
+                <Divider my={"xl"}/>
+
+                <Title order={3} mt={"xl"}>
+                    {t("view.home.about")}
+                </Title>
+
+                <Grid>
+                    <Grid.Col span={{xl: 2, lg: 3, xs: 12}}>
+                        <Text mt={"md"} fw={"bold"}>{t("view.home.creators")}</Text>
+                        <Text>{Creators.map((m, i) => <><span key={i}>{m}</span><br/></>)}</Text>
+                    </Grid.Col>
+                    <Grid.Col span={{xl: 5, lg: 4, sm: 12}}>
+                        <Text mt={"md"} fw={"bold"}>{t("view.home.sponsors")}</Text>
+                        <Text>
+                            <Trans i18nKey="view.home.sponsorList"/>
+                        </Text>
+                    </Grid.Col>
+                    <Grid.Col span={{xl: 2, lg: 3, xs: 12}}>
+                        <Text mt={"md"} fw={"bold"}>{t("view.home.contact")}</Text>
+                        <Text>{Contact}</Text>
+                    </Grid.Col>
+                </Grid>
+                <Text mt={"xl"}>{t("view.home.copyright")}</Text>
+
+                <Sponsors/>
             </Page>
 
             <KeyPressHandler/>

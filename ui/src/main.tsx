@@ -16,7 +16,7 @@ import {PaginationContextProvider} from "./hooks/usePagination.tsx";
 import {DataServiceContextProvider} from "./hooks/useDataService.tsx";
 
 const theme = createTheme({
-    fontFamily: 'Verdana, Montserrat, sans-serif',
+    fontFamily: 'Nunito, sans-serif',
     defaultRadius: 'xl',
     primaryColor: 'red',
     primaryShade: 9,

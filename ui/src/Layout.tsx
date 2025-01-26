@@ -22,7 +22,6 @@ import {useDialogContext} from "./hooks/useDialogContext.tsx";
 import ProfileLink from "./components/ProfileLink.tsx";
 import LoginDialog from "./views/login/LoginDialog.tsx";
 import NotificationPanel from "./NotificationPanel.tsx";
-// import Sponsors from "./components/Sponsors.tsx";
 
 const Layout: React.FC = () => {
 
@@ -78,7 +77,6 @@ const Layout: React.FC = () => {
                     </Box>
 
                     <Navigation onNavigate={close}/>
-                    {/*<Sponsors/>*/}
                 </ScrollArea>
             </AppShell.Navbar>
 
