@@ -15,7 +15,7 @@ const Header: React.FC<Properties> = (props) => {
             <Group justify={"space-between"}>
                 <Group>
                     {props.leftSection}
-                    <Title order={props.order || 2}>
+                    <Title order={props.order || 1}>
                         {props.children}
                     </Title>
                 </Group>

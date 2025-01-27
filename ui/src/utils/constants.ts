@@ -11,16 +11,16 @@ export const Layout = {
             LYRICS_BAR: 50
         },
         line: {
-            SPACING: 9,
+            SPACING: 8,
             PRIMARY_LINE_STROKE_WIDTH: 2,
             SECONDARY_LINE_STROKE_WIDTH: 1,
             STROKE_WIDTH_BOLD: 3,
         },
         note: {
-            RADIUS: 7,
+            RADIUS: 6,
             RADIUS_SMALL: 5,
-            REPEATING_OFFSET: 7,
-            SPACING: 60,
+            REPEATING_OFFSET: 6,
+            SPACING: 55,
             SHAPE: 0,
             DIMMED_OPACITY: 0.2,
             QUARTER_NOTE_STROKE: 4,
@@ -46,8 +46,13 @@ export const Layout = {
             FONT_SIZE: 16,
             INCREASED_FONT_SIZE: 20,
             DECREASED_FONT_SIZE: 14,
-            FONT_WEIGHT: 600
+            FONT_WEIGHT: 600,
+            DECREASE_FONT_FROM: 5
         }
+    },
+    embedding: {
+        BASE: 310,
+        ROW: 150,
     }
 }
 
@@ -78,7 +83,7 @@ export const Playback = {
     DEFAULT_INSTRUMENT: "piano",
 
     DEFAULT_VOLUME: -10,
-    MIN_VOLUME: -60,
+    MIN_VOLUME: -100,
     MAX_VOLUME: 0,
     VOLUME_STEP: 5,
 
@@ -99,3 +104,5 @@ export const Playback = {
     MAX_TRANSPOSITION: 12,
     TRANSPOSITION_STEP: 1,
 }
+
+export const Contact = "janika.oras@folklore.ee\ntanel.torn@folklore.ee";

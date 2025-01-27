@@ -4,6 +4,8 @@ import Stave from "./scores/details/components/stave/Stave.tsx";
 import {useScoreContext} from "../hooks/useScoreContext.tsx";
 import {useAudioContext} from "../hooks/useAudioContext.tsx";
 import PlaybackControls from "./scores/details/components/playback/PlaybackControls.tsx";
+import ScoreRecording from "./scores/details/components/ScoreRecording.tsx";
+import {Grid, Text} from "@mantine/core";
 
 interface Properties {
     score?: Score;
@@ -24,11 +26,18 @@ const Example: React.FC<Properties> = ({score}) => {
     }, [score]);
     return (
         <>
-            {score &&
-                <>
-                    <PlaybackControls/>
-                    <Stave score={score}/>
-                </>}
+            {score && <>
+                <Text size={"lg"} fw={"bold"}>
+                    {score.name}
+                </Text>
+                <Grid>
+                    <Grid.Col span={{xs: 12, xl: 8}}>
+                        {score.recording && <ScoreRecording recording={score.recording}/>}
+                    </Grid.Col>
+                </Grid>
+                <PlaybackControls/>
+                <Stave score={score}/>
+            </>}
         </>
     );
 }

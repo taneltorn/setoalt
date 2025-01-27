@@ -2,6 +2,10 @@ body {
   width: 98%;
 }
 
+h1 {
+  color: var(--mantine-color-red-9);
+}
+
 a {
   font-weight: 500;
   color: black;
@@ -69,12 +73,18 @@ a {
 .rhap_container {
   box-shadow: none !important;
   padding: 0 !important;
+  display: flex !important;
 
   .rhap_controls-section {
-    max-width: 50px !important;
+    max-width: 0px !important;
   }
 
-  .rhap_footer {
-    text-align: end;
-  }
+}
+
+.mantine-Slider-track {
+  height: 5px;
+}
+
+.mantine-Slider-thumb {
+  border: 1px solid var(--mantine-color-gray-5);
 }

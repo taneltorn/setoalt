@@ -19,11 +19,37 @@ class UserController {
     }
 
     initializeRoutes() {
+        this.router.get("/:username", verifyToken, logRequest, this.getUser.bind(this));
         this.router.get("/", verifyToken, logRequest, this.getUsers.bind(this));
         this.router.post("/", verifyToken, logRequest, this.createUser.bind(this));
         this.router.patch("/:id", verifyToken, logRequest, this.updateUser.bind(this));
         this.router.patch("/:id/password", verifyToken, logRequest, this.updateUserPassword.bind(this));
         this.router.delete("/:id", verifyToken, logRequest, this.deleteUser.bind(this));
+    }
+
+    async getUser(req: Request, res: Response): Promise<UserDTO> {
+        try {
+            // @ts-ignore todo use custom type
+            const user = req.user;
+            const username = req.params.username;
+            
+            if (user?.role !== 'ADMIN') {
+                this.logger.info(`Not authorized: ${user.username}`);
+                res.status(403).json({error: "Not authorized"});
+                return;
+            }
+
+            const result = await userService.findByUsername(username);
+            if (!result.success) {
+                res.status(500).json({error: result.error});
+                return;
+            }
+
+            res.status(200).json(Mapper.toUserDTO(result.data));
+        } catch (err) {
+            this.logger.error(err)
+            res.status(500).json({error: "An unexpected error occurred."});
+        }
     }
 
     async getUsers(req: Request, res: Response): Promise<UserDTO> {

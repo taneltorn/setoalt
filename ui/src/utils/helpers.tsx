@@ -33,7 +33,7 @@ export const EmptyScore: Score = {
 
 export const normalize = (score: Score): Score => {
     score.data.voices.forEach(v => {
-        v.hidden = undefined;
+        v.muted = undefined;
         v.occupiedPositions = undefined;
     });
 

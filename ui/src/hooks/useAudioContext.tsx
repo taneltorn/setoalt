@@ -65,7 +65,7 @@ export const AudioContextProvider: React.FC<Properties> = ({children}) => {
 
         const groupedNotes: GroupedNote[] = Object.values(
             context.score.data.voices
-                .filter(v => !v.hidden)
+                .filter(v => !v.muted)
                 .flatMap(v => v.notes)
                 .filter(n => n.position >= startPosition)
                 .reduce((acc, note) => {

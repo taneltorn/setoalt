@@ -9,7 +9,8 @@
       "navigation": {
         "home": "Avaleht",
         "scores": "Kuula",
-        "editor": "Redaktor",
+        "editor": "Kirjuta",
+        "about": "Rakendusest",
         "admin": "Seaded",
         "login": "Logi sisse",
         "logout": "Logi välja"
@@ -28,15 +29,30 @@
   "view": {
     "home": {
       "title": "Avaleht",
-      "header": "Seto laulu alternatiivne noodikiri",
-      "description": "Antud veebirakendus on osa Kirjandusmuuseumi loovuurimuslikust projektist <strong>\"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\"</strong>.<br/>Rakendus võimaldab luua ja kuulata seto laulu noodistusi.",
+      "about": "Rakendusest",
+      "header": "Seto leelo noodikiri. Veebirakendus seto leeloviiside õppimiseks",
+      "description": "Rakendusega saab luua ja kuulata seto leelo noodistusi seto noodikirjas.<br/>Noodikirja tutvustab lähemalt <0>Leelokool</0> (<1>laul.setomaa.ee/leelokool</1>) <0>Seto laulupärimuse</0> veebilehel.",
       "link": {
         "scores": "Noodistused",
         "editor": "Katseta"
-      }
+      },
+      "creators": "Koostajad",
+      "creatorList": "Janika Oras<br/>Mari Palolill<br/>Žanna Pärtlas<br/>Hans-Gunter Lock<br/>Tanel Torn (tehniline lahendus)",
+      "sponsors": "Toetajad",
+      "sponsorList": "Kultuuriministeeriumi kultuuri- ja loomevaldkondade loovuurimuse ja Setomaa pärimuskultuuri toetamise meetmed (loovuurimusprojekt \"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\")<br/>Eesti Teadusagentuur (PRG1288)<br/>Haridus- ja Teadusministeerium (TK215)",
+      "contact": "Kontakt",
+      "copyright": "© koostajad, Eesti Kirjandusmuuseum",
+      "technicalSolution": "Tehniline lahendus"
+    },
+    "about": {
+      "title": "Rakendusest",
+      "header": "Rakendusest",
+      "description": "Veebirakendus on osa loovuurimusprojektist <strong>„Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil“</strong>"
+  
     },
     "scoreList": {
       "title": "Kuula",
+      "starredScores": "Tärn laulu pealkirja järel tähendab, et seda lauluvarianti ei ole <strong>Seto laulupärimuse</strong> lehel, on ainult siin rakenduses.",
       "header": "Noodistused",
       "table": {
         "name": "Nimi",
@@ -64,6 +80,7 @@
     "editor": {
       "title": "Redaktor",
       "header": "Redaktor",
+      "description": "Nooti saad salvestada siis, kui logid kasutajana sisse. Kasutajanime ja parooli saamiseks palun kirjuta janika.oras@folklore.ee.",
       "form": {
         "title": "Pealkiri",
         "name": "Nimi",
@@ -82,7 +99,14 @@
     },
     "profile": {
       "title": "Profiil",
+      "label": {
+        "name": "Nimi",
+        "username": "Kasutajanimi",
+        "role": "Roll",
+        "createdAt": "Loodud"
+      },
       "form": {
+        "changePassword": "Vaheta parool",
         "newPassword": "Uus parool"
       }
     },
@@ -194,6 +218,7 @@
     "playPrevious": "Eelmine",
     "startPlayback": "Esita",
     "startPlaybackRepeat": "Esita kordamisega",
+    "startPlaybackRecording": "Kuula helisalvestust",
     "stopPlayback": "Peata",
     "resetPlayback": "Algusesse",
     "changeTempo": "Muuda tempot",
@@ -204,6 +229,8 @@
     "splitNote": "Poolita noot",
     "undo": "Võta tagasi",
     "redo": "Tee uuesti",
+    "muteVolume": "Vaigista",
+    "unmuteVolume": "Tühista vaigistus",
     "changeVolume": "Muuda helitugevust",
     "staveSelection": "Vaheta noodijoonestikku"
   },
@@ -316,11 +343,13 @@
         "updateScore": "Noodistuse muutmine ebaõnnestus!"
       },
       "user": {
+        "fetchUser": "Kasutaja laadimine ebaõnnestus!",
         "fetchUsers": "Kasutajate laadimine ebaõnnestus!",
         "saveUser": "Kasutaja salvestamine ebaõnnestus!",
         "removeUser": "Kasutaja kustutamine ebaõnnestus!"
       },
       "notification": {
+        "fetchNotification": "Teavituse laadmine ebaõnnestus!",
         "saveNotification": "Teavituse salvestamine ebaõnnestus!",
         "removeNotification": "Teavituse kustutamine ebaõnnestus!"
       },

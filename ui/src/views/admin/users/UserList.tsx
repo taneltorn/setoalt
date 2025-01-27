@@ -49,7 +49,7 @@ const UserList: React.FC = () => {
                     onClear={() => setQuery("")}
                 />
                 <Button
-                    size={"md"}
+                    size={"sm"}
                     variant={"outline"}
                     leftSection={<BiPlus size={Size.icon.SM}/>}
                     onClick={() => open(DialogType.SAVE_USER, {onSave: fetchData})}

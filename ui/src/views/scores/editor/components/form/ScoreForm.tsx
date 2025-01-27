@@ -56,7 +56,7 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
                     control={control}
                     render={({field}) => (
                         <Switch
-                            size={"xl"}
+                            size={"lg"}
                             {...field}
                             disabled={auth.currentUser?.role === Role.USER}
                             label={t(`visibility.${field.value?.toLowerCase()}`)}

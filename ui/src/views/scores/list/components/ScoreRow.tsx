@@ -40,6 +40,8 @@ const ScoreRow: React.FC<Properties> = ({score, state, onChange}) => {
             <Table.Td>{score.createdBy}</Table.Td>
             <Table.Td>
                 <Badge
+                    fw={"bold"}
+                    size={"md"}
                     bg={score?.visibility === "PUBLIC" ? theme.primaryColor : theme.colors.gray[5]}>
                     {t(`visibility.${score.visibility?.toLowerCase()}`)}
                 </Badge>

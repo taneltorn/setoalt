@@ -13,6 +13,7 @@ import ScoreSettings, {Setting} from "../details/components/ScoreSettings.tsx";
 import {DialogType, Role} from "../../../utils/enums.ts";
 import PlaybackControls from "../details/components/playback/PlaybackControls.tsx";
 import {useAuth} from "../../../hooks/useAuth.tsx";
+import Description from "../../../components/controls/Description.tsx";
 
 const Editor: React.FC = () => {
 
@@ -38,6 +39,10 @@ const Editor: React.FC = () => {
             }>
                 {t("view.editor.title")}
             </Header>
+
+            {!auth.currentUser && <Description span={{xl: 10, xs: 12}}>
+                {t("view.editor.description")}
+            </Description>}
 
             <Group justify={"space-between"}>
                 <PlaybackControls/>

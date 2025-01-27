@@ -112,6 +112,10 @@ export const calculateNoteCoords = (note: Note, voice: Voice, context: ScoreCont
     return {x: x, y: y};
 }
 
+export const getNoteBaseKey = (note: Note, voice: Voice) => {
+    return `${note.position}-${note.pitch}-${voice.type === VoiceType.BOTTOM_TORRO ? VoiceType.TORRO : voice.type}-${voice.hidden}`;
+}
+
 export const isInsideLoop = (position: number, loopRange?: Range): boolean | undefined => {
     if (!loopRange) {
         return undefined;
@@ -128,8 +132,8 @@ export const calculateNoteOpacity = (note: Note, voice: Voice, context: ScoreCon
         return 1;
     }
 
-    const key = `${note.position}-${note.pitch}-${voice.type === VoiceType.BOTTOM_TORRO ? VoiceType.TORRO : voice.type}-${voice.name}`;
-    if (context.duplicateNoteKeys.includes(key)) {
+    const key = `${getNoteBaseKey(note, voice)}-${voice.name}`;
+    if (context.duplicateNoteKeys.includes(`${key}`)) {
         return 0;
     }
 
@@ -250,5 +254,5 @@ export const calculateStaveDimensions = (score: Score): StaveDimensions => {
 }
 
 export const calculateEmbeddingHeight = (score: Score): number => {
-    return (score.data.breaks.length || 0) * 160 + 310;
+    return (score.data.breaks.length || 0) * Layout.embedding.ROW + Layout.embedding.BASE;
 }

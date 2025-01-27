@@ -1,5 +1,5 @@
 import {Button, Group} from "@mantine/core";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 import React, {useEffect, useMemo, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import useScoreService from "../../../hooks/useScoreService.tsx";
@@ -15,6 +15,7 @@ import {usePagination} from "../../../hooks/usePagination.tsx";
 import useSearchQuery from "../../../hooks/useSearchQuery.tsx";
 import PaginatedTable from "../../../components/table/PaginatedTable.tsx";
 import ScoreRow from "./components/ScoreRow.tsx";
+import Description from "../../../components/controls/Description.tsx";
 
 const ScoreList: React.FC = () => {
 
@@ -61,6 +62,13 @@ const ScoreList: React.FC = () => {
     return (
         <Page title={t("view.scoreList.title")}>
             <Header>{t("view.scoreList.header")}</Header>
+            <Description span={12}>
+
+                <Group gap={4}>
+                    <Trans i18nKey={"view.scoreList.starredScores"}/>
+                </Group>
+            </Description>
+
             <Group justify={"space-between"} mt={"lg"} mb={"md"}>
                 <SearchInput
                     value={query}
@@ -69,7 +77,7 @@ const ScoreList: React.FC = () => {
                 />
 
                 {auth.currentUser?.isEditor &&
-                    <Button size={"md"}
+                    <Button size={"sm"}
                             variant={"outline"}
                             leftSection={<BiPlus size={Size.icon.SM}/>}
                             onClick={() => navigate("/editor")}>

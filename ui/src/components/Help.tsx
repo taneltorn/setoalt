@@ -1,6 +1,6 @@
 import React from "react";
 import {
-    ActionIcon, 
+    ActionIcon,
     Box,
     Button,
     Divider,
@@ -16,7 +16,7 @@ import {useDisclosure} from "@mantine/hooks";
 import {
     FaBackward, FaCircle,
     FaForward,
-    FaItunesNote,
+    FaItunesNote, FaPlay,
     FaPlayCircle,
     FaRegTrashAlt
 } from "react-icons/fa";
@@ -33,7 +33,7 @@ import {FaDeleteLeft} from "react-icons/fa6";
 import {RiIncreaseDecreaseFill, RiParenthesesLine} from "react-icons/ri";
 import Icon from "@mdi/react";
 import {mdiMusicNoteEighth, mdiMusicNoteHalf, mdiMusicNoteQuarter} from "@mdi/js";
-import {PiSpeakerHighFill, PiSpeakerSimpleHigh} from "react-icons/pi";
+import {PiSpeakerSimpleHigh} from "react-icons/pi";
 import {ShiftLeftIcons, ShiftRightIcons} from "../utils/icons.tsx";
 import {ShiftMode} from "../utils/enums.ts";
 import {HiArrowNarrowDown, HiArrowNarrowUp} from "react-icons/hi";
@@ -72,7 +72,7 @@ const Help: React.FC<Properties> = (props) => {
                         <Tabs.Tab value="editor">
                             <Group>
                                 <BsMusicNoteList size={Size.icon.XS}/>
-                                <Text size={"md"}>Redaktor</Text>
+                                <Text size={"md"}>Kirjuta</Text>
                             </Group>
                         </Tabs.Tab>
                     </Tabs.List>
@@ -82,37 +82,37 @@ const Help: React.FC<Properties> = (props) => {
 
                         <Title order={5} my={"md"}>Hääled</Title>
 
-                        <HelpText icon={<FaCircle color={Color.voice.TORRO} />}>
+                        <HelpText icon={<FaCircle color={Color.voice.TORRO}/>}>
                             Torrõ
                         </HelpText>
 
-                        <HelpText icon={<FaCircle color={Color.voice.KILLO} />}>
+                        <HelpText icon={<FaCircle color={Color.voice.KILLO}/>}>
                             Killõ
                         </HelpText>
 
-                        <HelpText icon={<FaCircle color={Color.voice.BOTTOM_TORRO} />}>
+                        <HelpText icon={<FaCircle color={Color.voice.BOTTOM_TORRO}/>}>
                             Alumine torrõ
                         </HelpText>
 
-                        <HelpText icon={<FaCircle color={Color.voice.FRONT} />}>
+                        <HelpText icon={<FaCircle color={Color.voice.FRONT}/>}>
                             Eeslaul
                         </HelpText>
 
-                        <HelpText icon={<HiArrowNarrowUp color={Color.voice.TORRO} />}>
+                        <HelpText icon={<HiArrowNarrowUp color={Color.voice.TORRO}/>}>
                             Nooti on mikrotonaalselt kõrgendatud
                         </HelpText>
-                        <HelpText icon={<HiArrowNarrowDown color={Color.voice.TORRO} />}>
+                        <HelpText icon={<HiArrowNarrowDown color={Color.voice.TORRO}/>}>
                             Nooti on mikrotonaalselt madaldatud
                         </HelpText>
-                        
+
                         <Title order={6} my={"md"}>Häälte sisse/välja lülilitamine</Title>
 
-                        Hääli saad sisse ja välja lülitada vajutades vastava hääle nupul. Välja lülitatud hääli ei
+                        Hääli saad sisse ja välja lülitada, vajutades vastava hääle nupul. Välja lülitatud hääli ei
                         kuvata noodistusel ega esitada vastavat heli.
-                  
+                        <br/>
+                        Hoides all <Kbd>Ctrl</Kbd> klahvi on võimalik hääl peita, kuid jätta see taasesitusel siiski
+                        kõlama.
                         <Grid mt={"md"}>
-                            
-                            
                             <Grid.Col span={3}>
                                 <Button
                                     color={"black"}
@@ -123,6 +123,20 @@ const Help: React.FC<Properties> = (props) => {
                             </Grid.Col>
                             <Grid.Col span={9}>
                                 Hääl on sisse lülitatud.
+                            </Grid.Col>
+                        </Grid>
+                        <Grid>
+                            <Grid.Col span={3}>
+                                <Button
+                                    c={"black"}
+                                    color={"gray.1"}
+                                    size={"compact-sm"}
+                                    leftSection={<MdRecordVoiceOver color={"black"} size={Size.icon.SM}/>}>
+                                    torrõ
+                                </Button>
+                            </Grid.Col>
+                            <Grid.Col span={9}>
+                                Hääl on sisse lülitatud, kuid ei ole nähtav. Heli kõlab taasesitusel.
                             </Grid.Col>
                         </Grid>
                         <Grid>
@@ -144,13 +158,13 @@ const Help: React.FC<Properties> = (props) => {
 
                         <Title order={5} mb={"md"}>Nupud</Title>
 
-                        <HelpText icon={<PiSpeakerHighFill size={Size.icon.SM}/>}>
-                            Kuula arhiivisalvestist.
+                        <HelpText icon={<FaPlay size={Size.icon.XS}/>}>
+                            Kuula arhiivisalvestust.
                         </HelpText>
 
                         <HelpText icon={<MdOutlinePiano size={Size.icon.SM}/>}>
-                            Muuda heliväljundit. Valida saab klaveri (vaikimisi), süntesaatori, viiuli, flöödi ja kitarri
-                            vahel.
+                            Muuda heliväljundit. Valida saab klaveri (vaikimisi), süntesaatori, viiuli, flöödi ja
+                            kitarri vahel.
                         </HelpText>
 
                         <HelpText icon={<FaBackward size={Size.icon.SM}/>}>
@@ -158,9 +172,9 @@ const Help: React.FC<Properties> = (props) => {
                         </HelpText>
 
                         <HelpText icon={<FaPlayCircle color={theme.colors.red[9]} size={Size.icon.SM}/>}>
-                            Esita noodistuse mahamängimine. Heli korduvaks esitamiseks vali kõigepealt soovitud
-                            algusnoot ning
-                            seejärel <Kbd>Ctrl</Kbd> klahvi all hoides lõpunoot.
+                            Noodistuse mahamängimine.
+                            Kui tahad kuulata tervet lugu või mõnda lühemat lõiku mitu korda järjest, siis (1) kliki selle lõigu algusnoodile, 
+                            (2) vajuta alla <Kbd>Ctrl</Kbd> klahv ja (3) kliki soovitud lõigu lõpunoodile. Kordusrežiimist saad välja, vajutades valiku lõpus lähtesta-noolele.
                         </HelpText>
 
                         <HelpText icon={<FaForward size={Size.icon.SM}/>}>
@@ -174,7 +188,7 @@ const Help: React.FC<Properties> = (props) => {
                         </HelpText>
 
                         <HelpText icon={<IoIosSpeedometer color={theme.colors.gray[5]} size={Size.icon.SM}/>}>
-                            Muuda taasesituse kiirust aeglasemaks või kiiremaks.
+                            Muuda esitustempot aeglasemaks või kiiremaks.
                         </HelpText>
 
                         <Divider my={"md"}/>
@@ -185,8 +199,7 @@ const Help: React.FC<Properties> = (props) => {
 
                         <HelpText icon={<FaItunesNote size={Size.icon.SM}/>}>
                             Vali noodistuse lihtsustatud või detailvaate vahel. Lihtsustatud vaates ei kuvata
-                            noodijoonte
-                            helikõrguseid ega nootide mikrotonaalsuse indikaatoreid (üles/alla noolekesed).
+                            noodijoonte helikõrgusi ega üles-alla noolekesi (mikrotonaalsuse näitajaid).
                         </HelpText>
 
                         <HelpText icon={<BsCodeSlash size={Size.icon.SM}/>}>
@@ -204,7 +217,7 @@ const Help: React.FC<Properties> = (props) => {
 
                         <Title order={5} my={"md"}>Hääle aktiveerimine</Title>
                         Aktiivse hääle valimisel seotakse kõik järgnevalt lisatud noodid antud häälega. Kõik teised
-                        hääled peidetakse s.t. heli taasesitamisel vastavad hääled ei kõla, kuid jäävad noodijoonestikus
+                        hääled peidetakse, st heli taasesitamisel vastavad hääled ei kõla, kuid jäävad noodijoonestikus
                         siiski õrnalt nähtavale. Erinevaid häälekombinatsioone on võimalik valida <Kbd>Ctrl</Kbd> nuppu
                         all hoides.
 
@@ -257,11 +270,16 @@ const Help: React.FC<Properties> = (props) => {
                         <Title order={5} mb={"md"}>Nupud</Title>
 
                         <HelpText icon={<GiFClef size={Size.icon.SM}/>}>
-                            Vaheta noodijoonestikku. Valida saab PPT, diatoonilise ja danema diatoonilise vahel.
-                            Noodijoonestikku saab vahetada üksnes uue noodistuse puhul.
+                            Vaheta noodijoonestikku. Valida saab pooltoon-poolteisttoon- (PPT), vanema ja uuema
+                            diatoonilise helirea
+                            vahel. Noodijoonestikku saab vahetada üksnes uue noodistuse puhul.
                         </HelpText>
 
                         <Divider my={"md"}/>
+
+                        <HelpText icon={<strong>D, E♭, F♯, ...</strong>}>
+                            Lisa uus noot. Lisaks hiirele võib kasutada nootide sisestamiseks klaviatuuri numbriklahve 1 kuni 6 või 7, vastavalt helireale.
+                        </HelpText>
 
                         <HelpText icon={<RiIncreaseDecreaseFill size={Size.icon.XS}/>}>
                             Muuda valitud noodi helikõrgust tsentides.

@@ -26,7 +26,7 @@ const ScoreControls: React.FC<Properties> = (props) => {
             {!props.hideSecondaryButton &&
                 <Button
                     variant={props.secondaryButtonVariant || "subtle"}
-                    size={"md"}
+                    size={"sm"}
                     color={"black"}
                     onClick={props.onSecondaryButtonClick}
                 >
@@ -35,7 +35,7 @@ const ScoreControls: React.FC<Properties> = (props) => {
             {!props.hidePrimaryButton &&
                 <Button
                     type={"submit"}
-                    size={"md"}
+                    size={"sm"}
                     variant={props.primaryButtonVariant || "filled"}
                     loading={isSaving}
                     onClick={props.onPrimaryButtonClick}

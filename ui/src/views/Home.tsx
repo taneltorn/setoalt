@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from "react";
-import {Box, Button, Group, Tabs, Text} from "@mantine/core";
+import {Button, Divider, Grid, Group, Text} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import {Link} from "react-router-dom";
 import Page from "../Page.tsx";
@@ -11,19 +11,19 @@ import KeyPressHandler from "../components/KeyPressHandler.tsx";
 import ScoreDialogs from "./scores/details/components/ScoreDialogs.tsx";
 import Example from "./Example.tsx";
 import ContextProviders from "../ContextProviders.tsx";
+import {Contact} from "../utils/constants.ts";
+import Sponsors from "../components/Sponsors.tsx";
 
 const Home: React.FC = () => {
 
     const {t} = useTranslation();
-    const [active, setActive] = useState<Score>();
-    const [exampleA, setExampleA] = useState<Score>();
+    const [exampleScore, setExampleScore] = useState<Score>();
 
     useEffect(() => {
         fetch(`${import.meta.env.VITE_PUBLIC_URL}/examples/a.example.json`)
             .then(response => response.json())
             .then(score => {
-                setExampleA(score);
-                setActive(score);
+                setExampleScore(score);
             });
     }, []);
 
@@ -36,37 +36,47 @@ const Home: React.FC = () => {
                 </Header>
 
                 <Description span={12}>
-                    <Trans i18nKey="view.home.description"/>
+                    <Trans i18nKey="view.home.description"
+                           components={[<strong></strong>,
+                               <Link target="_blank" to="https://laul.setomaa.ee/leelokool"/>]}/>
                 </Description>
 
-                <Tabs defaultValue="example1" radius={"xs"}>
-                    <Tabs.List>
-                        {exampleA &&
-                            <Tabs.Tab value="example1" onClick={() => setActive(exampleA)}>
-                                {t("page.example")}:
-                                <Text size={"lg"} fw={"bold"}>
-                                    {exampleA?.name}
-                                </Text>
-                            </Tabs.Tab>}
-                    </Tabs.List>
+                {exampleScore && <Example score={exampleScore}/>}
 
-                    <Box mt={"lg"}>
-                        <Example score={active}/>
-                    </Box>
-                </Tabs>
-
-                <Group gap={4} mt={"md"}>
+                <Group gap={4} mb={"xl"}>
                     <Link to={"/editor"}>
-                        <Button size={"md"} color={"red"}>
+                        <Button size={"sm"} color={"red"}>
                             {t("view.home.link.editor")}
                         </Button>
                     </Link>
                     <Link to={"/scores"}>
-                        <Button size={"md"} color={"red"}>
+                        <Button size={"sm"} color={"red"}>
                             {t("view.home.link.scores")}
                         </Button>
                     </Link>
                 </Group>
+
+                <Divider my={"xl"}/>
+
+                <Grid>
+                    <Grid.Col span={{xl: 3, lg: 3, xs: 12}}>
+                        <Text fw={"bold"}>{t("view.home.creators")}</Text>
+                        <Text><Trans i18nKey={"view.home.creatorList"}/></Text>
+                    </Grid.Col>
+                    <Grid.Col span={{xl: 5, lg: 4, sm: 12}}>
+                        <Text fw={"bold"}>{t("view.home.sponsors")}</Text>
+                        <Text>
+                            <Trans i18nKey="view.home.sponsorList"/>
+                        </Text>
+                    </Grid.Col>
+                    <Grid.Col span={{xl: 2, lg: 3, xs: 12}}>
+                        <Text fw={"bold"}>{t("view.home.contact")}</Text>
+                        <Text>{Contact}</Text>
+                    </Grid.Col>
+                </Grid>
+                <Text mt={"xl"}>{t("view.home.copyright")}</Text>
+
+                <Sponsors/>
             </Page>
 
             <KeyPressHandler/>

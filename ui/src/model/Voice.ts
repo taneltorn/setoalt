@@ -14,5 +14,6 @@ export interface Voice {
     color: string;
     occupiedPositions?: number[];
     hidden?: boolean;
+    muted?: boolean;
     order?: number;
 }

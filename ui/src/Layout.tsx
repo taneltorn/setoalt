@@ -7,7 +7,8 @@ import {
     Burger,
     Button,
     Divider,
-    Group, ScrollArea,
+    Group,
+    ScrollArea,
     Transition
 } from "@mantine/core";
 import Navigation from "./components/sidebar/Navigation.tsx";
@@ -68,9 +69,9 @@ const Layout: React.FC = () => {
                     <Box visibleFrom={"md"}>
                         <Group justify={"space-between"}>
                             <Link to={"/"} onClick={close}>
-                                <Logo />
+                                <Logo/>
                             </Link>
-                            <ProfileLink />
+                            <ProfileLink/>
                         </Group>
                         <Divider my={"md"}/>
                     </Box>

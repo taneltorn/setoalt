@@ -74,7 +74,7 @@ const MicroTuningDialog: React.FC = () => {
             />
 
             <Switch
-                size={"xl"}
+                size={"lg"}
                 className={"hover-pointer"}
                 checked={showDetuneIndicator}
                 label={t(`dialog.microTuning.showDetuneIndicator`)}

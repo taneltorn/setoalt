@@ -30,7 +30,7 @@ const StaveLine: React.FC<Properties> = ({line, offsetY}) => {
                     <DetuneIndicator
                         detune={line.detune}
                         x={8}
-                        y={y + 8}
+                        y={y + (line.detune > 0 ? (Layout.stave.line.SPACING + 3) : (Layout.stave.line.SPACING))}
                         opacity={1}
                         color={"black"}
                     />}

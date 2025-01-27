@@ -7,8 +7,7 @@ import {RxDragHandleDots2} from "react-icons/rx";
 import {useScoreContext} from "../../hooks/useScoreContext.tsx";
 
 interface Properties {
-    active: boolean;
-    halfActive?: boolean;
+    state: "active" | "semi-active" | "disabled";
     disabled?: boolean;
     c?: string;
     color?: string;
@@ -16,23 +15,23 @@ interface Properties {
     onClick: (event?: any) => void;
 }
 
-const VoiceFilterButton: React.FC<Properties> = ({active, halfActive, disabled, label, onClick}) => {
+const VoiceFilterButton: React.FC<Properties> = ({state,  disabled, label, onClick}) => {
 
     const {t} = useTranslation();
     const {isEditMode} = useScoreContext();
 
     return (
         <Button
-            c={active ? "white" : halfActive ? "black" : "gray.5"}
-            color={active ? "black" : "gray.1"}
-            title={t(`tooltip.${active ? "hideVoice" : "showVoice"}`)}
+            c={state === "active" ? "white" : state === "semi-active" ? "black" : "gray.5"}
+            color={state === "active" ? "black" : "gray.1"}
+            title={t(`tooltip.${state !== "disabled" ? "hideVoice" : "showVoice"}`)}
             className={`me-2`}
             size={"compact-sm"}
             disabled={disabled}
-            leftSection={active || halfActive
+            leftSection={state !== "disabled"
                 ? <MdRecordVoiceOver
                     size={Size.icon.XS}
-                    style={{color: active ? "white" : "black"}}
+                    style={{color: state === "active" ? "white" : "black"}}
                 />
                 : <MdVoiceOverOff
                     size={Size.icon.XS}
