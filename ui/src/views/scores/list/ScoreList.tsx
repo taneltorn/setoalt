@@ -1,5 +1,5 @@
 import {Button, Group} from "@mantine/core";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 import React, {useEffect, useMemo, useState} from "react";
 import {useLocation, useNavigate} from "react-router-dom";
 import useScoreService from "../../../hooks/useScoreService.tsx";
@@ -65,7 +65,7 @@ const ScoreList: React.FC = () => {
             <Description span={12}>
 
                 <Group gap={4}>
-                    {t("view.scoreList.starredScores")}
+                    <Trans i18nKey={"view.scoreList.starredScores"}/>
                 </Group>
             </Description>
 

@@ -31,7 +31,7 @@
       "title": "Avaleht",
       "about": "Rakendusest",
       "header": "Seto leelo noodikiri. Veebirakendus seto leeloviiside õppimiseks",
-      "description": "Rakendusega saab luua ja kuulata seto leelo noodistusi seto noodikirjas.<br/>Noodikirja tutvustab lähemalt <0>\"Leelokool\"</0> (<1>laul.setomaa.ee/leelokool</1>) Seto laulupärimuse veebilehel.",
+      "description": "Rakendusega saab luua ja kuulata seto leelo noodistusi seto noodikirjas.<br/>Noodikirja tutvustab lähemalt <0>Leelokool</0> (<1>laul.setomaa.ee/leelokool</1>) <0>Seto laulupärimuse</0> veebilehel.",
       "link": {
         "scores": "Noodistused",
         "editor": "Katseta"
@@ -39,7 +39,7 @@
       "creators": "Koostajad",
       "creatorList": "Janika Oras<br/>Mari Palolill<br/>Žanna Pärtlas<br/>Hans-Gunter Lock<br/>Tanel Torn (tehniline lahendus)",
       "sponsors": "Toetajad",
-      "sponsorList": "Kultuuriministeeriumi kultuuri- ja loomevaldkondade loovuurimuse ja Setomaapärimuskultuuri toetamise meetmed (loovuurimusprojekt \"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\")<br/>Eesti Teadusagentuur (PRG1288)<br/>Haridus- ja Teadusministeerium (TK215)",
+      "sponsorList": "Kultuuriministeeriumi kultuuri- ja loomevaldkondade loovuurimuse ja Setomaa pärimuskultuuri toetamise meetmed (loovuurimusprojekt \"Seto mitmehäälse laulu õpetamine alternatiivse noodikirja abil\")<br/>Eesti Teadusagentuur (PRG1288)<br/>Haridus- ja Teadusministeerium (TK215)",
       "contact": "Kontakt",
       "copyright": "© koostajad, Eesti Kirjandusmuuseum",
       "technicalSolution": "Tehniline lahendus"
@@ -52,7 +52,7 @@
     },
     "scoreList": {
       "title": "Kuula",
-      "starredScores": "Tärn laulu pealkirja järel tähendab, et seda lauluvarianti ei ole „Seto laulupärimuse“ lehel, on ainult siin rakenduses.",
+      "starredScores": "Tärn laulu pealkirja järel tähendab, et seda lauluvarianti ei ole <strong>Seto laulupärimuse</strong> lehel, on ainult siin rakenduses.",
       "header": "Noodistused",
       "table": {
         "name": "Nimi",
