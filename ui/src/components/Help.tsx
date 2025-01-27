@@ -72,7 +72,7 @@ const Help: React.FC<Properties> = (props) => {
                         <Tabs.Tab value="editor">
                             <Group>
                                 <BsMusicNoteList size={Size.icon.XS}/>
-                                <Text size={"md"}>Redaktor</Text>
+                                <Text size={"md"}>Kirjuta</Text>
                             </Group>
                         </Tabs.Tab>
                     </Tabs.List>
@@ -107,7 +107,7 @@ const Help: React.FC<Properties> = (props) => {
 
                         <Title order={6} my={"md"}>Häälte sisse/välja lülilitamine</Title>
 
-                        Hääli saad sisse ja välja lülitada vajutades vastava hääle nupul. Välja lülitatud hääli ei
+                        Hääli saad sisse ja välja lülitada, vajutades vastava hääle nupul. Välja lülitatud hääli ei
                         kuvata noodistusel ega esitada vastavat heli.
                         <br/>
                         Hoides all <Kbd>Ctrl</Kbd> klahvi on võimalik hääl peita, kuid jätta see taasesitusel siiski
@@ -172,8 +172,9 @@ const Help: React.FC<Properties> = (props) => {
                         </HelpText>
 
                         <HelpText icon={<FaPlayCircle color={theme.colors.red[9]} size={Size.icon.SM}/>}>
-                            Noodistuse mahamängimine. Lõigu korduvaks esitamiseks vali kõigepealt soovitud
-                            algusnoot ning seejärel <Kbd>Ctrl</Kbd> klahvi all hoides lõpunoot.
+                            Noodistuse mahamängimine.
+                            Kui tahad kuulata tervet lugu või mõnda lühemat lõiku mitu korda järjest, siis (1) kliki selle lõigu algusnoodile, 
+                            (2) vajuta alla <Kbd>Ctrl</Kbd> klahv ja (3) kliki soovitud lõigu lõpunoodile. Kordusrežiimist saad välja, vajutades valiku lõpus lähtesta-noolele.
                         </HelpText>
 
                         <HelpText icon={<FaForward size={Size.icon.SM}/>}>
@@ -275,6 +276,10 @@ const Help: React.FC<Properties> = (props) => {
                         </HelpText>
 
                         <Divider my={"md"}/>
+
+                        <HelpText icon={<strong>D, E♭, F♯, ...</strong>}>
+                            Lisa uus noot. Lisaks hiirele võib kasutada nootide sisestamiseks klaviatuuri numbriklahve 1 kuni 6 või 7, vastavalt helireale.
+                        </HelpText>
 
                         <HelpText icon={<RiIncreaseDecreaseFill size={Size.icon.XS}/>}>
                             Muuda valitud noodi helikõrgust tsentides.

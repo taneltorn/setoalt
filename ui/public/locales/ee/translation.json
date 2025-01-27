@@ -80,6 +80,7 @@
     "editor": {
       "title": "Redaktor",
       "header": "Redaktor",
+      "description": "Nooti saad salvestada siis, kui logid kasutajana sisse. Kasutajanime ja parooli saamiseks palun kirjuta janika.oras@folklore.ee.",
       "form": {
         "title": "Pealkiri",
         "name": "Nimi",
