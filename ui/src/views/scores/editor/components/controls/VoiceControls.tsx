@@ -25,6 +25,7 @@ const VoiceControls: React.FC = () => {
     const showAllVoices = () => {
         context.score.data.voices.forEach(v => {
             v.muted = false;
+            v.hidden = false;
         })
         context.refresh();
     }
@@ -32,7 +33,8 @@ const VoiceControls: React.FC = () => {
     const showActiveVoice = (voiceName: string) => {
         context.score.data.voices.forEach(v => {
             v.muted = v.name !== voiceName;
-        })
+            v.hidden = v.name !== voiceName;
+        });
         context.refresh();
     }
 
@@ -84,6 +86,7 @@ const VoiceControls: React.FC = () => {
             const voice = context.score.data.voices.find(v => v.name === name);
             if (voice && voice.name !== context.activeVoice) {
                 voice.muted = !voice.muted;
+                voice.hidden = !voice.hidden;
                 context.refresh();
             }
             return;
@@ -91,6 +94,7 @@ const VoiceControls: React.FC = () => {
         context.setActiveVoice(name);
         context.score.data.voices.forEach(v => {
             v.muted = v.name !== name;
+            v.hidden = v.name !== name;
         });
         context.refresh();
     }

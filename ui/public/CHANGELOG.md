@@ -1,4 +1,8 @@
-#### [1.0.5] - 
+### [1.0.6]
+
+- Häälte valimise parandused muutmisrežiimis
+
+#### [1.0.5] - 27.01.2025
 
 - Detailvaates peidetakse tühjad (ilma nootideta) hääled
 - Lisatud võimalus häält peita ilma heli välja lülitamata (Ctrl + hiireklikk)
