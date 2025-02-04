@@ -43,7 +43,10 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
         stopPlayback();
 
         const score = {...values, data: {...context.score.data, stave: values.data.stave}};
-        score.data.voices.forEach(v => v.muted = false);
+        score.data.voices.forEach(v => {
+            v.muted = false;
+            v.hidden = false;
+        });
 
         const saveScore = () => score.id ? scoreService.updateScore(score.id, score) : scoreService.createScore(score);
         saveScore().then(() => navigate(`/scores/${score.id}`));
