@@ -1,3 +1,8 @@
+### [1.0.7]
+
+- Muudetud logo + selgitav tekst
+
+
 ### [1.0.6]
 
 - Häälte valimise parandused muutmisrežiimis
