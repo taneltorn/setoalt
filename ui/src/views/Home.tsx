@@ -40,7 +40,7 @@ const Home: React.FC = () => {
                            components={[<strong></strong>,
                                <Link target="_blank" to="https://laul.setomaa.ee/leelokool"/>]}/>
                 </Description>
-
+                
                 {exampleScore && <Example score={exampleScore}/>}
 
                 <Group gap={4} mb={"xl"}>
@@ -55,6 +55,7 @@ const Home: React.FC = () => {
                         </Button>
                     </Link>
                 </Group>
+
 
                 <Divider my={"xl"}/>
 
@@ -76,6 +77,9 @@ const Home: React.FC = () => {
                 </Grid>
                 <Text mt={"xl"}>{t("view.home.copyright")}</Text>
 
+                <Text mt={"sm"} fs={"italic"}>
+                    {t("view.home.description2")}
+                </Text>
                 <Sponsors/>
             </Page>
 

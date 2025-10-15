@@ -43,7 +43,7 @@ const Layout: React.FC = () => {
             layout={"default"}
             header={{height: {base: 48, md: 1}}}
             navbar={{
-                width: {base: 240},
+                width: {base: 260},
                 breakpoint: 'md',
                 collapsed: {mobile: !opened},
             }}

@@ -32,6 +32,7 @@
       "about": "Rakendusest",
       "header": "Seto leelo noodikiri. Veebirakendus seto leeloviiside õppimiseks",
       "description": "Rakendusega saab luua ja kuulata seto leelo noodistusi seto noodikirjas.<br/>Noodikirja tutvustab lähemalt <0>Leelokool</0> (<1>laul.setomaa.ee/leelokool</1>) <0>Seto laulupärimuse</0> veebilehel.",
+      "description2": "Rakenduses on avaldatud Eesti Kirjandusmuuseumi Eesti Rahvaluule Arhiivi ja Soome Kirjanduse Seltsi rahvaluulearhiivi helisalvestusi.",
       "link": {
         "scores": "Noodistused",
         "editor": "Katseta"
