@@ -14,11 +14,10 @@ const NOTE_RANGE = NoteRange.reverse();
 interface Properties {
     stave: Stave;
     setStave: (stave: Stave) => void;
-    onConfirm?: (stave: Stave) => void;
-    onClose?: () => void;
+    linesWithError: number[];
 }
 
-const StaveCreator: React.FC<Properties> = ({stave, setStave}) => {
+const StaveCreator: React.FC<Properties> = ({stave, setStave, linesWithError}) => {
 
     const {t} = useTranslation();
 
@@ -69,10 +68,12 @@ const StaveCreator: React.FC<Properties> = ({stave, setStave}) => {
                             <Table.Tr key={`line-${index}`}>
                                 <Table.Td>
                                     <Select
+                                        className={linesWithError.includes(index) ? "input-error" : ""}
                                         value={stave.lines[index].pitch}
-                                        data={NOTE_RANGE.reverse()}
+                                        data={NOTE_RANGE}
                                         onChange={v => handleLinePitchChange(index, v)}
                                     />
+
                                 </Table.Td>
                                 <Table.Td>
                                     <Select

@@ -26,10 +26,27 @@ const StaveSelectionDialog: React.FC = () => {
     const {close} = useDialogContext();
     const history = useHistory();
 
+    const [linesWithError, setLinesWithError] = useState<number[]>([]);
+
     const [customStave, setCustomStave] = useState<Stave>(context.score.data.stave.name === "Custom" ? context.score.data.stave : StaveCustom);
     const [stave, setStave] = useState<Stave>(context.score.data.stave);
 
     const handleSave = () => {
+        if (stave.name === "Custom") {
+
+            const errors: number[] = [];
+            stave.lines.forEach((l, i) => {
+                if (l.pitch === "") {
+                    errors.push(i);
+                }
+            });
+            setLinesWithError(errors);
+            if (errors.length > 0) {
+                return;
+            }
+        }
+
+        setLinesWithError([]);
         history.snapshot(context);
         context.score.data.stave = stave;
         context.refresh();
@@ -61,6 +78,7 @@ const StaveSelectionDialog: React.FC = () => {
             onSecondaryButtonClick={handleClose}
             onClose={handleClose}
         >
+            <p>{JSON.stringify(linesWithError)}</p>
             <Group className={"hover-pointer"}>
                 {[StavePPT, StaveOldDiatonic, StaveDiatonic, customStave].map((s, index) =>
                     <Card
@@ -102,6 +120,7 @@ const StaveSelectionDialog: React.FC = () => {
                 <StaveCreator
                     stave={customStave}
                     setStave={handleStaveChange}
+                    linesWithError={linesWithError}
                 />}
         </Dialog>
     )

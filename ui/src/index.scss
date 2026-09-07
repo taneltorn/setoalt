@@ -89,3 +89,6 @@ a {
 .mantine-Slider-thumb {
   border: 1px solid var(--mantine-color-gray-5);
 }
+.input-error .mantine-Input-input {
+  border: 2px solid var(--mantine-color-red-9) !important;
+}

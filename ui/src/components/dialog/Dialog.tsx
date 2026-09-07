@@ -10,6 +10,7 @@ interface Properties {
     size?: "sm" | "lg" | "xl";
     type: DialogType;
     hidePrimaryButton?: boolean;
+    primaryButtonDisabled?: boolean;
     hideSecondaryButton?: boolean;
     primaryButtonLabel?: string;
     secondaryButtonLabel?: string;
@@ -32,7 +33,7 @@ const Dialog: React.FC<Properties> = (props) => {
 
     return (
         <Modal
-            w={props.width}
+            w={props.w}
             size={props.size || "auto"}
             opened={props.type === active}
             closeButtonProps={{size: "xl"}}
@@ -63,6 +64,7 @@ const Dialog: React.FC<Properties> = (props) => {
 
                     {!props.hidePrimaryButton &&
                         <Button size={"md"}
+                                disabled={props.primaryButtonDisabled}
                                 loading={props.isLoading}
                                 onClick={() => props.onPrimaryButtonClick && props.onPrimaryButtonClick()}>
                             {props.primaryButtonLabel || t("button.save")}
