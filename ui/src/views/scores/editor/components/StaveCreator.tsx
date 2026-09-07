@@ -1,32 +1,26 @@
 import React from 'react';
-import {ActionIcon, Button, Center, Divider, Group, Select, Table} from "@mantine/core";
+import {Box, Button, Center, Select, Table} from "@mantine/core";
 import {Color, Layout, Size} from "../../../../utils/constants.ts";
 import IconButton from "../../../../components/controls/IconButton.tsx";
 import {FaRegTrashCan} from "react-icons/fa6";
 import {useTranslation} from "react-i18next";
 import {Stave} from "../../../../model/Stave.ts";
-import StavePreview from "../../details/components/stave/StavePreview.tsx";
 import {range} from "../../../../utils/helpers.tsx";
 import {NoteRange} from "../../../../utils/dictionaries.ts";
-import {useAudioContext} from "../../../../hooks/useAudioContext.tsx";
 import {BiPlus} from "react-icons/bi";
-import {RiArrowGoBackFill} from "react-icons/ri";
-import {FaPlayCircle} from "react-icons/fa";
 
 const NOTE_RANGE = NoteRange.reverse();
 
 interface Properties {
     stave: Stave;
     setStave: (stave: Stave) => void;
-    onConfirm: (stave: Stave) => void;
-    onClose: () => void;
+    onConfirm?: (stave: Stave) => void;
+    onClose?: () => void;
 }
 
-const StaveCreator: React.FC<Properties> = ({stave, setStave, onConfirm, onClose}) => {
+const StaveCreator: React.FC<Properties> = ({stave, setStave}) => {
 
     const {t} = useTranslation();
-
-    const audioContext = useAudioContext();
 
     const handleLineAdd = () => {
         const y = stave.lines.length > 0 ? Math.max(...stave.lines.map(l => l.y)) + 2 : 0;
@@ -54,34 +48,13 @@ const StaveCreator: React.FC<Properties> = ({stave, setStave, onConfirm, onClose
         setStave({...stave});
     }
 
-
     const handleLineRemove = (index: number) => {
         setStave({...stave, lines: stave.lines.filter((_, i) => i !== index)});
     }
 
-    const handlePlay = () => {
-        audioContext.playStaveScale(stave);
-    }
-
     return (
-        <>
-            <Group gap={4}>
-                <Button px={"sm"} variant={"transparent"} onClick={handlePlay} disabled={stave.lines.length === 0}>
-                    <Group gap={"xs"}>
-                        <ActionIcon
-                            size={Size.icon.SM}
-                            title={t("button.listen")}
-                            c={"white"}
-                        >
-                            {<FaPlayCircle size={Size.icon.XL}/>}
-                        </ActionIcon>
-                        {t("button.listen")}
-                    </Group>
-                </Button>
-            </Group>
-
+        <Box mt={"xl"}>
             {stave.lines.length > 0 && <>
-                <StavePreview stave={stave} width={300}/>
                 <Table>
                     <Table.Thead>
                         <Table.Tr>
@@ -104,7 +77,7 @@ const StaveCreator: React.FC<Properties> = ({stave, setStave, onConfirm, onClose
                                 <Table.Td>
                                     <Select
                                         value={`${stave.lines[index].y}`}
-                                        data={range(0, 20).map(n => `${n}`)}
+                                        data={range(0, 30).map(n => `${n}`)}
                                         onChange={v => handleLineYChange(index, v)}
                                     />
                                 </Table.Td>
@@ -134,6 +107,7 @@ const StaveCreator: React.FC<Properties> = ({stave, setStave, onConfirm, onClose
             <Center>
                 <Button
                     size={"sm"}
+                    mt={"md"}
                     variant={"subtle"}
                     leftSection={<BiPlus size={Size.icon.SM}/>}
                     onClick={handleLineAdd}
@@ -141,28 +115,7 @@ const StaveCreator: React.FC<Properties> = ({stave, setStave, onConfirm, onClose
                     {t("button.addLine")}
                 </Button>
             </Center>
-
-            <Divider my={"xl"}/>
-
-            <Group justify={"end"} gap={4}>
-                <Button
-                    variant={"subtle"}
-                    onClick={onClose}>
-                    <Group>
-                        <RiArrowGoBackFill size={Size.icon.SM}/>
-                        {t("button.back")}
-                    </Group>
-
-                </Button>
-                <Button
-                    disabled={!!stave.lines.find(l => l.pitch === "")}
-                    onClick={() => onConfirm(stave)}>
-                    {t("button.confirm")}
-                </Button>
-
-            </Group>
-
-        </>
+        </Box>
     )
 };
 

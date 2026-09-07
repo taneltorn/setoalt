@@ -5,6 +5,7 @@ import {useTranslation} from "react-i18next";
 import {DialogType} from "../../utils/enums.ts";
 
 interface Properties {
+    w?: string | number;
     title?: string;
     size?: "sm" | "lg" | "xl";
     type: DialogType;
@@ -31,6 +32,7 @@ const Dialog: React.FC<Properties> = (props) => {
 
     return (
         <Modal
+            w={props.width}
             size={props.size || "auto"}
             opened={props.type === active}
             closeButtonProps={{size: "xl"}}
