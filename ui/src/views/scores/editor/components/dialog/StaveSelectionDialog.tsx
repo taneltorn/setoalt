@@ -78,7 +78,6 @@ const StaveSelectionDialog: React.FC = () => {
             onSecondaryButtonClick={handleClose}
             onClose={handleClose}
         >
-            <p>{JSON.stringify(linesWithError)}</p>
             <Group className={"hover-pointer"}>
                 {[StavePPT, StaveOldDiatonic, StaveDiatonic, customStave].map((s, index) =>
                     <Card
