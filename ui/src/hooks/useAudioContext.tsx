@@ -132,6 +132,68 @@ export const AudioContextProvider: React.FC<Properties> = ({children}) => {
         Tone.getContext().transport.stop();
     };
 
+    const playStaveScale = (stave: Stave) => {
+        const lineNotes = stave.lines.map((line, index) => ({
+                pitch: line.pitch,
+                position: index,
+                duration: "8n"
+            }
+        ));
+
+        const repeatNotes = lineNotes.slice(1).reverse();
+        const notes = [...repeatNotes, ...lineNotes].map((n, i) => ({
+            pitch: n.pitch,
+            position: i,
+            duration: n.duration
+        }));
+
+        playNotesInOrder(notes);
+    }
+
+    const playNotesInOrder = (notes: Note[]) => {
+        if (isSwitching || notes.length === 0) {
+            return;
+        }
+
+        stopPlayback();
+        setIsPlaying(true);
+
+        if (Tone.getContext().state !== "running") {
+            Tone.getContext().resume();
+        }
+
+        const startPosition = Math.min(...notes.map(n => n.position));
+
+        const events: Array<[number, Note]> = notes.map(note => [
+            positionToSeconds(note.position - startPosition),
+            note
+        ]);
+
+        const endTimes = notes.map(note => {
+            const start = positionToSeconds(note.position - startPosition);
+            const duration = Tone.Time(note.duration).toSeconds();
+
+            return start + duration;
+        });
+
+        const playbackDuration = Math.max(...endTimes);
+
+        sequenceRef.current = new Tone.Part((_, note: Note) => {
+            const frequency = Tone.Frequency(note.pitch).toFrequency();
+
+            player.playNotes(
+                [frequency],
+                [note.duration]
+            );
+        }, events).start(0);
+
+        Tone.getContext().transport.scheduleOnce(() => {
+            stopPlayback();
+        }, `+${playbackDuration}`);
+
+        Tone.getContext().transport.start();
+    };
+
     const resetPlayback = (context: ScoreContextProperties) => {
         stopPlayback();
         context.activate(-1);
@@ -158,6 +220,8 @@ export const AudioContextProvider: React.FC<Properties> = ({children}) => {
 
         playNotes,
         startPlayback,
+        playNotesInOrder,
+        playStaveScale,
         stopPlayback,
         resetPlayback,
 

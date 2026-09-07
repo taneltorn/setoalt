@@ -1,6 +1,10 @@
-### [1.0.7]
+### [1.1.0]
 
+- Lisatud võimalus luua suvaline noodijoonestik
+- Lisatud inglise keele tugi
 - Muudetud logo + selgitav tekst
+- Parandatud viga parooli muutmisel
+- Pisiparandused
 
 
 ### [1.0.6]

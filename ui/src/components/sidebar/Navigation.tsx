@@ -1,7 +1,7 @@
 import React from "react";
 import {Link, useLocation, useNavigate} from "react-router-dom";
 import {useTranslation} from "react-i18next";
-import {Box, Button, Divider, Group, NavLink} from "@mantine/core";
+import {Box, Button, Center, Divider, Group, NavLink} from "@mantine/core";
 import classes from "./Sidebar.module.scss";
 import {PiSpeakerSimpleHigh} from "react-icons/pi";
 import {IoHome, IoSettingsOutline} from "react-icons/io5";
@@ -14,6 +14,8 @@ import Logo from "../Logo.tsx";
 import {DialogType} from "../../utils/enums.ts";
 import {useDialogContext} from "../../hooks/useDialogContext.tsx";
 import {usePagination} from "../../hooks/usePagination.tsx";
+import LanguageSelector from "../LanguageSelector.tsx";
+import {FaUser} from "react-icons/fa";
 
 const routes = [
     {id: 'home', icon: <IoHome className={classes.icon} size={Size.icon.SM}/>, link: "/"},
@@ -22,6 +24,10 @@ const routes = [
 ];
 
 const protectedRoutes = [
+    {id: 'profile', icon: <FaUser className={classes.icon} size={Size.icon.SM}/>, link: "/profile"},
+];
+
+const adminRoutes = [
     {id: 'admin', icon: <IoSettingsOutline className={classes.icon} size={Size.icon.SM}/>, link: "/admin"},
 ];
 
@@ -73,21 +79,43 @@ const Navigation: React.FC<Properties> = (props) => {
                 />
             ))}
 
-            {auth.currentUser?.isAdmin && <>
+
+            {auth.currentUser && <>
                 <Divider my={"xs"} color={"white"}/>
 
-                {protectedRoutes.map((item, index) => (
-                    <NavLink
-                        mb={4}
-                        key={index}
-                        active={item.link === "/" && location.pathname === "/" || item.link !== "/" && location.pathname.startsWith(item.link)}
-                        className={classes.link}
-                        label={t(`page.sidebar.navigation.${item.id}`)}
-                        leftSection={item.icon}
-                        onClick={() => handleNavigate(item.link)}
-                    />
-                ))}
+                {auth.currentUser && <>
+                    {protectedRoutes.map((item, index) => (
+                        <NavLink
+                            mb={4}
+                            key={index}
+                            active={item.link === "/" && location.pathname === "/" || item.link !== "/" && location.pathname.startsWith(item.link)}
+                            className={classes.link}
+                            label={t(`page.sidebar.navigation.${item.id}`)}
+                            leftSection={item.icon}
+                            onClick={() => handleNavigate(item.link)}
+                        />
+                    ))}
+                </>}
+
+                {auth.currentUser?.isAdmin && <>
+                    {adminRoutes.map((item, index) => (
+                        <NavLink
+                            mb={4}
+                            key={index}
+                            active={item.link === "/" && location.pathname === "/" || item.link !== "/" && location.pathname.startsWith(item.link)}
+                            className={classes.link}
+                            label={t(`page.sidebar.navigation.${item.id}`)}
+                            leftSection={item.icon}
+                            onClick={() => handleNavigate(item.link)}
+                        />
+                    ))}
+                </>}
+
             </>}
+
+            <Center>
+                <LanguageSelector/>
+            </Center>
 
             <Divider mt={"xs"}/>
 

@@ -70,7 +70,7 @@ const Profile: React.FC = () => {
                                     size={"xl"}
                                     type={"password"}
                                     placeholder={t("view.profile.form.newPassword")}
-                                    {...register("username", {required: t("field.required")})}
+                                    {...register("password", {required: t("field.required")})}
                                     autoComplete={"off"}
                                 />
                             </Input.Wrapper>

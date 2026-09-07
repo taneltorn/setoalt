@@ -1,0 +1,503 @@
+{
+  "page": {
+    "title": "Alternative notation for Seto singing",
+    "loading": "Loading data...",
+    "help": "Show guide",
+    "example": "Example",
+    "search": "Search",
+    "sidebar": {
+      "navigation": {
+        "home": "Home",
+        "scores": "Listen",
+        "editor": "Create",
+        "about": "About",
+        "profile": "My profile",
+        "admin": "Settings",
+        "login": "Log in",
+        "logout": "Log out"
+      },
+      "notice": {
+        "message": "This application is currently under development!",
+        "changelog": "Changelog"
+      }
+    },
+    "table": {
+      "itemsPerPage": " Show",
+      "results": "{{count}} results found",
+      "noData": "No data found."
+    }
+  },
+  "help": {
+    "listen": "Listen",
+    "write": "Write",
+    "voices": "Voices",
+    "text1": "Here you can listen to the created notations.",
+    "torre": "Torrõ",
+    "kille": "Killõ",
+    "lowTorre": "Lower torrõ",
+    "frontVoice": "Lead voice",
+    "noteHigher": "The note is microtonally raised",
+    "noteLower": "The note is microtonally lowered",
+    "voiceControl": "Turning voices on/off",
+    "voiceControlText": "You can turn voices on and off by clicking the button for the corresponding voice. Voices that are turned off are not displayed in the notation and are not played back.",
+    "voiceControlText2": "By holding down the <kbd>Ctrl</kbd> key, you can hide a voice while keeping it audible during playback.",
+    "voiceOn": "The voice is turned on.",
+    "voiceOnNotVisible": "The voice is turned on but not visible. It is audible during playback.",
+    "voiceOff": "The voice is turned off.",
+    "buttons": "Buttons",
+    "listenToArchiveRecording": "Listen to the archival recording.",
+    "changeOutput": "Change the audio output. You can choose between piano (default), synthesizer, violin, flute, and guitar.",
+    "prevNote": "Select the previous note.",
+    "playbackText": "Playing back the notation. If you want to listen to the entire song or a shorter section several times in a row, (1) click the first note of the section, (2) hold down the <kbd>Ctrl</kbd> key, and (3) click the last note of the desired section. To exit repeat mode, click the reset arrow at the end of the selection.",
+    "nextNote": "Select the next note.",
+    "adjustVolume": "Adjust the overall playback pitch lower or higher.",
+    "adjustTempo": "Adjust the playback tempo slower or faster.",
+    "openSettings": "Open notation settings.",
+    "switchMode": "Switch between the simplified and detailed notation views. In the simplified view, the pitches of the staff lines and the up/down arrows (microtonality indicators) are not displayed.",
+    "displayEmbedding": "Display the embed code for the notation. The code can be added to an external website (e.g. laul.setomaa.ee).",
+    "downloadPng": "Download the notation as an image file (.png).",
+    "editorText": "The editor allows you to experiment with creating notations.",
+    "voiceActivation": "Activating a voice",
+    "voiceActivationText": "When an active voice is selected, all subsequently added notes are assigned to that voice. All other voices are deactivated, meaning they are not audible during playback but remain faintly visible in the notation. Different voice combinations can be selected by holding down the <kbd>Ctrl</kbd> key.",
+    "voiceActive": "The voice is active.",
+    "voiceActiveNotVisible": "The voice is not active, but the notes are fully visible and audible during playback.",
+    "voiceNotActive": "The voice is not active; the notes are faintly visible and are not audible during playback.",
+    "changeScale": "Change the staff. You can choose between the semitone–whole-and-a-half-tone (PPT), older diatonic, and newer diatonic scales. You can also create an entirely new staff. The staff can only be changed for a new notation.",
+    "addNote": "Add a new note. In addition to using the mouse, you can enter notes using the number keys 1 to 6 or 7 on the keyboard, depending on the scale.",
+    "adjustPitch": "Adjust the pitch of the selected note in cents.",
+    "toHalfNote": "Change the selected note to a half note.",
+    "toQuarterNote": "Change the selected note to a quarter note.",
+    "toEightNote": "Change the selected note to an eighth note.",
+    "splitNote": "Split the selected eighth note into two sixteenth notes.",
+    "adjustNoteSize": "Change the size of the selected note. The first click makes the note smaller; the second restores its original size.",
+    "addBreak": "Add a line break.",
+    "addSeparator": "Add a separator. The first click adds a full-length separator, the second makes it shorter, and the third removes it.",
+    "shiftLeft": "Shift notes to the left.",
+    "shiftRight": "Shift notes to the right.",
+    "shiftLyricsLeft": "Shift the lyrics to the left. Requires holding down the <kbd>Ctrl</kbd> key.",
+    "shiftLyricsRight": "Shift the lyrics to the right. Requires holding down the <kbd>Ctrl</kbd> key.",
+    "shiftVoicesLeft": "Shift all notes and separators to the left. Requires holding down the <kbd>Shift</kbd> key.",
+    "shiftVoicesRight": "Shift all notes and separators to the right. Requires holding down the <kbd>Shift</kbd> key.",
+    "removeNote": "Remove the selected note.",
+    "undo": "Undo.",
+    "redo": "Redo.",
+    "reset": "Delete the notation and start over."
+  },
+  "view": {
+    "home": {
+      "title": "Home",
+      "about": "About",
+      "header": "Seto leelo notation. A web application for learning Seto leelo melodies",
+      "description": "The application allows you to create and listen to Seto leelo notations using Seto notation.<br/>The notation system is explained in more detail in <0>Leelokool</0> (<1>laul.setomaa.ee/leelokool</1>) on the <0>Seto Song Tradition</0> website.",
+      "description2": "The application includes audio recordings from the Estonian Folklore Archives of the Estonian Literary Museum and the folklore archives of the Finnish Literature Society.",
+      "link": {
+        "scores": "Notations",
+        "editor": "Try it"
+      },
+      "creators": "Creators",
+      "creatorList": "Janika Oras<br/>Mari Palolill<br/>Žanna Pärtlas<br/>Hans-Gunter Lock<br/>Tanel Torn (technical implementation)",
+      "sponsors": "Supporters",
+      "sponsorList": "Ministry of Culture measures supporting artistic research in the fields of culture and creativity and Setomaa traditional culture (artistic research project \"Teaching Seto Multipart Singing Using Alternative Musical Notation\")<br/>Estonian Research Council (PRG1288)<br/>Ministry of Education and Research (TK215)",
+      "contact": "Contact",
+      "copyright": "© creators, Estonian Literary Museum",
+      "technicalSolution": "Technical implementation"
+    },
+    "about": {
+      "title": "About",
+      "header": "About",
+      "description": "The web application is part of the artistic research project <strong>“Teaching Seto Multipart Singing Using Alternative Musical Notation”</strong>"
+    },
+    "scoreList": {
+      "title": "Listen",
+      "starredScores": "An asterisk after the song title indicates that this song variant is not available on the <strong>Seto Song Tradition</strong> website and is only available in this application.",
+      "header": "Notations",
+      "table": {
+        "name": "Name",
+        "stave": "Staff",
+        "voices": "Voices",
+        "visibility": "Visibility",
+        "createdBy": "Entered by",
+        "createdAt": "Created",
+        "modifiedAt": "Last modified"
+      }
+    },
+    "scoreDetails": {
+      "lyrics": "Lyrics",
+      "notFound": "Notation not found.",
+      "showAll": "View all notations",
+      "clonedScore": "Copy of {{name}}",
+      "settings": {
+        "selectSimplifiedMode": "Show simplified view",
+        "selectDetailMode": "Show detailed view",
+        "exportPng": "Export PNG",
+        "embedScore": "Embed code",
+        "cloneScore": "Make a copy"
+      }
+    },
+    "editor": {
+      "title": "Editor",
+      "header": "Editor",
+      "description": "You can save a notation when you are logged in. To obtain a username and password, please contact janika.oras@folklore.ee.",
+      "form": {
+        "title": "Title",
+        "name": "Name",
+        "description": "Description",
+        "defaultTempo": "Default tempo (BPM)",
+        "defaultTransposition": "Default pitch (semitones)",
+        "lineDetune": "Microtonal tuning of staff lines (cents)",
+        "text": "Lyrics",
+        "visibility": "Visibility",
+        "visibilityComment": "The notation is always accessible via a direct link.",
+        "recording": "Recording link",
+        "editor": "Notation",
+        "data": "Data",
+        "stave": "Settings",
+        "pitch": "Pitch",
+        "distance": "Distance (from top)",
+        "color": "Color"
+      }
+    },
+    "profile": {
+      "title": "Profile",
+      "label": {
+        "name": "Name",
+        "username": "Username",
+        "role": "Role",
+        "createdAt": "Created"
+      },
+      "form": {
+        "changePassword": "Change password",
+        "newPassword": "New password"
+      }
+    },
+    "admin": {
+      "title": "Admin panel",
+      "tab": {
+        "users": "Users",
+        "notifications": "Notifications"
+      },
+      "notifications": {
+        "id": "ID",
+        "title": "Title",
+        "message": "Text",
+        "validFrom": "Active from",
+        "validTo": "Active until",
+        "status": "Status",
+        "active": "Active",
+        "inactive": "Inactive",
+        "date": "Date"
+      },
+      "users": {
+        "table": {
+          "id": "ID",
+          "username": "Username",
+          "name": "Name",
+          "role": "Role",
+          "createdAt": "Created",
+          "modifiedAt": "Modified"
+        },
+        "form": {
+          "username": "Username",
+          "password": "Password",
+          "firstname": "First name",
+          "lastname": "Last name",
+          "role": "Role",
+          "editor": "Editor",
+          "user": "Regular user"
+        }
+      }
+    },
+    "login": {
+      "title": "Log in",
+      "form": {
+        "username": "Username",
+        "password": "Password",
+        "submit": "Log in"
+      }
+    },
+    "changelog": {
+      "title": "Changelog",
+      "header": "Changes"
+    },
+    "error": {
+      "title": "Error!",
+      "description": "Something went wrong!",
+      "returnToHome": "Back to home"
+    }
+  },
+  "button": {
+    "ok": "OK",
+    "copy": "Copy",
+    "copied": "Copied!",
+    "clone": "Make a copy",
+    "remove": "Delete",
+    "save": "Save",
+    "confirm": "Confirm",
+    "cancel": "Cancel",
+    "edit": "Edit",
+    "close": "Close",
+    "reset": "Reset",
+    "submit": "Submit",
+    "listen": "Listen",
+    "add": "Add",
+    "addNew": "Add new",
+    "addLine": "Add staff line",
+    "pngExport": "PNG",
+    "showAll": "Show all",
+    "showActive": "Show active",
+    "changeVoice": "Change voice",
+    "removeVoice": "Delete voice",
+    "changeInstrument": "Change audio output",
+    "backToTop": "Back to top",
+    "settings": "Settings and tools",
+    "back": "Back"
+  },
+  "tooltip": {
+    "activatePosition": "Position {{position}}",
+    "changeDuration": {
+      "2n": "Half note",
+      "4n": "Quarter note",
+      "8n": "Eighth note"
+    },
+    "openEditor": "Open editor",
+    "closeEditor": "Close editor",
+    "insertPitch": "Add {{pitch}} note",
+    "changePitch": "Change to {{pitch}} note",
+    "shiftLeft": "Shift left",
+    "shiftVoicesLeft": "Shift all notes and separators left",
+    "shiftLyricsLeft": "Shift lyrics left",
+    "shiftRight": "Shift right",
+    "shiftVoicesRight": "Shift all notes and separators right",
+    "shiftLyricsRight": "Shift lyrics right",
+    "insertBreak": "Add line break",
+    "removeBreak": "Remove line break",
+    "insertDivider": "Add separator",
+    "removeDivider": "Remove separator",
+    "microTuning": "Microtonality",
+    "removeNote": "Remove note",
+    "resetScore": "Reset",
+    "saveScore": "Save",
+    "playNext": "Next",
+    "playPrevious": "Previous",
+    "startPlayback": "Play",
+    "startPlaybackRepeat": "Play on repeat",
+    "startPlaybackRecording": "Listen to recording",
+    "stopPlayback": "Stop",
+    "resetPlayback": "Go to beginning",
+    "changeTempo": "Change tempo",
+    "showVoice": "Show voice",
+    "hideVoice": "Hide voice",
+    "transpose": "Change pitch",
+    "changeType": "Change size",
+    "splitNote": "Split note",
+    "undo": "Undo",
+    "redo": "Redo",
+    "muteVolume": "Mute",
+    "unmuteVolume": "Unmute",
+    "changeVolume": "Change volume",
+    "staveSelection": "Change staff"
+  },
+  "dialog": {
+    "saveScore": {
+      "title": "Save notation",
+      "description": "Save the created notation."
+    },
+    "saveVoice": {
+      "title": "Add voice",
+      "name": "Name",
+      "type": {
+        "label": "Voice type",
+        "0": "Torrõ",
+        "1": "Killõ",
+        "2": "Lower torrõ",
+        "3": "Lead voice"
+      },
+      "color": "Color",
+      "copyFrom": "Copy notes from an existing voice?"
+    },
+    "saveUser": {
+      "title": "Save user"
+    },
+    "removeScore": {
+      "title": "Are you sure?",
+      "description": "Delete notation <strong>{{name}}</strong>?"
+    },
+    "removeUser": {
+      "title": "Are you sure?",
+      "description": "Delete user <strong>{{username}}</strong>?"
+    },
+    "removeNotification": {
+      "title": "Are you sure?",
+      "description": "Delete notification <strong>{{title}}</strong>?"
+    },
+    "embedScore": {
+      "title": "Display notation on an external website",
+      "description": "Enter the maximum display dimensions and copy the code to your website.",
+      "position": "Starting position",
+      "width": "Width",
+      "height": "Height"
+    },
+    "microTuning": {
+      "title": "Microtonality",
+      "description": "Adjust the pitch of note {{pitch}}.",
+      "showDetuneIndicator": "Show indicator"
+    },
+    "staveSelection": {
+      "title": "Select staff"
+    },
+    "transpose": {
+      "title": "Transposition",
+      "description": "Adjust the playback pitch."
+    },
+    "changeTempo": {
+      "title": "Change tempo",
+      "description": "Make the playback faster or slower."
+    },
+    "resetScore": {
+      "title": "Are you sure?",
+      "description": "Delete this notation and start over?"
+    },
+    "saveNotification": {
+      "title": "Save notification"
+    }
+  },
+  "unit": {
+    "bpm": "BPM",
+    "semitones": "Semitones",
+    "semitonesAbbr": "st",
+    "cents": "Cents",
+    "centsAbbr": "c"
+  },
+  "visibility": {
+    "public": "Public",
+    "private": "Private"
+  },
+  "role": {
+    "admin": "Administrator",
+    "editor": "Editor",
+    "user": "User",
+    "guest": "Guest"
+  },
+  "field": {
+    "required": "This field is required",
+    "voiceExists": "A voice with this name has already been added"
+  },
+  "toast": {
+    "success": {
+      "score": {
+        "saveScore": "Notation saved!",
+        "removeScore": "Notation deleted!"
+      },
+      "user": {
+        "saveUser": "User saved!",
+        "removeUser": "User deleted!"
+      },
+      "notification": {
+        "saveNotification": "Notification saved!",
+        "removeNotification": "Notification deleted!"
+      }
+    },
+    "error": {
+      "score": {
+        "fetchScore": "Failed to load notation!",
+        "fetchScores": "Failed to load notations!",
+        "removeScore": "Failed to delete notation!",
+        "saveScore": "Failed to save notation!",
+        "updateScore": "Failed to update notation!"
+      },
+      "user": {
+        "fetchUser": "Failed to load user!",
+        "fetchUsers": "Failed to load users!",
+        "saveUser": "Failed to save user!",
+        "removeUser": "Failed to delete user!"
+      },
+      "notification": {
+        "fetchNotification": "Failed to load notification!",
+        "saveNotification": "Failed to save notification!",
+        "removeNotification": "Failed to delete notification!"
+      },
+      "message": "Something went wrong.",
+      "fetchData": "Failed to load data.",
+      "wrongCredentials": "Incorrect username/password",
+      "logout": "Failed to load data."
+    }
+  },
+  "stave": {
+    "ppt": "PPT",
+    "custom": "Create your own",
+    "diatonic": "Diatonic",
+    "olddiatonic": "Older diatonic",
+    "abbr": {
+      "ppt": "PPT",
+      "diatonic": "Diat.",
+      "olddiatonic": "O.Diat."
+    }
+  },
+  "pitch": {
+    "c3": "C",
+    "c#3": "C♯",
+    "d3": "D",
+    "d#3": "E♭",
+    "e3": "E",
+    "f3": "F",
+    "f#3": "F♯",
+    "g3": "G",
+    "g#3": "G♯",
+    "a3": "A",
+    "a#3": "A♯",
+    "b3": "B",
+    "c4": "C",
+    "c#4": "C♯",
+    "d4": "D",
+    "d#4": "E♭",
+    "e4": "E",
+    "f4": "F",
+    "f#4": "F♯",
+    "g4": "G",
+    "g#4": "G♯",
+    "a4": "A",
+    "a#4": "A♯",
+    "b4": "B",
+    "c5": "C",
+    "c#5": "C♯",
+    "d5": "D",
+    "d#5": "E♭",
+    "e5": "E",
+    "f5": "F",
+    "f#5": "F♯",
+    "g5": "G",
+    "g#5": "G♯",
+    "a5": "A",
+    "a#5": "A♯",
+    "b5": "B",
+    "c6": "C",
+    "c#6": "C♯",
+    "d6": "D",
+    "d#6": "E♭",
+    "e6": "E",
+    "f6": "F",
+    "f#6": "F♯",
+    "g6": "G",
+    "g#6": "G♯",
+    "a6": "A",
+    "a#6": "A♯",
+    "b6": "B"
+  },
+  "duration": {
+    "2n": "2n",
+    "4n": "4n",
+    "8n": "8n"
+  },
+  "instrument": {
+    "synth": "Synthesizer",
+    "piano": "Piano",
+    "violin": "Violin",
+    "flute": "Flute",
+    "guitar": "Guitar"
+  },
+  "line": {
+    "dark": "Dark",
+    "light": "Light",
+    "transparent": "Transparent"
+  }
+}

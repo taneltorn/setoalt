@@ -70,6 +70,7 @@ export const Color = {
     stave: {
         PRIMARY_LINE: "#000",
         SECONDARY_LINE: "#eee",
+        TRANSPARENT: "#fff",
     },
     voice: {
         TORRO: "#000000",
@@ -105,4 +106,4 @@ export const Playback = {
     TRANSPOSITION_STEP: 1,
 }
 
-export const Contact = "janika.oras@folklore.ee\ntanel.torn@folklore.ee";
+export const Contact = "janika.oras@folklore.ee\ntanel.torn@gmail.com";

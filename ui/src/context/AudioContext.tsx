@@ -12,6 +12,8 @@ export interface AudioContextProperties {
     setIsSwitching: (value: boolean) => void;
 
     playNotes: (notes: Note[], stave: Stave) => void;
+    playNotesInOrder: (notes: Note[]) => void;
+    playStaveScale: (stave: Stave) => void;
 
     startPlayback: (context: ScoreContextProperties) => void;
     stopPlayback: () => void;

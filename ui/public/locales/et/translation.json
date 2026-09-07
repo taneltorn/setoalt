@@ -11,6 +11,7 @@
         "scores": "Kuula",
         "editor": "Kirjuta",
         "about": "Rakendusest",
+        "profile": "Minu profiil",
         "admin": "Seaded",
         "login": "Logi sisse",
         "logout": "Logi välja"
@@ -25,6 +26,62 @@
       "results": "Leitud {{count}} tulemust",
       "noData": "Andmeid ei leitud."
     }
+  },
+  "help": {
+    "listen": "Kuula",
+    "write": "Kirjuta",
+    "voices": "Hääled",
+    "text1": "Siin saad kuulata loodud noodistusi.",
+    "torre": "Torrõ",
+    "kille": "Killõ",
+    "lowTorre": "Alumine torrõ",
+    "frontVoice": "Eeslaul",
+    "noteHigher": "Nooti on mikrotonaalselt kõrgendatud",
+    "noteLower": "Nooti on mikrotonaalselt madaldatud",
+    "voiceControl": "Häälte sisse/välja lülilitamine",
+    "voiceControlText": "Hääli saad sisse ja välja lülitada, vajutades vastava hääle nupul. Välja lülitatud hääli ei kuvata noodistusel ega esitada vastavat heli.",
+    "voiceControlText2": "Hoides all <kbd>Ctrl</kbd> klahvi on võimalik hääl peita, kuid jätta see taasesitusel siiski kõlama.",
+    "voiceOn": "Hääl on sisse lülitatud.",
+    "voiceOnNotVisible": "Hääl on sisse lülitatud, kuid ei ole nähtav. Heli kõlab taasesitusel.",
+    "voiceOff": "Hääl on välja lülitatud.",
+    "buttons": "Nupud",
+    "listenToArchiveRecording": "Kuula arhiivisalvestust.",
+    "changeOutput": "Muuda heliväljundit. Valida saab klaveri (vaikimisi), süntesaatori, viiuli, flöödi ja kitarri vahel.",
+    "prevNote": "Vali eelmine noot.",
+    "playbackText": "Noodistuse mahamängimine.Kui tahad kuulata tervet lugu või mõnda lühemat lõiku mitu korda järjest, siis (1) kliki selle lõigu algusnoodile, (2) vajuta alla <kbd>Ctrl</kbd> klahv ja (3) kliki soovitud lõigu lõpunoodile. Kordusrežiimist saad välja, vajutades valiku lõpus lähtesta-noolele.",
+    "nextNote": "Vali järgmine noot.",
+    "adjustVolume": "Muuda taasesituse üldist helikõrgust madalamaks või kõrgemaks.",
+    "adjustTempo": "Muuda esitustempot aeglasemaks või kiiremaks.",
+    "openSettings": "Ava noodistuse sätted.",
+    "switchMode": "Vali noodistuse lihtsustatud või detailvaate vahel. Lihtsustatud vaates ei kuvata noodijoonte helikõrgusi ega üles-alla noolekesi (mikrotonaalsuse näitajaid).",
+    "displayEmbedding": "Kuva noodistuse manustamiskood. Vastava koodi saab lisada välisele veebilehele (nt laul.setomaa.ee).",
+    "downloadPng": "Lae alla noodistuse pildifail (.png).",
+    "editorText": "Redaktor võimaldab katsetada noodistuste loomisega.",
+    "voiceActivation": "Hääle aktiveerimine",
+    "voiceActivationText": "Aktiivse hääle valimisel seotakse kõik järgnevalt lisatud noodid antud häälega. Kõik teised hääled peidetakse, st heli taasesitamisel vastavad hääled ei kõla, kuid jäävad noodijoonestikus siiski õrnalt nähtavale. Erinevaid häälekombinatsioone on võimalik valida <kbd>Ctrl</kbd> nuppu all hoides.",
+    "voiceActive": "Hääl on aktiivne.",
+    "voiceActiveNotVisible": "Hääl ei ole aktiivne, kuid noodid on täielikult nähtavad ja kõlavad taasesitusel.",
+    "voiceNotActive": "Hääl ei ole aktiivne, noodid on õrnalt nähtaval ja ei kõla taasesitusel.",
+    "changeScale": "Vaheta noodijoonestikku. Valida saab pooltoon-poolteisttoon- (PPT), vanema ja uuema diatoonilise helirea vahel. Lisaks saab luua täiesti uue noodijoonestiku. Noodijoonestikku saab vahetada üksnes uue noodistuse puhul.",
+    "addNote": "Lisa uus noot. Lisaks hiirele võib kasutada nootide sisestamiseks klaviatuuri numbriklahve 1 kuni 6 või 7, vastavalt helireale.",
+    "adjustPitch": "Muuda valitud noodi helikõrgust tsentides.",
+    "toHalfNote": "Muuda valitud noot poolnoodiks.",
+    "toQuarterNote": "Muuda valitud noot veerandnoodiks.",
+    "toEightNote": "Muuda valitud noot kaheksandiknoodiks.",
+    "splitNote": "Poolita valitud kaheksandiknoot kaheks kuueteistkümnendiknoodiks.",
+    "adjustNoteSize": "Muuda valitud noodi suurust. Esimene vajutus muudab noodi väiksemaks, teine taastab algse suuruse.",
+    "addBreak": "Lisa reavahe.",
+    "addSeparator": "Lisa eraldaja. Esimene vajutus lisab täispika eraldaja, teine vajutus muudab selle lühemaks ning kolmas eemaldab.",
+    "shiftLeft": "Nihuta noote vasakule.",
+    "shiftRight": "Nihuta noote paremale.",
+    "shiftLyricsLeft": "Nihuta laulusõnu vasakule. Vajalik <kbd>Ctrl</kbd> nupu all hoidmine.",
+    "shiftLyricsRight": "Nihuta laulusõnu paremale. Vajalik <kbd>Ctrl</kbd> nupu all hoidmine.",
+    "shiftVoicesLeft": "Nihuta kõiki noote ja eraldajaid vasakule. Vajalik <kbd>Shift</kbd> nupu all hoidmine.",
+    "shiftVoicesRight": "Nihuta kõiki noote ja eraldajaid paremale. Vajalik <kbd>Shift</kbd> nupu all hoidmine.",
+    "removeNote": "Eemalda valitud noot.",
+    "undo": "Võta tagasi.",
+    "redo": "Tee uuesti.",
+    "reset": "Kustuta noodistus ja alusta uuesti."
   },
   "view": {
     "home": {
@@ -95,7 +152,10 @@
         "recording": "Link salvestusele",
         "editor": "Noodistus",
         "data": "Andmed",
-        "stave": "Sätted"
+        "stave": "Sätted",
+        "pitch": "Helikõrgus",
+        "distance": "Kaugus (ülevalt)",
+        "color": "Värv"
       }
     },
     "profile": {
@@ -179,8 +239,10 @@
     "close": "Sulge",
     "reset": "Lähtesta",
     "submit": "Saada",
+    "listen": "Kuula",
     "add": "Lisa",
     "addNew": "Lisa uus",
+    "addLine": "Lisa noodijoon",
     "pngExport": "PNG",
     "showAll": "Näita kõiki",
     "showActive": "Näita aktiivset",
@@ -188,7 +250,8 @@
     "removeVoice": "Kustuta hääl",
     "changeInstrument": "Muuda heliväljundit",
     "backToTop": "Tagasi üles",
-    "settings": "Seaded ja tööriistad"
+    "settings": "Seaded ja tööriistad",
+    "back": "Tagasi"
   },
   "tooltip": {
     "activatePosition": "Positsioon {{position}}",
@@ -362,6 +425,7 @@
   },
   "stave": {
     "ppt": "PPT",
+    "custom": "Loo ise",
     "diatonic": "Diatooniline",
     "olddiatonic": "Vanem diatooniline",
     "abbr": {
@@ -431,5 +495,10 @@
     "violin": "Viiul",
     "flute": "Flööt",
     "guitar": "Kitarr"
+  },
+  "line": {
+    "dark": "Tume",
+    "light": "Hele",
+    "transparent": "Läbipaistev"
   }
 }

@@ -13,11 +13,14 @@ const ResetScoreDialog: React.FC = () => {
 
     const [t] = useTranslation();
     const history = useHistory();
-    const {setActiveVoice, setActivePosition, setLoopRange, setScore} = useScoreContext();
+    const {setActiveVoice, setActivePosition, setLoopRange, setScore, score} = useScoreContext();
     const {close} = useDialogContext();
 
     const confirm = () => {
-        setScore(structuredClone(EmptyScore));
+        const clone = structuredClone(EmptyScore);
+        clone.data.stave = {...score.data.stave};
+
+        setScore(clone);
         setActiveVoice(DefaultVoices[0].name);
         setActivePosition(0);
         setLoopRange(undefined);

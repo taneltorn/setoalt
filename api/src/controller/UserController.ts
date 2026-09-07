@@ -33,7 +33,7 @@ class UserController {
             const user = req.user;
             const username = req.params.username;
             
-            if (user?.role !== 'ADMIN') {
+            if (user?.role !== 'ADMIN' && user?.username !== username) {
                 this.logger.info(`Not authorized: ${user.username}`);
                 res.status(403).json({error: "Not authorized"});
                 return;

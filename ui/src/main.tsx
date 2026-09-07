@@ -2,10 +2,12 @@
 import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import '@mantine/core/styles.css';
+import "./i18n";
 import './index.scss'
 import '@mantine/notifications/styles.css';
 import '@mantine/dates/styles.css';
 import 'react-h5-audio-player/lib/styles.css';
+import chroma from "chroma-js";
 
 import {MantineProvider, createTheme} from '@mantine/core';
 import {AuthContextProvider} from "./hooks/useAuth.tsx";
@@ -16,13 +18,13 @@ import {PaginationContextProvider} from "./hooks/usePagination.tsx";
 import {DataServiceContextProvider} from "./hooks/useDataService.tsx";
 
 const theme = createTheme({
-    fontFamily: 'Nunito, sans-serif',
+    fontFamily: 'Verdana, sans-serif',
     defaultRadius: 'xl',
     primaryColor: 'red',
     primaryShade: 9,
     colors: {
-        'red': ['#970000', '#970000', '#970000', '#970000', '#E70000', '#D70000', '#C70000', '#B70000', '#A70000', '#970000'],
-
+        // @ts-ignore
+        red: chroma.scale("Reds").colors(10),
     },
     breakpoints: {
         xs: '30em',

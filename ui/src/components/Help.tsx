@@ -11,7 +11,7 @@ import {
     Text, Title,
     useMantineTheme
 } from "@mantine/core";
-import {useTranslation} from "react-i18next";
+import {Trans, useTranslation} from "react-i18next";
 import {useDisclosure} from "@mantine/hooks";
 import {
     FaBackward, FaCircle,
@@ -66,52 +66,52 @@ const Help: React.FC<Properties> = (props) => {
                         <Tabs.Tab value="playback">
                             <Group>
                                 <PiSpeakerSimpleHigh size={Size.icon.XS}/>
-                                <Text size={"md"}>Kuula</Text>
+                                <Text size={"md"}>{t("help.listen")}</Text>
                             </Group>
                         </Tabs.Tab>
                         <Tabs.Tab value="editor">
                             <Group>
                                 <BsMusicNoteList size={Size.icon.XS}/>
-                                <Text size={"md"}>Kirjuta</Text>
+                                <Text size={"md"}>{t("help.write")}</Text>
                             </Group>
                         </Tabs.Tab>
                     </Tabs.List>
 
                     <Tabs.Panel value={"playback"} pt={"xl"}>
-                        Siin saad kuulata loodud noodistusi.
+                        {t("help.text1")}
 
-                        <Title order={5} my={"md"}>Hääled</Title>
+                        <Title order={5} my={"md"}>{t("help.voices")}</Title>
 
                         <HelpText icon={<FaCircle color={Color.voice.TORRO}/>}>
-                            Torrõ
+                            {t("help.torre")}
                         </HelpText>
 
                         <HelpText icon={<FaCircle color={Color.voice.KILLO}/>}>
-                            Killõ
+                            {t("help.kille")}
                         </HelpText>
 
                         <HelpText icon={<FaCircle color={Color.voice.BOTTOM_TORRO}/>}>
-                            Alumine torrõ
+                            {t("help.lowTorre")}
                         </HelpText>
 
                         <HelpText icon={<FaCircle color={Color.voice.FRONT}/>}>
-                            Eeslaul
+                            {t("help.frontVoice")}
                         </HelpText>
 
                         <HelpText icon={<HiArrowNarrowUp color={Color.voice.TORRO}/>}>
-                            Nooti on mikrotonaalselt kõrgendatud
+                            {t("help.noteHigher")}
                         </HelpText>
                         <HelpText icon={<HiArrowNarrowDown color={Color.voice.TORRO}/>}>
-                            Nooti on mikrotonaalselt madaldatud
+                            {t("help.noteLower")}
                         </HelpText>
 
-                        <Title order={6} my={"md"}>Häälte sisse/välja lülilitamine</Title>
+                        <Title order={6} my={"md"}>{t("help.voiceControl")}</Title>
 
-                        Hääli saad sisse ja välja lülitada, vajutades vastava hääle nupul. Välja lülitatud hääli ei
-                        kuvata noodistusel ega esitada vastavat heli.
+                        {t("help.voiceControlText")}
                         <br/>
-                        Hoides all <Kbd>Ctrl</Kbd> klahvi on võimalik hääl peita, kuid jätta see taasesitusel siiski
-                        kõlama.
+                        <br/>
+                        <Trans i18nKey="help.voiceControlText2"  components={{kbd: <Kbd/>}}/>
+
                         <Grid mt={"md"}>
                             <Grid.Col span={3}>
                                 <Button
@@ -122,7 +122,7 @@ const Help: React.FC<Properties> = (props) => {
                                 </Button>
                             </Grid.Col>
                             <Grid.Col span={9}>
-                                Hääl on sisse lülitatud.
+                                {t("help.voiceOn")}
                             </Grid.Col>
                         </Grid>
                         <Grid>
@@ -136,7 +136,7 @@ const Help: React.FC<Properties> = (props) => {
                                 </Button>
                             </Grid.Col>
                             <Grid.Col span={9}>
-                                Hääl on sisse lülitatud, kuid ei ole nähtav. Heli kõlab taasesitusel.
+                                {t("help.voiceOnNotVisible")}
                             </Grid.Col>
                         </Grid>
                         <Grid>
@@ -150,76 +150,69 @@ const Help: React.FC<Properties> = (props) => {
                                 </Button>
                             </Grid.Col>
                             <Grid.Col span={9}>
-                                Hääl on välja lülitatud.
+                                {t("help.voiceOff")}
                             </Grid.Col>
                         </Grid>
 
                         <Divider my={"md"}/>
 
-                        <Title order={5} mb={"md"}>Nupud</Title>
+                        <Title order={5} mb={"md"}>{t("help.buttons")}</Title>
 
                         <HelpText icon={<FaPlay size={Size.icon.XS}/>}>
-                            Kuula arhiivisalvestust.
+                            {t("help.listenToArchiveRecording")}
                         </HelpText>
 
                         <HelpText icon={<MdOutlinePiano size={Size.icon.SM}/>}>
-                            Muuda heliväljundit. Valida saab klaveri (vaikimisi), süntesaatori, viiuli, flöödi ja
-                            kitarri vahel.
+                            {t("help.changeOutput")}
                         </HelpText>
 
                         <HelpText icon={<FaBackward size={Size.icon.SM}/>}>
+                            {t("help.prevNote")}
                             Vali eelmine noot.
                         </HelpText>
 
                         <HelpText icon={<FaPlayCircle color={theme.colors.red[9]} size={Size.icon.SM}/>}>
-                            Noodistuse mahamängimine.
-                            Kui tahad kuulata tervet lugu või mõnda lühemat lõiku mitu korda järjest, siis (1) kliki selle lõigu algusnoodile, 
-                            (2) vajuta alla <Kbd>Ctrl</Kbd> klahv ja (3) kliki soovitud lõigu lõpunoodile. Kordusrežiimist saad välja, vajutades valiku lõpus lähtesta-noolele.
+                            <Trans i18nKey="help.playbackText"  components={{kbd: <Kbd/>}}/>
                         </HelpText>
 
                         <HelpText icon={<FaForward size={Size.icon.SM}/>}>
-                            Vali järgmine noot.
+                            {t("help.nextNote")}
                         </HelpText>
 
                         <Divider my={"md"}/>
 
                         <HelpText icon={<GiTunePitch color={theme.colors.gray[5]} size={Size.icon.SM}/>}>
-                            Muuda taasesituse üldist helikõrgust madalamaks või kõrgemaks.
+                            {t("help.adjustVolume")}
                         </HelpText>
 
                         <HelpText icon={<IoIosSpeedometer color={theme.colors.gray[5]} size={Size.icon.SM}/>}>
-                            Muuda esitustempot aeglasemaks või kiiremaks.
+                            {t("help.adjustTempo")}
                         </HelpText>
 
                         <Divider my={"md"}/>
 
                         <HelpText icon={<IoSettingsOutline size={Size.icon.SM}/>}>
-                            Ava noodistuse sätted.
+                            {t("help.openSettings")}
                         </HelpText>
 
                         <HelpText icon={<FaItunesNote size={Size.icon.SM}/>}>
-                            Vali noodistuse lihtsustatud või detailvaate vahel. Lihtsustatud vaates ei kuvata
-                            noodijoonte helikõrgusi ega üles-alla noolekesi (mikrotonaalsuse näitajaid).
+                            {t("help.switchMode")}
                         </HelpText>
 
                         <HelpText icon={<BsCodeSlash size={Size.icon.SM}/>}>
-                            Kuva noodistuse manustamiskood. Vastava koodi saab lisada välisele veebilehele (nt
-                            laul.setomaa.ee).
+                            {t("help.displayEmbedding")}
                         </HelpText>
 
                         <HelpText icon={<BsFiletypePng size={Size.icon.SM}/>}>
-                            Lae alla noodistuse pildifail (.png).
+                            {t("help.downloadPng")}
                         </HelpText>
                     </Tabs.Panel>
 
                     <Tabs.Panel value={"editor"} pt={"xl"}>
-                        Redaktor võimaldab katsetada noodistuste loomisega.
+                        {t("help.editorText")}
 
-                        <Title order={5} my={"md"}>Hääle aktiveerimine</Title>
-                        Aktiivse hääle valimisel seotakse kõik järgnevalt lisatud noodid antud häälega. Kõik teised
-                        hääled peidetakse, st heli taasesitamisel vastavad hääled ei kõla, kuid jäävad noodijoonestikus
-                        siiski õrnalt nähtavale. Erinevaid häälekombinatsioone on võimalik valida <Kbd>Ctrl</Kbd> nuppu
-                        all hoides.
+                        <Title order={5} my={"md"}>{t("help.voiceActivation")}</Title>
+                        <Trans i18nKey="help.voiceActivationText"  components={{kbd: <Kbd/>}}/>
 
                         <Grid mt={"md"}>
                             <Grid.Col span={3}>
@@ -231,7 +224,7 @@ const Help: React.FC<Properties> = (props) => {
                                 </Button>
                             </Grid.Col>
                             <Grid.Col span={9}>
-                                Hääl on aktiivne.
+                                {t("help.voiceActive")}
                             </Grid.Col>
                         </Grid>
 
@@ -246,7 +239,7 @@ const Help: React.FC<Properties> = (props) => {
                                 </Button>
                             </Grid.Col>
                             <Grid.Col span={9}>
-                                Hääl ei ole aktiivne, kuid noodid on täielikult nähtavad ja kõlavad taasesitusel.
+                                {t("help.voiceActiveNotVisible")}
                             </Grid.Col>
                         </Grid>
 
@@ -261,107 +254,104 @@ const Help: React.FC<Properties> = (props) => {
                                 </Button>
                             </Grid.Col>
                             <Grid.Col span={9}>
-                                Hääl ei ole aktiivne, noodid on õrnalt nähtaval ja ei kõla taasesitusel.
+                                {t("help.voiceNotActive")}
                             </Grid.Col>
                         </Grid>
 
                         <Divider my={"md"}/>
 
-                        <Title order={5} mb={"md"}>Nupud</Title>
+                        <Title order={5} mb={"md"}>{t("help.buttons")}</Title>
 
                         <HelpText icon={<GiFClef size={Size.icon.SM}/>}>
-                            Vaheta noodijoonestikku. Valida saab pooltoon-poolteisttoon- (PPT), vanema ja uuema
-                            diatoonilise helirea
-                            vahel. Noodijoonestikku saab vahetada üksnes uue noodistuse puhul.
+                            {t("help.changeScale")}
                         </HelpText>
 
                         <Divider my={"md"}/>
 
                         <HelpText icon={<strong>D, E♭, F♯, ...</strong>}>
-                            Lisa uus noot. Lisaks hiirele võib kasutada nootide sisestamiseks klaviatuuri numbriklahve 1 kuni 6 või 7, vastavalt helireale.
+                            {t("help.addNote")}
                         </HelpText>
 
                         <HelpText icon={<RiIncreaseDecreaseFill size={Size.icon.XS}/>}>
-                            Muuda valitud noodi helikõrgust tsentides.
+                            {t("help.adjustPitch")}
                         </HelpText>
 
                         <Divider my={"md"}/>
 
                         <HelpText icon={<Icon path={mdiMusicNoteHalf} size={1}/>}>
-                            Muuda valitud noot poolnoodiks.
+                            {t("help.toHalfNote")}
                         </HelpText>
 
                         <HelpText icon={<Icon path={mdiMusicNoteQuarter} size={1}/>}>
-                            Muuda valitud noot veerandnoodiks.
+                            {t("help.toQuarterNote")}
                         </HelpText>
 
                         <HelpText icon={<Icon path={mdiMusicNoteEighth} size={1}/>}>
-                            Muuda valitud noot kaheksandiknoodiks.
+                            {t("help.toEightNote")}
                         </HelpText>
 
                         <HelpText icon={<MdOutlineCallSplit size={Size.icon.XS}/>}>
-                            Poolita valitud kaheksandiknoot kaheks kuueteistkümnendiknoodiks.
+                            {t("help.splitNote")}
                         </HelpText>
 
                         <Divider my={"md"}/>
 
                         <HelpText icon={<RiParenthesesLine size={Size.icon.SM}/>}>
-                            Muuda valitud noodi suurust. Esimene vajutus muudab noodi väiksemaks, teine taastab algse
-                            suuruse.
+                            {t("help.adjustNoteSize")}
                         </HelpText>
-
 
                         <Divider my={"md"}/>
 
                         <HelpText icon={<GrReturn size={Size.icon.SM}/>}>
-                            Lisa reavahe.
+                            {t("help.addBreak")}
                         </HelpText>
 
                         <HelpText icon={<RxDividerVertical size={Size.icon.SM}/>}>
-                            Lisa eraldaja. Esimene vajutus lisab täispika eraldaja, teine vajutus muudab selle lühemaks
-                            ning kolmas eemaldab.
+                            {t("help.addSeparator")}
                         </HelpText>
 
                         <HelpText icon={ShiftLeftIcons.get(ShiftMode.NOTES)}>
-                            Nihuta noote vasakule.
+                            {t("help.shiftLeft")}
                         </HelpText>
 
                         <HelpText icon={ShiftRightIcons.get(ShiftMode.NOTES)}>
-                            Nihuta noote paremale.
+                            {t("help.shiftRight")}
                         </HelpText>
 
                         <HelpText icon={ShiftLeftIcons.get(ShiftMode.LYRICS)}>
-                            Nihuta laulusõnu vasakule. Vajalik <Kbd>Ctrl</Kbd> nupu all hoidmine.
+                            <Trans i18nKey="help.shiftLyricsLeft"  components={{kbd: <Kbd/>}}/>
+
                         </HelpText>
 
                         <HelpText icon={ShiftRightIcons.get(ShiftMode.LYRICS)}>
-                            Nihuta laulusõnu paremale. Vajalik <Kbd>Ctrl</Kbd> nupu all hoidmine.
+                            <Trans i18nKey="help.shiftLyricsRight"  components={{kbd: <Kbd/>}}/>
                         </HelpText>
 
                         <HelpText icon={ShiftLeftIcons.get(ShiftMode.VOICES)}>
-                            Nihuta kõiki noote ja eraldajaid vasakule. Vajalik <Kbd>Shift</Kbd> nupu all hoidmine.
+                            <Trans i18nKey="help.shiftVoicesLeft"  components={{kbd: <Kbd/>}}/>
                         </HelpText>
 
                         <HelpText icon={ShiftRightIcons.get(ShiftMode.VOICES)}>
-                            Nihuta kõiki noote ja eraldajaid paremale. Vajalik <Kbd>Shift</Kbd> nupu all hoidmine.
+                            <Trans i18nKey="help.shiftVoicesRight"  components={{kbd: <Kbd/>}}/>
                         </HelpText>
 
                         <HelpText icon={<FaDeleteLeft size={Size.icon.SM}/>}>
-                            Eemalda valitud noot.
+                            {t("help.removeNote")}
                         </HelpText>
 
                         <Divider my={"md"}/>
 
                         <HelpText icon={<IoMdUndo size={Size.icon.SM}/>}>
-                            Võta tagasi.
+                            {t("help.undo")}
                         </HelpText>
 
                         <HelpText icon={<IoMdRedo size={Size.icon.SM}/>}>
-                            Tee uuesti.
+                            {t("help.redo")}
                         </HelpText>
 
                         <HelpText icon={<FaRegTrashAlt size={Size.icon.XS}/>}>
-                            Kustuta noodistus ja alusta uuesti.
+                            {t("help.reset")}
+
                         </HelpText>
                     </Tabs.Panel>
                 </Tabs>
