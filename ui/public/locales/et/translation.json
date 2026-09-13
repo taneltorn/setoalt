@@ -50,6 +50,7 @@
     "changeOutput": "Muuda heliväljundit. Valida saab klaveri (vaikimisi), süntesaatori, viiuli, flöödi ja kitarri vahel.",
     "prevNote": "Vali eelmine noot.",
     "playbackText": "Noodistuse mahamängimine.Kui tahad kuulata tervet lugu või mõnda lühemat lõiku mitu korda järjest, siis (1) kliki selle lõigu algusnoodile, (2) vajuta alla <kbd>Ctrl</kbd> klahv ja (3) kliki soovitud lõigu lõpunoodile. Kordusrežiimist saad välja, vajutades valiku lõpus lähtesta-noolele.",
+    "selectLoopRange": "Määra kordusvahemik. Vahemiku alguseks jääb praegune positsioon. Lõpu määramiseks vali noodijoonestikul soovitud noot.",
     "nextNote": "Vali järgmine noot.",
     "adjustVolume": "Muuda taasesituse üldist helikõrgust madalamaks või kõrgemaks.",
     "adjustTempo": "Muuda esitustempot aeglasemaks või kiiremaks.",
@@ -297,7 +298,8 @@
     "muteVolume": "Vaigista",
     "unmuteVolume": "Tühista vaigistus",
     "changeVolume": "Muuda helitugevust",
-    "staveSelection": "Vaheta noodijoonestikku"
+    "staveSelection": "Vaheta noodijoonestikku",
+    "selectLoopRange": "Vali kordusvahemik"
   },
   "dialog": {
     "saveScore": {

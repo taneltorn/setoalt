@@ -13,6 +13,7 @@ import {getDetuneLabel, getTempoLabel} from "../../../../../utils/helpers.tsx";
 import ValueIndicator from "../../../../../components/ValueIndicator.tsx";
 import {DialogType} from "../../../../../utils/enums.ts";
 import {HiOutlineSpeakerWave, HiOutlineSpeakerXMark} from "react-icons/hi2";
+import {TbRepeat} from "react-icons/tb";
 
 const PlaybackControls: React.FC = () => {
 
@@ -67,6 +68,18 @@ const PlaybackControls: React.FC = () => {
                     onClick={() => context.next()}
                 >
                     <FaForward size={Size.icon.SM}/>
+                </ActionIcon>
+
+                <ActionIcon
+                    size="xl"
+                    title={t("tooltip.selectLoopRange")}
+                    variant={context.isLoopSelectionMode ? "filled" : "subtle"}
+                    color={context.isLoopSelectionMode ? "red" : "black"}
+                    onClick={() =>
+                        context.setIsLoopSelectionMode(!context.isLoopSelectionMode)
+                    }
+                >
+                    <TbRepeat size={Size.icon.MD}/>
                 </ActionIcon>
             </Group>
 

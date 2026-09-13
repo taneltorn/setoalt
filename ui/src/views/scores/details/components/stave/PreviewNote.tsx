@@ -16,7 +16,6 @@ interface Properties {
 
 const PreviewNote: React.FC<Properties> = ({pitch, ...props}) => {
 
-
     const context = useScoreContext();
     const {isCtrlKeyActive} = useActiveKeys();
     const {changePitch, insertNote} = useNoteControls();
@@ -28,23 +27,36 @@ const PreviewNote: React.FC<Properties> = ({pitch, ...props}) => {
         return calculateCursorNoteCoords(pitch, props.x, props.y, context);
     }, [pitch, props.x, props.y]);
 
-    const handleClick = (event: any) => {
-        if (event.ctrlKey) {
-            context.updateLoopRange(context.loopRange?.start || context.activePosition, context.cursorPosition);
+    const handleClick = (event: React.MouseEvent) => {
+        if (event.ctrlKey || context.isLoopSelectionMode) {
+            context.updateLoopRange(
+                context.loopRange?.start ?? context.activePosition,
+                context.cursorPosition
+            );
+
+            context.setIsLoopSelectionMode(false);
             stopPlayback();
             return;
         }
 
-        const existingNote = context.getNote(context.cursorPosition, context.activeVoice);
+        const existingNote = context.getNote(
+            context.cursorPosition,
+            context.activeVoice
+        );
+
         if (existingNote) {
             changePitch(existingNote, pitch);
         } else {
-            const note = NoteFactory.create(pitch, context.cursorPosition, context.activeDuration);
+            const note = NoteFactory.create(
+                pitch,
+                context.cursorPosition,
+                context.activeDuration
+            );
             insertNote(note);
         }
-        context.activate(context.cursorPosition)
-    }
 
+        context.activate(context.cursorPosition);
+    };
     return (<>
         {context.cursorPosition >= 0 && !isCtrlKeyActive && <>
             <circle

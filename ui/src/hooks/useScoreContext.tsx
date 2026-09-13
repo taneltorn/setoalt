@@ -27,6 +27,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     const [isSimplifiedMode, setIsSimplifiedMode] = useState<boolean>(false);
     const [isExportMode, setIsExportMode] = useState<boolean>(false);
     const [isTypeMode, setIsTypeMode] = useState<boolean>(false);
+    const [isLoopSelectionMode, setIsLoopSelectionMode] = useState(false);
 
     const [containerRef, setContainerRef] = useState<RefObject<HTMLElement> | undefined>();
     const [svgRef, setSvgRef] = useState<RefObject<SVGSVGElement> | undefined>();
@@ -232,6 +233,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         isSimplifiedMode, setIsSimplifiedMode,
         isExportMode, setIsExportMode,
         isTypeMode, setIsTypeMode,
+        isLoopSelectionMode, setIsLoopSelectionMode,
 
         activate,
         next,
@@ -259,7 +261,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         svgRef, setSvgRef
 
     }), [containerRef, endPosition, isEditMode, isExportMode, isTypeMode, dimensions, score,
-        activeNote, activePosition, activeVoice, activeDuration, endPosition, cursorPosition, loopRange, isSimplifiedMode]);
+        activeNote, activePosition, activeVoice, activeDuration, endPosition, cursorPosition, loopRange, isLoopSelectionMode, isSimplifiedMode]);
 
     return (
         <ScoreContext.Provider value={context}>

@@ -19,6 +19,8 @@ export interface ScoreContextProperties {
     setIsExportMode: (value: boolean) => void;
     isTypeMode: boolean;
     setIsTypeMode: (value: boolean) => void;
+    isLoopSelectionMode: boolean;
+    setIsLoopSelectionMode: (value: boolean) => void;
 
     loopRange: Range | undefined;
     setLoopRange: (range: Range | undefined) => void;

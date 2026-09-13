@@ -28,14 +28,19 @@ const CursorMarker: React.FC = () => {
         return !context.score.data.voices.find(v => v.name === context.activeVoice)?.occupiedPositions?.includes(context.cursorPosition);
     }, [context.isEditMode, context.cursorPosition, context.activeVoice]);
 
-    const handleClick = (event: any) => {
-        if (event.ctrlKey) {
-            context.updateLoopRange(context.loopRange?.start || context.activePosition, context.cursorPosition);
+    const handleClick = (event: React.MouseEvent<SVGRectElement>) => {
+        if (event.ctrlKey || context.isLoopSelectionMode) {
+            context.updateLoopRange(
+                context.loopRange?.start ?? context.activePosition,
+                context.cursorPosition
+            );
+
+            context.setIsLoopSelectionMode(false);
             stopPlayback();
             return;
         }
         context.activate(context.cursorPosition);
-    }
+    };
 
     return (<>
             {context.isEditMode && <rect

@@ -50,6 +50,7 @@
     "changeOutput": "Change the audio output. You can choose between piano (default), synthesizer, violin, flute, and guitar.",
     "prevNote": "Select the previous note.",
     "playbackText": "Playing back the notation. If you want to listen to the entire song or a shorter section several times in a row, (1) click the first note of the section, (2) hold down the <kbd>Ctrl</kbd> key, and (3) click the last note of the desired section. To exit repeat mode, click the reset arrow at the end of the selection.",
+    "selectLoopRange": "Set the loop range. The current position will be used as the start of the range. Select a note on the staff to set the end.",
     "nextNote": "Select the next note.",
     "adjustVolume": "Adjust the overall playback pitch lower or higher.",
     "adjustTempo": "Adjust the playback tempo slower or faster.",
@@ -296,7 +297,8 @@
     "muteVolume": "Mute",
     "unmuteVolume": "Unmute",
     "changeVolume": "Change volume",
-    "staveSelection": "Change staff"
+    "staveSelection": "Change staff",
+    "selectLoopRange": "Vali loop range"
   },
   "dialog": {
     "saveScore": {

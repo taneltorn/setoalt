@@ -37,6 +37,7 @@ import {PiSpeakerSimpleHigh} from "react-icons/pi";
 import {ShiftLeftIcons, ShiftRightIcons} from "../utils/icons.tsx";
 import {ShiftMode} from "../utils/enums.ts";
 import {HiArrowNarrowDown, HiArrowNarrowUp} from "react-icons/hi";
+import {TbRepeat} from "react-icons/tb";
 
 interface Properties {
     tab?: string;
@@ -177,6 +178,10 @@ const Help: React.FC<Properties> = (props) => {
 
                         <HelpText icon={<FaForward size={Size.icon.SM}/>}>
                             {t("help.nextNote")}
+                        </HelpText>
+
+                        <HelpText icon={<TbRepeat size={Size.icon.SM}/>}>
+                            {t("help.selectLoopRange")}
                         </HelpText>
 
                         <Divider my={"md"}/>
