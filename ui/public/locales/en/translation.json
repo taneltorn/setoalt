@@ -90,7 +90,7 @@
       "title": "Home",
       "about": "About",
       "header": "Seto leelo notation. A web application for learning Seto leelo melodies",
-      "description": "The application allows you to create and listen to Seto leelo notations using Seto notation.<br/>The notation system is explained in more detail in <0>Leelokool</0> on the <0>Seto Song Tradition</0> website (<1><strong>{{link}}</strong></1>).",
+      "description": "The application allows you to create and listen to Seto leelo notations using Seto notation.<br/>The notation system is explained in more detail in <0><strong>Leelokool on the Seto Singing Heritage</strong></0> website.",
       "description2": "The application includes audio recordings from the Estonian Folklore Archives of the Estonian Literary Museum and the folklore archives of the Finnish Literature Society.",
       "link": {
         "scores": "Notations",
@@ -111,7 +111,7 @@
     },
     "scoreList": {
       "title": "Listen",
-      "starredScores": "An asterisk after the song title indicates that this song variant is not available on the <strong>Seto Song Tradition</strong> website and is only available in this application.",
+      "starredScores": "An asterisk after the song title indicates that this song variant is not available on the <0><strong>Seto Singing Heritage</strong></0> website and is only available in this application.",
       "header": "Notations",
       "table": {
         "name": "Name",

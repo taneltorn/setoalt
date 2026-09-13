@@ -20,7 +20,6 @@ const Home: React.FC = () => {
     const {t, i18n} = useTranslation();
     const [exampleScore, setExampleScore] = useState<Score>();
 
-
     const link = i18n.language === Language.EN
         ? "https://laul.setomaa.ee/en"
         : "https://laul.setomaa.ee/leelokool";
@@ -44,10 +43,7 @@ const Home: React.FC = () => {
                 <Description span={12}>
                     <Trans i18nKey="view.home.description"
                            values={{link}}
-                           components={[
-                               <strong></strong>,
-                               <Link target="_blank" to={link}/>,
-                           ]}/>
+                           components={[<Link target="_blank" to={link}/>]}/>
                 </Description>
 
                 {exampleScore && <Example score={exampleScore}/>}

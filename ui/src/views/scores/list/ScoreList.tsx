@@ -1,7 +1,7 @@
 import {Button, Group} from "@mantine/core";
 import {Trans, useTranslation} from "react-i18next";
 import React, {useEffect, useMemo, useState} from "react";
-import {useLocation, useNavigate} from "react-router-dom";
+import {Link, useLocation, useNavigate} from "react-router-dom";
 import useScoreService from "../../../hooks/useScoreService.tsx";
 import {Score} from "../../../model/Score.ts";
 import {useAuth} from "../../../hooks/useAuth.tsx";
@@ -16,10 +16,11 @@ import useSearchQuery from "../../../hooks/useSearchQuery.tsx";
 import PaginatedTable from "../../../components/table/PaginatedTable.tsx";
 import ScoreRow from "./components/ScoreRow.tsx";
 import Description from "../../../components/controls/Description.tsx";
+import {Language} from "../../../model/Language.ts";
 
 const ScoreList: React.FC = () => {
 
-    const {t} = useTranslation();
+    const {t, i18n} = useTranslation();
     const auth = useAuth();
     const navigate = useNavigate();
     const location = useLocation();
@@ -31,6 +32,10 @@ const ScoreList: React.FC = () => {
     const [scores, setScores] = useState<Score[]>([]);
 
     const fetchData = () => fetchScores().then(setScores);
+
+    const link = i18n.language === Language.EN
+        ? "https://laul.setomaa.ee/en"
+        : "https://laul.setomaa.ee/leelokool";
 
     const filteredScores = useMemo(() => {
         const lowerCaseQuery = query.toLowerCase();
@@ -65,7 +70,8 @@ const ScoreList: React.FC = () => {
             <Description span={12}>
 
                 <Group gap={4}>
-                    <Trans i18nKey={"view.scoreList.starredScores"}/>
+                    <Trans i18nKey={"view.scoreList.starredScores"}
+                           components={[<Link target="_blank" to={link}/>]}/>
                 </Group>
             </Description>
 

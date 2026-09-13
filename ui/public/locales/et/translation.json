@@ -90,7 +90,7 @@
       "title": "Avaleht",
       "about": "Rakendusest",
       "header": "Seto leelo noodikiri. Veebirakendus seto leeloviiside õppimiseks",
-      "description": "Rakendusega saab luua ja kuulata seto leelo noodistusi seto noodikirjas.<br/>Noodikirja tutvustab lähemalt <0>Leelokool</0> <0>Seto laulupärimuse</0> veebilehel (<1><strong>{{link}}</strong></1>).",
+      "description": "Rakendusega saab luua ja kuulata seto leelo noodistusi seto noodikirjas.<br/>Noodikirja tutvustab lähemalt <0><strong>Leelokool Seto laulupärimuse</strong></0> veebilehel.",
       "description2": "Rakenduses on avaldatud Eesti Kirjandusmuuseumi Eesti Rahvaluule Arhiivi ja Soome Kirjanduse Seltsi rahvaluulearhiivi helisalvestusi.",
       "link": {
         "scores": "Noodistused",
@@ -112,7 +112,7 @@
     },
     "scoreList": {
       "title": "Kuula",
-      "starredScores": "Tärn laulu pealkirja järel tähendab, et seda lauluvarianti ei ole <strong>Seto laulupärimuse</strong> lehel, on ainult siin rakenduses.",
+      "starredScores": "Tärn laulu pealkirja järel tähendab, et seda lauluvarianti ei ole <0><strong>Seto laulupärimuse</strong></0> lehel, on ainult siin rakenduses.",
       "header": "Noodistused",
       "table": {
         "name": "Nimi",
