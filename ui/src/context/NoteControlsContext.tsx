@@ -2,7 +2,7 @@ import React from 'react';
 import {Note, NoteType} from "../model/Note.ts";
 
 export interface NoteControlsContextProperties {
-    insertNote: (note: Note, moveToNext?: boolean) => void;
+    insertNote: (note: Note) => void;
     removeNote: (position: number, moveToPrevious?: boolean) => void;
     changeDuration: (duration: string, note?: Note, shift?: boolean) => void;
     changePitch: (note: Note, pitch: string) => void;

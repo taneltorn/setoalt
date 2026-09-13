@@ -13,11 +13,17 @@ import Example from "./Example.tsx";
 import ContextProviders from "../ContextProviders.tsx";
 import {Contact} from "../utils/constants.ts";
 import Sponsors from "../components/Sponsors.tsx";
+import {Language} from "../model/Language.ts";
 
 const Home: React.FC = () => {
 
-    const {t} = useTranslation();
+    const {t, i18n} = useTranslation();
     const [exampleScore, setExampleScore] = useState<Score>();
+
+
+    const link = i18n.language === Language.EN
+        ? "https://laul.setomaa.ee/en"
+        : "https://laul.setomaa.ee/leelokool";
 
     useEffect(() => {
         fetch(`${import.meta.env.VITE_PUBLIC_URL}/examples/a.example.json`)
@@ -37,10 +43,13 @@ const Home: React.FC = () => {
 
                 <Description span={12}>
                     <Trans i18nKey="view.home.description"
-                           components={[<strong></strong>,
-                               <Link target="_blank" to="https://laul.setomaa.ee/leelokool"/>]}/>
+                           values={{link}}
+                           components={[
+                               <strong></strong>,
+                               <Link target="_blank" to={link}/>,
+                           ]}/>
                 </Description>
-                
+
                 {exampleScore && <Example score={exampleScore}/>}
 
                 <Group gap={4} mb={"xl"}>

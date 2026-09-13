@@ -71,7 +71,6 @@ const Layout: React.FC = () => {
                             <Link to={"/"} onClick={close}>
                                 <Logo/>
                             </Link>
-                            {/*<ProfileLink/>*/}
                         </Group>
                         <Divider my={"md"}/>
                     </Box>

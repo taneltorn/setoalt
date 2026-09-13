@@ -1,13 +1,7 @@
-import React, {ReactNode} from "react";
-import {Button, Menu} from "@mantine/core";
+import React from "react";
+import {Button, Menu, Text} from "@mantine/core";
 import {useTranslation} from "react-i18next";
-import getUnicodeFlagIcon from "country-flag-icons/unicode";
 import {Language} from "../model/Language.ts";
-
-const iconMap = new Map<Language, ReactNode>([
-    [Language.ET, getUnicodeFlagIcon("EE")],
-    [Language.EN, getUnicodeFlagIcon("GB")],
-]);
 
 const normalizeLng = (lng: string): Language => {
     const base = lng.split("-")[0];
@@ -28,29 +22,19 @@ const LanguageSelector: React.FC = () => {
 
     return (
         <Menu shadow="md">
-            <Menu.Target>
-                <Button
-                    px="xs"
-                    size="xl"
-                    color="gray"
-                    variant="transparent"
-                    title={t("page.selectLanguage")}
-                >
-                    {iconMap.get(current)}
-                </Button>
-            </Menu.Target>
+            <Button
+                px="xs"
+                size="xl"
+                color="gray"
+                onClick={() => changeLanguage(current === Language.ET ? Language.EN : Language.ET)}
+                variant="transparent"
+                title={t("page.selectLanguage")}
+            >
+                <Text size={"xs"} fw={"bold"}>
+                    {t("page.sidebar.switchLang")}
+                </Text>
+            </Button>
 
-            <Menu.Dropdown>
-                {[Language.ET, Language.EN].map((lng) => (
-                    <Menu.Item
-                        key={lng}
-                        leftSection={iconMap.get(lng)}
-                        onClick={() => changeLanguage(lng)}
-                    >
-                        {lng.toUpperCase()}
-                    </Menu.Item>
-                ))}
-            </Menu.Dropdown>
         </Menu>
     );
 };

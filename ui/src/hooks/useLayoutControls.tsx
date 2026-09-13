@@ -127,6 +127,8 @@ export const LayoutControlsContextProvider: React.FC<Properties> = ({children}) 
     const toggleDivider = () => {
         history.snapshot(context);
 
+        console.log(context.activeNote)
+
         const position = context.activeNote
             ? (context.activeNote.position + durationToScalar(context.activeNote.duration))
             : (context.activePosition + 1);

@@ -24,7 +24,7 @@ export const NoteControlsContextProvider: React.FC<Properties> = ({children}) =>
     const {shiftNotes} = useLayoutControls();
     const {playNotes} = useAudioContext();
 
-    const insertNote = (note: Note, moveToNext?: boolean) => {
+    const insertNote = (note: Note) => {
         history.snapshot(context)
 
         const voice = context.score.data.voices.find(v => v.name === context.activeVoice);
@@ -38,9 +38,6 @@ export const NoteControlsContextProvider: React.FC<Properties> = ({children}) =>
             voice.notes.sort((a, b) => (a.position || 0) - (b.position || 0));
 
             context.refresh();
-            if (moveToNext) {
-                context.activate(note.position + durationToScalar(note.duration));
-            }
         }
     }
 

@@ -24,7 +24,7 @@ export interface ScoreContextProperties {
     setLoopRange: (range: Range | undefined) => void;
     updateLoopRange: (start: number, end: number) => void;
 
-    activate: (position: number) => void;
+    activate: (position: number, silently?: boolean) => void;
     next: () => void;
     previous: () => void;
 

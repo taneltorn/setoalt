@@ -19,7 +19,8 @@
       "notice": {
         "message": "This application is currently under development!",
         "changelog": "Changelog"
-      }
+      },
+      "switchLang": "EESTI KEELES"
     },
     "table": {
       "itemsPerPage": " Show",
@@ -88,7 +89,7 @@
       "title": "Home",
       "about": "About",
       "header": "Seto leelo notation. A web application for learning Seto leelo melodies",
-      "description": "The application allows you to create and listen to Seto leelo notations using Seto notation.<br/>The notation system is explained in more detail in <0>Leelokool</0> (<1>laul.setomaa.ee/leelokool</1>) on the <0>Seto Song Tradition</0> website.",
+      "description": "The application allows you to create and listen to Seto leelo notations using Seto notation.<br/>The notation system is explained in more detail in <0>Leelokool</0> on the <0>Seto Song Tradition</0> website (<1><strong>{{link}}</strong></1>).",
       "description2": "The application includes audio recordings from the Estonian Folklore Archives of the Estonian Literary Museum and the folklore archives of the Finnish Literature Society.",
       "link": {
         "scores": "Notations",

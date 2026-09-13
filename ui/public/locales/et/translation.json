@@ -19,7 +19,8 @@
       "notice": {
         "message": "Tegemist on arendusjärgus oleva rakendusega!",
         "changelog": "Muutelugu"
-      }
+      },
+      "switchLang": "IN ENGLISH"
     },
     "table": {
       "itemsPerPage": " Kuva",
@@ -88,7 +89,7 @@
       "title": "Avaleht",
       "about": "Rakendusest",
       "header": "Seto leelo noodikiri. Veebirakendus seto leeloviiside õppimiseks",
-      "description": "Rakendusega saab luua ja kuulata seto leelo noodistusi seto noodikirjas.<br/>Noodikirja tutvustab lähemalt <0>Leelokool</0> (<1>laul.setomaa.ee/leelokool</1>) <0>Seto laulupärimuse</0> veebilehel.",
+      "description": "Rakendusega saab luua ja kuulata seto leelo noodistusi seto noodikirjas.<br/>Noodikirja tutvustab lähemalt <0>Leelokool</0> <0>Seto laulupärimuse</0> veebilehel (<1><strong>{{link}}</strong></1>).",
       "description2": "Rakenduses on avaldatud Eesti Kirjandusmuuseumi Eesti Rahvaluule Arhiivi ja Soome Kirjanduse Seltsi rahvaluulearhiivi helisalvestusi.",
       "link": {
         "scores": "Noodistused",

@@ -10,7 +10,7 @@ const Logo: React.FC<Properties> = (props) => {
     return (
         <Box onClick={props.onClick}>
             <Group gap={"md"} wrap={"nowrap"}>
-                <Image src={"/logo.png"} alt={"Punktinoot Logo"} width={60} height={60}/>
+                <Image src={`${import.meta.env.VITE_PUBLIC_URL}/logo.png`} alt={"Punktinoot logo"} width={60} height={60}/>
             </Group>
         </Box>);
 }

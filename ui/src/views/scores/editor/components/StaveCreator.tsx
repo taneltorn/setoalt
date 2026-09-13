@@ -9,7 +9,7 @@ import {range} from "../../../../utils/helpers.tsx";
 import {NoteRange} from "../../../../utils/dictionaries.ts";
 import {BiPlus} from "react-icons/bi";
 
-const NOTE_RANGE = NoteRange.reverse();
+const NOTE_RANGE = [...NoteRange].reverse();
 
 interface Properties {
     stave: Stave;
@@ -68,6 +68,7 @@ const StaveCreator: React.FC<Properties> = ({stave, setStave, linesWithError}) =
                             <Table.Tr key={`line-${index}`}>
                                 <Table.Td>
                                     <Select
+                                        searchable={true}
                                         className={linesWithError.includes(index) ? "input-error" : ""}
                                         value={stave.lines[index].pitch}
                                         data={NOTE_RANGE}

@@ -32,7 +32,7 @@ const StaveDivider: React.FC<Properties> = ({divider}) => {
     return (
         <>
             {context.isEditMode &&
-                <text x={x}
+                <text x={x + 7}
                       y={y + 20}
                       fill={theme.colors.red[9]}
                       fontSize={18}>
@@ -40,7 +40,7 @@ const StaveDivider: React.FC<Properties> = ({divider}) => {
                 </text>}
 
             <rect
-                x={x + 7}
+                x={x + 14}
                 y={y + (divider.type === "Separator" ? 12 : 0)}
                 width={Layout.stave.divider.WIDTH}
                 height={height}

@@ -2,7 +2,7 @@ import React, {useEffect} from 'react';
 import {useScoreContext} from "../hooks/useScoreContext.tsx";
 import {useAudioContext} from "../hooks/useAudioContext.tsx";
 import {ShortKey} from "../utils/keymap";
-import {range} from "../utils/helpers.tsx";
+import {durationToScalar, range} from "../utils/helpers.tsx";
 import {useDialogContext} from "../hooks/useDialogContext.tsx";
 import {NoteType} from "../model/Note.ts";
 import {DialogType, ShiftMode} from "../utils/enums.ts";
@@ -69,8 +69,9 @@ const KeyPressHandler: React.FC = () => {
                         return;
                     }
                     const note = NoteFactory.create(pitch, scoreContext.activePosition, scoreContext.activeDuration);
-                    insertNote(note, true);
-                    audioContext.playNotes([note], scoreContext.score.data.stave);
+                    insertNote(note);
+                    scoreContext.activate(note.position);
+                    scoreContext.setActivePosition(note.position + durationToScalar(note.duration));
                 }
                 return;
             }
