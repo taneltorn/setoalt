@@ -25,11 +25,19 @@ const StaveNote: React.FC<Properties> = ({note, voice}) => {
 
     const {x, y} = useMemo(() => {
         return calculateNoteCoords(note, voice, context, params);
-    }, [note.pitch, note.position, note.detune, context.score.data.stave, breaksDependency]);
+    }, [
+        note.pitch,
+        note.position,
+        note.detune,
+        context.score.data.stave,
+        breaksDependency,
+        context.dimensions.y,
+        params
+    ]);
 
     const opacity = useMemo(() => {
         return calculateNoteOpacity(note, voice, context);
-    }, [context.activeVoice, context.duplicateNoteKeys, voicesDependency, context.loopRange]);
+    }, [context.activeVoice, context.duplicateNoteKeys, voicesDependency, context.loopRange, params]);
 
     const color = isHighlighted(note, context) ? theme.colors.red[9] : note.color || voice.color || "black";
 

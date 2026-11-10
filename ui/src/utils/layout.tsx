@@ -42,8 +42,8 @@ export const DefaultLayoutParams = {
     EMBEDDING_ROW: 150,
 }
 
-export const MinimizedLayoutParams = {
-    name: "minimized",
+export const CompactLayoutParams = {
+    name: "compact",
 
     CONTAINER_MIN_WIDTH: 1000,
     CONTAINER_MAX_WIDTH: 1500,
@@ -52,15 +52,15 @@ export const MinimizedLayoutParams = {
     CONTAINER_SYMBOLS_BAR: 30,
     CONTAINER_LYRICS_BAR: 50,
 
-    LINE_SPACING: 8,
+    LINE_SPACING: 6,
     LINE_PRIMARY_LINE_STROKE_WIDTH: 2,
     LINE_SECONDARY_LINE_STROKE_WIDTH: 1,
     LINE_STROKE_WIDTH_BOLD: 3,
 
-    NOTE_RADIUS: 6,
-    NOTE_RADIUS_SMALL: 5,
+    NOTE_RADIUS: 5,
+    NOTE_RADIUS_SMALL: 4,
     NOTE_REPEATING_OFFSET: 6,
-    NOTE_SPACING: 55,
+    NOTE_SPACING: 40,
 
     DIVIDER_SEPARATOR_HEIGHT: 40,
     DIVIDER_WIDTH: 2,
@@ -74,9 +74,9 @@ export const MinimizedLayoutParams = {
     RANGE_WIDTH: 4,
 
     LYRICS_HEIGHT: 24,
-    LYRICS_FONT_SIZE: 16,
+    LYRICS_FONT_SIZE: 13,
     LYRICS_INCREASED_FONT_SIZE: 20,
-    LYRICS_DECREASED_FONT_SIZE: 14,
+    LYRICS_DECREASED_FONT_SIZE: 10,
     LYRICS_FONT_WEIGHT: 600,
     LYRICS_DECREASE_FONT_FROM: 5,
     LYRICS_TEXT_HEIGHT: 500,

@@ -171,7 +171,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     }, [score]);
 
     const dimensions: StaveDimensions = useMemo<StaveDimensions>(
-        () => calculateStaveDimensions(score, params), [score, score.data.breaks, score.data.voices]);
+        () => calculateStaveDimensions(score, params), [score, score.data.breaks, score.data.voices, params]);
 
     const halfPositions: HalfPosition[] = useMemo(() => {
         const sixteenthNotes = score.data.voices

@@ -20,7 +20,7 @@ const StaveBlock: React.FC<Properties> = ({index, lines}) => {
 
     const {y} = useMemo(() => {
         return calculateStaveBlockCoords(index, context);
-    }, [lines, breaksDependency]);
+    }, [lines, breaksDependency, params]);
 
     return (
         <>

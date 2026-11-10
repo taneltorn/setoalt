@@ -17,15 +17,12 @@ import ValueIndicator from "../../../../../components/ValueIndicator.tsx";
 import {DialogType} from "../../../../../utils/enums.ts";
 import {HiOutlineSpeakerWave, HiOutlineSpeakerXMark} from "react-icons/hi2";
 import {TbRepeat} from "react-icons/tb";
-import {useLayoutParams} from "../../../../../hooks/useLayoutParams.tsx";
-import {DefaultLayoutParams, MinimizedLayoutParams} from "../../../../../utils/layout.tsx";
 
 const PlaybackControls: React.FC = () => {
 
     const {t} = useTranslation();
     const theme = useMantineTheme();
 
-    const {params, setParams} = useLayoutParams();
     const context = useScoreContext();
     const {open} = useDialogContext();
     const {isPlaying, startPlayback, stopPlayback} = useAudioContext();
@@ -154,12 +151,6 @@ const PlaybackControls: React.FC = () => {
                         <ValueIndicator label={getTempoLabel(tempo, context.score.defaultTempo)}/>
                     </Box>
                 </Group>
-
-                <Button variant={"subtle"} onClick={() => {
-                    setParams(params.name === "default" ? MinimizedLayoutParams : DefaultLayoutParams)
-                }}>
-                    {params.name}
-                </Button>
             </Group>
         </Group>
     );

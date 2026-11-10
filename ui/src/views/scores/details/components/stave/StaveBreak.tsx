@@ -23,7 +23,7 @@ const StaveBreak: React.FC<Properties> = ({position}) => {
 
     const {x, y} = useMemo(() => {
         return calculateBreakCoords(position, context, params)
-    }, [position, context.score.data.stave, breaksDependency]);
+    }, [position, context.score.data.stave, breaksDependency, params]);
 
     return (<>
             {context.isEditMode &&

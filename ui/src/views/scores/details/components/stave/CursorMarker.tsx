@@ -18,7 +18,13 @@ const CursorMarker: React.FC = () => {
 
     const {x, y} = useMemo(() => {
         return calculateCursorCoords(context, params);
-    }, [context.cursorPosition, context.score.data.stave, breaksDependency]);
+    },  [
+        context.cursorPosition,
+        context.score.data.stave,
+        breaksDependency,
+        context.dimensions.y,
+        params
+    ]);
 
     const showNote = useMemo(() => {
         if (!context.isEditMode) return false;
@@ -27,7 +33,7 @@ const CursorMarker: React.FC = () => {
         if (note) return true;
 
         return !context.score.data.voices.find(v => v.name === context.activeVoice)?.occupiedPositions?.includes(context.cursorPosition);
-    }, [context.isEditMode, context.cursorPosition, context.activeVoice]);
+    }, [context.isEditMode, context.cursorPosition, context.activeVoice, params]);
 
     const handleClick = (event: React.MouseEvent<SVGRectElement>) => {
         if (event.ctrlKey || context.isLoopSelectionMode) {

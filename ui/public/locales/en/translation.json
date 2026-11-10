@@ -129,6 +129,8 @@
       "showAll": "View all notations",
       "clonedScore": "Copy of {{name}}",
       "settings": {
+        "useNormalLayout": "Use normal layout",
+        "useCompactLayout": "Use compact layout",
         "selectSimplifiedMode": "Show simplified view",
         "selectDetailMode": "Show detailed view",
         "exportPng": "Export PNG",

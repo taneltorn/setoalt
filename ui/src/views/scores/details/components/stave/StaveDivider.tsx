@@ -28,7 +28,7 @@ const StaveDivider: React.FC<Properties> = ({divider}) => {
 
     const {x, y} = useMemo(() => {
         return calculateDividerCoords(divider, context, params)
-    }, [divider.type, context.score.data.stave]);
+    }, [divider.type, context.score.data.stave, params]);
 
     return (
         <>

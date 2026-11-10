@@ -26,7 +26,7 @@ const PreviewNote: React.FC<Properties> = ({pitch, ...props}) => {
 
     const {x, y} = useMemo(() => {
         return calculateCursorNoteCoords(pitch, props.x, props.y, context, params);
-    }, [pitch, props.x, props.y]);
+    }, [pitch, props.x, props.y, context.dimensions.y, params]);
 
     const handleClick = (event: React.MouseEvent) => {
         if (event.ctrlKey || context.isLoopSelectionMode) {

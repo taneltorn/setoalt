@@ -24,7 +24,7 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
 
     const {x, y} = useMemo(() => {
         return calculateLyricCoords(lyric, context, params);
-    }, [lyric.position, context.score.data.stave, breaksDependency]);
+    }, [lyric.position, context.score.data.stave, breaksDependency, params]);
 
 
     const handleClick = () => {

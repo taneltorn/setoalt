@@ -46,7 +46,7 @@ const Editor: React.FC = () => {
 
             <Group justify={"space-between"}>
                 <PlaybackControls/>
-                <ScoreSettings settings={[Setting.CHANGE_MODE, Setting.EXPORT_PNG]}/>
+                <ScoreSettings settings={[Setting.CHANGE_LAYOUT, Setting.CHANGE_MODE, Setting.EXPORT_PNG]}/>
             </Group>
 
             <VoiceControls/>

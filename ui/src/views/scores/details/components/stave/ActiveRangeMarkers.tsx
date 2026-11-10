@@ -24,7 +24,7 @@ const ActiveRangeMarkers: React.FC = () => {
 
     const [start, end] = useMemo(() => {
         return calculateLoopRangeCoords(context, params)
-    }, [context.loopRange]);
+    }, [context.loopRange, params]);
 
     const handleReset = () => {
         stopPlayback();

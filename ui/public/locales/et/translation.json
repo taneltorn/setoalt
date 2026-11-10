@@ -130,6 +130,8 @@
       "showAll": "Vaata kõiki noodistusi",
       "clonedScore": "{{name}} koopia",
       "settings": {
+        "useNormalLayout": "Kuva tavalist paigutust",
+        "useCompactLayout": "Kasuta kompaktset paigutust",
         "selectSimplifiedMode": "Kuva lihtsustatud vaade",
         "selectDetailMode": "Kuva detailne vaade",
         "exportPng": "Ekspordi PNG",

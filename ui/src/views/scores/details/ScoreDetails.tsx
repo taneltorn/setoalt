@@ -45,7 +45,6 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
             <VoiceFilter/>
             <Stave score={score}/>
 
-
             {score.text && (<>
                     <ScrollArea h={exceedsMaxHeight && !showAllLyrics ? params.LYRICS_TEXT_HEIGHT : undefined}>
                         <div ref={lyricsRef}>
@@ -64,9 +63,6 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
                     )}
                 </>
             )}
-
-
-            {/*<p>{JSON.stringify(score)}</p>*/}
         </Page>
     );
 }

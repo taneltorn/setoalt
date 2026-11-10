@@ -27,6 +27,7 @@ export const VoiceTypes = [
 ];
 
 export const AllScoreSettings = [
+    Setting.CHANGE_LAYOUT,
     Setting.CHANGE_MODE,
     Setting.EMBED_CODE,
     Setting.EXPORT_PNG,

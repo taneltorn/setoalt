@@ -13,9 +13,13 @@ import useScoreService from "../../../../hooks/useScoreService.tsx";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../../../hooks/useAuth.tsx";
 import useScoreExport from "../../../../hooks/useScoreExport.tsx";
+import {useLayoutParams} from "../../../../hooks/useLayoutParams.tsx";
+import {DefaultLayoutParams, CompactLayoutParams} from "../../../../utils/layout.tsx";
+import {TbBaselineDensityMedium, TbBaselineDensitySmall} from "react-icons/tb";
 
 export enum Setting {
     CHANGE_MODE,
+    CHANGE_LAYOUT,
     EXPORT_PNG,
     EMBED_CODE,
     CLONE_SCORE
@@ -33,6 +37,7 @@ const ScoreSettings: React.FC<Properties> = ({settings}) => {
     const auth = useAuth();
     const scoreService = useScoreService();
     const {score, isSimplifiedMode, setIsSimplifiedMode} = useScoreContext();
+    const {params, setParams} = useLayoutParams();
     const {open} = useDialogContext();
     const {exportToPng, isLoading} = useScoreExport();
 
@@ -64,12 +69,28 @@ const ScoreSettings: React.FC<Properties> = ({settings}) => {
                     </ActionIcon>
                 </Menu.Target>
                 <Menu.Dropdown>
+                    {settings.includes(Setting.CHANGE_LAYOUT) &&
+                        <Menu.Item
+                            onClick={() => setParams(params.name === "default" ? CompactLayoutParams : DefaultLayoutParams)}>
+                            <Group>
+                                {params.name === "default"
+                                    ? <TbBaselineDensitySmall size={Size.icon.SM}/>
+                                    : <TbBaselineDensityMedium size={Size.icon.SM}/>}
+                                <Text mr={"md"}>{t(`view.scoreDetails.settings.${params.name === "default"
+                                    ? "useCompactLayout"
+                                    : "useNormalLayout"}`)}
+                                </Text>
+                            </Group>
+                        </Menu.Item>}
+
                     {settings.includes(Setting.CHANGE_MODE) &&
                         <Menu.Item onClick={() => setIsSimplifiedMode(!isSimplifiedMode)}>
                             <Group>
                                 <FaItunesNote size={Size.icon.SM}/>
-                                <Text
-                                    mr={"md"}>{t(`view.scoreDetails.settings.${isSimplifiedMode ? "selectDetailMode" : "selectSimplifiedMode"}`)}</Text>
+                                <Text mr={"md"}>{t(`view.scoreDetails.settings.${isSimplifiedMode
+                                    ? "selectDetailMode"
+                                    : "selectSimplifiedMode"}`)}
+                                </Text>
                             </Group>
                         </Menu.Item>}
 
