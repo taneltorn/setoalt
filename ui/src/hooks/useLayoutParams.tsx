@@ -2,7 +2,7 @@ import React, {useContext, useMemo, useState} from 'react';
 import {isEmpty} from "../utils/helpers.tsx";
 import {LayoutParams} from "../model/LayoutParams.ts";
 import {LayoutParamsContext} from "../context/LayoutParamsContext.tsx";
-import {DefaultLayoutParams} from "../utils/layout.tsx";
+import {CompactLayoutParams} from "../utils/layout.tsx";
 
 interface Properties {
     children: React.ReactNode;
@@ -10,7 +10,7 @@ interface Properties {
 
 export const LayoutParamsContextProvider: React.FC<Properties> = ({children}) => {
 
-    const [params, setParams] = useState<LayoutParams>(DefaultLayoutParams);
+    const [params, setParams] = useState<LayoutParams>(CompactLayoutParams);
 
     const context = useMemo(() => ({
         params, setParams,

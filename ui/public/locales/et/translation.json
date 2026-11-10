@@ -131,7 +131,7 @@
       "showAll": "Vaata kõiki noodistusi",
       "clonedScore": "{{name}} koopia",
       "settings": {
-        "useNormalLayout": "Kasuta tavalist paigutust",
+        "useNormalLayout": "Kasuta suuremat paigutust",
         "useCompactLayout": "Kasuta kompaktset paigutust",
         "selectSimplifiedMode": "Kuva lihtsustatud vaade",
         "selectDetailMode": "Kuva detailne vaade",

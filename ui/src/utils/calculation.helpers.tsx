@@ -8,6 +8,7 @@ import {Lyric} from "../model/Lyric.ts";
 import {Range} from "../model/Range.ts";
 import {ScoreContextProperties} from "../context/ScoreContext.tsx";
 import {LayoutParams} from "../model/LayoutParams.ts";
+import {durationToScalar} from "./helpers.tsx";
 
 // todo: could refactor a lot here
 
@@ -29,12 +30,14 @@ export const calculateDividerCoords = (divider: Divider, context: ScoreContextPr
     const x = params.CONTAINER_PADDING_X_START
         + divider.position * params.NOTE_SPACING
         - params.NOTE_RADIUS
+        + params.DIVIDER_SEPARATOR_X_OFFSET
         - params.DIVIDER_WIDTH
         - params.NOTE_SPACING / 2
         - offset.x;
 
     const y = params.CONTAINER_SYMBOLS_BAR
         + offset.y
+        + params.DIVIDER_SEPARATOR_Y_OFFSET
         - params.DIVIDER_SEPARATOR_HEIGHT / 2;
 
     return {x: x, y: y};
@@ -229,6 +232,7 @@ export const getBreakOffset = (position: number, context: ScoreContextProperties
 }
 
 export const calculateStaveDimensions = (score: Score, params: LayoutParams): StaveDimensions => {
+    console.log("calculating stave dimensions")
     const bottomLineY = score.data.stave.lines.slice(-1)?.[0]?.y || 0;
     const y = params.CONTAINER_SYMBOLS_BAR
         + params.LINE_SPACING * bottomLineY
@@ -245,8 +249,17 @@ export const calculateStaveDimensions = (score: Score, params: LayoutParams): St
 
     const blocks = score.data.breaks.length + 1;
 
+    const lastNote = score.data.voices
+        .flatMap(v => v.notes)
+        .reduce<Note | undefined>(
+            (last, note) => !last || note.position > last.position ? note : last,
+            undefined
+        );
+
+    const toAdd = (durationToScalar(lastNote?.duration ?? "8n")) * params.NOTE_SPACING;
+
     return {
-        x: Math.min(Math.max(x + 250, params.CONTAINER_MIN_WIDTH), params.CONTAINER_MAX_WIDTH),
+        x: Math.min(Math.max(x + toAdd, params.CONTAINER_MIN_WIDTH), params.CONTAINER_MAX_WIDTH),
         y: y,
         blocks: blocks,
         containerY: y * blocks,
