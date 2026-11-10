@@ -12,6 +12,7 @@ export interface Score {
     defaultTempo?: number;
     defaultTransposition?: number;
     text?: string;
+    translations?: Record<string, string>;
     visibility?: string;
     createdBy?: string;
     createdAt?: Date;

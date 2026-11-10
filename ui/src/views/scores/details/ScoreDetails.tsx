@@ -1,6 +1,6 @@
-import React from "react";
+import React, {useState} from "react";
 import Page from "../../../Page.tsx";
-import {Group} from "@mantine/core";
+import {Button, Group, ScrollArea,} from "@mantine/core";
 import {Score} from "../../../model/Score.ts";
 import Description from "../../../components/controls/Description.tsx";
 import VoiceFilter from "./components/playback/VoiceFilter.tsx";
@@ -8,15 +8,25 @@ import Stave from "./components/stave/Stave.tsx";
 import ScoreSettings from "./components/ScoreSettings.tsx";
 import {AllScoreSettings} from "../../../utils/dictionaries.ts";
 import PlaybackControls from "./components/playback/PlaybackControls.tsx";
-import ScoreLyrics from "./components/ScoreLyrics.tsx";
 import ScoreRecording from "./components/ScoreRecording.tsx";
 import ScoreHeader from "./components/ScoreHeader.tsx";
+import ScoreLyricsSection from "./ScoreLyricsSection.tsx";
+import {useTranslation} from "react-i18next";
+import {useElementSize} from "@mantine/hooks";
+import {Layout} from "../../../utils/constants.ts";
 
 interface Properties {
     score: Score;
 }
 
 const ScoreDetails: React.FC<Properties> = ({score}) => {
+
+    const {t} = useTranslation();
+    const {ref: lyricsRef, height: lyricsHeight} = useElementSize();
+
+    const [showAllLyrics, setShowAllLyrics] = useState(false);
+
+    const exceedsMaxHeight = lyricsHeight > Layout.lyrics.height;
 
     return (
         <Page title={score.name}>
@@ -34,7 +44,29 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
             <VoiceFilter/>
             <Stave score={score}/>
 
-            <ScoreLyrics lyrics={score?.text}/>
+
+            {score.text && (
+                <>
+                    <ScrollArea h={exceedsMaxHeight && !showAllLyrics ? Layout.lyrics.height : undefined}>
+                        <div ref={lyricsRef}>
+                            <ScoreLyricsSection score={score}/>
+                        </div>
+                    </ScrollArea>
+
+                    {exceedsMaxHeight && !showAllLyrics && (
+                        <Button
+                            mt={"md"}
+                            variant={"subtle"}
+                            onClick={() => setShowAllLyrics(true)}
+                        >
+                            {t("button.displayAll")}
+                        </Button>
+                    )}
+                </>
+            )}
+
+
+            {/*<p>{JSON.stringify(score)}</p>*/}
         </Page>
     );
 }

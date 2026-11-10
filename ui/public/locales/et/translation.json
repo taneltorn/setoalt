@@ -149,6 +149,8 @@
         "defaultTransposition": "Vaikimisi helikõrgus (pooltoonides)",
         "lineDetune": "Noodijoonte mikrotonaalsus (tsentides)",
         "text": "Laulusõnad",
+        "textEt": "Tõlge (eesti)",
+        "textEn": "Tõlge (inglise)",
         "visibility": "Nähtavus",
         "visibilityComment": "Otselingiga on noodistus alati ligipääsetav.",
         "recording": "Link salvestusele",
@@ -253,7 +255,8 @@
     "changeInstrument": "Muuda heliväljundit",
     "backToTop": "Tagasi üles",
     "settings": "Seaded ja tööriistad",
-    "back": "Tagasi"
+    "back": "Tagasi",
+    "displayAll": "Kuva kõik"
   },
   "tooltip": {
     "activatePosition": "Positsioon {{position}}",

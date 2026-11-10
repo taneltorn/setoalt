@@ -53,6 +53,10 @@ export const Layout = {
     embedding: {
         BASE: 310,
         ROW: 150,
+    },
+    lyrics: {
+        height: 500,
+        gap: 200
     }
 }
 

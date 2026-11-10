@@ -37,6 +37,7 @@ export const normalize = (score: Score): Score => {
         v.occupiedPositions = undefined;
     });
 
+    console.log("score", score)
     return score;
 }
 

@@ -37,7 +37,7 @@ const Stave: React.FC<Properties> = ({score, isEditMode}) => {
                 marginTop: 15,
                 maxWidth: context.dimensions.x + 15,
                 overflowX: "auto",
-                height: context.dimensions.y * context.dimensions.blocks + 30
+                height: context.dimensions.y * context.dimensions.blocks + 10
             }}>
             {!context.isSimplifiedMode && <ActiveNotes/>}
 

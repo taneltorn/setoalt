@@ -40,6 +40,8 @@ const ScoreEditor: React.FC<Properties> = ({score}) => {
     const methods = useForm<Score>({defaultValues: {...score}});
 
     const onSubmit = async (values: Score) => {
+        console.log("values")
+        console.log(values)
         stopPlayback();
 
         const score = {...values, data: {...context.score.data, stave: values.data.stave}};

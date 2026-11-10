@@ -54,11 +54,18 @@ class ScoreService {
     public async insert(score: any, user: any): Promise<any> {
         try {
             this.logger.info(`Inserting new score`);
-            const query = `INSERT INTO setoalt.scores(name, description, recording, data, default_tempo, default_transposition,
-                                                      text, visibility,
+            const query = `INSERT INTO setoalt.scores(name,
+                                                      description,
+                                                      recording,
+                                                      data,
+                                                      default_tempo,
+                                                      default_transposition,
+                                                      text,
+                                                      translations,
+                                                      visibility,
                                                       created_by,
                                                       deleted_at)
-                           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10)
+                           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
                            RETURNING *`;
             const result = await pool.query(query, [
                 score.name,
@@ -68,6 +75,7 @@ class ScoreService {
                 score.defaultTempo,
                 score.defaultTransposition,
                 score.text,
+                score.translations,
                 score.visibility,
                 user.username,
                 null,
@@ -93,10 +101,11 @@ class ScoreService {
                     default_tempo         = $5,
                     default_transposition = $6,
                     text                  = $7,
-                    visibility            = $8,
-                    modified_by           = $9,
+                    translations          = $8,
+                    visibility            = $9,
+                    modified_by           = $10,
                     modified_at           = NOW()
-                WHERE id = $10
+                WHERE id = $11
                 RETURNING *;
             `;
             const result = await pool.query(query, [
@@ -107,6 +116,7 @@ class ScoreService {
                 score.defaultTempo,
                 score.defaultTransposition,
                 score.text,
+                score.translations,
                 score.visibility,
                 user.username,
                 id,

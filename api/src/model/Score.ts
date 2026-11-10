@@ -7,6 +7,7 @@ export type Score = {
     defaultTempo?: number;
     defaultTransposition?: number;
     text?: string;
+    translations?: object;
     visibility?: string;
     createdBy?: string;
     modifiedBy?: string;
