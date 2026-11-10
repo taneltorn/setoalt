@@ -55,6 +55,7 @@
     "adjustVolume": "Muuda taasesituse üldist helikõrgust madalamaks või kõrgemaks.",
     "adjustTempo": "Muuda esitustempot aeglasemaks või kiiremaks.",
     "openSettings": "Ava noodistuse sätted.",
+    "switchLayout": "Vali kompaktse ja normaalsuurusega paigutuse vahel.",
     "switchMode": "Vali noodistuse lihtsustatud või detailvaate vahel. Lihtsustatud vaates ei kuvata noodijoonte helikõrgusi ega üles-alla noolekesi (mikrotonaalsuse näitajaid).",
     "displayEmbedding": "Kuva noodistuse manustamiskood. Vastava koodi saab lisada välisele veebilehele (nt laul.setomaa.ee).",
     "downloadPng": "Lae alla noodistuse pildifail (.png).",

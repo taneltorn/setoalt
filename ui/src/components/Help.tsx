@@ -37,13 +37,12 @@ import {PiSpeakerSimpleHigh} from "react-icons/pi";
 import {ShiftLeftIcons, ShiftRightIcons} from "../utils/icons.tsx";
 import {ShiftMode} from "../utils/enums.ts";
 import {HiArrowNarrowDown, HiArrowNarrowUp} from "react-icons/hi";
-import {TbRepeat} from "react-icons/tb";
+import {TbBaselineDensityMedium, TbRepeat} from "react-icons/tb";
 
 interface Properties {
     tab?: string;
 }
 
-// todo: use translation + make dynamic
 const Help: React.FC<Properties> = (props) => {
 
     const {t} = useTranslation();
@@ -198,6 +197,10 @@ const Help: React.FC<Properties> = (props) => {
 
                         <HelpText icon={<IoSettingsOutline size={Size.icon.SM}/>}>
                             {t("help.openSettings")}
+                        </HelpText>
+
+                        <HelpText icon={<TbBaselineDensityMedium size={Size.icon.SM}/>}>
+                            {t("help.switchLayout")}
                         </HelpText>
 
                         <HelpText icon={<FaItunesNote size={Size.icon.SM}/>}>

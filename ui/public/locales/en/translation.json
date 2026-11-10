@@ -55,6 +55,7 @@
     "adjustVolume": "Adjust the overall playback pitch lower or higher.",
     "adjustTempo": "Adjust the playback tempo slower or faster.",
     "openSettings": "Open notation settings.",
+    "switchLayout": "Switch between compact and normal layout.",
     "switchMode": "Switch between the simplified and detailed notation views. In the simplified view, the pitches of the staff lines and the up/down arrows (microtonality indicators) are not displayed.",
     "displayEmbedding": "Display the embed code for the notation. The code can be added to an external website (e.g. laul.setomaa.ee).",
     "downloadPng": "Download the notation as an image file (.png).",
