@@ -5,7 +5,6 @@ import useScoreService from "../../hooks/useScoreService.tsx";
 import KeyPressHandler from "../../components/KeyPressHandler.tsx";
 import DevInfo from "../../components/DevInfo.tsx";
 import {useDevMode} from "../../hooks/useDevContext.tsx";
-import LoadingOverlay from "../../components/LoadingOverlay.tsx";
 import ScoreNotFound from "./ScoreNotFound.tsx";
 import ScoreDetails from "./details/ScoreDetails.tsx";
 import ScoreDialogs from "./details/components/ScoreDialogs.tsx";
@@ -15,6 +14,7 @@ import ScoreEmbedding from "./embed/ScoreEmbedding.tsx";
 import ContextProviders from "../../ContextProviders.tsx";
 import {useAuth} from "../../hooks/useAuth.tsx";
 import {Role} from "../../utils/enums.ts";
+import {Box, LoadingOverlay} from "@mantine/core";
 
 interface Properties {
     mode: "details" | "edit" | "new" | "embed" | "embed-new";
@@ -45,9 +45,9 @@ const ScoreManager: React.FC<Properties> = ({mode}) => {
 
     return (
         <ContextProviders>
-            <LoadingOverlay isLoading={scoreService.isLoading}>
-                {mode !== "embed" && noData && <ScoreNotFound/>}
+            <Box pos={"relative"}>
 
+                {mode !== "embed" && noData && <ScoreNotFound/>}
                 {mode === "details" && score && <ScoreDetails score={score}/>}
                 {mode === "edit" && score
                     && (auth.currentUser?.role !== Role.USER || score.createdBy === auth.currentUser?.username)
@@ -57,7 +57,9 @@ const ScoreManager: React.FC<Properties> = ({mode}) => {
                 {mode === "embed-new" && <ScoreEmbedding isEditMode/>}
 
                 {isDevMode && <DevInfo/>}
-            </LoadingOverlay>
+
+                <LoadingOverlay visible={scoreService.isLoading}/>
+            </Box>
 
             <KeyPressHandler/>
             <ScoreDialogs/>

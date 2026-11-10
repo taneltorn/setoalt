@@ -15,7 +15,7 @@ const Page: React.FC<Properties> = ({children, title}) => {
     }, [title]);
 
     return (
-        <div style={{maxWidth: Layout.stave.container.MAX_WIDTH}}>
+        <div style={{maxWidth: Layout.page.MAX_WIDTH}}>
             {children}
         </div>
     )

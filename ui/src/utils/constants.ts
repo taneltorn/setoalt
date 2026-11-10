@@ -1,62 +1,8 @@
 export const DateFormat = "DD.MM.yyyy HH:mm";
 
 export const Layout = {
-    stave: {
-        container: {
-            MIN_WIDTH: 1000,
-            MAX_WIDTH: 1500,
-            PADDING_X_START: 75,
-            PADDING_X_END: 60,
-            SYMBOLS_BAR: 30,
-            LYRICS_BAR: 50
-        },
-        line: {
-            SPACING: 8,
-            PRIMARY_LINE_STROKE_WIDTH: 2,
-            SECONDARY_LINE_STROKE_WIDTH: 1,
-            STROKE_WIDTH_BOLD: 3,
-        },
-        note: {
-            RADIUS: 6,
-            RADIUS_SMALL: 5,
-            REPEATING_OFFSET: 6,
-            SPACING: 55,
-            SHAPE: 0,
-            DIMMED_OPACITY: 0.2,
-            QUARTER_NOTE_STROKE: 4,
-            HALF_NOTE_STROKE: 2,
-        },
-        divider: {
-            SEPARATOR_HEIGHT: 40,
-            WIDTH: 2,
-            CONTAINER_WIDTH: 15,
-        },
-        position: {
-            WIDTH: 24,
-            HEIGHT: 6,
-        },
-        cursor: {
-            WIDTH: 24
-        },
-        range: {
-            WIDTH: 4,
-        },
-        lyrics: {
-            HEIGHT: 24,
-            FONT_SIZE: 16,
-            INCREASED_FONT_SIZE: 20,
-            DECREASED_FONT_SIZE: 14,
-            FONT_WEIGHT: 600,
-            DECREASE_FONT_FROM: 5
-        }
-    },
-    embedding: {
-        BASE: 310,
-        ROW: 150,
-    },
-    lyrics: {
-        height: 500,
-        gap: 200
+    page: {
+        MAX_WIDTH: 1000,
     }
 }
 

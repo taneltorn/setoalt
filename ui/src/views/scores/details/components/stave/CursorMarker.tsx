@@ -1,22 +1,23 @@
 import React, {useMemo} from 'react';
 import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {calculateCursorCoords} from "../../../../../utils/calculation.helpers.tsx";
-import {Layout} from "../../../../../utils/constants.ts";
 import {useAudioContext} from "../../../../../hooks/useAudioContext.tsx";
 import {useMantineTheme} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import PreviewNote from "./PreviewNote.tsx";
+import {useLayoutParams} from "../../../../../hooks/useLayoutParams.tsx";
 
 const CursorMarker: React.FC = () => {
 
     const {t} = useTranslation();
     const theme = useMantineTheme();
+    const {params} = useLayoutParams();
     const context = useScoreContext();
     const {stopPlayback} = useAudioContext();
     const breaksDependency = JSON.stringify(context.score.data.breaks);
 
     const {x, y} = useMemo(() => {
-        return calculateCursorCoords(context);
+        return calculateCursorCoords(context, params);
     }, [context.cursorPosition, context.score.data.stave, breaksDependency]);
 
     const showNote = useMemo(() => {
@@ -45,18 +46,18 @@ const CursorMarker: React.FC = () => {
     return (<>
             {context.isEditMode && <rect
                 x={x}
-                width={Layout.stave.cursor.WIDTH}
+                width={params.CURSOR_WIDTH}
                 y={y}
                 height={context.dimensions.y}
                 fill={theme.colors.gray[9]}
-                opacity={x >= (Layout.stave.container.PADDING_X_START - Layout.stave.note.SPACING) ? 0.05 : 0}
+                opacity={x >= (params.CONTAINER_PADDING_X_START - params.NOTE_SPACING) ? 0.05 : 0}
             />}
 
             <rect
                 className={"hover-pointer"}
-                x={x - Layout.stave.note.SPACING / 2 - Layout.stave.note.RADIUS / 2}
+                x={x - params.NOTE_SPACING / 2 - params.NOTE_RADIUS / 2}
                 y={y}
-                width={Layout.stave.note.SPACING * 1.5}
+                width={params.NOTE_SPACING * 1.5}
                 height={context.dimensions.y}
                 opacity={0}
                 onClick={event => handleClick(event)}

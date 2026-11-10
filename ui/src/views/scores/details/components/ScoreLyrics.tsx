@@ -1,6 +1,6 @@
 import React from "react";
 import {Box, Text} from "@mantine/core";
-import {Layout} from "../../../../utils/constants.ts";
+import {useLayoutParams} from "../../../../hooks/useLayoutParams.tsx";
 
 interface Properties {
     lyrics?: string;
@@ -8,10 +8,12 @@ interface Properties {
 
 const ScoreLyrics: React.FC<Properties> = ({lyrics}) => {
 
+    const {params} = useLayoutParams();
+
     return (
         <Box>
-            <Text fz={Layout.stave.lyrics.INCREASED_FONT_SIZE}>
-            <pre style={{whiteSpace: "pre-wrap", fontFamily: "Verdana"}}>{lyrics}</pre>
+            <Text fz={params.LYRICS_INCREASED_FONT_SIZE}>
+                <pre style={{whiteSpace: "pre-wrap", fontFamily: "Verdana"}}>{lyrics}</pre>
             </Text>
         </Box>
     );

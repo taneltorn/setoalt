@@ -1,6 +1,13 @@
 import React, {RefObject, useContext, useEffect, useMemo, useState} from 'react';
 import {Note} from "../model/Note.ts";
-import {durationToScalar, EmptyScore, getPositionRange, getPositions, isEmpty, sort} from "../utils/helpers.tsx";
+import {
+    durationToScalar,
+    EmptyScore,
+    getPositionRange,
+    getPositions,
+    isEmpty,
+    sort
+} from "../utils/helpers.tsx";
 import {Score} from "../model/Score.ts";
 import {StaveDimensions} from "../model/Dimensions.ts";
 import {HalfPosition} from "../model/HalfPosition.ts";
@@ -8,10 +15,11 @@ import {Range} from "../model/Range.ts";
 import {useAudioContext} from "./useAudioContext.tsx";
 import {DefaultVoices} from "../utils/dictionaries.ts";
 import {calculateStaveDimensions, getNoteBaseKey, getOffset, isInsideLoop} from "../utils/calculation.helpers.tsx";
-import {Layout, Playback} from "../utils/constants.ts";
+import {Playback} from "../utils/constants.ts";
 import {Voice} from "../model/Voice.ts";
 import useCursorCoords from "./useCursorCoords.tsx";
 import {ScoreContext} from "../context/ScoreContext.tsx";
+import {useLayoutParams} from "./useLayoutParams.tsx";
 
 interface Properties {
     children: React.ReactNode;
@@ -20,6 +28,7 @@ interface Properties {
 export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
     const audioContext = useAudioContext();
+    const {params} = useLayoutParams();
 
     const [score, setScore] = useState<Score>(structuredClone(EmptyScore));
 
@@ -63,8 +72,8 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
     const scrollToPosition = (position: number) => {
         if (containerRef?.current) {
-            const offset = getOffset(position, context.score.data.breaks, context.dimensions);
-            const x = position * Layout.stave.note.SPACING - offset.x;
+            const offset = getOffset(position, context.score.data.breaks, context.dimensions, params);
+            const x = position * params.NOTE_SPACING - offset.x;
 
             // todo should be dynamic, but these seem to more or less work for the time being
             const X_OFFSET = 150;
@@ -80,7 +89,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
 
             const y = containerRef.current.offsetTop + offset.y + window.scrollY;
             if (window.innerHeight < y + Y_OFFSET) {
-                const scrollTo = offset.y + containerRef.current.offsetTop - Layout.stave.container.SYMBOLS_BAR - 35;
+                const scrollTo = offset.y + containerRef.current.offsetTop - params.CONTAINER_SYMBOLS_BAR - 35;
                 window.scrollTo({
                     top: scrollTo,
                     behavior: 'instant'
@@ -162,7 +171,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
     }, [score]);
 
     const dimensions: StaveDimensions = useMemo<StaveDimensions>(
-        () => calculateStaveDimensions(score), [score, score.data.breaks, score.data.voices]);
+        () => calculateStaveDimensions(score, params), [score, score.data.breaks, score.data.voices]);
 
     const halfPositions: HalfPosition[] = useMemo(() => {
         const sixteenthNotes = score.data.voices
@@ -172,8 +181,8 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
             return sixteenthNotes
                 .map(n => ({
                     position: n.position,
-                    cutoffCoordStart: (n.position + 0.75) * Layout.stave.note.SPACING,
-                    cutoffCoordEnd: (n.position + 1.25) * Layout.stave.note.SPACING
+                    cutoffCoordStart: (n.position + 0.75) * params.NOTE_SPACING,
+                    cutoffCoordEnd: (n.position + 1.25) * params.NOTE_SPACING
                 }));
         }
         return [];
@@ -198,7 +207,7 @@ export const ScoreContextProvider: React.FC<Properties> = ({children}) => {
         return Array.from(duplicates);
     }, [score, isEditMode, score.data.voices, activeVoice]);
 
-    const cursorCoords = useCursorCoords(containerRef, dimensions, halfPositions);
+    const cursorCoords = useCursorCoords(containerRef, dimensions, params, halfPositions);
 
     const cursorPosition = useMemo(() => {
         let position = cursorCoords.x + (score.data.breaks[cursorCoords.y - 1] || 0);

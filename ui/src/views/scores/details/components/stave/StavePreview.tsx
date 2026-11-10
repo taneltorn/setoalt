@@ -3,7 +3,7 @@ import {useTranslation} from "react-i18next";
 import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {Stave} from "../../../../../model/Stave.ts";
 import {getLineCoords} from "../../../../../utils/helpers.tsx";
-import {Layout} from "../../../../../utils/constants.ts";
+import {useLayoutParams} from "../../../../../hooks/useLayoutParams.tsx";
 
 interface Properties {
     stave: Stave;
@@ -13,13 +13,14 @@ interface Properties {
 const StavePreview: React.FC<Properties> = ({stave, width}) => {
 
     const [t] = useTranslation();
+    const {params} = useLayoutParams();
     const context = useScoreContext();
 
     return (
         <svg width={width || 100}>
             {stave.lines.map((line, index) => {
-                let {y} = getLineCoords(line, 0, context);
-                y = y - Layout.stave.container.SYMBOLS_BAR  + 30;
+                let {y} = getLineCoords(line, 0, params, context);
+                y = y - params.CONTAINER_SYMBOLS_BAR  + 30;
 
                 return <g key={index}>
                     <text x={0} y={y} fontSize={8} fill={"black"}>

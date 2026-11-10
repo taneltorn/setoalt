@@ -1,5 +1,5 @@
 import React from 'react';
-import {Layout} from "../../../../../utils/constants.ts";
+import {useLayoutParams} from "../../../../../hooks/useLayoutParams.tsx";
 
 interface Properties {
     detune: number
@@ -12,11 +12,12 @@ interface Properties {
 const DetuneIndicator: React.FC<Properties> = ({x, y, detune, opacity, color}) => {
 
     const size = 20;
+    const {params} = useLayoutParams();
 
     return (
         <svg
-            x={x + 0.5 * Layout.stave.note.RADIUS}
-            y={y - (detune > 0 ? 3 : 3.5) * Layout.stave.note.RADIUS}
+            x={x + 0.5 * params.NOTE_RADIUS}
+            y={y - (detune > 0 ? 3 : 3.5) * params.NOTE_RADIUS}
             width={size}
             height={size}
             viewBox="0 0 24 24"

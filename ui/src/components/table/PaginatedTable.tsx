@@ -1,7 +1,6 @@
 import React, {ReactNode} from "react";
-import {Alert, Button, Group, Pagination, Table, Text, useMantineTheme} from "@mantine/core";
+import {Alert, Box, Button, Group, LoadingOverlay, Pagination, Table, Text, useMantineTheme} from "@mantine/core";
 import {useTranslation} from "react-i18next";
-import LoadingOverlay from "../LoadingOverlay.tsx";
 import {usePagination} from "../../hooks/usePagination.tsx";
 import {ItemsPerPageOptions} from "../../context/PaginationContext.tsx";
 
@@ -24,7 +23,7 @@ const PaginatedTable: React.FC<Properties> = ({isLoading, headers, rows}) => {
     }
 
     return (
-        <LoadingOverlay isLoading={!!isLoading}>
+        <Box pos={"relative"}>
             <Table highlightOnHover verticalSpacing={"sm"} variant={""}>
                 <Table.Thead>
                     <Table.Tr>
@@ -80,7 +79,9 @@ const PaginatedTable: React.FC<Properties> = ({isLoading, headers, rows}) => {
                         </Text>
                     </Group>
                 </Alert>}
-        </LoadingOverlay>
+
+            <LoadingOverlay visible={isLoading}/>
+        </Box>
     );
 }
 

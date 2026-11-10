@@ -1,7 +1,7 @@
 import {RefObject, useState, useEffect} from 'react';
-import {Layout} from "../utils/constants.ts";
 import {StaveDimensions} from "../model/Dimensions.ts";
 import {HalfPosition} from "../model/HalfPosition.ts";
+import {LayoutParams} from "../model/LayoutParams.ts";
 
 type MousePosition = {
     x: number;
@@ -10,7 +10,7 @@ type MousePosition = {
     cy: number;
 };
 
-const useCursorCoords = (elementRef: RefObject<HTMLElement> | undefined, dimensions: StaveDimensions, halfPositions?: HalfPosition[]): MousePosition => {
+const useCursorCoords = (elementRef: RefObject<HTMLElement> | undefined, dimensions: StaveDimensions, params: LayoutParams, halfPositions?: HalfPosition[]): MousePosition => {
 
     const [cursorPosition, setCursorPosition] = useState<MousePosition>({x: 0, y: 0, cx: 0, cy: 0});
 
@@ -23,11 +23,11 @@ const useCursorCoords = (elementRef: RefObject<HTMLElement> | undefined, dimensi
                 const rect = elementRef.current.getBoundingClientRect();
                 const cx = ev.clientX - rect.left
                     + (elementRef.current.scrollLeft || 0)
-                    - Layout.stave.container.PADDING_X_START
-                    + Layout.stave.note.SPACING;
+                    - params.CONTAINER_PADDING_X_START
+                    + params.NOTE_SPACING;
                 const cy = ev.clientY - rect.top;
 
-                let x = Math.round(cx / Layout.stave.note.SPACING) - 1;
+                let x = Math.round(cx / params.NOTE_SPACING) - 1;
                 if (halfPositions?.length) {
                     const inMiddle = halfPositions.find(it => cx >= it.cutoffCoordStart && cx < it.cutoffCoordEnd);
                     if (inMiddle) {

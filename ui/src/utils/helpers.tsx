@@ -2,7 +2,7 @@ import * as Tone from "tone";
 import {Frequency} from "tone";
 import {Note} from "../model/Note";
 import {Voice, VoiceType} from "../model/Voice";
-import {Layout, Size} from "./constants";
+import {Size} from "./constants";
 import {Score} from "../model/Score";
 import {Line} from "../model/Line";
 import {DefaultVoices, NoteRange} from "./dictionaries.ts";
@@ -15,6 +15,7 @@ import {DateValue} from "@mantine/dates";
 import {Notification} from "../model/Notification.ts";
 import {ScoreContextProperties} from "../context/ScoreContext.tsx";
 import {XY} from "../model/XY.ts";
+import {LayoutParams} from "../model/LayoutParams.ts";
 
 export const isEmpty = (object: any) => {
     return !object || Object.keys(object).length === 0 || object.length === 0;
@@ -110,10 +111,10 @@ export const getPositions = (voices: Voice[]) => {
     return sort(Array.from(new Set(voices.flatMap(v => v.notes).map(n => n.position))));
 }
 
-export const getLineCoords = (line: Line, startingY: number, context: ScoreContextProperties): XY => {
+export const getLineCoords = (line: Line, startingY: number, params: LayoutParams, context: ScoreContextProperties): XY => {
     const y = startingY
-        + line.y * Layout.stave.line.SPACING
-        + Layout.stave.container.SYMBOLS_BAR;
+        + line.y * params.LINE_SPACING
+        + params.CONTAINER_SYMBOLS_BAR;
 
     return {x: context.dimensions.x, y: y};
 }

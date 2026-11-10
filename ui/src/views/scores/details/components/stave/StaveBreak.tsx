@@ -5,6 +5,7 @@ import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {calculateBreakCoords} from "../../../../../utils/calculation.helpers.tsx";
 import {useLayoutControls} from "../../../../../hooks/useLayoutControls.tsx";
 import {useHover} from "@mantine/hooks";
+import {useLayoutParams} from "../../../../../hooks/useLayoutParams.tsx";
 
 interface Properties {
     position: number;
@@ -14,13 +15,14 @@ const StaveBreak: React.FC<Properties> = ({position}) => {
 
     const [t] = useTranslation();
     const theme = useMantineTheme();
+    const {params} = useLayoutParams();
     const context = useScoreContext();
     const {removeBreak} = useLayoutControls();
     const {hovered, ref} = useHover();
     const breaksDependency = JSON.stringify(context.score.data.breaks);
 
     const {x, y} = useMemo(() => {
-        return calculateBreakCoords(position, context)
+        return calculateBreakCoords(position, context, params)
     }, [position, context.score.data.stave, breaksDependency]);
 
     return (<>

@@ -1,6 +1,6 @@
 import React from 'react';
 import {Box, Button, Center, Select, Table} from "@mantine/core";
-import {Color, Layout, Size} from "../../../../utils/constants.ts";
+import {Color, Size} from "../../../../utils/constants.ts";
 import IconButton from "../../../../components/controls/IconButton.tsx";
 import {FaRegTrashCan} from "react-icons/fa6";
 import {useTranslation} from "react-i18next";
@@ -8,6 +8,7 @@ import {Stave} from "../../../../model/Stave.ts";
 import {range} from "../../../../utils/helpers.tsx";
 import {NoteRange} from "../../../../utils/dictionaries.ts";
 import {BiPlus} from "react-icons/bi";
+import {useLayoutParams} from "../../../../hooks/useLayoutParams.tsx";
 
 const NOTE_RANGE = [...NoteRange].reverse();
 
@@ -20,6 +21,7 @@ interface Properties {
 const StaveCreator: React.FC<Properties> = ({stave, setStave, linesWithError}) => {
 
     const {t} = useTranslation();
+    const {params} = useLayoutParams();
 
     const handleLineAdd = () => {
         const y = stave.lines.length > 0 ? Math.max(...stave.lines.map(l => l.y)) + 2 : 0;
@@ -27,7 +29,7 @@ const StaveCreator: React.FC<Properties> = ({stave, setStave, linesWithError}) =
             pitch: "",
             y: y,
             color: Color.stave.PRIMARY_LINE,
-            strokeWidth: Layout.stave.line.PRIMARY_LINE_STROKE_WIDTH
+            strokeWidth: params.LINE_PRIMARY_LINE_STROKE_WIDTH
         }
         setStave({...stave, lines: [...stave.lines, line]});
     }

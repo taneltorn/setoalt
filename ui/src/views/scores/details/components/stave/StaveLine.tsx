@@ -2,8 +2,8 @@ import React from 'react';
 import {useTranslation} from "react-i18next";
 import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {Line} from "../../../../../model/Line.ts";
-import {Layout} from "../../../../../utils/constants.ts";
 import DetuneIndicator from "./DetuneIndicator.tsx";
+import {useLayoutParams} from "../../../../../hooks/useLayoutParams.tsx";
 
 interface Properties {
     line: Line;
@@ -13,10 +13,11 @@ interface Properties {
 const StaveLine: React.FC<Properties> = ({line, offsetY}) => {
 
     const [t] = useTranslation();
+    const {params} = useLayoutParams();
     const context = useScoreContext();
 
-    const y = Layout.stave.container.SYMBOLS_BAR
-        + line.y * Layout.stave.line.SPACING
+    const y = params.CONTAINER_SYMBOLS_BAR
+        + line.y * params.LINE_SPACING
         + offsetY;
 
     return (<g>
@@ -30,7 +31,7 @@ const StaveLine: React.FC<Properties> = ({line, offsetY}) => {
                     <DetuneIndicator
                         detune={line.detune}
                         x={8}
-                        y={y + (line.detune > 0 ? (Layout.stave.line.SPACING + 3) : (Layout.stave.line.SPACING))}
+                        y={y + (line.detune > 0 ? (params.LINE_SPACING + 3) : (params.LINE_SPACING))}
                         opacity={1}
                         color={"black"}
                     />}
@@ -38,7 +39,7 @@ const StaveLine: React.FC<Properties> = ({line, offsetY}) => {
             <line
                 key={line.pitch}
                 className={`hover-pointer`}
-                x1={(!context.isSimplifiedMode ? Layout.stave.container.PADDING_X_START : 0) - Layout.stave.note.SPACING / 1.5}
+                x1={(!context.isSimplifiedMode ? params.CONTAINER_PADDING_X_START : 0) - params.NOTE_SPACING / 1.5}
                 y1={y}
                 x2={context.dimensions.x} y2={y}
                 stroke={line.color}

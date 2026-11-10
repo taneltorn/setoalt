@@ -13,7 +13,7 @@ import ScoreHeader from "./components/ScoreHeader.tsx";
 import ScoreLyricsSection from "./ScoreLyricsSection.tsx";
 import {useTranslation} from "react-i18next";
 import {useElementSize} from "@mantine/hooks";
-import {Layout} from "../../../utils/constants.ts";
+import {useLayoutParams} from "../../../hooks/useLayoutParams.tsx";
 
 interface Properties {
     score: Score;
@@ -23,10 +23,11 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
 
     const {t} = useTranslation();
     const {ref: lyricsRef, height: lyricsHeight} = useElementSize();
+    const {params} = useLayoutParams();
 
     const [showAllLyrics, setShowAllLyrics] = useState(false);
 
-    const exceedsMaxHeight = lyricsHeight > Layout.lyrics.height;
+    const exceedsMaxHeight = lyricsHeight > params.LYRICS_TEXT_HEIGHT;
 
     return (
         <Page title={score.name}>
@@ -45,9 +46,8 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
             <Stave score={score}/>
 
 
-            {score.text && (
-                <>
-                    <ScrollArea h={exceedsMaxHeight && !showAllLyrics ? Layout.lyrics.height : undefined}>
+            {score.text && (<>
+                    <ScrollArea h={exceedsMaxHeight && !showAllLyrics ? params.LYRICS_TEXT_HEIGHT : undefined}>
                         <div ref={lyricsRef}>
                             <ScoreLyricsSection score={score}/>
                         </div>

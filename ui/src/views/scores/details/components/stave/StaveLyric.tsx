@@ -3,9 +3,9 @@ import {Lyric} from "../../../../../model/Lyric.ts";
 import {useAudioContext} from "../../../../../hooks/useAudioContext.tsx";
 import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {calculateLyricCoords} from "../../../../../utils/calculation.helpers.tsx";
-import {Layout} from "../../../../../utils/constants.ts";
 import {useHistory} from "../../../../../hooks/useHistory.tsx";
 import {useMantineTheme} from "@mantine/core";
+import {useLayoutParams} from "../../../../../hooks/useLayoutParams.tsx";
 
 interface Properties {
     lyric: Lyric;
@@ -17,12 +17,13 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
     const context = useScoreContext();
     const history = useHistory();
     const {stopPlayback} = useAudioContext();
+    const {params} = useLayoutParams();
 
     const [value, setValue] = useState<string>(lyric.text);
     const breaksDependency = JSON.stringify(context.score.data.breaks);
 
     const {x, y} = useMemo(() => {
-        return calculateLyricCoords(lyric, context);
+        return calculateLyricCoords(lyric, context, params);
     }, [lyric.position, context.score.data.stave, breaksDependency]);
 
 
@@ -68,8 +69,8 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
 
     return (<>
             {context.isEditMode && !context.isExportMode &&
-                <foreignObject key={`lyric-${lyric.position}`} x={x - 20} y={y} width={Layout.stave.note.SPACING}
-                               height={Layout.stave.lyrics.HEIGHT}>
+                <foreignObject key={`lyric-${lyric.position}`} x={x - 20} y={y} width={params.NOTE_SPACING}
+                               height={params.LYRICS_HEIGHT}>
                     <input
                         onFocus={handleFocus}
                         onBlur={() => save()}
@@ -77,14 +78,14 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
                         disabled={!context.isEditMode}
                         value={value}
                         style={{
-                            width: Layout.stave.note.SPACING,
+                            width: params.NOTE_SPACING,
                             borderRadius: 12,
                             color: lyric.position === context.activePosition && !context.isExportMode
                                 ? theme.colors.red[9]
                                 : "black",
-                            fontWeight: Layout.stave.lyrics.FONT_WEIGHT,
-                            fontSize: Layout.stave.lyrics.FONT_SIZE,
-                            height: Layout.stave.lyrics.HEIGHT
+                            fontWeight: params.LYRICS_FONT_WEIGHT,
+                            fontSize: params.LYRICS_FONT_SIZE,
+                            height: params.LYRICS_HEIGHT
                         }}
                         onChange={e => handleChange(e.target.value)}
                     />
@@ -97,8 +98,8 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
                     fill={lyric.position === context.activePosition && !context.isExportMode
                         ? theme.colors.red[9]
                         : "black"}
-                    fontWeight={Layout.stave.lyrics.FONT_WEIGHT}
-                    fontSize={lyric.text.length >= Layout.stave.lyrics.DECREASE_FONT_FROM ? Layout.stave.lyrics.DECREASED_FONT_SIZE : Layout.stave.lyrics.FONT_SIZE}
+                    fontWeight={params.LYRICS_FONT_WEIGHT}
+                    fontSize={lyric.text.length >= params.LYRICS_DECREASE_FONT_FROM ? params.LYRICS_DECREASED_FONT_SIZE : params.LYRICS_FONT_SIZE}
                     x={x}
                     y={y}
                     onClick={handleClick}

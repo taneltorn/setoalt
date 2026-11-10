@@ -4,7 +4,7 @@ import {Line} from "../../../../../model/Line.ts";
 import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {useDevMode} from "../../../../../hooks/useDevContext.tsx";
 import {calculateStaveBlockCoords} from "../../../../../utils/calculation.helpers.tsx";
-import {Layout} from "../../../../../utils/constants.ts";
+import {useLayoutParams} from "../../../../../hooks/useLayoutParams.tsx";
 
 interface Properties {
     lines: Line[];
@@ -14,6 +14,7 @@ interface Properties {
 const StaveBlock: React.FC<Properties> = ({index, lines}) => {
 
     const context = useScoreContext();
+    const {params} = useLayoutParams();
     const {isDevMode} = useDevMode();
     const breaksDependency = JSON.stringify(context.score.data.breaks);
 
@@ -25,7 +26,7 @@ const StaveBlock: React.FC<Properties> = ({index, lines}) => {
         <>
             {isDevMode &&
                 <rect
-                    height={Layout.stave.container.SYMBOLS_BAR}
+                    height={params.CONTAINER_SYMBOLS_BAR}
                     width={context.dimensions.x}
                     y={y}
                     fill={"green"}
@@ -40,9 +41,9 @@ const StaveBlock: React.FC<Properties> = ({index, lines}) => {
 
             {isDevMode &&
                 <rect
-                    height={Layout.stave.container.LYRICS_BAR}
+                    height={params.CONTAINER_LYRICS_BAR}
                     width={context.dimensions.x}
-                    y={y + context.dimensions.y - Layout.stave.container.LYRICS_BAR}
+                    y={y + context.dimensions.y - params.CONTAINER_LYRICS_BAR}
                     fill={"blue"}
                     opacity={0.2}
                 />}

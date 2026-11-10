@@ -2,11 +2,11 @@ import React, {useMemo, useState} from 'react';
 import {useScoreContext} from "../../../../../hooks/useScoreContext.tsx";
 import {useDevMode} from "../../../../../hooks/useDevContext.tsx";
 import {calculateCursorNoteCoords} from "../../../../../utils/calculation.helpers.tsx";
-import {Layout} from "../../../../../utils/constants.ts";
 import {useAudioContext} from "../../../../../hooks/useAudioContext.tsx";
 import {NoteFactory} from "../../../../../utils/factories.ts";
 import {useNoteControls} from "../../../../../hooks/useNoteControls.tsx";
 import {useActiveKeys} from "../../../../../hooks/useActiveKeys.tsx";
+import {useLayoutParams} from "../../../../../hooks/useLayoutParams.tsx";
 
 interface Properties {
     pitch: string;
@@ -22,9 +22,10 @@ const PreviewNote: React.FC<Properties> = ({pitch, ...props}) => {
     const {stopPlayback} = useAudioContext();
     const {isDevMode} = useDevMode();
     const [opacity, setOpacity] = useState<number>(isDevMode ? 0.2 : 0);
+    const {params} = useLayoutParams();
 
     const {x, y} = useMemo(() => {
-        return calculateCursorNoteCoords(pitch, props.x, props.y, context);
+        return calculateCursorNoteCoords(pitch, props.x, props.y, context, params);
     }, [pitch, props.x, props.y]);
 
     const handleClick = (event: React.MouseEvent) => {
@@ -63,7 +64,7 @@ const PreviewNote: React.FC<Properties> = ({pitch, ...props}) => {
                 cx={x}
                 cy={y}
                 opacity={isDevMode ? Math.max(opacity, 0.2) : opacity}
-                r={Layout.stave.note.RADIUS}
+                r={params.NOTE_RADIUS}
             />
             <rect
                 className={"hover-pointer"}
@@ -72,7 +73,7 @@ const PreviewNote: React.FC<Properties> = ({pitch, ...props}) => {
                 opacity={isDevMode ? 0.1 : 0}
                 onMouseOver={() => setOpacity(0.5)}
                 onMouseLeave={() => setOpacity(0)}
-                r={Layout.stave.note.RADIUS * 2.5}
+                r={params.NOTE_RADIUS * 2.5}
                 height={40}
                 fill={"red"}
                 width={100}

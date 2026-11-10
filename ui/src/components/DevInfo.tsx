@@ -3,12 +3,14 @@ import {useScoreContext} from "../hooks/useScoreContext.tsx";
 import useCursorCoords from "../hooks/useCursorCoords.tsx";
 import {Grid} from "@mantine/core";
 import {useAudioContext} from "../hooks/useAudioContext.tsx";
+import {useLayoutParams} from "../hooks/useLayoutParams.tsx";
 
 const DevInfo: React.FC = () => {
 
+    const {params} = useLayoutParams();
     const context = useScoreContext();
     const audioContext = useAudioContext();
-    const {x, y, cx, cy} = useCursorCoords(context.containerRef, context.dimensions);
+    const {x, y, cx, cy} = useCursorCoords(context.containerRef, context.dimensions, params);
 
     return (
         <div style={{marginTop: 20, padding: "10px 15px", backgroundColor: "#f9f9f9", borderRadius: "16px"}}>
