@@ -17,7 +17,7 @@ const ScoreLyricsSection: React.FC<Properties> = ({score}) => {
     const translation = score.translations?.[i18n.resolvedLanguage ?? i18n.language] || score.translations?.["et"];
 
     return (
-        <Group align="flex-start" gap={params.LYRICS_TEXT_HEIGHT}>
+        <Group align="flex-start" gap={params.LYRICS_TEXT_GAP}>
             <ScoreLyrics lyrics={score.text}/>
             {translation && <ScoreLyrics lyrics={translation}/>}
         </Group>

@@ -2,7 +2,7 @@ export const DateFormat = "DD.MM.yyyy HH:mm";
 
 export const Layout = {
     page: {
-        MAX_WIDTH: 1000,
+        MAX_WIDTH: 1200,
     }
 }
 
