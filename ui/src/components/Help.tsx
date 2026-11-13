@@ -60,7 +60,7 @@ const Help: React.FC<Properties> = (props) => {
                 <Text fw={"bold"}>?</Text>
             </ActionIcon>
 
-            <Drawer opened={opened} onClose={close} title={<Title order={2}>Abi</Title>}>
+            <Drawer opened={opened} onClose={close} title={<Title order={2}>{t("help.guide")}</Title>}>
                 <Tabs defaultValue={props.tab || "playback"} radius={"xs"}>
                     <Tabs.List>
                         <Tabs.Tab value="playback">
@@ -168,7 +168,6 @@ const Help: React.FC<Properties> = (props) => {
 
                         <HelpText icon={<FaBackward size={Size.icon.SM}/>}>
                             {t("help.prevNote")}
-                            Vali eelmine noot.
                         </HelpText>
 
                         <HelpText icon={<FaPlayCircle color={theme.colors.red[9]} size={Size.icon.SM}/>}>
