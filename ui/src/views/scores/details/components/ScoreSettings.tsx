@@ -1,5 +1,5 @@
 import React from "react";
-import {ActionIcon, Group, Loader, Menu, Text} from "@mantine/core";
+import {ActionIcon, Group, Loader, Menu, Text, Tooltip} from "@mantine/core";
 import {useTranslation} from "react-i18next";
 import {useScoreContext} from "../../../../hooks/useScoreContext.tsx";
 import {BsCodeSlash, BsFiletypePng} from "react-icons/bs";
@@ -13,13 +13,10 @@ import useScoreService from "../../../../hooks/useScoreService.tsx";
 import {useNavigate} from "react-router-dom";
 import {useAuth} from "../../../../hooks/useAuth.tsx";
 import useScoreExport from "../../../../hooks/useScoreExport.tsx";
-import {useLayoutParams} from "../../../../hooks/useLayoutParams.tsx";
-import {DefaultLayoutParams, CompactLayoutParams} from "../../../../utils/layout.tsx";
-import {TbBaselineDensityMedium, TbBaselineDensitySmall} from "react-icons/tb";
+import LayoutParamsControls from "../LayoutParamsControls.tsx";
 
 export enum Setting {
     CHANGE_MODE,
-    CHANGE_LAYOUT,
     EXPORT_PNG,
     EMBED_CODE,
     CLONE_SCORE
@@ -37,7 +34,6 @@ const ScoreSettings: React.FC<Properties> = ({settings}) => {
     const auth = useAuth();
     const scoreService = useScoreService();
     const {score, isSimplifiedMode, setIsSimplifiedMode} = useScoreContext();
-    const {params, setParams} = useLayoutParams();
     const {open} = useDialogContext();
     const {exportToPng, isLoading} = useScoreExport();
 
@@ -54,35 +50,23 @@ const ScoreSettings: React.FC<Properties> = ({settings}) => {
     return (
         <Group gap={4}>
             <Help tab={location.pathname.includes("edit") ? "editor" : "playback"}/>
+            <LayoutParamsControls/>
             <Menu shadow={"md"} position={"bottom-end"}>
                 <Menu.Target>
-                    <ActionIcon
-                        size={"xl"}
-                        variant={"subtle"}
-                        color={"gray"}
-                        data-active={"true"}
-                        title={t("button.settings")}
-                    >
-                        {isLoading
-                            ? <Loader size={Size.icon.MD}/>
-                            : <IoSettingsOutline size={Size.icon.MD}/>}
-                    </ActionIcon>
+                    <Tooltip label={t("button.settings")}>
+                        <ActionIcon
+                            size={"xl"}
+                            variant={"subtle"}
+                            color={"gray"}
+                            data-active={"true"}
+                        >
+                            {isLoading
+                                ? <Loader size={Size.icon.MD}/>
+                                : <IoSettingsOutline size={Size.icon.MD}/>}
+                        </ActionIcon>
+                    </Tooltip>
                 </Menu.Target>
                 <Menu.Dropdown>
-                    {settings.includes(Setting.CHANGE_LAYOUT) &&
-                        <Menu.Item
-                            onClick={() => setParams(params.name === "default" ? CompactLayoutParams : DefaultLayoutParams)}>
-                            <Group>
-                                {params.name === "default"
-                                    ? <TbBaselineDensitySmall size={Size.icon.SM}/>
-                                    : <TbBaselineDensityMedium size={Size.icon.SM}/>}
-                                <Text mr={"md"}>{t(`view.scoreDetails.settings.${params.name === "default"
-                                    ? "useCompactLayout"
-                                    : "useNormalLayout"}`)}
-                                </Text>
-                            </Group>
-                        </Menu.Item>}
-
                     {settings.includes(Setting.CHANGE_MODE) &&
                         <Menu.Item onClick={() => setIsSimplifiedMode(!isSimplifiedMode)}>
                             <Group>

@@ -30,13 +30,13 @@ const Editor: React.FC = () => {
     return (
         <Page title={t("view.editor.title")}>
             <Header rightSection={
-                <ScoreControls
-                    onPrimaryButtonClick={handleClick}
-                    primaryButtonVariant={"outline"}
-                    hidePrimaryButton={![Role.ADMIN, Role.EDITOR, Role.USER].includes(auth.currentUser?.role as Role)}
-                    hideSecondaryButton
-                />
-            }>
+                         <ScoreControls
+                            onPrimaryButtonClick={handleClick}
+                            primaryButtonVariant={"outline"}
+                            hidePrimaryButton={![Role.ADMIN, Role.EDITOR, Role.USER].includes(auth.currentUser?.role as Role)}
+                            hideSecondaryButton
+                        />
+                    }>
                 {t("view.editor.title")}
             </Header>
 
@@ -46,7 +46,7 @@ const Editor: React.FC = () => {
 
             <Group justify={"space-between"}>
                 <PlaybackControls/>
-                <ScoreSettings settings={[Setting.CHANGE_LAYOUT, Setting.CHANGE_MODE, Setting.EXPORT_PNG]}/>
+                <ScoreSettings settings={[Setting.CHANGE_MODE, Setting.EXPORT_PNG]}/>
             </Group>
 
             <VoiceControls/>

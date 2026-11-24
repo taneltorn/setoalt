@@ -8,7 +8,7 @@ import {
     Grid, Group,
     Kbd,
     Tabs,
-    Text, Title,
+    Text, Title, Tooltip,
     useMantineTheme
 } from "@mantine/core";
 import {Trans, useTranslation} from "react-i18next";
@@ -36,7 +36,7 @@ import {mdiMusicNoteEighth, mdiMusicNoteHalf, mdiMusicNoteQuarter} from "@mdi/js
 import {PiSpeakerSimpleHigh} from "react-icons/pi";
 import {ShiftLeftIcons, ShiftRightIcons} from "../utils/icons.tsx";
 import {ShiftMode} from "../utils/enums.ts";
-import {HiArrowNarrowDown, HiArrowNarrowUp} from "react-icons/hi";
+import {HiArrowNarrowDown, HiArrowNarrowUp, HiOutlineZoomIn, HiOutlineZoomOut} from "react-icons/hi";
 import {TbBaselineDensityMedium, TbRepeat} from "react-icons/tb";
 
 interface Properties {
@@ -51,14 +51,16 @@ const Help: React.FC<Properties> = (props) => {
 
     return (
         <Box visibleFrom={"sm"}>
-            <ActionIcon
-                title={t("page.help")}
-                size={Size.icon.MD}
-                color={theme.colors.blue[9]}
-                onClick={open}
-            >
-                <Text fw={"bold"}>?</Text>
-            </ActionIcon>
+            <Tooltip label={t("page.help")}>
+                <ActionIcon
+                    size={"xl"}
+                    variant={"subtle"}
+                    color={theme.colors.blue[9]}
+                    onClick={open}
+                >
+                    <Text fw={"bold"}>?</Text>
+                </ActionIcon>
+            </Tooltip>
 
             <Drawer opened={opened} onClose={close} title={<Title order={2}>{t("help.guide")}</Title>}>
                 <Tabs defaultValue={props.tab || "playback"} radius={"xs"}>
@@ -110,7 +112,7 @@ const Help: React.FC<Properties> = (props) => {
                         {t("help.voiceControlText")}
                         <br/>
                         <br/>
-                        <Trans i18nKey="help.voiceControlText2"  components={{kbd: <Kbd/>}}/>
+                        <Trans i18nKey="help.voiceControlText2" components={{kbd: <Kbd/>}}/>
 
                         <Grid mt={"md"}>
                             <Grid.Col span={3}>
@@ -171,7 +173,7 @@ const Help: React.FC<Properties> = (props) => {
                         </HelpText>
 
                         <HelpText icon={<FaPlayCircle color={theme.colors.red[9]} size={Size.icon.SM}/>}>
-                            <Trans i18nKey="help.playbackText"  components={{kbd: <Kbd/>}}/>
+                            <Trans i18nKey="help.playbackText" components={{kbd: <Kbd/>}}/>
                         </HelpText>
 
                         <HelpText icon={<FaForward size={Size.icon.SM}/>}>
@@ -193,6 +195,14 @@ const Help: React.FC<Properties> = (props) => {
                         </HelpText>
 
                         <Divider my={"md"}/>
+
+                        <HelpText icon={<HiOutlineZoomOut size={Size.icon.SM}/>}>
+                            {t("help.zoomOut")}
+                        </HelpText>
+
+                        <HelpText icon={<HiOutlineZoomIn size={Size.icon.SM}/>}>
+                            {t("help.zoomIn")}
+                        </HelpText>
 
                         <HelpText icon={<IoSettingsOutline size={Size.icon.SM}/>}>
                             {t("help.openSettings")}
@@ -219,7 +229,7 @@ const Help: React.FC<Properties> = (props) => {
                         {t("help.editorText")}
 
                         <Title order={5} my={"md"}>{t("help.voiceActivation")}</Title>
-                        <Trans i18nKey="help.voiceActivationText"  components={{kbd: <Kbd/>}}/>
+                        <Trans i18nKey="help.voiceActivationText" components={{kbd: <Kbd/>}}/>
 
                         <Grid mt={"md"}>
                             <Grid.Col span={3}>
@@ -326,20 +336,20 @@ const Help: React.FC<Properties> = (props) => {
                         </HelpText>
 
                         <HelpText icon={ShiftLeftIcons.get(ShiftMode.LYRICS)}>
-                            <Trans i18nKey="help.shiftLyricsLeft"  components={{kbd: <Kbd/>}}/>
+                            <Trans i18nKey="help.shiftLyricsLeft" components={{kbd: <Kbd/>}}/>
 
                         </HelpText>
 
                         <HelpText icon={ShiftRightIcons.get(ShiftMode.LYRICS)}>
-                            <Trans i18nKey="help.shiftLyricsRight"  components={{kbd: <Kbd/>}}/>
+                            <Trans i18nKey="help.shiftLyricsRight" components={{kbd: <Kbd/>}}/>
                         </HelpText>
 
                         <HelpText icon={ShiftLeftIcons.get(ShiftMode.VOICES)}>
-                            <Trans i18nKey="help.shiftVoicesLeft"  components={{kbd: <Kbd/>}}/>
+                            <Trans i18nKey="help.shiftVoicesLeft" components={{kbd: <Kbd/>}}/>
                         </HelpText>
 
                         <HelpText icon={ShiftRightIcons.get(ShiftMode.VOICES)}>
-                            <Trans i18nKey="help.shiftVoicesRight"  components={{kbd: <Kbd/>}}/>
+                            <Trans i18nKey="help.shiftVoicesRight" components={{kbd: <Kbd/>}}/>
                         </HelpText>
 
                         <HelpText icon={<FaDeleteLeft size={Size.icon.SM}/>}>

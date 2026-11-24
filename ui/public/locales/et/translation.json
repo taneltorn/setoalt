@@ -2,7 +2,7 @@
   "page": {
     "title": "Seto laulu alternatiivne noodikiri",
     "loading": "Laen andmeid...",
-    "help": "Näita juhendit",
+    "help": "Juhend",
     "example": "Näide",
     "search": "Otsi",
     "sidebar": {
@@ -85,7 +85,9 @@
     "removeNote": "Eemalda valitud noot.",
     "undo": "Võta tagasi.",
     "redo": "Tee uuesti.",
-    "reset": "Kustuta noodistus ja alusta uuesti."
+    "reset": "Kustuta noodistus ja alusta uuesti.",
+    "zoomIn": "Kuva noodijoonestik suuremalt.",
+    "zoomOut": "Kuva noodijoonestik väiksemalt."
   },
   "view": {
     "home": {
@@ -258,9 +260,11 @@
     "removeVoice": "Kustuta hääl",
     "changeInstrument": "Muuda heliväljundit",
     "backToTop": "Tagasi üles",
-    "settings": "Seaded ja tööriistad",
+    "settings": "Seaded",
     "back": "Tagasi",
-    "displayAll": "Kuva kõik"
+    "displayAll": "Kuva kõik",
+    "increaseZoom": "Suurenda",
+    "decreaseZoom": "Vähenda"
   },
   "tooltip": {
     "activatePosition": "Positsioon {{position}}",
@@ -287,8 +291,8 @@
     "removeNote": "Eemalda noot",
     "resetScore": "Lähtesta",
     "saveScore": "Salvesta",
-    "playNext": "Järgmine",
-    "playPrevious": "Eelmine",
+    "playNext": "Järgmine noot",
+    "playPrevious": "Eelmine noot",
     "startPlayback": "Esita",
     "startPlaybackRepeat": "Esita kordamisega",
     "startPlaybackRecording": "Kuula helisalvestust",

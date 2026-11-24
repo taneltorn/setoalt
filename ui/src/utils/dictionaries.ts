@@ -23,16 +23,16 @@ export const VoiceTypes = [
     VoiceType.TORRO,
     VoiceType.KILLO,
     VoiceType.BOTTOM_TORRO,
-    VoiceType.FRONT,  
+    VoiceType.FRONT,
 ];
 
 export const AllScoreSettings = [
-    Setting.CHANGE_LAYOUT,
     Setting.CHANGE_MODE,
     Setting.EMBED_CODE,
     Setting.EXPORT_PNG,
     Setting.CLONE_SCORE,
-]
+];
+
 export const Durations: string[] = [
     "2n", "4n", "8n"
 ];
@@ -45,10 +45,10 @@ export const NoteRange = [
 ];
 
 export const Instruments: Instrument[] = [
-      {
+    {
         name: "piano",
         path: `${import.meta.env.VITE_PUBLIC_URL || ""}/samples/piano/`,
-        mapping:{
+        mapping: {
             "C3": "C3.mp3",
             "D3": "D3.mp3",
             "D#3": "Ds3.mp3",
@@ -129,7 +129,7 @@ export const Instruments: Instrument[] = [
             "E5": "E5.mp3",
             "E6": "E6.mp3",
         }
-    } ,
+    },
     {
         name: "guitar",
         path: `${import.meta.env.VITE_PUBLIC_URL || ""}/samples/guitar/`,

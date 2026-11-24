@@ -1,5 +1,5 @@
-export const DefaultLayoutParams = {
-    name: "default",
+export const LayoutParamsLg = {
+    name: "lg",
 
     CONTAINER_MIN_WIDTH: 500,
     CONTAINER_MAX_WIDTH: 2000,
@@ -44,8 +44,8 @@ export const DefaultLayoutParams = {
     EMBEDDING_ROW: 150,
 }
 
-export const CompactLayoutParams = {
-    name: "compact",
+export const LayoutParamsMd = {
+    name: "md",
 
     CONTAINER_MIN_WIDTH: 500,
     CONTAINER_MAX_WIDTH: 2000,
@@ -83,6 +83,52 @@ export const CompactLayoutParams = {
     LYRICS_DECREASED_FONT_SIZE: 10,
     LYRICS_FONT_WEIGHT: 600,
     LYRICS_DECREASE_FONT_FROM: 5,
+    LYRICS_TEXT_HEIGHT: 500,
+    LYRICS_TEXT_GAP: 200,
+
+    EMBEDDING_BASE: 310,
+    EMBEDDING_ROW: 150,
+}
+
+export const LayoutParamsSm = {
+    name: "sm",
+
+    CONTAINER_MIN_WIDTH: 500,
+    CONTAINER_MAX_WIDTH: 2000,
+    CONTAINER_PADDING_X_START: 75,
+    CONTAINER_PADDING_X_END: 75,
+    CONTAINER_SYMBOLS_BAR: 30,
+    CONTAINER_LYRICS_BAR: 50,
+
+    LINE_SPACING: 6,
+    LINE_PRIMARY_LINE_STROKE_WIDTH: 2,
+    LINE_SECONDARY_LINE_STROKE_WIDTH: 1,
+    LINE_STROKE_WIDTH_BOLD: 3,
+
+    NOTE_RADIUS: 4,
+    NOTE_RADIUS_SMALL: 3,
+    NOTE_REPEATING_OFFSET: 6,
+    NOTE_SPACING: 30,
+
+    DIVIDER_SEPARATOR_HEIGHT: 30,
+    DIVIDER_SEPARATOR_X_OFFSET: -5,
+    DIVIDER_SEPARATOR_Y_OFFSET: -10,
+    DIVIDER_WIDTH: 2,
+    DIVIDER_CONTAINER_WIDTH: 15,
+
+    POSITION_WIDTH: 24,
+    POSITION_HEIGHT: 6,
+
+    CURSOR_WIDTH: 24,
+
+    RANGE_WIDTH: 4,
+
+    LYRICS_HEIGHT: 24,
+    LYRICS_FONT_SIZE: 11,
+    LYRICS_INCREASED_FONT_SIZE: 20,
+    LYRICS_DECREASED_FONT_SIZE: 8,
+    LYRICS_FONT_WEIGHT: 600,
+    LYRICS_DECREASE_FONT_FROM: 4,
     LYRICS_TEXT_HEIGHT: 500,
     LYRICS_TEXT_GAP: 200,
 

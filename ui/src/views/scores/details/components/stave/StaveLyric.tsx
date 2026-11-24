@@ -69,7 +69,7 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
 
     return (<>
             {context.isEditMode && !context.isExportMode &&
-                <foreignObject key={`lyric-${lyric.position}`} x={x - 20} y={y} width={params.NOTE_SPACING}
+                <foreignObject key={`lyric-${lyric.position}`} x={x - 10} y={y} width={params.NOTE_SPACING}
                                height={params.LYRICS_HEIGHT}>
                     <input
                         onFocus={handleFocus}
@@ -103,7 +103,9 @@ const StaveLyric: React.FC<Properties> = ({lyric}) => {
                     x={x}
                     y={y}
                     onClick={handleClick}
-                >{lyric.text}</text>}
+                >
+                    {lyric.text}
+                </text>}
         </>
     )
 };

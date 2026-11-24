@@ -1,5 +1,5 @@
 import React, {ReactNode} from 'react';
-import {ActionIcon} from "@mantine/core";
+import {ActionIcon, Tooltip} from "@mantine/core";
 
 interface Properties {
     className?: string;
@@ -16,19 +16,21 @@ const ControlButton: React.FC<Properties> = (props) => {
     const title = props.tooltip + (props.shortKey ? ` (${props.shortKey})` : "");
 
     return (
-        <ActionIcon
-            title={title}
-            size={40}
-            w={55}
-            color={"black"}
-            data-active={props.active}
-            className={"control-button"}
-            variant={props.active ? "filled" : "transparent"}
-            disabled={props.disabled}
-            onClick={props.onClick}
-        >
-            {props.children}
-        </ActionIcon>
+        <Tooltip label={title}>
+            <ActionIcon
+                size={40}
+                w={55}
+                color={"black"}
+                data-active={props.active}
+                className={"control-button"}
+                variant={props.active ? "filled" : "transparent"}
+                disabled={props.disabled}
+                onClick={props.onClick}
+            >
+                {props.children}
+            </ActionIcon>
+        </Tooltip>
+
     )
 };
 
