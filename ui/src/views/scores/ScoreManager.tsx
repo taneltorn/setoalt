@@ -44,7 +44,7 @@ const ScoreManager: React.FC<Properties> = ({mode}) => {
     }, [params.id]);
 
     return (
-        <ContextProviders>
+        <ContextProviders key={`${mode}-${params.id ?? "new"}`}>
             <Box pos={"relative"}>
 
                 {mode !== "embed" && noData && <ScoreNotFound/>}

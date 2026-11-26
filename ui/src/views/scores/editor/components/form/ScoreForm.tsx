@@ -38,6 +38,7 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
                 error={errors.name?.message}
             >
                 <TextInput
+                    autoComplete={"off"}
                     size={"xl"}
                     placeholder={t("view.editor.form.name")}
                     {...register("name", {required: t("field.required")})}

@@ -41,6 +41,7 @@ const SaveScoreDialog: React.FC = () => {
         const saveScore = () => score.id 
             ? scoreService.updateScore(score.id, score)
             : scoreService.createScore(score);
+
         saveScore()
             .then((r) => {
                 methods.reset();

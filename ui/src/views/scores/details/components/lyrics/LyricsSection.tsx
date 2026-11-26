@@ -37,7 +37,7 @@ const LyricsSection: React.FC<Properties> = ({score}) => {
                 mih={Size.page.LYRICS_TEXT_MIN_HEIGHT}
                 mah={lyricsHeight || undefined}
                 style={{
-                    resize: exceedsMaxHeight ? "vertical" : "none",
+                    resize: exceedsMaxHeight ? "both" : "none",
                     overflow: "auto",
                 }}
             >
