@@ -102,23 +102,6 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
             </Input.Wrapper>
 
             <Input.Wrapper
-                label={t("view.editor.form.notes")}
-                size={"xl"}
-                mb={"xl"}
-                error={errors.notes?.message}
-            >
-                <Textarea
-                    size={"xl"}
-                    autosize
-                    minRows={4}
-                    maxRows={12}
-                    placeholder={t("view.editor.form.notes")}
-                    {...register("notes")}
-                    {...handleFocus}
-                />
-            </Input.Wrapper>
-
-            <Input.Wrapper
                 label={t("view.editor.form.text")}
                 size={"xl"}
                 mb={"xl"}
@@ -155,6 +138,7 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
             <Input.Wrapper
                 label={t("view.editor.form.textEn")}
                 size={"xl"}
+                mb={"xl"}
                 error={errors.text?.message}
             >
                 <Textarea
@@ -167,6 +151,24 @@ const ScoreForm: React.FC<Properties> = ({onSubmit}) => {
                     {...handleFocus}
                 />
             </Input.Wrapper>
+
+            <Input.Wrapper
+                label={t("view.editor.form.notes")}
+                size={"xl"}
+                mb={"xl"}
+                error={errors.notes?.message}
+            >
+                <Textarea
+                    size={"xl"}
+                    autosize
+                    minRows={4}
+                    maxRows={12}
+                    placeholder={t("view.editor.form.notes")}
+                    {...register("notes")}
+                    {...handleFocus}
+                />
+            </Input.Wrapper>
+
         </form>
     )
 };
