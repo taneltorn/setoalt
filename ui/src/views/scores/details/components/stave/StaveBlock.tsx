@@ -30,7 +30,7 @@ const StaveBlock: React.FC<Properties> = ({index, lines}) => {
                     width={context.dimensions.x}
                     y={y}
                     fill={"green"}
-                    opacity={0.2}
+                    opacity={0.6}
                 />}
             {lines.map(line =>
                 <StaveLine

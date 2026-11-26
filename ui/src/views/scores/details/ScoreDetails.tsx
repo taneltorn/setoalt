@@ -1,6 +1,5 @@
-import React, {useState} from "react";
-import Page from "../../../Page.tsx";
-import {Button, Group, ScrollArea,} from "@mantine/core";
+import React from "react";
+import {Box, Group, Text} from "@mantine/core";
 import {Score} from "../../../model/Score.ts";
 import Description from "../../../components/controls/Description.tsx";
 import VoiceFilter from "./components/playback/VoiceFilter.tsx";
@@ -10,24 +9,14 @@ import {AllScoreSettings} from "../../../utils/dictionaries.ts";
 import PlaybackControls from "./components/playback/PlaybackControls.tsx";
 import ScoreRecording from "./components/ScoreRecording.tsx";
 import ScoreHeader from "./components/ScoreHeader.tsx";
-import ScoreLyricsSection from "./ScoreLyricsSection.tsx";
-import {useTranslation} from "react-i18next";
-import {useElementSize} from "@mantine/hooks";
-import {useLayoutParams} from "../../../hooks/useLayoutParams.tsx";
+import Page from "../../../Page.tsx";
+import LyricsSection from "./components/lyrics/LyricsSection.tsx";
 
 interface Properties {
     score: Score;
 }
 
 const ScoreDetails: React.FC<Properties> = ({score}) => {
-
-    const {t} = useTranslation();
-    const {ref: lyricsRef, height: lyricsHeight} = useElementSize();
-    const {params} = useLayoutParams();
-
-    const [showAllLyrics, setShowAllLyrics] = useState(false);
-
-    const exceedsMaxHeight = lyricsHeight > params.LYRICS_TEXT_HEIGHT;
 
     return (
         <Page title={score.name}>
@@ -45,24 +34,11 @@ const ScoreDetails: React.FC<Properties> = ({score}) => {
             <VoiceFilter/>
             <Stave score={score}/>
 
-            {score.text && (<>
-                    <ScrollArea h={exceedsMaxHeight && !showAllLyrics ? params.LYRICS_TEXT_HEIGHT : undefined}>
-                        <div ref={lyricsRef}>
-                            <ScoreLyricsSection score={score}/>
-                        </div>
-                    </ScrollArea>
+            <LyricsSection score={score}/>
 
-                    {exceedsMaxHeight && !showAllLyrics && (
-                        <Button
-                            mt={"md"}
-                            variant={"subtle"}
-                            onClick={() => setShowAllLyrics(true)}
-                        >
-                            {t("button.displayAll")}
-                        </Button>
-                    )}
-                </>
-            )}
+            {score.notes && <Box mt={"xl"}>
+                <Text>{score.notes}</Text>
+            </Box>}
         </Page>
     );
 }

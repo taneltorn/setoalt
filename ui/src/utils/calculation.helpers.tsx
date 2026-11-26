@@ -12,10 +12,21 @@ import {durationToScalar} from "./helpers.tsx";
 
 // todo: could refactor a lot here
 
-export const calculateBreakCoords = (position: number, context: ScoreContextProperties, params: LayoutParams): XY => {
-    const offset = getBreakOffset(position, context, params);
+export const calculateBreakCoords = (breakPosition: number, context: ScoreContextProperties, params: LayoutParams): XY => {
+    console.log("calculateBreakCoords")
+    const notes = context.score.data.voices.find(v => v.name === context.activeVoice)?.notes || [];
+    console.log(notes)
+    const note = notes.find(n => n.position + durationToScalar(n.duration) === breakPosition);
+    const positionToUse = (note?.position || 0) + durationToScalar(note?.duration || "8n");
+
+    console.log("break pos:", breakPosition)
+    console.log("note pos:", note?.position)
+    console.log("pos to use:", positionToUse)
+
+    const offset = getBreakOffset(positionToUse, context, params);
+
     const x = params.CONTAINER_PADDING_X_START
-        + position * params.NOTE_SPACING
+        + breakPosition * params.NOTE_SPACING
         - offset.x;
 
     const y = params.CONTAINER_SYMBOLS_BAR / 2
@@ -28,17 +39,14 @@ export const calculateDividerCoords = (divider: Divider, context: ScoreContextPr
     const offset = getOffset(divider.position, context.score.data.breaks, context.dimensions, params, 0, true);
 
     const x = params.CONTAINER_PADDING_X_START
-        + divider.position * params.NOTE_SPACING
-        - params.NOTE_RADIUS
+        + (divider.position - 1) * params.NOTE_SPACING
         + params.DIVIDER_SEPARATOR_X_OFFSET
-        - params.DIVIDER_WIDTH
-        - params.NOTE_SPACING / 2
+        + params.NOTE_RADIUS
         - offset.x;
 
     const y = params.CONTAINER_SYMBOLS_BAR
         + offset.y
-        + params.DIVIDER_SEPARATOR_Y_OFFSET
-        - params.DIVIDER_SEPARATOR_HEIGHT / 2;
+        - params.DIVIDER_OVERFLOW_Y;
 
     return {x: x, y: y};
 }
@@ -231,40 +239,41 @@ export const getBreakOffset = (position: number, context: ScoreContextProperties
     };
 }
 
-export const calculateStaveDimensions = (score: Score, params: LayoutParams): StaveDimensions => {
-    console.log("calculating stave dimensions")
+export const calculateStaveDimensions = (
+    score: Score,
+    params: LayoutParams
+): StaveDimensions => {
     const bottomLineY = score.data.stave.lines.slice(-1)?.[0]?.y || 0;
+
     const y = params.CONTAINER_SYMBOLS_BAR
         + params.LINE_SPACING * bottomLineY
         + params.CONTAINER_LYRICS_BAR;
 
-
     const distances = score.data.voices.flatMap(v => v.notes).map(n => {
-        const nearestBreak = score.data.breaks.filter(p => p <= n.position).slice(-1)?.[0] || 0;
-        return n.position - nearestBreak;
+        const nearestBreak = score.data.breaks
+            .filter(p => p <= n.position)
+            .slice(-1)?.[0] || 0;
+
+        return n.position - nearestBreak
+            + durationToScalar(n.duration) - 1;
     });
 
-    //todo include dividers and breaks
-    const x = Math.max(...distances) * params.NOTE_SPACING + params.CONTAINER_PADDING_X_START + params.CONTAINER_PADDING_X_END;
+    const x = Math.max(0, ...distances) * params.NOTE_SPACING
+        + params.CONTAINER_PADDING_X_START
+        + params.CONTAINER_PADDING_X_END;
 
     const blocks = score.data.breaks.length + 1;
 
-    const lastNote = score.data.voices
-        .flatMap(v => v.notes)
-        .reduce<Note | undefined>(
-            (last, note) => !last || note.position > last.position ? note : last,
-            undefined
-        );
-
-    const toAdd = (durationToScalar(lastNote?.duration ?? "8n")) * params.NOTE_SPACING;
-
     return {
-        x: Math.min(Math.max(x + toAdd, params.CONTAINER_MIN_WIDTH), params.CONTAINER_MAX_WIDTH),
-        y: y,
-        blocks: blocks,
+        x: Math.min(
+            Math.max(x, params.CONTAINER_MIN_WIDTH),
+            params.CONTAINER_MAX_WIDTH
+        ),
+        y,
+        blocks,
         containerY: y * blocks,
     };
-}
+};
 
 export const calculateEmbeddingHeight = (score: Score, params: LayoutParams): number => {
     return (score.data.breaks.length || 0) * params.EMBEDDING_ROW + params.EMBEDDING_BASE;

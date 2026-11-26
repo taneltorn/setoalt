@@ -68,8 +68,10 @@ export const NoteControlsContextProvider: React.FC<Properties> = ({children}) =>
         context.refresh();
     }
 
-    const changeDuration = (duration: string, note?: Note, shift?: boolean) => {
-        context.setActiveDuration(duration);
+    const changeDuration = (duration: string, note?: Note, shift?: boolean, keepEditDuration?: boolean) => {
+        if (!keepEditDuration) {
+            context.setActiveDuration(duration);
+        }
 
         if (note) {
             if (shift) {

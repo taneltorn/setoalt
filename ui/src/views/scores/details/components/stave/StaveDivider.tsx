@@ -24,7 +24,7 @@ const StaveDivider: React.FC<Properties> = ({divider}) => {
 
     const height = divider.type === DividerType.SEPARATOR
         ? params.DIVIDER_SEPARATOR_HEIGHT
-        : context.dimensions.y - params.CONTAINER_SYMBOLS_BAR - params.CONTAINER_LYRICS_BAR + params.DIVIDER_SEPARATOR_HEIGHT;
+        : (context.score.data.stave.lines.at(-1)?.y || 0) * params.LINE_SPACING + params.DIVIDER_OVERFLOW_Y * 2;
 
     const {x, y} = useMemo(() => {
         return calculateDividerCoords(divider, context, params)
@@ -42,7 +42,7 @@ const StaveDivider: React.FC<Properties> = ({divider}) => {
 
             <rect
                 x={x + 14}
-                y={y + (divider.type === "Separator" ? 12 : 0)}
+                y={y}
                 width={params.DIVIDER_WIDTH}
                 height={height}
             />

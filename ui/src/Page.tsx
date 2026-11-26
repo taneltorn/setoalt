@@ -1,11 +1,12 @@
 import React, {useEffect} from "react";
-import {Layout} from "./utils/constants.ts";
+import {Size} from "./utils/constants.ts";
 import {useTranslation} from "react-i18next";
 
 interface Properties {
     title?: string;
     children: React.ReactNode;
 }
+
 const Page: React.FC<Properties> = ({children, title}) => {
 
     const {t} = useTranslation();
@@ -15,7 +16,7 @@ const Page: React.FC<Properties> = ({children, title}) => {
     }, [title]);
 
     return (
-        <div style={{maxWidth: Layout.page.MAX_WIDTH}}>
+        <div style={{maxWidth: Size.page.MAX_WIDTH}}>
             {children}
         </div>
     )

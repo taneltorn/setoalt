@@ -20,7 +20,8 @@
         "message": "This application is currently under development!",
         "changelog": "Changelog"
       },
-      "switchLang": "EESTI KEELES"
+      "switchLang": "EESTI KEELES",
+      "devMode": "Dev mode"
     },
     "table": {
       "itemsPerPage": " Show",
@@ -153,6 +154,7 @@
         "defaultTempo": "Default tempo (BPM)",
         "defaultTransposition": "Default pitch (semitones)",
         "lineDetune": "Microtonal tuning of staff lines (cents)",
+        "notes": "Notes",
         "text": "Lyrics",
         "textEt": "Translation (Estonian)",
         "textEn": "Translation (English)",
@@ -262,6 +264,7 @@
     "settings": "Settings",
     "back": "Back",
     "displayAll": "Show all",
+    "displayPartially": "Show partially",
     "increaseZoom": "Zoom in",
     "decreaseZoom": "Zoom out"
   },

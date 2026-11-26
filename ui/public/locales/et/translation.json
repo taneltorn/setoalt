@@ -20,7 +20,8 @@
         "message": "Tegemist on arendusjärgus oleva rakendusega!",
         "changelog": "Muutelugu"
       },
-      "switchLang": "IN ENGLISH"
+      "switchLang": "IN ENGLISH",
+      "devMode": "Arendusrežiim"
     },
     "table": {
       "itemsPerPage": " Kuva",
@@ -154,6 +155,7 @@
         "defaultTempo": "Vaikimisi tempo (BPM)",
         "defaultTransposition": "Vaikimisi helikõrgus (pooltoonides)",
         "lineDetune": "Noodijoonte mikrotonaalsus (tsentides)",
+        "notes": "Märkmed",
         "text": "Laulusõnad",
         "textEt": "Tõlge (eesti)",
         "textEn": "Tõlge (inglise)",
@@ -263,6 +265,7 @@
     "settings": "Seaded",
     "back": "Tagasi",
     "displayAll": "Kuva kõik",
+    "displayPartially": "Kuva vähem",
     "increaseZoom": "Suurenda",
     "decreaseZoom": "Vähenda"
   },

@@ -1,11 +1,5 @@
 export const DateFormat = "DD.MM.yyyy HH:mm";
 
-export const Layout = {
-    page: {
-        MAX_WIDTH: 1200,
-    }
-}
-
 export const Size = {
     icon: {
         XS: 20,
@@ -13,6 +7,11 @@ export const Size = {
         MD: 32,
         LG: 42,
         XL: 56,
+    },
+    page: {
+        MAX_WIDTH: 1200,
+        LYRICS_TEXT_MIN_HEIGHT: 150,
+        LYRICS_TEXT_DEFAULT_HEIGHT: 350,
     }
 }
 

@@ -1,3 +1,11 @@
+### [1.3.0]
+
+- Erinevad parandused ja täiendused
+
+### [1.2.0]
+
+- Erinevad parandused ja täiendused
+
 ### [1.1.0]
 
 - Lisatud võimalus luua suvaline noodijoonestik

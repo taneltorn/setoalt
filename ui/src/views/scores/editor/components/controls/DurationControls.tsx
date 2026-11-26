@@ -29,7 +29,7 @@ const DurationControls: React.FC = () => {
     const handleNoteSplit = () => {
         if (activeNote) {
             if (activeNote.duration === "8n") {
-                changeDuration("16n", activeNote, false);
+                changeDuration("16n", activeNote, false, true);
                 const note = NoteFactory.create(activeNote.pitch, activeNote.position + 0.5, "16n");
                 insertNote(note);
                 return;
@@ -56,7 +56,7 @@ const DurationControls: React.FC = () => {
                 <ControlButton
                     key={duration}
                     active={activeNote?.duration !== "16n" && activeDuration === duration}
-                    disabled={activeNote?.duration === "16n"}
+                    // disabled={activeNote?.duration === "16n"}
                     tooltip={t(`tooltip.changeDuration.${duration}`)}
                     shortKey={DurationToShortKey.get(duration)}
                     onClick={() => changeDuration(duration, activeNote, true)}

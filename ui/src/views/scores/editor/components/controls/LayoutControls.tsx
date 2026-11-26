@@ -14,12 +14,13 @@ import {useLayoutControls} from "../../../../../hooks/useLayoutControls.tsx";
 import {useNoteControls} from "../../../../../hooks/useNoteControls.tsx";
 import {useActiveKeys} from "../../../../../hooks/useActiveKeys.tsx";
 import {ShiftLeftIcons, ShiftRightIcons} from "../../../../../utils/icons.tsx";
+import {durationToScalar} from "../../../../../utils/helpers.tsx";
 
 const LayoutControls: React.FC = () => {
 
     const [t] = useTranslation();
     const {isCtrlKeyActive, isShiftKeyActive} = useActiveKeys();
-    const {activePosition, score} = useScoreContext();
+    const {activePosition, activeNote, score} = useScoreContext();
     const {removeNote} = useNoteControls();
     const {shiftLeft, shiftRight, toggleBreak, toggleDivider} = useLayoutControls();
 
@@ -40,7 +41,7 @@ const LayoutControls: React.FC = () => {
             <ControlButton
                 tooltip={t("tooltip.insertBreak")}
                 shortKey={ShortKey.BREAK}
-                active={score.data.breaks.findIndex(p => p === activePosition) >= 0}
+                active={score.data.breaks.findIndex(p => p === ((activeNote?.position || 0) + durationToScalar(activeNote?.duration || "8n"))) >= 0}
                 onClick={() => toggleBreak()}
             >
                 <GrReturn size={Size.icon.XS}/>
@@ -48,6 +49,7 @@ const LayoutControls: React.FC = () => {
             <ControlButton
                 tooltip={t("tooltip.insertDivider")}
                 shortKey={ShortKey.DIVIDER}
+                disabled={!Number.isInteger(activePosition)}
                 active={score.data.dividers.findIndex(d => [DividerType.BAR, DividerType.SEPARATOR].includes(d.type)
                     && d.position === (activePosition + 1)) >= 0}
                 onClick={toggleDivider}

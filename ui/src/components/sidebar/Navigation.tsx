@@ -16,6 +16,7 @@ import {useDialogContext} from "../../hooks/useDialogContext.tsx";
 import {usePagination} from "../../hooks/usePagination.tsx";
 import LanguageSelector from "../LanguageSelector.tsx";
 import {FaUser} from "react-icons/fa";
+import DevModeSelector from "../DevModeSelector.tsx";
 
 const routes = [
     {id: 'home', icon: <IoHome className={classes.icon} size={Size.icon.SM}/>, link: "/"},
@@ -134,6 +135,11 @@ const Navigation: React.FC<Properties> = (props) => {
                         </Box>
                     </Button>
                 </Group>}
+
+            {auth.currentUser?.isAdmin &&
+                <Center mt={"xl"}>
+                    <DevModeSelector/>
+                </Center>}
         </>
     );
 }

@@ -1,15 +1,15 @@
 import React from "react";
 import {Group} from "@mantine/core";
-import {Score} from "../../../model/Score.ts";
-import ScoreLyrics from "./components/ScoreLyrics.tsx";
+import {Score} from "../../../../../model/Score.ts";
+import ScoreLyrics from "../ScoreLyrics.tsx";
 import {useTranslation} from "react-i18next";
-import {useLayoutParams} from "../../../hooks/useLayoutParams.tsx";
+import {useLayoutParams} from "../../../../../hooks/useLayoutParams.tsx";
 
 interface Properties {
     score: Score;
 }
 
-const ScoreLyricsSection: React.FC<Properties> = ({score}) => {
+const LyricsBox: React.FC<Properties> = ({score}) => {
 
     const {i18n} = useTranslation();
     const {params} = useLayoutParams();
@@ -24,4 +24,4 @@ const ScoreLyricsSection: React.FC<Properties> = ({score}) => {
     );
 }
 
-export default ScoreLyricsSection;
+export default LyricsBox;

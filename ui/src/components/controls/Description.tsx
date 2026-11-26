@@ -10,7 +10,7 @@ const Description: React.FC<Properties> = (props) => {
 
     return (
         <Grid mb={"md"}>
-            <Grid.Col span={props.span || {xs: 12, lg: 7}}>
+            <Grid.Col span={props.span || {xs: 12, lg: 9}}>
                 <Text>{props.children}</Text>
             </Grid.Col>
         </Grid>

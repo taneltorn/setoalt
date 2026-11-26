@@ -12,8 +12,8 @@ const normalizeLng = (lng: string): Language => {
 };
 
 const LanguageSelector: React.FC = () => {
-    const {t, i18n} = useTranslation();
 
+    const {t, i18n} = useTranslation();
     const current = normalizeLng(i18n.resolvedLanguage ?? i18n.language);
 
     const changeLanguage = (lng: Language) => {

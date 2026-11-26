@@ -20,7 +20,7 @@ export interface LayoutParams {
 
     DIVIDER_SEPARATOR_HEIGHT: number;
     DIVIDER_SEPARATOR_X_OFFSET: number;
-    DIVIDER_SEPARATOR_Y_OFFSET: number;
+    DIVIDER_OVERFLOW_Y: number;
     DIVIDER_WIDTH: number;
     DIVIDER_CONTAINER_WIDTH: number;
 

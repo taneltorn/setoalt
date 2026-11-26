@@ -19,7 +19,6 @@ import {IoMdArrowUp} from "react-icons/io";
 import {useTranslation} from "react-i18next";
 import {Notifications} from "@mantine/notifications";
 import {useDialogContext} from "./hooks/useDialogContext.tsx";
-import ProfileLink from "./components/ProfileLink.tsx";
 import LoginDialog from "./views/login/LoginDialog.tsx";
 import NotificationPanel from "./NotificationPanel.tsx";
 
@@ -51,17 +50,12 @@ const Layout: React.FC = () => {
             <Notifications position="top-right"/>
 
             <AppShell.Header withBorder={false} py={{base: 4, md: 0}}>
-                <Group justify={"space-between"} px={"xs"}>
-                    <Burger
-                        opened={opened}
-                        onClick={toggle}
-                        hiddenFrom="md"
-                        size="md"
-                    />
-                    <Group hiddenFrom={"md"}>
-                        <ProfileLink onClick={close}/>
-                    </Group>
-                </Group>
+                <Burger
+                    opened={opened}
+                    onClick={toggle}
+                    hiddenFrom="md"
+                    size="md"
+                />
             </AppShell.Header>
 
             <AppShell.Navbar p={"md"}>

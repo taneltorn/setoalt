@@ -127,10 +127,11 @@ export const LayoutControlsContextProvider: React.FC<Properties> = ({children}) 
     const toggleDivider = () => {
         history.snapshot(context);
 
-        console.log(context.activeNote)
-
         const position = context.activeNote
-            ? (context.activeNote.position + durationToScalar(context.activeNote.duration))
+            ? (context.activeNote.position + durationToScalar(
+                context.activeNote?.duration === "16n"
+                    ? "8n"
+                    : context.activeNote.duration))
             : (context.activePosition + 1);
 
         const divider = context.score.data.dividers.find(it => it.position === position);

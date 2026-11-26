@@ -60,12 +60,13 @@ class ScoreService {
                                                       data,
                                                       default_tempo,
                                                       default_transposition,
+                                                      notes,
                                                       text,
                                                       translations,
                                                       visibility,
                                                       created_by,
                                                       deleted_at)
-                           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11)
+                           VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12)
                            RETURNING *`;
             const result = await pool.query(query, [
                 score.name,
@@ -74,6 +75,7 @@ class ScoreService {
                 score.data,
                 score.defaultTempo,
                 score.defaultTransposition,
+                score.notes,
                 score.text,
                 score.translations,
                 score.visibility,
@@ -100,12 +102,13 @@ class ScoreService {
                     data                  = $4,
                     default_tempo         = $5,
                     default_transposition = $6,
-                    text                  = $7,
-                    translations          = $8,
-                    visibility            = $9,
-                    modified_by           = $10,
+                    notes                 = $7,
+                    text                  = $8,
+                    translations          = $9,
+                    visibility            = $10,
+                    modified_by           = $11,
                     modified_at           = NOW()
-                WHERE id = $11
+                WHERE id = $12
                 RETURNING *;
             `;
             const result = await pool.query(query, [
@@ -115,6 +118,7 @@ class ScoreService {
                 score.data,
                 score.defaultTempo,
                 score.defaultTransposition,
+                score.notes,
                 score.text,
                 score.translations,
                 score.visibility,

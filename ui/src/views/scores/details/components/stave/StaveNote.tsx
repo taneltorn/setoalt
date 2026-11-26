@@ -54,6 +54,18 @@ const StaveNote: React.FC<Properties> = ({note, voice}) => {
             >
                 <title>{t(`pitch.${note.pitch.toLowerCase()}`)}</title>
             </circle>
+            {context.isEditMode && note.duration === "16n" && <circle
+                className={"hover-pointer"}
+                cx={x}
+                cy={y}
+                r={(note.type === NoteType.SMALL ? params.NOTE_RADIUS_SMALL : params.NOTE_RADIUS) - 3}
+                fill={"white"}
+                opacity={opacity}
+                z={voice.type === VoiceType.FRONT ? 1000 : 200}
+            >
+                <title>{t(`pitch.${note.pitch.toLowerCase()}`)}</title>
+            </circle>}
+
             {!context.isSimplifiedMode && note.detune && note.showDetuneIndicator &&
                 <DetuneIndicator
                     detune={note.detune}

@@ -6,6 +6,7 @@ export type Score = {
     data: object;
     defaultTempo?: number;
     defaultTransposition?: number;
+    notes?: string;
     text?: string;
     translations?: object;
     visibility?: string;

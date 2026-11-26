@@ -31,7 +31,6 @@ const SaveScoreDialog: React.FC = () => {
     }
     const methods = useForm<Score>({defaultValues: DEFAULT_VALUES});
 
-    
     const onSubmit = async (values: Score) => {
         const score = {...values, data: context.score.data};
         score.data.voices.forEach(v => {
@@ -44,6 +43,7 @@ const SaveScoreDialog: React.FC = () => {
             : scoreService.createScore(score);
         saveScore()
             .then((r) => {
+                methods.reset();
                 close();
                 navigate(r.id ? `/scores/${r.id}` : "/scores");
             });

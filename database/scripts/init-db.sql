@@ -40,6 +40,7 @@ CREATE TABLE IF NOT EXISTS setoalt.scores
     data JSON NOT NULL,
     default_tempo INTEGER,
     default_transposition INTEGER,
+    notes TEXT,
     text TEXT,
     translations JSON,
     visibility VARCHAR(255) NOT NULL,

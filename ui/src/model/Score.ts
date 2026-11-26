@@ -11,6 +11,7 @@ export interface Score {
     data: ScoreData;
     defaultTempo?: number;
     defaultTransposition?: number;
+    notes?: string;
     text?: string;
     translations?: Record<string, string>;
     visibility?: string;
